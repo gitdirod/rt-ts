@@ -64,7 +64,7 @@ export default function ModalViewStoreType({setAction}) {
 
     return (
         <div className='h-fit bg-white max-h-[calc(100vh-10vh)] top-full z-10 rounded-lg overflow-auto'>
-            <div className="relative w-full gap-4 center-r p-2 font-light bg-slate-800 text-white text-2xl rounded-t-lg">
+            <div className="relative w-full gap-4 center-r p-2 font-light bg-slate-800 text-white text-2xl rounded-t-lg md:min-w-[500px]">
                 <img src={iconTag} className="w-8" alt="ok" />
                 <span className="text-base md:text-xl font-poppins-regular">Nuevo Tipo de producto</span>
                 
@@ -83,7 +83,7 @@ export default function ModalViewStoreType({setAction}) {
                 onSubmit={handleSubmit}
                 noValidate
             >
-                <div className='flex  flex-col items-center justify-around gap-2 flex-wrap w-full md:min-w-[500px]'>
+                <div className='flex  flex-col items-center justify-around gap-2 flex-wrap w-full '>
                     {/* name */}
                     <LabelSimple
                         htmlfor="name"
