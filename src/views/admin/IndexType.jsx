@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import useStore from '/src/hooks/useStore'
-import { Link } from 'react-router-dom'
 import IsLoading from '/src/components/IsLoading'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import BlockType from '/src/components/admin/BlockType'
@@ -8,11 +7,24 @@ import iconAdd from '/src/static/icons/add.svg'
 import IconTag from '/src/static/icons/tag.svg'
 import BlockStoreType from '/src/components/admin/BlockStoreType'
 import Btn from '/src/components/admin/Btn'
+import useAdmin from '/src/hooks/useAdmin'
+import ModalViewStoreType from '/src/components/admin/modals/ModalViewStoreType'
 
 
 export default function IndexType(){
     const {types} = useStore()
     const[ activeAdd, setActiveAdd] = useState(false)
+
+    const { 
+        update,  
+        handleModalStateComponent,
+        handleModalViewComponent
+      } =useAdmin()
+
+    const addType=()=>{
+        handleModalViewComponent(<ModalViewStoreType setAction={setActiveAdd}/>)
+        handleModalStateComponent(true)
+    }
 
     if(types === undefined) return(<IsLoading/>)
 
@@ -32,7 +44,8 @@ export default function IndexType(){
                         icon={iconAdd}
                         text='Nuevo'
                         style='bg-green-500'
-                        action={()=>setActiveAdd(true)}
+                        // action={()=>setActiveAdd(true)}
+                        action={addType}
                     />
                 )
             }

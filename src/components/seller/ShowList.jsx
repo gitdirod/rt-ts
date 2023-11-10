@@ -81,7 +81,7 @@ export default function ShowList({ closeModal}) {
     return (
         <div 
             id='listProduct' 
-            className="center-c max-h-[calc(100vh-10vh)] bg-slate-100 overflow-x-hidden overflow-auto top-full z-10 rounded-lg " 
+            className="center-c max-h-[calc(100vh-10vh)] bg-slate-100 overflow-x-hidden overflow-y-auto top-full z-10 rounded-lg " 
         > 
 
             <div className="relative w-full gap-4 center-r p-2 font-light bg-slate-800 text-white text-2xl">

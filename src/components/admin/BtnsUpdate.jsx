@@ -6,7 +6,7 @@ import iconSave from '/src/static/icons/save_filled.svg'
 export default function BtnsUpdate({closeAction}) {
   return (
     <div 
-        className='flex gap-4 p-2 px-10 w-full'
+        className='flex gap-4 px-10 w-full'
     >
         <Btn
             icon={iconClose}
