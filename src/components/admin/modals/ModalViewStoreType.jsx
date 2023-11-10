@@ -1,21 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import useAdmin from '/src/hooks/useAdmin'
 import LabelSimple from '/src/components/admin/LabelSimple'
+
+import useStore from '/src/hooks/useStore'
+import BtnsUpdate from '../BtnsUpdate'
+import ModalViewRequest from '../ModalViewRequest'
+import Btn from '../Btn'
+import UploadImages from '/src/components/common/UploadImages'
+import ShowUploadedImages from '/src/components/common/ShowUploadedImages'
+
 import iconSave from '/src/static/icons/save_filled.svg'
 import iconTagBlack from '/src/static/icons/tagBlack.svg'
 import iconTag from '/src/static/icons/tag.svg'
-import iconDelete from '/src/static/icons/delete.svg'
 import iconImage from '/src/static/icons/images.svg'
-import add from '/src/static/icons/add.svg'
-import useStore from '/src/hooks/useStore'
-import BtnsUpdate from '../BtnsUpdate'
-import AlertAdmin from '../AlertAdmin'
-import ModalViewRequest from '../ModalViewRequest'
 import iconClose from '/src/static/icons/seller/close.svg'
-import Btn from '../Btn'
-import UploadImages from '/src/components/common/UploadImages'
-
-import ShowUploadedImages from '/src/components/common/ShowUploadedImages'
 
 export default function ModalViewStoreType({setAction}) {
 
@@ -103,7 +101,7 @@ export default function ModalViewStoreType({setAction}) {
                         htmlfor="image"
                         name="Imagen:"
                         image={iconImage}
-                        error={errores.name}
+                        error={errores.image}
                     >
                         
                         <UploadImages
