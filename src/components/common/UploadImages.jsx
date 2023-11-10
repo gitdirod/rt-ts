@@ -28,7 +28,7 @@ const UploadImages =({children, max = 1, setImages, images, maxMessage=false})=>
     
     return (
         <div 
-            className='center-r h-full cursor-pointer group outline-none '
+            className='center-r h-full cursor-pointer group outline-none w-full '
             {...getRootProps()}
         >
             <input 
