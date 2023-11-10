@@ -17,7 +17,7 @@ import iconImage from '/src/static/icons/images.svg'
 import ModalBlockHeader from '/src/components/common/modals/ModalBlockHeader'
 import ModalContainer from '/src/components/common/modals/ModalContainer'
 
-export default function ModalViewStoreType({setAction}) {
+export default function ModalViewStoreUpdateType({setAction}) {
 
     const {
         create,  

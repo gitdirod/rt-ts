@@ -8,7 +8,7 @@ import IconTag from '/src/static/icons/tag.svg'
 import BlockStoreType from '/src/components/admin/BlockStoreType'
 import Btn from '/src/components/admin/Btn'
 import useAdmin from '/src/hooks/useAdmin'
-import ModalViewStoreType from '/src/components/admin/modals/ModalViewStoreType'
+import ModalViewStoreUpdateType from '/src/components/admin/modals/ModalViewStoreUpdateType'
 
 
 export default function IndexType(){
@@ -22,7 +22,7 @@ export default function IndexType(){
       } =useAdmin()
 
     const addType=()=>{
-        handleModalViewComponent(<ModalViewStoreType setAction={setActiveAdd}/>)
+        handleModalViewComponent(<ModalViewStoreUpdateType setAction={setActiveAdd}/>)
         handleModalStateComponent(true)
     }
 
