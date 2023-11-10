@@ -5,15 +5,17 @@ import LabelSimple from '/src/components/admin/LabelSimple'
 import useStore from '/src/hooks/useStore'
 import BtnsUpdate from '../BtnsUpdate'
 import ModalViewRequest from '../ModalViewRequest'
-import Btn from '../Btn'
+
 import UploadImages from '/src/components/common/UploadImages'
 import ShowUploadedImages from '/src/components/common/ShowUploadedImages'
 
 import iconSave from '/src/static/icons/save_filled.svg'
 import iconTagBlack from '/src/static/icons/tagBlack.svg'
-import iconTag from '/src/static/icons/tag.svg'
+
 import iconImage from '/src/static/icons/images.svg'
-import iconClose from '/src/static/icons/seller/close.svg'
+
+import ModalBlockHeader from '/src/components/common/modals/ModalBlockHeader'
+import ModalContainer from '/src/components/common/modals/ModalContainer'
 
 export default function ModalViewStoreType({setAction}) {
 
@@ -63,20 +65,11 @@ export default function ModalViewStoreType({setAction}) {
     },[waiting])
 
     return (
-        <div className='h-fit bg-white max-h-[calc(100vh-10vh)] top-full z-10 rounded-lg overflow-auto'>
-            <div className="relative w-full gap-4 center-r p-2 font-light bg-slate-800 text-white text-2xl rounded-t-lg md:min-w-[500px]">
-                <img src={iconTag} className="w-8" alt="ok" />
-                <span className="text-base md:text-xl font-poppins-regular">Nuevo Tipo de producto</span>
-                
-                <Btn
-                    style='md:absolute bg-white right-2 '
-                    icon={iconClose}
-                    imageColor
-                    action={()=>{
-                        closeModal()
-                    }}
-                />
-            </div>
+        <ModalContainer>
+            <ModalBlockHeader
+                name="Nuevo Tipo de producto"
+                closeModal={closeModal}
+            />
             
             <form 
                 className="flex flex-col justify-between items-center flex-1 p-4 "
@@ -124,6 +117,7 @@ export default function ModalViewStoreType({setAction}) {
                 </div>
                 
             </form>
-        </div>
+        </ModalContainer>
+        
     )
 }
