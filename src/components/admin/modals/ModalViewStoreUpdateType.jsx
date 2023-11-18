@@ -16,10 +16,11 @@ import iconImage from '/src/static/icons/images.svg'
 
 import ModalBlockHeader from '/src/components/common/modals/ModalBlockHeader'
 import ModalContainer from '/src/components/common/modals/ModalContainer'
+import ImagesShower from '/src/components/admin/ImagesShower'
+import { urlsBackend } from '/src/data/urlsBackend'
 
 export default function ModalViewStoreUpdateType({setAction, item}) {
 
-    console.log(item)
     const {
         create,  
         update,  
@@ -44,29 +45,41 @@ export default function ModalViewStoreUpdateType({setAction, item}) {
     const closeModal = ()=>{
         handleModalStateComponent(false)
     }
-
     const handleSubmit = async e =>{
         
         e.preventDefault()
-        const typeStore = {
+        let typeStore = {
           name: nameRef.current.value,
           image: image[0]
         }
         if(!waiting){
-            create('type_products', typeStore, setErrores, setState, setWaiting)
+            if(item?.id){
+                typeStore.id = item.id
+                typeStore._method= 'PUT'
+                update('type_products', typeStore, setErrores, setState, setWaiting)
+            }else{
+                create('type_products', typeStore, setErrores, setState, setWaiting)
+            }
         }
+
     }
 
     const initail = {
         name:item?.name ? item.name :'',
-
+    }
+    const initialImage = {
+        name:item?.image ? item.image : '',
+        id:item?.image ? item.image : ''
+        
     }
 
     useEffect(()=>{
         if(state){
             mutateTypes()
             setState(false)
-            setAction(false)
+            if(setAction){
+                setAction(false)
+            }
         }
         handleModalViewRequest(<ModalViewRequest text="Guardando..." icon={iconSave} spin={false}/> )
         handleModalStateRequest(waiting)
@@ -75,7 +88,7 @@ export default function ModalViewStoreUpdateType({setAction, item}) {
     return (
         <ModalContainer>
             <ModalBlockHeader
-                name="Nuevo Tipo de producto"
+                name={item?.id ? "Actualizar Tipo de producto":"Nuevo Tipo de producto"}
                 closeModal={closeModal}
             />
             
@@ -100,7 +113,6 @@ export default function ModalViewStoreUpdateType({setAction, item}) {
                         />
                     </LabelSimple>
                     <LabelSimple
-                        htmlfor="image"
                         name="Imagen:"
                         image={iconImage}
                         error={errores.image}
@@ -119,6 +131,12 @@ export default function ModalViewStoreUpdateType({setAction, item}) {
                         removeImage={removeFile}
                         images={image}
                     />
+                    
+                    {
+                        image.length == 0 && item?.id && (
+                            <ImagesShower images={[initialImage]} url={urlsBackend.ICON}/>
+                        )
+                    }
         
                     <BtnsUpdate
                         closeAction={closeModal}

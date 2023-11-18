@@ -17,7 +17,9 @@ const ImagesShower = ({setDelete, images, url, edit = false})=> {
     }
   })
   useEffect(()=>{
-    setDelete(toDelete)
+    if(setDelete){
+      setDelete(toDelete)
+    }
   },[toDelete])
   return (
       <>
