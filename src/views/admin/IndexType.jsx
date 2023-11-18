@@ -16,7 +16,6 @@ export default function IndexType(){
     const[ activeAdd, setActiveAdd] = useState(false)
 
     const { 
-        update,  
         handleModalStateComponent,
         handleModalViewComponent
       } =useAdmin()
@@ -44,7 +43,6 @@ export default function IndexType(){
                         icon={iconAdd}
                         text='Nuevo'
                         style='bg-green-500'
-                        // action={()=>setActiveAdd(true)}
                         action={addType}
                     />
                 )

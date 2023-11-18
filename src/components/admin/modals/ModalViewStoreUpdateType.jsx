@@ -17,22 +17,25 @@ import iconImage from '/src/static/icons/images.svg'
 import ModalBlockHeader from '/src/components/common/modals/ModalBlockHeader'
 import ModalContainer from '/src/components/common/modals/ModalContainer'
 
-export default function ModalViewStoreUpdateType({setAction}) {
+export default function ModalViewStoreUpdateType({setAction, item}) {
 
+    console.log(item)
     const {
         create,  
+        update,  
         handleModalViewRequest,
         handleModalStateRequest,
         handleModalStateComponent
     } = useAdmin()
+
     const {mutateTypes} = useStore()
+
+    const nameRef = useRef()
+    const [image, setImage]= useState([])
 
     const [errores, setErrores] = useState({})
     const [state, setState] = useState(false)
     const [waiting, setWaiting] = useState(false)
-
-    const nameRef = useRef()
-    const [image, setImage]= useState([])
 
     const removeFile = (name)=>{
         setImage(files => files.filter(file => file.name !== name))
@@ -52,6 +55,11 @@ export default function ModalViewStoreUpdateType({setAction}) {
         if(!waiting){
             create('type_products', typeStore, setErrores, setState, setWaiting)
         }
+    }
+
+    const initail = {
+        name:item?.name ? item.name :'',
+
     }
 
     useEffect(()=>{
@@ -88,6 +96,7 @@ export default function ModalViewStoreUpdateType({setAction}) {
                         type="text" 
                         id="name"
                         ref={nameRef}
+                        defaultValue={initail.name}
                         />
                     </LabelSimple>
                     <LabelSimple

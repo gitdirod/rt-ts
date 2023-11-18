@@ -8,12 +8,13 @@
     width: 100%;
     transition: all 0.3s ease;
     cursor: pointer;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
   }
   select {
     width: 100%;
     outline: none !important;
     cursor: pointer;
+    background: transparent;
   }
   textarea {
     width: 100%;
@@ -172,9 +173,9 @@
 }
 @font-face {
   font-family: "Poppins-Extrabold";
-  src: url("./static/fonts/Poppins/Poppins-Extrabold.ttf");
+  src: url("./static/fonts/Poppins/Poppins-ExtraBold.ttf");
 }
 @font-face {
   font-family: "Poppins-Semibold";
-  src: url("./static/fonts/Poppins/Poppins-Semibold.ttf");
+  src: url("./static/fonts/Poppins/Poppins-SemiBold.ttf");
 }
