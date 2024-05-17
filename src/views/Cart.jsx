@@ -116,12 +116,12 @@ const Cart=()=> {
                         </div>
                         <div className="flex justify-between items-center px-4">
                             <p className="font-poppins-regular">I.V.A</p>
-                            <p>{formatearDinero(subtotal * 0.12)}</p>
+                            <p>{formatearDinero(subtotal * 0.15)}</p>
                         </div>
                     </div>
                     <div className="flex justify-between items-center px-8 py-4 border-t border-t-slate-300">
                         <p className="font-poppins-regular">Total:</p>
-                        <p>{formatearDinero(subtotal* 1.12)}</p>
+                        <p>{formatearDinero(subtotal* 1.15)}</p>
                     </div>
                     <div className="w-full">
                         <div 
