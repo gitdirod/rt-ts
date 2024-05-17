@@ -69,8 +69,9 @@ const ModalViewAddProduct=({product, isButtonCart=true, urlCart='/store/cart', c
 
 
             <div className="center-c">   
-                <div className="font-poppins-extrabold text-2xl">
+                <div className="center-c font-poppins-extrabold text-2xl">
                     <p>{formatearDinero(product.price)}</p>
+                    <span className="font-bold text-xs text-cyanDark ">Más impuestos</span>
                 </div>
                 <div className="center-r gap-0.5">
                     <button

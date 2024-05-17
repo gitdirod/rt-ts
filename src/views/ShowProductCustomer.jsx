@@ -201,8 +201,9 @@ const ShowProductCustomer=() => {
 
           
 
-          <div className={`w-full font-poppins-extrabold text-center text-5xl text-cyanPrimary`}>
-            <p>{formatearDinero(productToShow?.price)}</p>
+          <div className={`w-full flex flex-col font-poppins-extrabold text-center text-5xl text-cyanPrimary`}>
+            <p className="">{formatearDinero(productToShow?.price)}</p>
+            <span className="font-bold text-xs ">Más impuestos</span>
           </div>
 
           <div 
