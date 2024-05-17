@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react'
-import BlockSubHeader from './BlockSubHeader'
+
 import useAdmin from '/src/hooks/useAdmin'
 import LabelSimple from '/src/components/admin/LabelSimple'
-import BtnsUpdate from './BtnsUpdate'
-import ModalViewRequest from './ModalViewRequest'
-import iconSave from '/src/static/icons/save_filled.svg'
 
-export default function BlockStoreItemOne({url, itemName, labelName='', mutate, setAction, icon}) {
+import ModalViewRequest from '../ModalViewRequest'
+import iconSave from '/src/static/icons/save_filled.svg'
+import BlockSubHeader from '../BlockSubHeader'
+import BtnsUpdate from '../BtnsUpdate'
+import ModalBlockHeader from '/src/components/common/modals/ModalBlockHeader'
+import ModalContainer from '/src/components/common/modals/ModalContainer'
+
+export default function ModalViewStoreUpdateItem({item, labelName, headerTitle, iconColor, iconBlack}){
 
     const {
         create,  
         handleModalViewRequest,
-        handleModalStateRequest
+        handleModalStateRequest,
+        handleModalStateComponent
     } = useAdmin()
 
     const [errores, setErrores] = useState({})
@@ -31,36 +36,36 @@ export default function BlockStoreItemOne({url, itemName, labelName='', mutate, 
             create(url, itemToStore, setErrores, setState, setWaiting)
         }
     }
-
+    const closeModal = ()=>{
+        handleModalStateComponent(false)
+    }
     useEffect(()=>{
         if(state){
             mutate()
             setState(false)
-            setAction(false)
         }
         handleModalViewRequest(<ModalViewRequest text="Guardando..." icon={iconSave} spin={false}/> )
         handleModalStateRequest(waiting)
     },[waiting])
 
     return (
-        <div className='border border-green-500 mb-4 h-fit bg-white rounded'>
-            
+        <ModalContainer>
+            <ModalBlockHeader
+                name={headerTitle}
+                iconColor={iconColor}
+                closeModal={closeModal}
+            />
             <form 
-                className="flex flex-col justify-between  items-center flex-1"
+                className="flex flex-col justify-between items-center flex-1 p-4 gap-4"
                 onSubmit={handleSubmit}
                 noValidate
             >
-                <BlockSubHeader
-                itemName={itemName}
-                isNew={true}
-                setAction={setAction}
-            />
-                <div className='flex  flex-col items-center justify-around gap-2 flex-wrap w-full'>
+                <div className='flex  flex-col items-center justify-around gap-2 flex-wrap w-full '>
                     {/* name */}
                     <LabelSimple
                         htmlfor="name"
-                        name={labelName}
-                        image={icon}
+                        name={labelName+':'}
+                        image={iconBlack}
                         error={errores?.name}
                     >
                         <input 
@@ -71,10 +76,11 @@ export default function BlockStoreItemOne({url, itemName, labelName='', mutate, 
                     </LabelSimple>
                 </div>
                 <BtnsUpdate
-                    closeAction={setAction}
+                    closeAction={closeModal}
                 />
                 
             </form>
-        </div>
+        </ModalContainer>
+        
     )
 }

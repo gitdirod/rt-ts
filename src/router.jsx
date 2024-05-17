@@ -60,6 +60,7 @@ import SellerAdminLayout from './layout/SellerAdminLayout'
 import SellerAdminIndexSoldOrders from '/src/views/sellerAdmin/SellerAdminIndexSoldOrders'
 import SellerAdminCreateSoldOrder from '/src/views/sellerAdmin/SellerAdminCreateSoldOrder'
 import SellerAdminIndexCustomers from '/src/views/sellerAdmin/SellerAdminIndexCustomers'
+import IndexProductNew from '/src/views/admin/indexProductNew'
 
 
 
@@ -135,6 +136,10 @@ const router = createBrowserRouter([
                     {
                         path:'/admin/inventory/products',
                         element: <IndexProduct />
+                    },
+                    {
+                        path:'/admin/inventory/productsNew',
+                        element: <IndexProductNew />
                     },
                     {
                         path : "/admin/inventory/products/item/:itemId",

@@ -20,7 +20,7 @@
     "react-toastify": "^9.1.1",
     "swiper": "^10.2.0",
     "swr": "^2.0.3",
-    "vite": "^4.4.9"
+    "vite": "^4.5.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

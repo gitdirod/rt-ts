@@ -16,7 +16,7 @@ export default function BlockType({type}) {
 
     return (
         <div 
-            className="relative flex items-center border mt-0.5 py-2  group rounded-lg bg-white hover:border-slate-400"   
+            className="relative flex items-center border mt-0.5 py-2  cursor-pointer group rounded-lg bg-white hover:border-slate-400"   
             onClick={editItem}
         >
             <div className='flex gap-x-4 items-center text-slate-700 group-hover:font-bold transition-all'>

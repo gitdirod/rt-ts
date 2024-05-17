@@ -11,6 +11,8 @@ import iconEnergyBlack from '/src/static/icons/energyBlack.svg'
 import iconStar from '/src/static/icons/star.svg'
 import BlockStoreItemOne from '/src/components/admin/BlockStoreItemOne'
 import Btn from '/src/components/admin/Btn'
+import ModalViewStoreUpdateItem from '/src/components/admin/modals/ModalViewStoreUpdateItem'
+import useAdmin from '/src/hooks/useAdmin'
 
 
 
@@ -22,6 +24,16 @@ const IndexMore =()=>{
         mutateSizes,
         mutateNumbers
     } = useStore()
+
+    const {
+        handleModalStateComponent,
+        handleModalViewComponent
+    } = useAdmin()
+
+    const storeSize =()=>{
+        handleModalViewComponent(<ModalViewStoreUpdateItem headerTitle="Nuevo tamaño" labelName="Tamaño" iconColor={iconSize} iconBlack={iconSizeBlack}/>)
+        handleModalStateComponent(true)
+    }
     
     if(sizes === undefined || numbers === undefined) return(<IsLoading/>)
     return (
@@ -55,7 +67,8 @@ const IndexMore =()=>{
                                         icon={IconAdd}
                                         text='Nuevo'
                                         style='bg-green-500'
-                                        action={()=>setAddSize(true)}
+                                        action={storeSize}
+                                        // action={()=>setAddSize(true)}
                                     />
                                 )
                             }

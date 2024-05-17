@@ -18,6 +18,7 @@ import ModalBlockHeader from '/src/components/common/modals/ModalBlockHeader'
 import ModalContainer from '/src/components/common/modals/ModalContainer'
 import ImagesShower from '/src/components/admin/ImagesShower'
 import { urlsBackend } from '/src/data/urlsBackend'
+import iconTag from '/src/static/icons/tag.svg'
 
 export default function ModalViewStoreUpdateType({setAction, item}) {
 
@@ -90,6 +91,7 @@ export default function ModalViewStoreUpdateType({setAction, item}) {
             <ModalBlockHeader
                 name={item?.id ? "Actualizar Tipo de producto":"Nuevo Tipo de producto"}
                 closeModal={closeModal}
+                iconColor={iconTag}
             />
             
             <form 
