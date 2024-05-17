@@ -5,12 +5,11 @@ import LabelSimple from '/src/components/admin/LabelSimple'
 
 import ModalViewRequest from '../ModalViewRequest'
 import iconSave from '/src/static/icons/save_filled.svg'
-import BlockSubHeader from '../BlockSubHeader'
 import BtnsUpdate from '../BtnsUpdate'
 import ModalBlockHeader from '/src/components/common/modals/ModalBlockHeader'
 import ModalContainer from '/src/components/common/modals/ModalContainer'
 
-export default function ModalViewStoreUpdateItem({item, labelName, headerTitle, iconColor, iconBlack}){
+export default function ModalViewStoreUpdateItem({mutate, url, item, labelName, headerTitle, iconColor, iconBlack}){
 
     const {
         create,  

@@ -31,7 +31,16 @@ const IndexMore =()=>{
     } = useAdmin()
 
     const storeSize =()=>{
-        handleModalViewComponent(<ModalViewStoreUpdateItem headerTitle="Nuevo tamaño" labelName="Tamaño" iconColor={iconSize} iconBlack={iconSizeBlack}/>)
+        handleModalViewComponent(
+            <ModalViewStoreUpdateItem 
+                url='sizes'
+                mutate={mutateSizes}
+                headerTitle="Nuevo tamaño" 
+                labelName="Tamaño" 
+                iconColor={iconSize} 
+                iconBlack={iconSizeBlack}
+            />
+        )
         handleModalStateComponent(true)
     }
     
