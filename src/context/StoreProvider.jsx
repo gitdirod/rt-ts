@@ -184,7 +184,7 @@ const StoreProvider = memo(({children}) => {
     useEffect(()=>{
         const newSubtotal = order?.reduce((subtotal, product) => (product.price * product.cantidad) + subtotal, 0)
         setSubtotal(newSubtotal)
-        setTotal(()=>(formatearDinero2(newSubtotal * 1.12)))
+        setTotal(()=>(formatearDinero2(newSubtotal * 1.15)))
     }, [order])
 
     useEffect(()=>{

@@ -115,7 +115,7 @@ const Cart=()=> {
                             <p>{formatearDinero(subtotal)}</p>
                         </div>
                         <div className="flex justify-between items-center px-4">
-                            <p className="font-poppins-regular">I.V.A</p>
+                            <p className="font-poppins-regular">Impuestos</p>
                             <p>{formatearDinero(subtotal * 0.15)}</p>
                         </div>
                     </div>

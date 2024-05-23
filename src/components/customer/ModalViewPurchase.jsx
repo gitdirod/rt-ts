@@ -109,8 +109,8 @@ const ModalViewPurchase=({closeModal})=> {
                                     <span className="font-poppins-bold ">{formatearDinero(subtotal)}</span>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <span>I.V.A</span>
-                                    <span className="font-poppins-bold ">{formatearDinero(subtotal * 0.12)}</span>
+                                    <span>Impuestos</span>
+                                    <span className="font-poppins-bold ">{formatearDinero(subtotal * 0.15)}</span>
                                 </div>
                             <div className="flex justify-between items-center border-t ">
                                 <span>Total:</span>
