@@ -10,7 +10,6 @@ import Alert from './Alert'
 import add from '/src/static/icons/add.svg'
 import close from '/src/static/icons/close.svg'
 import imgUpdate from '/src/static/icons/update.svg'
-import { PHONES_TYPES } from '/src/data/phonesTypes';
 import { ADDRESSES_TYPES } from '/src/data/addressesTypes';
 import Btn from './admin/Btn';
 
@@ -28,16 +27,14 @@ const TarjetEnvoice=({children, envoiceAddress, envoice = true})=> {
         url: '/'
       })
 
-    const [phoneToShow, setPhoneToShow] = useState("No registra")
     const [createNew, setCreateNew] = useState(false)
-
     const [stateNewTarjet, setStateNewTarjet] = useState(false)
     const [waitingNewTarjet, setWaitingNewTarjet] = useState(false)
     const [errorNewTarjet, setErrorNewTarjet] = useState(false)
     
     const nameRef = useRef()
     const [ccruc, setCcruc] = useState(envoiceAddress?.['ccruc']?envoiceAddress?.['ccruc']:"")
-    const [phone, setPhone] = useState(envoiceAddress?.phone?.number?envoiceAddress?.phone?.number:"")
+    const [phone, setPhone] = useState(envoiceAddress?.phone ? envoiceAddress?.phone : "")
     const cityRef = useRef()
     const addressRef = useRef()
     
@@ -53,10 +50,6 @@ const TarjetEnvoice=({children, envoiceAddress, envoice = true})=> {
             city: cityRef.current.value,
             address: addressRef.current.value,
             phone: phone.replace(/\s+/g, '')
-            // phone: {
-            //     number: phone.replace(/\s+/g, ''),
-            //     type: envoice? PHONES_TYPES.ENVOICE: PHONES_TYPES.SEND,
-            // }
         }
         create('addresses',tarjetEnvoice, setErrorNewTarjet, setStateNewTarjet, setWaitingNewTarjet)
       }
@@ -79,7 +72,7 @@ const TarjetEnvoice=({children, envoiceAddress, envoice = true})=> {
           }
       }
       useEffect(()=>{
-        setPhone(envoiceAddress?.phone?.number?envoiceAddress?.phone?.number:"")
+        setPhone(envoiceAddress?.phone ? envoiceAddress?.phone :"")
         setCcruc(envoiceAddress?.['ccruc']?envoiceAddress?.['ccruc']:"")
       },[envoiceAddress])
 
@@ -106,7 +99,7 @@ const TarjetEnvoice=({children, envoiceAddress, envoice = true})=> {
                 <p className=" font-poppins-semibold">Nombre: <span className="font-poppins-regular"> {envoiceAddress?.['people']}</span></p>
                 <p className=" font-poppins-semibold">CC o RUC: <span className="font-poppins-regular "> {envoiceAddress?.['ccruc']}</span></p>
                 
-                <p className=" font-poppins-semibold">Telefono: <span className=" font-poppins-regular"> {envoiceAddress?.phone?.['number']}</span></p>
+                <p className=" font-poppins-semibold">Telefono: <span className=" font-poppins-regular"> {envoiceAddress?.phone}</span></p>
             </div>
 
             <div className="border-t">
