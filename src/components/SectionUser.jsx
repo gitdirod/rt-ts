@@ -8,10 +8,6 @@ import cart from '/src/static/icons/cartBlack.svg'
 import user from '/src/static/icons/userBlack.svg'
 
 
-// #F1A31F amarillo
-// #E35544 rojo
-// #15A7AE cyan claro
-// #2D565E cyan oscuro
 const SectionUser=({section})=> {
     const activeSection = " text-white activeSection font-poppins-bold bg-slate-800 rounded-lg "
     const notActiveSection = " font-poppins-regular text-slate-700 hover:font-poppins-bold "

@@ -52,10 +52,11 @@ const TarjetEnvoice=({children, envoiceAddress, envoice = true})=> {
             ccruc: ccruc.replace(/\s+/g, ''),
             city: cityRef.current.value,
             address: addressRef.current.value,
-            phone: {
-                number: phone.replace(/\s+/g, ''),
-                type: envoice? PHONES_TYPES.ENVOICE: PHONES_TYPES.SEND,
-            }
+            phone: phone.replace(/\s+/g, '')
+            // phone: {
+            //     number: phone.replace(/\s+/g, ''),
+            //     type: envoice? PHONES_TYPES.ENVOICE: PHONES_TYPES.SEND,
+            // }
         }
         create('addresses',tarjetEnvoice, setErrorNewTarjet, setStateNewTarjet, setWaitingNewTarjet)
       }
