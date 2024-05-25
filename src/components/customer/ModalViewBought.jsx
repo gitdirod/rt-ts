@@ -62,6 +62,7 @@ const ModalViewBought=({order, closeModal})=> {
                     <AddressTarget icon={iconCash} address={envoiceAddress}/>
                     <AddressTarget icon={iconSend} address={sendAddress} title='Datos envio:'/>                   
                 </div>
+                
                 <ShowList order={order}/>
             </div>
         </div>
@@ -95,8 +96,6 @@ const AddressTarget = ({address, icon, title='Datos facturación:'}) => {
 }
 
 const ShowList = ({order}) => {
-
-    
 
     const columns = [
         { title: '#', className: 'w-10' },
@@ -137,6 +136,7 @@ const ShowList = ({order}) => {
             
         </tr>
       );
+
     return (
         <div 
             id='listProduct' 
@@ -147,7 +147,7 @@ const ShowList = ({order}) => {
                     <Tbody items={order?.products} renderRow={renderRow} />
                     <TableHeader columns={columns} />
                 </table>
-                <ShowTotal subTotal={order?.subtotal} total={order?.total}/>
+                <ShowTotal subtotal={order?.subtotal} total={order?.total}/>
             </div>
         </div>
     )
