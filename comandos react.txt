@@ -1,0 +1,19 @@
+ 
+#instalar  nodejs npm
+sudo apt install nodejs npm
+
+#Instalar nvm y Node 16.13.0
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+
+nvm install 16.13.0
+nvm use 16.13.0
+
+
+#usar version por defecto
+nvm alias default 16.13.0
+
+
+#reinstlar y correr
+#npm install
+npm run dev

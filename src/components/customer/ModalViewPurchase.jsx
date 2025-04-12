@@ -117,7 +117,7 @@ const ModalViewPurchase=({closeModal})=> {
                                 <span className="font-poppins-extrabold">{formatearDinero(total)}</span>
                             </div>
                         </div>
-                        <div className='flex flex-col md:flex-row gap-2 md:gap-4 mt-2 '>
+                        <div className='flex flex-col  md:flex-row md:justify-center gap-2 md:gap-4 mt-2 '>
                             {banks.map(bank => (
                                 <BankDescription key={bank.id} bank={bank}/>
                             ))}

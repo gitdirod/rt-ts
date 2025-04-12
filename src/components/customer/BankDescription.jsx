@@ -24,8 +24,12 @@ export default function BankDescription({bank}) {
                 {bank.user}
             </div>
             <div>
-                CC:
-                {bank.cc}
+                RUC:
+                {bank.ruc}
+            </div>
+            <div>
+                email:
+                {bank.email}
             </div>
         </div>
     </div>

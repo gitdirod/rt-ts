@@ -13,6 +13,7 @@ import useAdmin from "/src/hooks/useAdmin";
 import ModalViewPurchase from "/src/components/customer/ModalViewPurchase";
 import NoProductsToShow from "/src/components/common/NoProductsToShow";
 import iconCuestion from "/src/static/img/cuestions.svg"
+import { urlsSocial } from '/src/data/urlsSocial'
 
 const Cart=()=> {
     const navigate = useNavigate()
@@ -91,6 +92,11 @@ const Cart=()=> {
 
                 <div className="center-c gap-1">
                     {/* Contenedor de producto */}
+                    <div className="font-bold text-white px-4 py-2 bg-red-700 rounded-md cursor-pointer font-normal">
+                        <a href={urlsSocial.facebook} target="_blank">
+                        Valor a pagar <span className="font-bold">NO INCLUYE GASTOS DE ENVÍO</span>, Antes de realizar tu pago, consulta primero con nuestros asesores. Click aquí para contactar con un vendedor.
+                        </a>
+                    </div>
 
                     {order.map(product =>(
                         <SummaryProduct 
