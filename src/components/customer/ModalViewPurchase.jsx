@@ -16,6 +16,7 @@ import iconAlert from '/src/static/icons/alertBlack.svg'
 import { banks } from '/src/data/banks'
 import Btn from '../admin/Btn';
 import BankDescription from './BankDescription';
+import { urlsSocial } from '/src/data/urlsSocial'
 
 
 const ModalViewPurchase=({closeModal})=> {
@@ -101,6 +102,11 @@ const ModalViewPurchase=({closeModal})=> {
                     <div className='flex items-center gap-x-2'>
                         <img className="w-6 h-6 grey" src={cash} alt="" />
                         <span className='text-xl font-poppins-extrabold'>Resumen de Pago</span>
+                    </div>
+                    <div className="font-bold text-white px-4 py-2 bg-red-700 rounded-md cursor-pointer font-normal">
+                        <a href={urlsSocial.facebook} target="_blank">
+                        Valor a pagar <span className="font-bold">NO INCLUYE GASTOS DE ENVÍO</span>, Antes de realizar tu pago, consulta primero con nuestros asesores. Click aquí para contactar con un vendedor.
+                        </a>
                     </div>
                     <div className='flex flex-col gap-x-4 w-full font-poppins-regular  '>
                         <div className='flex flex-col p-2 px-4  rounded-lg bg-white border'>
