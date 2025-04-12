@@ -1,15 +1,25 @@
-import axios from "axios"
+import axios from 'axios';
 
-const token = localStorage.getItem('AUTH_TOKEN')
 const clienteAxios = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     headers: {
-        'Accept' : 'application/json',
-        'X-Requested-With' : 'XMLHttpRequest',
-        'Authorization': `Bearer ${token}`
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        // 'Content-Type': 'multipart/form-data'
     },
-    withCredentials: true
-})
+    withCredentials: true,
+});
 
+// Interceptor para agregar el token en cada solicitud
+clienteAxios.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('AUTH_TOKEN');
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-export default clienteAxios
+export default clienteAxios;
