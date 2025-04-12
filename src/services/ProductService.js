@@ -43,29 +43,5 @@ export const ProductService = {
             mutate
         };
     },
-    // checkExistingProducts: async (codes) => {
-    //     const { create } = useAdmin(); // Acceder al método `create` desde el contexto de Admin
 
-    //     try {
-    //         const response = await create(`${BACKEND.PRODUCTS.KEY}/check`, { codes });
-
-    //         if (response.success) {
-    //             return {
-    //                 success: true,
-    //                 data: response.data
-    //             };
-    //         } else {
-    //             return {
-    //                 success: false,
-    //                 errors: response.errors
-    //             };
-    //         }
-    //     } catch (error) {
-    //         console.error("Error checking existing products:", error);
-    //         return {
-    //             success: false,
-    //             errors: error.response?.data?.errors || {}
-    //         };
-    //     }
-    // }
 };
