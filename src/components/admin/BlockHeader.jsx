@@ -1,7 +1,7 @@
 export default function BlockHeader({children, name, code='', middle=null}) {
     return (
             <div
-                className='w-full mb-4 border bg-white text-slate-700 rounded-lg relative'
+                className='w-full mb-1 border bg-white text-slate-700 rounded-lg relative'
             >
                 <div
                     className='flex flex-col md:flex-row justify-between items-center gap-1 md:gap-2 bg-gradient-to-r rounded  px-2 py-1'

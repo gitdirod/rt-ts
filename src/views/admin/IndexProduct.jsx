@@ -1,150 +1,148 @@
-import useStore from "/src/hooks/useStore"
-import { useNavigate } from "react-router-dom"
-import IsLoading from "/src/components/IsLoading"
-import { memo } from "react"
+import { useEffect, useState } from 'react';
+import {
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Paper, TablePagination
+} from '@mui/material';
+import { ProductService } from '/src/services/ProductService';
+import { formatearDinero } from '/src/helpers';
+import ImageTable from '/src/components/admin/ImageTable';
+import BlockHeader from '/src/components/admin/BlockHeader';
+import LabelSimpleWithoutLine from '/src/components/admin/LabelSimpleWithoutLines';
+import LinkBtn from '/src/components/admin/LinkBtn';
+import iconSearch from '/src/static/icons/search.svg'
 import add from '/src/static/icons/add.svg'
 import iconItem from '/src/static/icons/item.svg'
 import ok from '/src/static/icons/ok.svg'
 import close from '/src/static/icons/close.svg'
-import iconSearch from '/src/static/icons/search.svg'
-import BlockHeader from "/src/components/admin/BlockHeader"
-import LinkBtn from "../../components/admin/LinkBtn"
-import TableHeader from "/src/components/admin/TableHeader"
-import Tbody from "/src/components/admin/Tbody"
-import { formatearDinero, formatearDinero2 } from "/src/helpers"
-import ImageTable from "/src/components/admin/ImageTable"
-import LabelSimpleWithoutLine from "/src/components/admin/LabelSimpleWithoutLines"
 
+export default function MiTablaConPaginacion() {
+ 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
+  const [first, setFirst] = useState(0);
+  const [sortField, setSortField] = useState('id');
+  const [sortOrder, setSortOrder] = useState('desc');
 
-const IndexProduct =()=> {
-  const {products} = useStore()
+  const { data: products, totalRecords, loading, mutate } = ProductService.useProducts({
+    page: Math.floor(first / rowsPerPage) + 1,
+    perPage: rowsPerPage,
+    name: '',
+    code: '',
+    // categories: selectedCategories.map(sel => sel.id).join(','),
+    // types: selectedTypes.map(sel => sel.id).join(','),
+    sortField,
+    sortOrder
+  });
+
+  console.log(products)
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    setFirst(newPage * rowsPerPage);
+  };
   
-  const navigate = useNavigate()
-  const handleSelect =(id)=>{
-    navigate(`/admin/inventory/products/item/${id}`)
-  }
 
-  const columns = [
-    { title: '#', className: 'w-10' },
-    { title: 'Nombre', className: '' },
-    { title: 'Clasificación', className: '' },
-    { title: 'Precio', className: 'w-32' },
-    { title: 'Unidades', className: 'w-32' },
-    { title: 'Imagenes', className: '' },
-    { title: 'Visible', className: 'w-20' },
-  ];
-  const renderRow = (item) => (
-    <tr
-      key={item.id}
-      className='cursor-pointer group/item'
-      onClick={() => handleSelect(item.id)}
-    >
-        {/* Aquí podrías renderizar las celdas como prefieras, dependiendo del item. */}
-        <Td style='w-10 group-hover/item:border-l-slate-300 border-l rounded-l-lg'>
-            {item.id}
-        </Td>
-        <Td style='flex-col'>
-            <span className='text-md'>{item?.name}</span>
-            <span className=' text-xs'>{item?.code}</span>
-        </Td>
-        <Td style='flex-col text-xs '>
-            <span>G. {item?.group?.name}</span>
-            <span>C. {item?.category?.name}</span>
-            <div className="flex justify-center items-center gap-2">
-            <div className="w-5 h-5">
-                <img 
-                src={import.meta.env.VITE_API_URL + "/iconos/" + item?.type_product?.image}
-                alt="Tipo de producto" 
-                />
-            </div>
-            <span>{item?.type_product?.name}</span>
-            </div>
-        </Td>
-        <Td style='w-32 '>
-            {item?.price?formatearDinero(item?.price):'$0'}
-        </Td>
-        <Td style={`w-32 ${item?.units<0?'text-red-500 font-extrabold':''}`}>
-            {item?.units?formatearDinero2(item?.units):'0'}
-        </Td>
-        <Td style="z-0">
-            <ImageTable 
-                images={item?.images}
-                url={import.meta.env.VITE_API_URL + "/products/"}
-                higth={14}
-                count={true}
-            />
-        </Td>
-        <Td style='w-20 border-r group-hover/item:border-r-slate-400 rounded-r-lg'>
-          <img src={item?.available?ok:close} alt="visible" className={`w-5 h-5 ${item?.available?'green':'red'}`} />
-        </Td>
-    </tr>
-);
+  const handleChangeRowsPerPage = (event) => {
+    const newRowsPerPage = parseInt(event.target.value, 10);
+    setRowsPerPage(newRowsPerPage);
+    setPage(0);
+    setFirst(0);
+  };
 
-  if(products === undefined) return (<IsLoading />)
+  const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
+  const currentPage = Math.min(page, totalPages - 1 >= 0 ? totalPages - 1 : 0);
+
+
+  useEffect(() => {
+    const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
+    if (page >= totalPages && totalPages > 0) {
+      setPage(totalPages - 1);
+      setFirst((totalPages - 1) * rowsPerPage);
+    }
+  }, [totalRecords, rowsPerPage, page]);
+  
 
   return (
-  
     <div className="overflow-y-hidden flex flex-col flex-1 pb-2">
-
-      {/* Cabecera */}
-      <BlockHeader
-        middle = {(
-          <div>
-            <LabelSimpleWithoutLine
-              icon={iconSearch}
-              // name='Buscar:'
-            >
-              <input 
-                type="text" 
-                placeholder='Buscar...'
-                className=""
-              />
-            </LabelSimpleWithoutLine>
-          </div>
-        )}
-            name={  
-            <div className='flex'>
-              <img src={iconItem} alt="save" className='w-8 h-8 pr-2' />
-                Productos ({products?.length})
-            </div>
-            }
-            
-        >
-          <LinkBtn
-              to='/admin/inventory/storeProduct'
-              icon={add}
-              text='Nuevo'
-              imageColor='white'
-              style='bg-cyanPrimary'
-          />
-        </BlockHeader>
-      {/* contenido */}
-
+            <BlockHeader
+              middle = {(
+                <div>
+                  <LabelSimpleWithoutLine
+                    icon={iconSearch}
+                    // name='Buscar:'
+                  >
+                    <input 
+                      type="text" 
+                      placeholder='Buscar...'
+                      className=""
+                    />
+                  </LabelSimpleWithoutLine>
+                </div>
+              )}
+                  name={  
+                  <div className='flex'>
+                    <img src={iconItem} alt="save" className='w-8 h-8 pr-2' />
+                      Productos ({totalRecords || 0})
+                  </div>
+                  }
+                  
+              >
+                <LinkBtn
+                    to='/admin/inventory/storeProduct'
+                    icon={add}
+                    text='Nuevo'
+                    imageColor='white'
+                    style='bg-cyanPrimary'
+                />
+              </BlockHeader>
       <div className='flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto ' >
-        <div
-            className=' w-full absolute '
-        >
-          <table className=" table-fixed w-full text-slate-600 ">
-            <Tbody items={products} renderRow={renderRow} />
-            <TableHeader columns={columns} />
-          </table>
+        <div className=' w-full absolute '>
+          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <TableContainer>
+              <Table stickyHeader>
+                <TableHead>
+                  <TableRow>
+                    <TableCell><span className='font-bold'>Código</span></TableCell>
+                    <TableCell><span className='font-bold'>Nombre</span></TableCell>
+                    <TableCell><span className='font-bold'>Grupo - Categoría</span></TableCell>
+                    <TableCell><span className='font-bold'>Tipo</span></TableCell>
+                    <TableCell><span className='font-bold'>Precio</span></TableCell>
+                    <TableCell><span className='font-bold'>Imagen</span></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(products || []).map((product, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{product?.code}</TableCell>
+                      <TableCell>{product?.name}</TableCell>
+                      <TableCell><span>{`${product?.group?.name} - ${product?.category.name}`}</span></TableCell>
+                      <TableCell>{product?.type_product?.name}</TableCell>
+                      <TableCell>{formatearDinero(product?.price)}</TableCell>
+                      <TableCell>
+                        <ImageTable 
+                          images={product?.images}
+                          url={import.meta.env.VITE_API_URL + "/products/"}
+                          higth={14}
+                          count={true}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              component="div"
+              count={totalRecords || 0}
+              page={currentPage}
+              rowsPerPage={rowsPerPage}
+              rowsPerPageOptions={[5, 10, 25]}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-const Td = ({children, style='',id, select})=>{
-  return(
-      <td
-          className='px-0'
-          onClick={()=>{id? select(id):null}}
-      >
-      <div className={`py-1 font-poppins-regular text-sm bg-white group-hover/item:border-y-slate-400 group-hover/item:bg-slate- transition-all h-16 flex flex-1 items-center justify-center group-hover/item:font-poppins-semibold border-y ${style}`}>
-          {children}
-      </div>
-  </td>
-  )
-}
-
-export default memo(IndexProduct)

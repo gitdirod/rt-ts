@@ -40,7 +40,7 @@ const AdminLayout=()=> {
       <div className="flex h-[calc(100vh-50px)]" >
         <SidebarAdmin />
           
-          <div className="flex  w-full flex-wrap p-2 overflow-y-hidden">
+          <div className="flex  w-full flex-wrap p-1 overflow-y-hidden">
             <Outlet />
           </div>
           <ToastContainer />

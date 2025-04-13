@@ -5,7 +5,7 @@ const ImageTable =({higth="40",url,images, count=false})=> {
   return (
     <>
       <div
-        className="flex justify-center items-center flex-1 z-0"
+        className="flex  items-center flex-1 z-0"
       >
         { 
           images.length ? 
@@ -21,7 +21,7 @@ const ImageTable =({higth="40",url,images, count=false})=> {
                 ''
               }
               <img 
-                className={`h-${higth}`}
+                className={`h-${higth} w-${higth}`}
                 src={url + images[0]['name']} 
                 alt={images[0]['name']} 
               />
