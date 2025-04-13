@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, TablePagination
+  Paper, TablePagination,
+  TextField,
+  Box
 } from '@mui/material';
 
 import Button from '@mui/material/Button';
@@ -13,8 +15,7 @@ import { ProductService } from '/src/services/ProductService';
 import { formatearDinero } from '/src/helpers';
 import ImageTable from '/src/components/admin/ImageTable';
 import BlockHeader from '/src/components/admin/BlockHeader';
-import LabelSimpleWithoutLine from '/src/components/admin/LabelSimpleWithoutLines';
-import iconSearch from '/src/static/icons/search.svg'
+import SearchIcon from '@mui/icons-material/Search';
 import iconItem from '/src/static/icons/item.svg'
 import { useNavigate } from 'react-router-dom';
 
@@ -31,12 +32,14 @@ export default function MiTablaConPaginacion() {
   const [first, setFirst] = useState(0);
   const [sortField, setSortField] = useState('id');
   const [sortOrder, setSortOrder] = useState('desc');
+  const [filterName, setFilterName] = useState('')
+  const [filterCode, setFilterCode] = useState('')
 
   const { data: products, totalRecords, loading, mutate } = ProductService.useProducts({
     page: Math.floor(first / rowsPerPage) + 1,
     perPage: rowsPerPage,
-    name: '',
-    code: '',
+    name: filterName,
+    code: filterCode,
     // categories: selectedCategories.map(sel => sel.id).join(','),
     // types: selectedTypes.map(sel => sel.id).join(','),
     sortField,
@@ -75,17 +78,24 @@ export default function MiTablaConPaginacion() {
     <div className="overflow-y-hidden flex flex-col flex-1 pb-2">
             <BlockHeader
               middle = {(
-                <div>
-                  <LabelSimpleWithoutLine
-                    icon={iconSearch}
-                    // name='Buscar:'
-                  >
-                    <input 
-                      type="text" 
-                      placeholder='Buscar...'
-                      className=""
+                <div className='flex items-center'>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                    <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                    <TextField id="input-with-sx" label="Nombre" variant="standard" 
+                      onChange={(event) => {
+                        setFilterName(event.target.value);
+                      }}
                     />
-                  </LabelSimpleWithoutLine>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                    <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                    <TextField id="input-with-sx" label="Código" variant="standard"
+                      onChange={(event) => {
+                        setFilterCode(event.target.value);
+                      }}
+                    />
+                  </Box>
+
                 </div>
               )}
                   name={  
