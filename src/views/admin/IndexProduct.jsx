@@ -3,19 +3,28 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, TablePagination
 } from '@mui/material';
+
+import Button from '@mui/material/Button';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Stack from '@mui/material/Stack';
+
+
 import { ProductService } from '/src/services/ProductService';
 import { formatearDinero } from '/src/helpers';
 import ImageTable from '/src/components/admin/ImageTable';
 import BlockHeader from '/src/components/admin/BlockHeader';
 import LabelSimpleWithoutLine from '/src/components/admin/LabelSimpleWithoutLines';
-import LinkBtn from '/src/components/admin/LinkBtn';
 import iconSearch from '/src/static/icons/search.svg'
-import add from '/src/static/icons/add.svg'
 import iconItem from '/src/static/icons/item.svg'
-import ok from '/src/static/icons/ok.svg'
-import close from '/src/static/icons/close.svg'
+import { useNavigate } from 'react-router-dom';
+
 
 export default function MiTablaConPaginacion() {
+
+  const navigate = useNavigate()
+  const addProduct =()=>{
+    navigate(`/admin/inventory/storeProduct`)
+  }
  
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
@@ -87,13 +96,11 @@ export default function MiTablaConPaginacion() {
                   }
                   
               >
-                <LinkBtn
-                    to='/admin/inventory/storeProduct'
-                    icon={add}
-                    text='Nuevo'
-                    imageColor='white'
-                    style='bg-cyanPrimary'
-                />
+                <Stack direction="row" spacing={2}>
+                  <Button variant="outlined" color="success" startIcon={<AddCircleOutlineIcon />} onClick={addProduct} >
+                    Nuevo
+                  </Button>
+                </Stack>
               </BlockHeader>
       <div className='flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto ' >
         <div className=' w-full absolute '>
