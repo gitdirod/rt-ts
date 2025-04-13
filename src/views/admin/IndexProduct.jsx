@@ -8,6 +8,7 @@ import {
 
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import Stack from '@mui/material/Stack';
 
 
@@ -16,7 +17,6 @@ import { formatearDinero } from '/src/helpers';
 import ImageTable from '/src/components/admin/ImageTable';
 import BlockHeader from '/src/components/admin/BlockHeader';
 import SearchIcon from '@mui/icons-material/Search';
-import iconItem from '/src/static/icons/item.svg'
 import { useNavigate } from 'react-router-dom';
 
 
@@ -35,18 +35,20 @@ export default function MiTablaConPaginacion() {
   const [filterName, setFilterName] = useState('')
   const [filterCode, setFilterCode] = useState('')
 
+  const [debouncedFilterName, setDebouncedFilterName] = useState('');
+  const [debouncedFilterCode, setDebouncedFilterCode] = useState('');
+
+
   const { data: products, totalRecords, loading, mutate } = ProductService.useProducts({
     page: Math.floor(first / rowsPerPage) + 1,
     perPage: rowsPerPage,
-    name: filterName,
-    code: filterCode,
+    name: debouncedFilterName,
+    code: debouncedFilterCode,
     // categories: selectedCategories.map(sel => sel.id).join(','),
     // types: selectedTypes.map(sel => sel.id).join(','),
     sortField,
     sortOrder
   });
-
-  console.log(products)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -63,6 +65,28 @@ export default function MiTablaConPaginacion() {
 
   const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
   const currentPage = Math.min(page, totalPages - 1 >= 0 ? totalPages - 1 : 0);
+
+  // Debounce para el nombre
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedFilterName(filterName);
+    }, 500); // espera 500 ms
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [filterName]);
+
+  // Debounce para el código
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedFilterCode(filterCode);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [filterCode]);
 
 
   useEffect(() => {
@@ -99,15 +123,15 @@ export default function MiTablaConPaginacion() {
                 </div>
               )}
                   name={  
-                  <div className='flex'>
-                    <img src={iconItem} alt="save" className='w-8 h-8 pr-2' />
+                  <div className='flex items-center'>
+                    <Inventory2OutlinedIcon color="primary" fontSize="large"/>
                       Productos ({totalRecords || 0})
                   </div>
                   }
                   
               >
                 <Stack direction="row" spacing={2}>
-                  <Button variant="outlined" color="success" startIcon={<AddCircleOutlineIcon />} onClick={addProduct} >
+                  <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} onClick={addProduct} >
                     Nuevo
                   </Button>
                 </Stack>

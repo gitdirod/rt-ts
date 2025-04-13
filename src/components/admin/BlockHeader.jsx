@@ -7,14 +7,14 @@ export default function BlockHeader({children, name, code='', middle=null}) {
                     className='flex flex-col md:flex-row justify-between items-center gap-1 md:gap-2 bg-gradient-to-r rounded  px-2 py-1'
                 >
                     <div
-                        className={` ${middle?'md:w-1/3':'md:w-1/2'} w-full flex flex-col font-poppins-extrabold text-xl md:text-2xl`}
+                        className={` ${middle?'md:w-1/3':'md:w-1/2'} w-full flex flex-col text-xl md:text-2xl`}
                     >
                         {name}
                         {code?<span className='text-xs'>Cód. {code}</span>:''}
                         
                     </div>
                     {middle && (
-                        <div className="w-full md:w-1/3 h-full flex text-xl font-poppins-extrabold">
+                        <div className="w-full md:w-1/3 h-full flex text-xl">
                             {middle}
                         </div>
                     )}
