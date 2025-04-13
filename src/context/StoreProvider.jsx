@@ -3,6 +3,7 @@ import clienteAxios from "/src/config/axios"
 import { createContext, useState, useEffect, memo } from "react"
 import { toast } from "react-toastify"
 import { formatearDinero2 } from '/src/helpers'
+import { swrConfig } from '/src/utils/fetchData'
 
 
 
@@ -41,100 +42,73 @@ const StoreProvider = memo(({children}) => {
     }
 
     const { data: likes, mutate: mutateLikes } = useSWR(enableUser ? '/api/likes': null, () => 
-        clienteAxios('/api/likes')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
-    )
+        clienteAxios('/api/likes').then(res => res.data.data), swrConfig)
+    
 
     const { data: orders, mutate: mutateOrders } = useSWR(enableAdminUser || enableUser ?'/api/orders':null, () => 
         clienteAxios('/api/orders')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
 
     )
 
     const { data: soldOrders, mutate: mutateSoldOrders } = useSWR(enableAdminUser || enableUser ?'/api/sold_orders':null, () => 
         clienteAxios('/api/sold_orders')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
 
     )
 
     const { data: purchases, mutate: mutatePurchases } = useSWR(enableAdminUser ?'/api/purchase_orders':null, () => 
         clienteAxios('/api/purchase_orders')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
-
+        .then(res => res.data.data),
+        swrConfig
     )
     
     const { data: numbers,  mutate: mutateNumbers } = useSWR(enableAdminUser?'/api/number_colors':null, () => 
         clienteAxios('/api/number_colors')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
 
     const { data: sizes,  mutate: mutateSizes } = useSWR(enableAdminUser?'/api/sizes':null, () => 
         clienteAxios('/api/sizes')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
     const { data: inventory, mutate: mutateInventory } = useSWR(enableAdminUser?'/api/inventory':null, () => 
         clienteAxios('/api/inventory')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
     const { data: products, isLoading:isProducts, mutate: mutateProducts } = useSWR(enableAdminUser?'/api/products':'/api/public-products', () => 
         clienteAxios(enableAdminUser?'/api/products':'/api/public-products')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
 
     const { data: memories, isLoading:isMemories,  mutate: mutateMemories } = useSWR('/api/memories', () => 
         clienteAxios('/api/memories')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
 
     const { data: groups, isLoading:isGroups,  mutate: mutateGroups } = useSWR('/api/groups', () => 
         clienteAxios('/api/groups')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     ) 
 
     const { data: types, isLoading:isTypes,  mutate: mutateTypes } = useSWR('/api/type_products', () => 
         clienteAxios('/api/type_products')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     ) 
 
     const { data: categories, isLoading:isCategories, mutate: mutateCategories } = useSWR('/api/categories', () => 
         clienteAxios('/api/categories')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
     
 
@@ -150,32 +124,24 @@ const StoreProvider = memo(({children}) => {
 
     const { data: landings, mutate: mutateLandings } = useSWR('/api/landings', () => 
         clienteAxios('/api/landings')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
 
     const { data: suggesteds, mutate: mutateSuggesteds } = useSWR('/api/suggesteds', () => 
         clienteAxios('/api/suggesteds')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
     const { data: suggestions, mutate: mutateSuggestions } = useSWR('/api/suggestions', () => 
         clienteAxios('/api/suggestions')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
     const { data: customers, mutate: mutateCustomers } = useSWR(enableAdminUser?'/api/customers':null, () => 
         clienteAxios('/api/customers')
-        .then(res => res.data.data)
-        .catch(error => {
-            // throw Error(error?.response?.data?.errors)
-        })
+        .then(res => res.data.data),
+        swrConfig
     )
     
 
