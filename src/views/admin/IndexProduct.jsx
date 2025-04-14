@@ -14,8 +14,6 @@ import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
-import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 
 import BACKEND from '/src/data/backend';
@@ -87,6 +85,7 @@ export default function MiTablaConPaginacion() {
     setEdit(true)
   };
   const handleClose = () => setOpen(false);
+  const handleCloseEdit = () => setEdit(false);
 
 
   // Debounce para el nombre
@@ -134,7 +133,7 @@ export default function MiTablaConPaginacion() {
 
       <Modal
         open={edit}
-        onClose={handleEdit}
+        onClose={handleCloseEdit}
       >
         <ModalStoreUpdateProduct product={selectedProduct}/>
       </Modal>
@@ -189,7 +188,6 @@ export default function MiTablaConPaginacion() {
                     <TableCell><span className='font-bold'>Tipo</span></TableCell>
                     <TableCell><span className='font-bold'>Precio</span></TableCell>
                     <TableCell><span className='font-bold'>Imagen</span></TableCell>
-                    <TableCell><span className='font-bold'>Opciones</span></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -209,9 +207,8 @@ export default function MiTablaConPaginacion() {
                         handleOpen(product); // por ejemplo, abrir modal de vista
                       }}
                       onContextMenu={(e) => {
-                        e.preventDefault(); // 🔒 evitar que se abra el menú por defecto
-                        console.log('👉 Click derecho - editar producto');
-                        // Aquí podrías abrir otro modal o un menú contextual
+                        e.preventDefault(); //  evitar que se abra el menú por defecto
+                        handleEdit(product)
                       }}
                     >
                       <TableCell>{product?.available ? <CheckCircleTwoToneIcon color='success'/> : <CancelTwoToneIcon color='error'/> }</TableCell>
@@ -227,14 +224,6 @@ export default function MiTablaConPaginacion() {
                           higth={14}
                           count={true}
                           />
-                      </TableCell>
-                      <TableCell>
-                        <div className=' flex gap-2 items-center cursor-pointer '>
-                        {/* <Button variant="outlined" size="small">Editar</Button>
-                        <Button variant="outlined" size="small">Ver</Button> */}
-                          <VisibilityOutlinedIcon color="primary"  fontSize="small" onClick={()=>handleOpen(product)}/>
-                          <ModeEditOutlineOutlinedIcon color="primary" fontSize="small" onClick={()=>handleOpen(product)}/>
-                        </div>
                       </TableCell>
                     </TableRow>
                     ))}
