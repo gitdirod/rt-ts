@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, TablePagination,
@@ -6,19 +7,24 @@ import {
   Box
 } from '@mui/material';
 
+import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
+import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
-import Stack from '@mui/material/Stack';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 
-
+import BACKEND from '/src/data/backend';
 import { ProductService } from '/src/services/ProductService';
 import { formatearDinero } from '/src/helpers';
 import ImageTable from '/src/components/admin/ImageTable';
 import BlockHeader from '/src/components/admin/BlockHeader';
-import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from 'react-router-dom';
-
+import ModalSeeProduct from '/src/components/admin/modals/ModalSeeProduct';
+import ModalStoreUpdateProduct from '/src/components/admin/modals/ModalStoreUpdateProduct';
 
 export default function MiTablaConPaginacion() {
 
@@ -34,6 +40,8 @@ export default function MiTablaConPaginacion() {
   const [sortOrder, setSortOrder] = useState('desc');
   const [filterName, setFilterName] = useState('')
   const [filterCode, setFilterCode] = useState('')
+
+  const [selectedProduct, setSelectedProduct] = useState({})
 
   const [debouncedFilterName, setDebouncedFilterName] = useState('');
   const [debouncedFilterCode, setDebouncedFilterCode] = useState('');
@@ -65,6 +73,21 @@ export default function MiTablaConPaginacion() {
 
   const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
   const currentPage = Math.min(page, totalPages - 1 >= 0 ? totalPages - 1 : 0);
+
+
+
+  const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const handleOpen = (product) => {
+    setSelectedProduct(product)
+    setOpen(true)
+  };
+  const handleEdit = (product) => {
+    setSelectedProduct(product)
+    setEdit(true)
+  };
+  const handleClose = () => setOpen(false);
+
 
   // Debounce para el nombre
   useEffect(() => {
@@ -100,42 +123,58 @@ export default function MiTablaConPaginacion() {
 
   return (
     <div className="overflow-y-hidden flex flex-col flex-1 pb-2">
-            <BlockHeader
-              middle = {(
-                <div className='flex items-center'>
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                    <TextField id="input-with-sx" label="Nombre" variant="standard" 
-                      onChange={(event) => {
-                        setFilterName(event.target.value);
-                      }}
-                    />
-                  </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                    <TextField id="input-with-sx" label="Código" variant="standard"
-                      onChange={(event) => {
-                        setFilterCode(event.target.value);
-                      }}
-                    />
-                  </Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        // aria-labelledby="modal-modal-title"
+        // aria-describedby="modal-modal-description"
+      >
+        <ModalSeeProduct product={selectedProduct}/>
+      </Modal>
 
-                </div>
-              )}
-                  name={  
-                  <div className='flex items-center'>
-                    <Inventory2OutlinedIcon color="primary" fontSize="large"/>
-                      Productos ({totalRecords || 0})
-                  </div>
-                  }
-                  
-              >
-                <Stack direction="row" spacing={2}>
-                  <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} onClick={addProduct} >
-                    Nuevo
-                  </Button>
-                </Stack>
-              </BlockHeader>
+      <Modal
+        open={edit}
+        onClose={handleEdit}
+      >
+        <ModalStoreUpdateProduct product={selectedProduct}/>
+      </Modal>
+
+      <BlockHeader
+        middle = {(
+          <div className='flex items-center'>
+            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+              <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+              <TextField id="input-with-sx" label="Nombre" variant="standard" 
+                onChange={(event) => {
+                  setFilterName(event.target.value);
+                }}
+              />
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+              <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+              <TextField id="input-with-sx" label="Código" variant="standard"
+                onChange={(event) => {
+                  setFilterCode(event.target.value);
+                }}
+              />
+            </Box>
+
+          </div>
+        )}
+            name={  
+            <div className='flex items-center'>
+              <Inventory2OutlinedIcon color="primary" fontSize="large"/>
+                Productos ({totalRecords || 0})
+            </div>
+            }
+            
+        >
+          <Stack direction="row" spacing={2}>
+            <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} onClick={addProduct} >
+              Nuevo
+            </Button>
+          </Stack>
+        </BlockHeader>
       <div className='flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto ' >
         <div className=' w-full absolute '>
           <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -143,17 +182,39 @@ export default function MiTablaConPaginacion() {
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
+                    <TableCell><span className='font-bold'>Dis.</span></TableCell>
                     <TableCell><span className='font-bold'>Código</span></TableCell>
                     <TableCell><span className='font-bold'>Nombre</span></TableCell>
                     <TableCell><span className='font-bold'>Grupo - Categoría</span></TableCell>
                     <TableCell><span className='font-bold'>Tipo</span></TableCell>
                     <TableCell><span className='font-bold'>Precio</span></TableCell>
                     <TableCell><span className='font-bold'>Imagen</span></TableCell>
+                    <TableCell><span className='font-bold'>Opciones</span></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {(products || []).map((product, index) => (
-                    <TableRow key={index}>
+                    <TableRow 
+                      key={index}
+                      hover
+                      sx={{
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s ease-in-out',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 0, 0, 0.05)', // claro en light mode
+                          // backgroundColor: 'rgba(255,255,255,0.08)', // en dark mode
+                        }
+                      }}
+                      onClick={() => {
+                        handleOpen(product); // por ejemplo, abrir modal de vista
+                      }}
+                      onContextMenu={(e) => {
+                        e.preventDefault(); // 🔒 evitar que se abra el menú por defecto
+                        console.log('👉 Click derecho - editar producto');
+                        // Aquí podrías abrir otro modal o un menú contextual
+                      }}
+                    >
+                      <TableCell>{product?.available ? <CheckCircleTwoToneIcon color='success'/> : <CancelTwoToneIcon color='error'/> }</TableCell>
                       <TableCell>{product?.code}</TableCell>
                       <TableCell>{product?.name}</TableCell>
                       <TableCell><span>{`${product?.group?.name} - ${product?.category.name}`}</span></TableCell>
@@ -162,10 +223,18 @@ export default function MiTablaConPaginacion() {
                       <TableCell>
                         <ImageTable 
                           images={product?.images}
-                          url={import.meta.env.VITE_API_URL + "/products/"}
+                          url={BACKEND.PRODUCTS.URL}
                           higth={14}
                           count={true}
-                        />
+                          />
+                      </TableCell>
+                      <TableCell>
+                        <div className=' flex gap-2 items-center cursor-pointer '>
+                        {/* <Button variant="outlined" size="small">Editar</Button>
+                        <Button variant="outlined" size="small">Ver</Button> */}
+                          <VisibilityOutlinedIcon color="primary"  fontSize="small" onClick={()=>handleOpen(product)}/>
+                          <ModeEditOutlineOutlinedIcon color="primary" fontSize="small" onClick={()=>handleOpen(product)}/>
+                        </div>
                       </TableCell>
                     </TableRow>
                     ))}
