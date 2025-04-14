@@ -21,7 +21,7 @@ const ModalSeeProduct = forwardRef(({ product }, ref) => {
 
   return (
     <Box sx={style}>
-      <Box sx={{ display: 'flex', gap: 4 , display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <Box sx={{ display: 'flex', gap: 4 , alignItems: 'center', justifyContent: 'center'}}>
         {/* Imagen a la izquierda */}
         <Box sx={{ width: '33.33%', height: '100%' }} >
             {product?.images?.length > 0 && (
