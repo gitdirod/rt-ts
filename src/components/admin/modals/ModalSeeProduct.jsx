@@ -1,10 +1,8 @@
 import React, { forwardRef } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Chip, Typography } from '@mui/material';
 import { formatearDinero } from '/src/helpers';
 import BACKEND from '/src/data/backend';
 import ProductImage from '../ProductImage';
-import DisabledByDefaultTwoToneIcon from '@mui/icons-material/DisabledByDefaultTwoTone';
-import CheckBoxTwoToneIcon from '@mui/icons-material/CheckBoxTwoTone';
 
 const ModalSeeProduct = forwardRef(({ product }, ref) => {
   const style = {
@@ -23,7 +21,9 @@ const ModalSeeProduct = forwardRef(({ product }, ref) => {
     <Box sx={style}>
       <Box sx={{ display: 'flex', gap: 4 , alignItems: 'center', justifyContent: 'center'}}>
         {/* Imagen a la izquierda */}
+        
         <Box sx={{ width: '33.33%', height: '100%' }} >
+        
             {product?.images?.length > 0 && (
             <ProductImage imageUrl={BACKEND.PRODUCTS.URL + product.images[0].name} />
             )}
@@ -31,22 +31,20 @@ const ModalSeeProduct = forwardRef(({ product }, ref) => {
 
         {/* Info a la derecha */}
         <Box sx={{ flex: 1, overflowY: 'auto' }}>
-            <Box className="flex items-center">
-                {product?.available ? <CheckBoxTwoToneIcon color='success'/> : <DisabledByDefaultTwoToneIcon color='error'/> }
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    <span className="font-black">{product?.name}</span> 
-                </Typography>
-            </Box>
-          <Typography sx={{ mt: 2 }}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <span className="font-black">{product?.name}</span> 
+          </Typography>
+          <Box sx={{ mt: 1 }}>{product?.available ? <Chip label="Disponible" color="primary" /> : <Chip label="No disponible"  /> }</Box>
+          <Typography sx={{ mt: 1 }}>
             <span className="font-bold">Precio:</span> {formatearDinero(product?.price)}
           </Typography>
-          <Typography sx={{ mt: 2 }}>
+          <Typography sx={{ mt: 1 }}>
             <span className="font-bold">Código:</span> {product?.code}
           </Typography>
-          <Typography sx={{ mt: 2 }}>
+          <Typography sx={{ mt: 1 }}>
             <span className="font-bold">Descripción:</span> {product?.description}
           </Typography>
-          <Box sx={{ mt: 2 }}>
+          <Box sx={{ mt: 1 }}>
             <div className="p-2 border bg-zinc-50 border-zinc-700 rounded-lg flex items-center gap-4">
               <div className='text-xs text-slate-700'>
                 <span className="font-bold">Grupo:</span> {product?.group?.name}

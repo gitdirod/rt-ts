@@ -211,7 +211,7 @@ export default function MiTablaConPaginacion() {
                         handleEdit(product)
                       }}
                     >
-                      <TableCell>{product?.available ? <CheckCircleTwoToneIcon color='success'/> : <CancelTwoToneIcon color='error'/> }</TableCell>
+                      <TableCell>{product?.available ? <CheckCircleTwoToneIcon color='primary'/> : <CancelTwoToneIcon /> }</TableCell>
                       <TableCell>{product?.code}</TableCell>
                       <TableCell>{product?.name}</TableCell>
                       <TableCell><span>{`${product?.group?.name} - ${product?.category.name}`}</span></TableCell>
