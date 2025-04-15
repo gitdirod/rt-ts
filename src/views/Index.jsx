@@ -17,9 +17,9 @@ const Inicio=()=> {
     <div className="flex flex-col mt-2 transition-all">
       <BottomBarClient/>
       <Landing/>
-      <div className="flex gap-x-4">
+      {/* <div className="flex gap-x-4">
         <SuggestedCategory/>
-      </div>
+      </div> */}
       <SuggestedsProducts/>
       <ShowCategories
         font="text-lg"
