@@ -68,46 +68,121 @@ const AdminProvider = memo(({children}) =>{
             setWaiting(false)
         }
     }
-    const create = async (url, sendData , setErrores,setState, setWaiting) =>{
+    // const create = async (url, sendData , setErrores,setState, setWaiting) =>{
         
-        setWaiting(true)
-        try{
-            const {data} = await clienteAxios.post('/api/' + url , sendData, 
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            )
-            toastMessage(data.message)
-            setState(data.state)
-            setWaiting(false)
-            setErrores({})
-        }catch(error){
-            setErrores(error.response.data.errors)
-            setWaiting(false)
+    //     setWaiting(true)
+    //     try{
+    //         const {data} = await clienteAxios.post('/api/' + url , sendData, 
+    //             {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`,
+    //                     'Content-Type': 'multipart/form-data'
+    //                 }
+    //             }
+    //         )
+    //         toastMessage(data.message)
+    //         setState(data.state)
+    //         setWaiting(false)
+    //         setErrores({})
+    //     }catch(error){
+    //         setErrores(error.response.data.errors)
+    //         setWaiting(false)
+    //     }
+    // }
+
+
+    const createFormData = (sendData) => {
+        const formData = new FormData();
+      
+        for (const key in sendData) {
+          if (key === 'images' && Array.isArray(sendData.images)) {
+            sendData.images.forEach((image) => {
+              formData.append('images[]', image); //  correcto para Laravel
+            });
+          } else if (key === 'deleted' && Array.isArray(sendData.deleted)) {
+            //  Enviar solo los IDs como deleted[]
+            sendData.deleted.forEach((img, index) => {
+              formData.append(`deleted[${index}]`, img.id);
+            });
+          } else if (sendData[key] !== undefined && sendData[key] !== null) {
+            formData.append(key, sendData[key]);
+          }
         }
-    }
-    const update = async (url, sendData , setErrores,setState, setWaiting) =>{
-        setWaiting(true)
-        try{
-            const {data} = await clienteAxios.post('/api/' + url +'/'+sendData.id, sendData,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            toastMessage(data.message)
-            setState(data.state)
-            setWaiting(false)
-            setErrores({})
-        }catch(error){
-            setErrores(error.response.data.errors)
-            setWaiting(false)
+      
+        return formData;
+      };
+      
+      
+
+
+    const getRequestConfig = (url, method, data, contentType) => {
+        const config = {
+            method,
+            url,
+            data,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': contentType,
+            },
+        };
+        return config;
+    };
+
+    const handleResponse = async (requestPromise) => {
+        try {
+            const response = await requestPromise;
+            return { success: true, data: response.data };
+        } catch (error) {
+            if (error.response?.status === 401) {
+                console.error('Unauthorized. Please log in again.');
+            }
+            return { success: false, errors: error.response?.data?.errors || {} };
         }
+    };
+
+    const request = async (url, method, sendData = null) => {
+        let data = sendData;
+        let contentType = 'application/json';
+    
+        // Si hay imágenes, usa FormData
+        if (sendData && (Array.isArray(sendData.images) || sendData.image instanceof File)) {
+            data = createFormData(sendData);
+            contentType = 'multipart/form-data';
+        }
+    
+        // Obtener la configuración de la solicitud
+        const config = getRequestConfig(url, method, data, contentType);
+    
+        // Ejecutar la solicitud y manejar la respuesta
+        return handleResponse(clienteAxios(config));
+    };
+
+    const create = async (url, sendData) => {
+        return await request(url, 'post', sendData)
     }
+
+    const update = async (url, sendData) => {
+        return await request(`${url}/${sendData.id}`,'post', sendData)
+    }
+    // const update = async (url, sendData , setErrores,setState, setWaiting) =>{
+    //     setWaiting(true)
+    //     try{
+    //         const {data} = await clienteAxios.post('/api/' + url +'/'+sendData.id, sendData,
+    //         {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //                 'Content-Type': 'multipart/form-data'
+    //             }
+    //         })
+    //         toastMessage(data.message)
+    //         setState(data.state)
+    //         setWaiting(false)
+    //         setErrores({})
+    //     }catch(error){
+    //         setErrores(error.response.data.errors)
+    //         setWaiting(false)
+    //     }
+    // }
     const destroy = async (url, sendData , setErrores, setState, setWaiting) =>{
         setWaiting(true)
         try{

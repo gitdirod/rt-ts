@@ -115,6 +115,7 @@ const UpdateProduct=()=> {
       )
 
     }
+    console.log(product)
     if(!waiting){
       update('products', product, setErrores, setState, setWaiting)
     }

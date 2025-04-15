@@ -3,6 +3,8 @@ import { Box, Chip, Typography } from '@mui/material';
 import { formatearDinero } from '/src/helpers';
 import BACKEND from '/src/data/backend';
 import ProductImage from '../ProductImage';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const ModalSeeProduct = forwardRef(({ product }, ref) => {
   const style = {
@@ -34,7 +36,7 @@ const ModalSeeProduct = forwardRef(({ product }, ref) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <span className="font-black">{product?.name}</span> 
           </Typography>
-          <Box sx={{ mt: 1 }}>{product?.available ? <Chip label="Disponible" color="primary" /> : <Chip label="No disponible"  /> }</Box>
+          <Box sx={{ mt: 1 }}>{product?.available ? <Chip icon={<CheckOutlinedIcon />} label="Disponible" color="primary" /> : <Chip icon={<CloseOutlinedIcon/>} label="No disponible"  /> }</Box>
           <Typography sx={{ mt: 1 }}>
             <span className="font-bold">Precio:</span> {formatearDinero(product?.price)}
           </Typography>

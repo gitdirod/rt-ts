@@ -10,8 +10,8 @@ import {
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
-import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import SearchIcon from '@mui/icons-material/Search';
@@ -135,7 +135,13 @@ export default function MiTablaConPaginacion() {
         open={edit}
         onClose={handleCloseEdit}
       >
-        <ModalStoreUpdateProduct product={selectedProduct}/>
+        <ModalStoreUpdateProduct 
+          product={selectedProduct}
+          onUpdated={() => {
+            handleCloseEdit();
+            mutate();
+          }}
+        />
       </Modal>
 
       <BlockHeader
@@ -211,7 +217,7 @@ export default function MiTablaConPaginacion() {
                         handleEdit(product)
                       }}
                     >
-                      <TableCell>{product?.available ? <CheckCircleTwoToneIcon color='primary'/> : <CancelTwoToneIcon /> }</TableCell>
+                      <TableCell>{product?.available ? <CheckCircleOutlinedIcon color='primary'/> : <CancelOutlinedIcon /> }</TableCell>
                       <TableCell>{product?.code}</TableCell>
                       <TableCell>{product?.name}</TableCell>
                       <TableCell><span>{`${product?.group?.name} - ${product?.category.name}`}</span></TableCell>

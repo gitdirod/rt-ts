@@ -7,17 +7,22 @@ import ImageUploader from '/src/components/ImageUploader';
 import CropOutlinedIcon from '@mui/icons-material/CropOutlined';
 import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined';
 import ElectricBoltOutlinedIcon from '@mui/icons-material/ElectricBoltOutlined';
+import ImagePreviewManager from '/src/components/ImagePreviewManager';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithChangesOutlined';
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
+import useAdmin from '/src/hooks/useAdmin';
+import BACKEND from '/src/data/backend';
 
-const ModalStoreUpdateProduct = forwardRef(({ product }, ref) => {
-
+const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
 
     const {
         categories, 
-        types,
-        mutateProducts,
-        sizes,
-        numbers,
+        types
     } = useStore()
+
+    const { create, update } = useAdmin()
 
     const style = {
         position: 'absolute',
@@ -28,7 +33,7 @@ const ModalStoreUpdateProduct = forwardRef(({ product }, ref) => {
         bgcolor: 'background.paper',
         border: '1px solid #000',
         boxShadow: 24,
-        p: 4
+        p: 4,
     };
 
     const [productName, setProductName] = useState(product?.name || '')
@@ -38,12 +43,62 @@ const ModalStoreUpdateProduct = forwardRef(({ product }, ref) => {
     const [visible, setVisible] = useState(product?.available ? true : false)
     const [productDescripcion, setProductDescripcion] = useState(product?.description || '')
     const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
+    const [imagesToDelete, setImagesToDelete] = useState([]);
     const [productSize, setProductSize] = useState(product?.size || '');
     const [productWeight, setProductWeight] = useState(product?.weight || '');
     const [productPower, setProductPower] = useState(product?.number_color	 || '');
 
+    const handleSubmit = async e =>{
+        // e.preventDefault()
+        const pro = {
+          _method: product?.id ? 'PUT' : 'POST',
+          id: product?.id,
+          name: productName,
+          code: productCode,
+          category: categoryId,
+          type: typeId,
+          description: productDescripcion,
+          available: visible ? 1 : 0,
+          size: productSize,
+          number_color: productPower,
+          weight: productWeight,
+          images: imagenesSeleccionadas,
+          deleted: imagesToDelete?.map(img =>(
+              {
+                id:img.id
+              }
+            )
+          )
+    
+        }
+        console.log(pro)
+
+        const response = product ? await update(BACKEND.PRODUCTS.KEY, pro) : await create(BACKEND.PRODUCTS.KEY, pro)
+        
+        if (response.success) {
+            console.log("Producto actualizado");
+            if (onUpdated) onUpdated(); // ✅ dispara el mutate en el padre
+          } else {
+            console.log(response.errors);
+            // setErrores(response.errors)
+          }
+        
+      }
+
     return (
     <Box sx={style}>
+        <Box sx={{ display: 'flex', flex: 1, gap: 2, alignItems: 'center', justifyContent:'center', width: '100%', mb: 2 }}>
+            {
+                product ? 
+                    <PublishedWithChangesOutlinedIcon color='primary' sx={{fontSize: 40}} /> 
+                    : 
+                    <NoteAddOutlinedIcon color='primary' sx={{fontSize: 40}}/> 
+            }
+            <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold'}}>
+                {product ? 'Actualizar producto':'Crear producto'}
+            </Typography>
+        </Box>
+
         <Box sx={{ display: 'flex', gap: 4 }}>
             {/* Columna izquierda */}
             <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -142,6 +197,16 @@ const ModalStoreUpdateProduct = forwardRef(({ product }, ref) => {
                 
 
                 <ImageUploader onImagesChange={setImagenesSeleccionadas} />
+
+
+                {product?.images && (
+                    <ImagePreviewManager
+                        images={product?.images}
+                        url={import.meta.env.VITE_API_URL + "/products/"}
+                        edit={true}
+                        setDelete={setImagesToDelete}
+                    />
+                )}
             
                 <Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 2 }}>
                     <CropOutlinedIcon sx={{ color: 'action.active', mr: 1 }} />
@@ -177,6 +242,10 @@ const ModalStoreUpdateProduct = forwardRef(({ product }, ref) => {
                 </Box>
 
             </Box>
+        </Box>
+        <Box sx={{flex: 1, display: 'flex', marginTop:'1rem', gap: 1, justifyContent:'end'}}> 
+            <Button variant="outlined" color='inherit' startIcon={<CancelOutlinedIcon />} >Cancelar</Button>
+            <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSubmit}>Guardar</Button>
         </Box>
     </Box>
 
