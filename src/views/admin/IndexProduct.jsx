@@ -133,10 +133,15 @@ export default function MiTablaConPaginacion() {
 
       <Modal
         open={edit}
-        onClose={handleCloseEdit}
+        onClose={(event, reason) => {
+          if (reason !== 'backdropClick') {
+            handleCloseEdit();
+          }
+        }}
       >
         <ModalStoreUpdateProduct 
           product={selectedProduct}
+          onCancel={handleCloseEdit}
           onUpdated={() => {
             handleCloseEdit();
             mutate();

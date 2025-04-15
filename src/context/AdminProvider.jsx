@@ -68,27 +68,27 @@ const AdminProvider = memo(({children}) =>{
             setWaiting(false)
         }
     }
-    // const create = async (url, sendData , setErrores,setState, setWaiting) =>{
+    const create = async (url, sendData , setErrores,setState, setWaiting) =>{
         
-    //     setWaiting(true)
-    //     try{
-    //         const {data} = await clienteAxios.post('/api/' + url , sendData, 
-    //             {
-    //                 headers: {
-    //                     Authorization: `Bearer ${token}`,
-    //                     'Content-Type': 'multipart/form-data'
-    //                 }
-    //             }
-    //         )
-    //         toastMessage(data.message)
-    //         setState(data.state)
-    //         setWaiting(false)
-    //         setErrores({})
-    //     }catch(error){
-    //         setErrores(error.response.data.errors)
-    //         setWaiting(false)
-    //     }
-    // }
+        setWaiting(true)
+        try{
+            const {data} = await clienteAxios.post('/api/' + url , sendData, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            )
+            toastMessage(data.message)
+            setState(data.state)
+            setWaiting(false)
+            setErrores({})
+        }catch(error){
+            setErrores(error.response.data.errors)
+            setWaiting(false)
+        }
+    }
 
 
     const createFormData = (sendData) => {
@@ -157,32 +157,32 @@ const AdminProvider = memo(({children}) =>{
         return handleResponse(clienteAxios(config));
     };
 
-    const create = async (url, sendData) => {
+    const newCreate = async (url, sendData) => {
         return await request(url, 'post', sendData)
     }
 
-    const update = async (url, sendData) => {
+    const newUpdate = async (url, sendData) => {
         return await request(`${url}/${sendData.id}`,'post', sendData)
     }
-    // const update = async (url, sendData , setErrores,setState, setWaiting) =>{
-    //     setWaiting(true)
-    //     try{
-    //         const {data} = await clienteAxios.post('/api/' + url +'/'+sendData.id, sendData,
-    //         {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //                 'Content-Type': 'multipart/form-data'
-    //             }
-    //         })
-    //         toastMessage(data.message)
-    //         setState(data.state)
-    //         setWaiting(false)
-    //         setErrores({})
-    //     }catch(error){
-    //         setErrores(error.response.data.errors)
-    //         setWaiting(false)
-    //     }
-    // }
+    const update = async (url, sendData , setErrores,setState, setWaiting) =>{
+        setWaiting(true)
+        try{
+            const {data} = await clienteAxios.post('/api/' + url +'/'+sendData.id, sendData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            toastMessage(data.message)
+            setState(data.state)
+            setWaiting(false)
+            setErrores({})
+        }catch(error){
+            setErrores(error.response.data.errors)
+            setWaiting(false)
+        }
+    }
     const destroy = async (url, sendData , setErrores, setState, setWaiting) =>{
         setWaiting(true)
         try{
@@ -307,7 +307,9 @@ const AdminProvider = memo(({children}) =>{
                 emailVerification,
                 show,
                 create,
+                newCreate,
                 update,
+                newUpdate,
                 destroy,
 
                 categoryAdmin,

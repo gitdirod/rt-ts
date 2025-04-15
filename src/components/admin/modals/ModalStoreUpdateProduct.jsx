@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Button, InputLabel, MenuItem, Select, TextareaAutosize, TextField, Typography } from '@mui/material';
+import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Button, InputLabel, MenuItem, Select, TextareaAutosize, TextField, Typography, Alert } from '@mui/material';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import useStore from '/src/hooks/useStore';
@@ -15,14 +15,18 @@ import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import useAdmin from '/src/hooks/useAdmin';
 import BACKEND from '/src/data/backend';
 
-const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
+import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
+
+import CheckIcon from '@mui/icons-material/Check';
+
+const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, ref) => {
 
     const {
         categories, 
         types
     } = useStore()
 
-    const { create, update } = useAdmin()
+    const { newCreate, newUpdate } = useAdmin()
 
     const style = {
         position: 'absolute',
@@ -47,6 +51,7 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
     const [productSize, setProductSize] = useState(product?.size || '');
     const [productWeight, setProductWeight] = useState(product?.weight || '');
     const [productPower, setProductPower] = useState(product?.number_color	 || '');
+    const [errores, setErrores] = useState({});
 
     const handleSubmit = async e =>{
         // e.preventDefault()
@@ -73,14 +78,15 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
         }
         console.log(pro)
 
-        const response = product ? await update(BACKEND.PRODUCTS.KEY, pro) : await create(BACKEND.PRODUCTS.KEY, pro)
+        const response = product ? await newUpdate(BACKEND.PRODUCTS.KEY, pro) : await newCreate(BACKEND.PRODUCTS.KEY, pro)
         
         if (response.success) {
             console.log("Producto actualizado");
-            if (onUpdated) onUpdated(); // ✅ dispara el mutate en el padre
+            setErrores({})
+            if (onUpdated) onUpdated();
           } else {
             console.log(response.errors);
-            // setErrores(response.errors)
+            setErrores(response.errors)
           }
         
       }
@@ -111,18 +117,29 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
                     value={productName}
                     onChange={(e) => setProductName(e.target.value)}
                     />
+                    
                 </Box>
+                {errores?.name && (
+                    <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
+                    {errores?.name}
+                    </Alert>
+                )}
 
                 <Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 2 }}>
                     <QrCodeIcon sx={{ color: 'action.active', mr: 1 }} />
                     <TextField
-                    label="Código"
-                    variant="standard"
-                    fullWidth
-                    value={productCode}
-                    onChange={(e) => setProductCode(e.target.value.toUpperCase())}
+                        label="Código"
+                        variant="standard"
+                        fullWidth
+                        value={productCode}
+                        onChange={(e) => setProductCode(e.target.value.toUpperCase())}
                     />
                 </Box>
+                {errores?.code && (
+                    <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
+                    {errores?.code}
+                    </Alert>
+                )}
 
                 <FormControl variant="standard" fullWidth sx={{ mb: 2 }}>
                     <InputLabel>Categoría</InputLabel>
@@ -141,6 +158,11 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
                     ))}
                     </Select>
                 </FormControl>
+                {errores?.category && (
+                    <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
+                    {errores?.category}
+                    </Alert>
+                )}
 
                 <FormControl variant="standard" fullWidth sx={{ mb: 2 }}>
                     <InputLabel>Tipo de producto</InputLabel>
@@ -159,6 +181,11 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
                     ))}
                     </Select>
                 </FormControl>
+                {errores?.type && (
+                    <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
+                    {errores?.type}
+                    </Alert>
+                )}
 
                 <FormControlLabel
                     control={
@@ -190,6 +217,11 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
                     onChange={(e) => setProductDescripcion(e.target.value)}
                     />
                 </FormControl>
+                {errores?.description && (
+                    <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
+                    {errores?.description}
+                    </Alert>
+                )}
             </Box>
 
             {/* Columna derecha */}
@@ -197,6 +229,11 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
                 
 
                 <ImageUploader onImagesChange={setImagenesSeleccionadas} />
+                {errores?.images && (
+                    <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
+                    {errores?.images}
+                    </Alert>
+                )}
 
 
                 {product?.images && (
@@ -244,7 +281,7 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated }, ref) => {
             </Box>
         </Box>
         <Box sx={{flex: 1, display: 'flex', marginTop:'1rem', gap: 1, justifyContent:'end'}}> 
-            <Button variant="outlined" color='inherit' startIcon={<CancelOutlinedIcon />} >Cancelar</Button>
+            <Button variant="outlined" color='inherit' startIcon={<CancelOutlinedIcon />} onClick={onCancel} >Cancelar</Button>
             <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSubmit}>Guardar</Button>
         </Box>
     </Box>
