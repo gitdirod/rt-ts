@@ -17,7 +17,6 @@ import BACKEND from '/src/data/backend';
 
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
 
-import CheckIcon from '@mui/icons-material/Check';
 
 const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, ref) => {
 
@@ -42,8 +41,8 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, re
 
     const [productName, setProductName] = useState(product?.name || '')
     const [productCode, setProductCode] = useState(product?.code || '')
-    const [categoryId, setCategoryId] = useState(product?.category?.id || {})
-    const [typeId, setTypeId] = useState(product?.type_product?.id || {})
+    const [categoryId, setCategoryId] = useState(product?.category?.id || '')
+    const [typeId, setTypeId] = useState(product?.type_product?.id || '')
     const [visible, setVisible] = useState(product?.available ? true : false)
     const [productDescripcion, setProductDescripcion] = useState(product?.description || '')
     const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
@@ -76,16 +75,15 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, re
           )
     
         }
-        console.log(pro)
 
         const response = product ? await newUpdate(BACKEND.PRODUCTS.KEY, pro) : await newCreate(BACKEND.PRODUCTS.KEY, pro)
         
         if (response.success) {
-            console.log("Producto actualizado");
+            // console.log("Producto actualizado");
             setErrores({})
             if (onUpdated) onUpdated();
           } else {
-            console.log(response.errors);
+            // console.log(response.errors);
             setErrores(response.errors)
           }
         

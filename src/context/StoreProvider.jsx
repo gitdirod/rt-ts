@@ -82,7 +82,8 @@ const StoreProvider = memo(({children}) => {
         swrConfig
     )
     const { data: products, isLoading:isProducts, mutate: mutateProducts } = useSWR(enableAdminUser?'/api/products':'/api/public-products', () => 
-        clienteAxios(enableAdminUser?'/api/products':'/api/public-products')
+        clienteAxios('/api/public-products')
+    // clienteAxios(enableAdminUser?'/api/products':'/api/public-products')
         .then(res => res.data.data),
         swrConfig
     )

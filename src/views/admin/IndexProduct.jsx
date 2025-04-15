@@ -4,7 +4,9 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, TablePagination,
   TextField,
-  Box
+  Box,
+  Typography,
+  Chip
 } from '@mui/material';
 
 import Modal from '@mui/material/Modal';
@@ -174,13 +176,20 @@ export default function MiTablaConPaginacion() {
             name={  
             <div className='flex items-center'>
               <Inventory2OutlinedIcon color="primary" fontSize="large"/>
-                Productos ({totalRecords || 0})
+                <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold', fontSize:'2rem'}}>
+                  Productos <Chip label={totalRecords || 0} color="primary"  sx={{font:'bold'}} /> 
+                </Typography>
             </div>
             }
             
         >
           <Stack direction="row" spacing={2}>
-            <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} onClick={addProduct} >
+            <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} 
+            onClick={() => {
+              handleEdit(null); // por ejemplo, abrir modal de vista
+            }}
+            // onClick={addProduct} 
+            >
               Nuevo
             </Button>
           </Stack>
@@ -246,7 +255,7 @@ export default function MiTablaConPaginacion() {
               count={totalRecords || 0}
               page={currentPage}
               rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25, 50]}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
