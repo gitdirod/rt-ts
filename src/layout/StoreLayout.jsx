@@ -45,7 +45,7 @@ const StoreLayout=()=> {
     <div
       className="relative cursor-default min-h-screen"
     >
-      <div className="relative flex flex-col min-h-screen bg-slate-100">
+      <div className="relative flex flex-col min-h-screen bg-zinc-50">
         <Navbar />
         <div className="flex flex-col transition-all">
           <Outlet/>

@@ -3,9 +3,9 @@ import { fetchData, swrConfig} from '/src/utils/fetchData';
 import BACKEND from '/src/data/backend';
 
 export const ProductService = {
-    useProducts: ({ page, perPage, name, code, categories, types, sortField, sortOrder }) => {
+    useProducts: ({ page, perPage, name, code, group_id, categories, types, sortField, sortOrder }) => {
         // Construcción de la URL con los parámetros
-        const url = `${BACKEND.PRODUCTS.KEY}?page=${page}&perPage=${perPage}&name=${name}&code=${code}&categories=${categories}&types=${types}&sortField=${sortField}&sortOrder=${sortOrder}`;
+        const url = `${BACKEND.PRODUCTS.KEY}?page=${page}&perPage=${perPage}&name=${name}&code=${code}&group_id=${group_id}&categories=${categories}&types=${types}&sortField=${sortField}&sortOrder=${sortOrder}`;
 
         // Uso de SWR para obtener productos
         const { data, error, mutate } = useSWR(

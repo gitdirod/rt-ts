@@ -1,95 +1,97 @@
-import { 
-    memo, 
-    useEffect, 
-    useState 
-} from "react"
+import { memo, useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import useStore from "/src/hooks/useStore"
-import { useAuth } from "/src/hooks/useAuth";
-import BottomBarClient from "/src/components/BottomBarClient"
-import TittleName from "/src/components/TittleName"
+import { ProductService } from '/src/services/ProductService'
 import Products from "/src/components/Products"
-import Memories from "/src/components/Memories"
-import SuggestedCategory from "/src/components/SuggestedCategory"
-import ShowCategories from "/src/components/ShowCategories"
-import SuggestedsProducts from "/src/components/SuggestedsProducts"
-import Footer from "/src/components/customer/Footer"
-import iconAlert from '/src/static/icons/alertBlack.svg'
+import { Button } from "@mui/material"
+import AddIcon from '@mui/icons-material/Add'
 
-const CustomerView=()=> {
-    
-    const { user } = useAuth({middleware: 'guest'})
-    const location = useLocation()
-    const queryParams = new URLSearchParams(location.search)
-    const groupName = queryParams.get('gro');
-    const categoryName = queryParams.get('cat');
-    const typeName = queryParams.get('typ');
-    const searchName = queryParams.get('search');
+const CustomerView = () => {
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
 
-    const { products } = useStore()
+  const groupId = queryParams.get('gi')
+  const categoryIds = queryParams.get('ci')?.split(',') || []
 
-    const [filteredProducts, setFilteredProducts] = useState([]);
+  const [rowsPerPage] = useState(15)
+  const [first, setFirst] = useState(0)
+  const [sortField] = useState('id')
+  const [sortOrder] = useState('desc')
 
+  const [products, setProducts] = useState([])
+  const [page, setPage] = useState(1)
+
+  const { data, totalRecords, loading } = ProductService.useProducts({
+    page,
+    perPage: rowsPerPage,
+    name: '',
+    code: '',
+    categories: categoryIds,
+    types: [],
+    group_id: groupId,
+    sortField,
+    sortOrder
+  })
+
+
+  // Reset cuando cambian los filtros de búsqueda o ruta
+  useEffect(() => {
+    if(products != []){
+        setProducts([])
+        setPage(1)
+    }
+  }, [location.search])
+
+    // Agregar productos (sin duplicados)
     useEffect(() => {
-      let filtered = [...products];
+        if (!data || !Array.isArray(data)) return
+    
+        let actualizado = false
+    
+        setProducts(prev => {
+        const nuevos = data.filter(item => !prev.some(p => p.id === item.id))
+        if (nuevos.length > 0) {
+            actualizado = true
+            return [...prev, ...nuevos]
+        }
+        return prev
+        })
+    
+        // Solo si se actualizó
+        if (actualizado) {
+        // nada extra por ahora
+        }
+    }, [data])
   
-      if (searchName) {
-        filtered = filtered.filter(product =>  product.available == true && 
-        ( product.name.toUpperCase().replace(/\s+/g, '').includes(searchName.toUpperCase().replace(/\s+/g, '')) || 
-            product.code.toUpperCase().replace(/\s+/g, '').includes(searchName.toUpperCase().replace(/\s+/g, ''))
-        ));
-      }
-      if (typeName) {
-        filtered = filtered.filter(product => product.type_product?.name === typeName && product.available);
-      }
 
-      if (categoryName) {
-        filtered = filtered.filter(product => product.category?.name === categoryName && product.available);
-      }
-  
-      if (groupName) {
-        filtered = filtered.filter(product => product.group?.name === groupName && product.available);
-      }
-  
-      setFilteredProducts(filtered);
-  
-    }, [products, categoryName, groupName, typeName, searchName]);
+  const loadMore = () => {
+    setPage(prev => prev + 1)
+  }
 
-    return (
-        <div className="">
-            {user && ( <BottomBarClient/>) }
+  const noMoreProducts = products.length >= totalRecords
+  return (
+    <div className="">
+      <Products products={products} />
 
-            {
-                filteredProducts?.length ?
-                <div className="center-c gap-8 pt-8 w-full">
-                    <TittleName>
-                        {
-                            searchName? `Buscando: ${searchName}`:
-                            categoryName && groupName ? 
-                            `${categoryName} en ${groupName}`:
-                            categoryName? categoryName
-                            : groupName ? groupName :
-                            typeName? typeName
-                            : 'Todos los Productos'
-                        }
-                    </TittleName>
-                    <Products products={filteredProducts}/>
-                </div>
-                :
-                <div className="center-r md:py-20 text-5xl font-poppins-bold py-4">
-                    <div className="center-r gap-4 text-white w-fit p-4 bg-yellow-500 shadow-md border rounded-lg">
-                        <img src={iconAlert} className="w-10 h-10 white" alt="" />El producto que buscas no existe.
-                    </div>
-                </div>
-            }
-            <SuggestedsProducts/>
-            <SuggestedCategory/>
-            <ShowCategories
-                font="text-lg"
-            />
-            <Memories/>
-            <Footer/>
-        </div>
-    )
+      <div className="w-full flex justify-center mt-6">
+            <Button
+                color="primary"
+                sx={{ fontWeight: 'bold' }}
+                loadingPosition="start"
+                startIcon={<AddIcon />}
+                variant="outlined"
+                disabled={loading || noMoreProducts}
+                onClick={loadMore}
+            >
+            {loading
+                ? 'Cargando...'
+                : noMoreProducts
+                ? 'No hay más productos'
+                : 'Ver más productos'}
+            </Button>
+      </div>
+
+    </div>
+  )
 }
+
 export default memo(CustomerView)

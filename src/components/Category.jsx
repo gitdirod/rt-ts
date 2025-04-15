@@ -14,7 +14,7 @@ const Category=({categoria, width = 'w-32', height='h-auto'})=> {
 
     const handleCloseMenu= () =>{
         handleSetMenu(false)
-        navigate(`/store/products/?cat=${categoria?.name}&gro=${categoria?.group_name}`)
+        navigate(`/store/products/?cat=${categoria?.name}&ci=${[categoria?.id].join(',')}&gro=${categoria?.group_name}&gi=${categoria?.group_id}`)
         
     }
     

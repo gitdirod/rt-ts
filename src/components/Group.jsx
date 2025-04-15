@@ -4,7 +4,7 @@ export default function Grupo({group}){
 
   const navigate = useNavigate()
   const goTo= () =>{
-      navigate(`/store/products/?gro=${group?.name}`)
+      navigate(`/store/products/?gro=${group?.name}&gi=${group?.id}`)
     }
   return (
 

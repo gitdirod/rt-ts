@@ -81,12 +81,12 @@ const StoreProvider = memo(({children}) => {
         .then(res => res.data.data),
         swrConfig
     )
-    const { data: products, isLoading:isProducts, mutate: mutateProducts } = useSWR(enableAdminUser?'/api/products':'/api/public-products', () => 
-        clienteAxios('/api/public-products')
-    // clienteAxios(enableAdminUser?'/api/products':'/api/public-products')
-        .then(res => res.data.data),
-        swrConfig
-    )
+    // const { data: products, isLoading:isProducts, mutate: mutateProducts } = useSWR(enableAdminUser?'/api/products':'/api/public-products', () => 
+    //     clienteAxios('/api/public-products')
+    // // clienteAxios(enableAdminUser?'/api/products':'/api/public-products')
+    //     .then(res => res.data.data),
+    //     swrConfig
+    // )
 
     const { data: memories, isLoading:isMemories,  mutate: mutateMemories } = useSWR('/api/memories', () => 
         clienteAxios('/api/memories')
@@ -298,7 +298,7 @@ const StoreProvider = memo(({children}) => {
                 // product,
                 categories,
                 groups,
-                products,
+                // products,
                 order,
                 likes,
                 orders,
@@ -318,7 +318,7 @@ const StoreProvider = memo(({children}) => {
 
                 isGroups,
                 isCategories,
-                isProducts,
+                // isProducts,
                 isTypes,
                 customers,
 
@@ -326,7 +326,7 @@ const StoreProvider = memo(({children}) => {
                 
                 mutateGroups,
                 mutateCategories,
-                mutateProducts,
+                // mutateProducts,
                 mutateLikes,
                 mutateOrders,
                 mutateSoldOrders,

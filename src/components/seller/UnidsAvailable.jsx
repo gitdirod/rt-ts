@@ -1,14 +1,20 @@
 import React from 'react'
-import iconCircle from '/src/static/icons/seller/circle.svg'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 
-export default function UnidsAvailable({units=null, textColor=' text-white ', style=' font-poppins-extrabold text-xs md:text-sm '}) {
+export default function UnidsAvailable({
+  units = null,
+  textColor = 'text-white',
+  style = 'text-xs md:text-sm'
+}) {
   return (
-    <div className={'center-r gap-1 ' + textColor + ' '+ style }>
-        <div className='relative'>
-            <img src={iconCircle} alt="" className='w-2  absolute animate-ping top-0 left-0 ' />
-            <img src={iconCircle} alt="" className='w-2' />
-        </div>
-        <span>{units} </span> <span>unidades</span>
+    <div className={`flex items-center gap-2 ${textColor} ${style}`}>
+      <div className="relative flex items-center justify-center">
+        {/* Ping animado */}
+        <div className="absolute animate-ping inline-flex h-3 w-3 rounded-full bg-current opacity-75"></div>
+        <FiberManualRecordIcon sx={{ fontSize: 12 }} />
+      </div>
+      <span className="leading-tight">{units}</span>
+      <span className="opacity-80">{units == 1 ? 'unidad': 'unidades'}</span>
     </div>
   )
 }

@@ -25,12 +25,12 @@ export default function Point() {
                     alt="" 
                 />
             </div>
-            <iframe 
+            {/* <iframe 
                 className='w-1/2 rounded-sm shadow-slate-700 shadow-md'
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d974.6667590757783!2d-78.48981521571397!3d-0.19949556227177764!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59bee1dcd17a9%3A0xbf12a4bd32fb0408!2sTecnitools%20%22Pasi%C3%B3n%20por%20la%20Joyer%C3%ADa%22!5e0!3m2!1sen!2sec!4v1693259246508!5m2!1sen!2sec"
                 width="600"  allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
             >
-            </iframe>
+            </iframe> */}
             
         </div>
     </div>
