@@ -5,6 +5,7 @@ import { memo } from "react";
 import Footer from "../components/customer/Footer";
 import Memories from "../components/Memories";
 import BottomBarClient from "../components/BottomBarClient";
+// import SuggestedCategory from "/src/components/SuggestedCategoryDELETE";
 
 const Inicio=()=> {
   

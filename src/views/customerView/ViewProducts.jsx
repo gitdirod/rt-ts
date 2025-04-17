@@ -4,6 +4,7 @@ import { ProductService } from '/src/services/ProductService'
 import Products from "/src/components/Products"
 import { Button } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add'
+import TittleName from "/src/components/TittleName"
 
 const CustomerView = () => {
   const location = useLocation()
@@ -11,6 +12,10 @@ const CustomerView = () => {
 
   const groupId = queryParams.get('gi')
   const categoryIds = queryParams.get('ci')?.split(',') || []
+  const groupName = queryParams.get('gro')?.split(',') || []
+  const categoryNameRaw = queryParams.get('cat') || ''
+  const categoryName = categoryNameRaw.trim()
+  
 
   const [rowsPerPage] = useState(15)
   const [first, setFirst] = useState(0)
@@ -69,7 +74,12 @@ const CustomerView = () => {
 
   const noMoreProducts = products.length >= totalRecords
   return (
-    <div className="">
+    <div className=" mx-auto container max-w-screen-xl">
+      <TittleName>
+        {groupName}
+        {categoryName ? ` & ${categoryName}` : ''}
+      </TittleName>
+
       <Products products={products} />
 
       <div className="w-full flex justify-center mt-6">

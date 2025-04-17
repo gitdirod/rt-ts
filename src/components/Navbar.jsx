@@ -155,10 +155,10 @@ const  Navbar=()=> {
             </div>
             
             <nav 
-                className={`center-c fixed w-full ${zindex}`}
+                className={`center-c fixed w-full  ${zindex}`}
             >
 
-                <div ref={navRef} className="w-full center-c  bg-white/80 backdrop-blur-sm ">
+                <div ref={navRef} className="w-full center-c border-b border-b-steal-500/50 bg-white/80 backdrop-blur-sm ">
     
                     <div className='relative flex flex-col lg:flex-row justify-between items-center w-full gap-x-4 px-20 '>
                         <div 

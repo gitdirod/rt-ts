@@ -165,7 +165,7 @@ const ShowProductCustomer=() => {
               <Stack direction="column"  spacing={0}>
                 <Stack direction="row" spacing={4}>
                   <LikeHart size="w-4" productId={productToShow.id} />
-                  <Typography variant="h5" fontWeight="" textTransform="uppercase">
+                  <Typography sx={{fontFamily: 'poppins-extrabold, sans-serif', fontWeight: 800 }} variant="h5" fontWeight="" textTransform="uppercase">
                     {productToShow.name} <span className="text-zinc-500">({productToShow?.code})</span>
                   </Typography>
                 </Stack>
