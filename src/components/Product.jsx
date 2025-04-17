@@ -87,7 +87,7 @@ const Product=({product})=> {
                         borderRadius: '12px'
                     }}
                 >
-                    {!inCart ? 'Comprar' : 'Ver en carrito'} — <span className="ml-2 font-bold">{formatearDinero(product.price)}</span>
+                    Agregar — <span className="ml-2 font-bold">{formatearDinero(product.price)}</span>
                 </Button>
             </Box>
         </div>
