@@ -102,9 +102,12 @@ const ShowProductCustomer=() => {
         {/* Galería de Imágenes */}
         <Grid container direction="column"
           size={{xs:12, md:6}}
+
           sx={{
             justifyContent: "center",
             alignItems: "center",
+            position:'relative',
+            gap:1
           }}
         >
           <Stack >
@@ -118,7 +121,7 @@ const ShowProductCustomer=() => {
                 handleModalViewImage(<ModalViewImage images={productToShow.images} url={BACKEND.PRODUCTS.URL} index={indexImage} closeModal={handleCloseModals} />);
               }}
             />
-            {productToShow?.images.length >= 1 && (
+            {productToShow?.images.length > 1 && (
               <>
                 <IconButton
                   onClick={downIndex}
@@ -136,8 +139,8 @@ const ShowProductCustomer=() => {
             )}
           </Stack>
 
-          {productToShow?.images.length >= 1 && (
-            <Stack direction="row" spacing={1} mt={2} justifyContent="center" flexWrap="wrap">
+          {productToShow?.images.length > 1 && (
+            <Stack direction="row" spacing={1} justifyContent="center" flexWrap="wrap">
               {productToShow.images.map((img, idx) => (
                 <Avatar
                   key={img.id}
