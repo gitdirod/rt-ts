@@ -14,7 +14,7 @@ const BadgeCart=()=> {
             className="relative w-6 cursor-pointer"
         >
 
-            <img className=" white" src={iconCart} alt=""/>
+            <img className=" grey " src={iconCart} alt=""/>
             {
                 order?.length > 0 && (
                     <div 

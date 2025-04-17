@@ -2,29 +2,25 @@ import useStore from "../hooks/useStore"
 import { useEffect, useState, memo } from "react"
 import { useLocation } from "react-router-dom"
 import { formatearDinero } from "../helpers"
-import SuggestedsProducts from "../components/SuggestedsProducts"
-import ShowCategories from "../components/ShowCategories"
-import Footer from "../components/customer/Footer"
 import IsLoading from "../components/IsLoading"
-import Memories from "../components/Memories"
 import LikeHart from "../components/LikeHart"
-import ButtonLikeHart from "../components/ButtonLikeHart"
-import { useAuth } from "/src/hooks/useAuth"
 import useAdmin from "/src/hooks/useAdmin"
 import ModalViewImage from "/src/components/ModalViewImage"
-import { urlsBackend } from "/src/data/urlsBackend"
+import BoltIcon from '@mui/icons-material/Bolt';
+import CropIcon from '@mui/icons-material/Crop';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-import iconCart from '/src/static/icons/cart.svg'
-import iconBack from '/src/static/icons/common/backBlackFilled.svg'
-import iconForward from '/src/static/icons/common/forwardBlackFilled.svg'
-import iconClasificacion from '/src/static/icons/clasificacion_color.svg'
-import iconEnergy from '/src/static/icons/energy_color.svg'
-import size from '/src/static/icons/size.svg'
+import {
+  Box, Grid, Typography, IconButton, Button, Divider, Stack, Avatar
+} from '@mui/material';
+import {
+  ArrowBackIosNew, ArrowForwardIos, ShoppingCart
+} from '@mui/icons-material';
 
-import weight from '/src/static/icons/weight.svg'
 import UnidsAvailable from "/src/components/seller/UnidsAvailable"
 import GoToGestor from "/src/components/admin/GoToGestor"
 import ModalViewAddProduct from "/src/components/seller/ModalViewAddProduct"
+import BACKEND from "/src/data/backend"
 
 export async function loader({ params }){
   return params.productName
@@ -35,15 +31,11 @@ const ShowProductCustomer=() => {
 
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
-  const productCode = queryParams.get('code');
+  const productId = queryParams.get('pid');
 
+  
+  const [productToShow, setProductToShow] = useState(null);  // Estado para el producto
   const { products, order } = useStore()
-
-  const { 
-    user 
-  } = useAuth({
-    middleware: 'guest',
-  })
 
   const {
     handleCloseModals,
@@ -51,10 +43,30 @@ const ShowProductCustomer=() => {
     handleModalViewImage,
     handleModalStateComponent,
     handleModalViewComponent,
+    fetchProductById
   
   } = useAdmin()
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Función para obtener el producto por ID
+  const getProduct = async (id) => {
+    const { data, error } = await fetchProductById(id);  // Usamos la función del contexto
+    if (data) {
+        setProductToShow(data);
+    } else {
+        console.error("Error al cargar el producto", error);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (productId) {
+      getProduct(productId);  // Obtener el producto cuando se monta el componente
+    }
+  }, [productId]);
   
-  const productToShow =  products?.find((product)=> product.code === productCode)
+  
   const inOrder = order?.find(product => product.id === productToShow?.id ) ?? null
   
   const [images, setImages] = useState([])
@@ -81,179 +93,156 @@ const ShowProductCustomer=() => {
     setImages(productToShow?.images)
     setIndexImage(0)
   },[productToShow,products])
-  if(productToShow === undefined || productToShow?.units < 0 ) return <IsLoading/>
-  
+
+  if(isLoading || productToShow === undefined || productToShow === null || productToShow?.units < 0 ) return <IsLoading/>
+
   return (
-
-  <>
-      
-    <div className="mx-auto md:max-w-7xl lg:max-w-screen-2xl mt-4 mb-16 border bg-white rounded-lg p-2">
-      <div className="relative flex flex-col w-full lg:flex-row  rounded-lg h-full">
-        
-        <div className="flex flex-1 flex-col justify-between w-full lg:w-1/2 ">
-                      
-          <div className="relative flex flex-col justify-between  flex-1 h-full">
-            <div></div>
-            <div className="group relative center-r">
-              <img 
-                className="w-full rounded-lg object-contain h-full select-none border "
-                src={urlsBackend.PRODUCT_IMAGE + productToShow.images?.[indexImage]?.['name']} 
-                alt="imagen de producto" 
-                onClick={()=>{
-                  handleModalStateImage(true)
-                  handleModalViewImage(<ModalViewImage images={productToShow.images} url={urlsBackend.PRODUCT_IMAGE} index={indexImage} closeModal={handleCloseModals}/>)
-                }}
-              />
-              {
-                images.length > 1 && (
-                  <>
-                  <div
-                    className="absolute center-r left-0 shadow-md hover:scale-110 p-0.5 bg-white rounded-full transition-all cursor-pointer"
-                    onClick={downIndex}
-                  >
-                    <img src={iconBack} className="w-10 h-10 grey opacity-80" alt="iconBack" />
-                  </div>
-
-                  <div
-                    className="absolute center-r right-0 shadow-md hover:scale-110 p-0.5 bg-white rounded-full transition-all cursor-pointer"
-                    onClick={upIndex}
-                  >
-                    <img src={iconForward} className="w-10 h-10 grey opacity-80" alt="iconForward" />
-                  </div>
-                  </>
-                )}
-            </div>
-
-            {
-              images.length > 1 && (
-                <div className="w-full center-r transition-all gap-2 flex-wrap p-1">
-                  {images?.map((image, index) =>(
-                    <img 
-                      key={image.id}
-                      className={`cursor-pointer h-10 md:h-16 rounded-lg hover:scale-110 select-none transition-all ${indexImage === index ? 'border-2 border-cyanPrimary':'border'}`}
-                      src={urlsBackend.PRODUCT_IMAGE + image?.name}
-                      alt={image?.name} 
-                      onClick={()=>setIndexImage(index)}
-                    />
-                  )) }
-                    
-                </div>
-              )
-            }
-
-          </div>
-        </div>
-
-        <div className="relative flex flex-col justify-start font-poppins-regular text-slate-700 gap-y-8 items-start py-10 px-4 w-full lg:w-1/2">
-          <div className="w-fit my-4 px-8 select-none">
-              <div
-                className="center-r w-full"
-              >
-                <LikeHart size="w-10" productId={productToShow.id} />
-                <h1 className="font-poppins-extrabold text-3xl md:text-5xl  uppercase ">{productToShow.name}</h1>
-              </div>
-          </div>
-          
-          <div className="text-lg p-2 w-full">
-            <p className=" font-poppins-bold">Descripción:</p>
-            <p className=" border-b  p-2">{productToShow?.description}</p>
-          </div>
-
-          <div className=" center-c text-lg items-start gap-y-2">
-            <div className="flex items-center gap-x-4 w-full">
-              <img className="w-6 h-6 " src={iconClasificacion} alt="calsificacion" />
-              {productToShow?.group?.name}
-            </div>
-
-            <div className="flex items-center gap-x-4 w-full">
-              <img className="w-6 h-6" src={urlsBackend.ICON + productToShow?.type_product?.image} alt="icon" />
-              <p className="">{productToShow?.type_product?.name}</p>
-            </div>
-            
-            {
-              productToShow?.weight!=="NADA" && (
-                <div className="flex gap-x-4 items-center w-full">
-                  <img className="w-6 h-6 " src={weight} alt="" />
-                  <p className="">{productToShow?.weight}</p>
-                </div>
-              )
-            }
-            {
-              productToShow?.size !=="NADA" && (
-                <div className="flex gap-x-4 items-center w-full">
-                  <img className="w-6 h-6" src={size} alt="icon" />
-                  <p className="">{productToShow?.size}</p>
-                </div>
-              )
-            }
-
-            {
-              productToShow?.number_color !== "NADA" && (
-                <div className="flex gap-x-4 items-center w-full">
-                  <img className="w-6 h-6" src={iconEnergy} alt="icon" />
-                  <p className=" ">{productToShow?.number_color}</p>
-                </div>
-              )
-            }
-            
-            <UnidsAvailable units={productToShow?.units} textColor='text-slate-700' style/>
-          </div>
-
-          
-
-          <div className={`w-full flex flex-col font-poppins-extrabold text-center text-5xl text-cyanPrimary`}>
-            <p className="">{formatearDinero(productToShow?.price)}</p>
-            <span className="font-bold text-xs ">Más impuestos</span>
-          </div>
-
-          <div 
-            className="flex gap-2 justify-center items-center gap-y-2 w-full"
-          >
-            <div 
-              className={`center-r font-poppins-bold group/buttom py-2 w-full cursor-pointer text-white rounded-lg bg-cyanPrimary`}
-              onClick={()=>{
-                handleModalStateComponent(true)
-                handleModalViewComponent(<ModalViewAddProduct product={productToShow} closeModal={handleCloseModals}/>)
+    <Box maxWidth="xl" mx="auto" my={4} p={3} bgcolor="white" borderRadius={4} boxShadow={3}>
+      <Grid container  spacing={4}>
+        {/* Galería de Imágenes */}
+        <Grid container direction="column"
+          size={{xs:12, md:6}}
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Stack >
+            <Box
+              component="img"
+              src={BACKEND.PRODUCTS.URL + productToShow?.images?.[indexImage]?.name}
+              alt="Imagen de producto"
+              sx={{ width: '100%', height: 400, objectFit: 'contain', borderRadius: 3, border: '1px solid #CCC', cursor: 'zoom-in' }}
+              onClick={() => {
+                handleModalStateImage(true);
+                handleModalViewImage(<ModalViewImage images={productToShow.images} url={BACKEND.PRODUCTS.URL} index={indexImage} closeModal={handleCloseModals} />);
               }}
-            >
-              <div className="flex gap-x-2 group-hover/buttom:scale-110 transition-all">
-                {inOrder ? '('+inOrder?.cantidad + ') Unidades':'Comprar'}
-                <img className="w-6 h-6" src={iconCart} alt="icon"/> 
-              </div>
-            </div>
-            
-
-            <ButtonLikeHart
-              productId={productToShow.id}
             />
-          </div>
-          
-          <div className="absolute w-full bottom-0 left-0 flex justify-center items-center px-4">
-            <div className="flex justify-center items-center gap-x-10 font-semibold">
-              <p className="text-slate-600 text-xs sm:text-sm md:text-base">Código: <span className="  font-thin">{productToShow.code}</span></p>
-              <p className="text-slate-600 text-xs sm:text-sm md:text-base">Categoría: <span className="  font-thin">{productToShow.category?.name}</span></p>
-            </div>
-          </div>
-        </div>
-        <GoToGestor to={"/admin/inventory/products/item/"+ productToShow.id}/>
-      </div>
-    </div>
-    
+            {productToShow?.images.length >= 1 && (
+              <>
+                <IconButton
+                  onClick={downIndex}
+                  sx={{ position: 'absolute', top: '50%', left: 8, transform: 'translateY(-50%)', backgroundColor: '#fff' }}
+                >
+                  <ArrowBackIosNew />
+                </IconButton>
+                <IconButton
+                  onClick={upIndex}
+                  sx={{ position: 'absolute', top: '50%', right: 8, transform: 'translateY(-50%)', backgroundColor: '#fff' }}
+                >
+                  <ArrowForwardIos />
+                </IconButton>
+              </>
+            )}
+          </Stack>
 
-    <div className="w-full mx-auto transition-all">
-      <SuggestedsProducts/>
-      <ShowCategories
-          font="text-lg"
-        />
-      
+          {productToShow?.images.length >= 1 && (
+            <Stack direction="row" spacing={1} mt={2} justifyContent="center" flexWrap="wrap">
+              {productToShow.images.map((img, idx) => (
+                <Avatar
+                  key={img.id}
+                  src={BACKEND.PRODUCTS.URL + img.name}
+                  variant="rounded"
+                  sx={{
+                    width: 64,
+                    height: 64,
+                    border: idx === indexImage ? '2px solid #00acc1' : '1px solid #ddd',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s',
+                    '&:hover': { transform: 'scale(1.05)' }
+                  }}
+                  onClick={() => setIndexImage(idx)}
+                />
+              ))}
+            </Stack>
+          )}
+        </Grid>
 
-        <Memories/>
-        <Footer/> 
-        <div className="h-10 md:hidden">
-        </div>
-    </div>
-  </>
-  )
+        {/* Información del Producto */}
+        <Grid size={{xs:12, md:6}}>
+          <Stack spacing={3}>
+            <Stack spacing={4}>
+              <Stack direction="column"  spacing={0}>
+                <Stack direction="row" spacing={4}>
+                  <LikeHart size="w-4" productId={productToShow.id} />
+                  <Typography variant="h5" fontWeight="" textTransform="uppercase">
+                    {productToShow.name} <span className="text-zinc-500">({productToShow?.code})</span>
+                  </Typography>
+                </Stack>
+                <Box>
+                  <UnidsAvailable units={productToShow?.units} textColor="text-cyanPrimary" />
+                </Box>
+              </Stack>
+              
+              <Box textAlign="center">
+                <Typography variant="h4" fontWeight="bold" color="primary">
+                  {formatearDinero(productToShow.price)}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">Más impuestos</Typography>
+              </Box>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  startIcon={<ShoppingCart />}
+                  size="large"
+                  onClick={() => {
+                    handleModalStateComponent(true);
+                    handleModalViewComponent(<ModalViewAddProduct product={productToShow} closeModal={handleCloseModals} />);
+                  }}
+                >
+                  {inOrder ? `(${inOrder?.cantidad}) Unidades` : 'Comprar'}
+                </Button>
+                {/* <ButtonLikeHart productId={productToShow.id} /> */}
+              </Stack>
+            </Stack>
+
+            <Divider />
+
+            <Box>
+              <Typography  variant="body2" color="text.secondary" mt={1}>
+              {productToShow.description}
+              </Typography>
+            </Box>
+
+            <Stack direction={'row'} spacing={4}>
+              {/* <Stack direction="row" spacing={1} alignItems="center">
+                <Category fontSize="small" />
+                <Typography>{productToShow?.group?.name}</Typography>
+              </Stack> */}
+              <Stack direction="row" spacing={1} color="text.secondary" alignItems="center">
+                <Avatar src={BACKEND.ICONS.URL + productToShow?.type?.image} sx={{ width: 20, height: 20 }} />
+                <Typography fontSize="small">{productToShow?.type?.name}</Typography>
+              </Stack>
+              {productToShow?.weight && (
+                <Stack direction="row" spacing={1} alignItems="center" color="text.secondary">
+                  <FitnessCenterIcon fontSize="small" />
+                  <Typography fontSize="small">{productToShow?.weight}</Typography>
+                </Stack>
+              )}
+              {productToShow?.size && (
+                <Stack direction="row" spacing={1} alignItems="center" color="text.secondary">
+                  <CropIcon fontSize="small" />
+                  <Typography fontSize="small">{productToShow?.size}</Typography>
+                </Stack>
+              )}
+              {productToShow?.number_color && (
+                <Stack direction="row" spacing={1} alignItems="center" color="text.secondary">
+                  <BoltIcon fontSize="small" />
+                  <Typography fontSize="small">{productToShow?.number_color}</Typography>
+                </Stack>
+              )}
+              
+            </Stack>
+          </Stack>
+        </Grid>
+      </Grid>
+
+      <GoToGestor to={`/admin/inventory/products/item/${productToShow.id}`} />
+    </Box>
+  );
+
 }
 
 export default memo(ShowProductCustomer)

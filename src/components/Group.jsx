@@ -10,11 +10,11 @@ export default function Grupo({group}){
 
     <>
         <li 
-          className="hover:border-b-slate-800 px-2 font-poppins-regular rounded-sm hover:scale-110 transition-all cursor-pointer" 
+          className="hover:bg-zinc-200 hover:border-b p-2 rounded-lg hover:scale-110 transition-all cursor-pointer" 
           onClick={()=>goTo()}
         >
           <div
-            className="flex justify-center items-center  text-white"
+            className="flex justify-center items-center "
           >
             {group?.name}
           </div>

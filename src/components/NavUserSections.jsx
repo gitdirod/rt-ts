@@ -39,7 +39,7 @@ export default function NavUserSections() {
             {
                 user?
                 <>
-                    <img className="w-6 h-6 white" src={iconUser} alt="" />
+                    <img className="w-6 h-6 grey" src={iconUser} alt="" />
                     {/* agregar hidden en vez de flex */}
                     <div className="hidden font-poppins-regular group-hover:flex  left-0 absolute w-full bg-white rounded-lg p-1 shadow-md   border"> 
                         <ul className="w-full">

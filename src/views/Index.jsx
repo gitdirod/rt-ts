@@ -6,12 +6,7 @@ import Footer from "../components/customer/Footer";
 import Memories from "../components/Memories";
 import BottomBarClient from "../components/BottomBarClient";
 
-import { useAuth } from "../hooks/useAuth";
-// import SuggestedCategory from "/src/components/SuggestedCategory";
-
 const Inicio=()=> {
-
-  const { user } = useAuth({middleware: 'guest'})
   
   return (
     <div className="flex flex-col mt-2 transition-all">
@@ -22,6 +17,8 @@ const Inicio=()=> {
       </div> */}
       {/* <SuggestedsProducts/> */}
       <ShowCategories
+        width={200}
+        height={200}
         font="text-lg"
       />
   

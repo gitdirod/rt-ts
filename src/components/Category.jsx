@@ -1,56 +1,82 @@
-import useStore from "/src/hooks/useStore"
-import { useNavigate } from "react-router-dom"
-import { memo } from "react"
-import { urlsBackend } from "/src/data/urlsBackend"
+import { useNavigate } from "react-router-dom";
+import { memo } from "react";
+import { Card, CardMedia, CardActionArea, CardContent, Typography, Box } from "@mui/material";
+import useStore from "/src/hooks/useStore";
+import { urlsBackend } from "/src/data/urlsBackend";
 
+const Category = ({ categoria, width = 128, height = 100 }) => {
+  const navigate = useNavigate();
+  const { handleClikCategoryCurrent, handleSetMenu } = useStore();
 
+  const handleClick = () => {
+    handleClikCategoryCurrent(categoria?.id);
+    handleSetMenu(false);
+    navigate(
+      `/store/products/?cat=${categoria?.name}&ci=${[categoria?.id].join(",")}&gro=${categoria?.group_name}&gi=${categoria?.group_id}`
+    );
+  };
 
-const Category=({categoria, width = 'w-32', height='h-auto'})=> {
-    const navigate = useNavigate()
-    const {
-            handleClikCategoryCurrent,
-            handleSetMenu
-        } = useStore()
+  return (
+    <Card
+      elevation={4}
+      onClick={handleClick}
+      sx={{
+        width,
+        borderRadius: 2,
+        overflow: "hidden",
+        cursor: "pointer",
+        transition: "transform 0.3s",
+        "&:hover": {
+          transform: "scale(1.05)",
+        },
+      }}
+    >
+      <CardActionArea>
+        <Box sx={{ position: "relative", width: "100%", height }}>
+          <CardMedia
+            component="img"
+            image={urlsBackend.CATEGORY + categoria?.images?.[0]?.name}
+            alt={categoria?.name}
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.5s",
+              "&:hover": {
+                transform: "scale(1.1)",
+              },
+            }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              bgcolor: "rgba(0, 0, 0, 0.1)",
+              transition: "opacity 0.3s",
+              "&:hover": {
+                opacity: 0,
+              },
+            }}
+          />
+        </Box>
 
-    const handleCloseMenu= () =>{
-        handleSetMenu(false)
-        navigate(`/store/products/?cat=${categoria?.name}&ci=${[categoria?.id].join(',')}&gro=${categoria?.group_name}&gi=${categoria?.group_id}`)
-        
-    }
-    
-    return (
-        <>
-            
-            <div
-                className={`my-2 ${width} group/item h-auto rounded-lg overflow-hidden border center-c  hover:scale-105 transition-all shadow-md cursor-pointer `} 
-                key={categoria?.id}
-                onClick={()=>{
-                    handleClikCategoryCurrent(categoria?.id)
-                    handleCloseMenu()
-                    
-                }}  
-                
-            >
-                <div className={` relative ${width} ${height} center-r overflow-hidden`}>
-                    
-                    <img 
-                        className={`${width} h-auto group-hover/item:scale-110 transition-all duration-500`}
-                        src={urlsBackend.CATEGORY + categoria?.images[0]?.['name']} 
-                        alt={`${categoria?.image}`} 
-                    />
-                    <div 
-                        className="group-hover:opacity-0 transition-all duration-300 absolute w-full h-full opacity-40"
-                    >
+        <CardContent sx={{ bgcolor: "primary.main", py: 1, px: 2 }}>
+          <Typography
+            // variant="subtitle2"
+            color="white"
+            // fontWeight="bold"
+            textAlign="center"
+            noWrap
+          >
+            {categoria?.name}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+  );
+};
 
-                        </div>
-                </div>
-                <div className="text-white font-poppins-bold text-sm p-0.5  w-full center-r bg-slate-700">
-                    {categoria?.name}
-                </div>
-            </div>
-                    
-            
-        </>
-    )
-}
-export default memo(Category) 
+export default memo(Category);

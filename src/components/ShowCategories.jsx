@@ -15,7 +15,7 @@ const ShowCategories =({width='w-40', height='h-auto', font = "text-2xl"})=> {
       <TittleName>
         Compra por categorías
       </TittleName>
-      <div className="flex shrink-0 flex-wrap justify-center items-center gap-x-4 w-full px-30">
+      <div className="flex shrink-0 flex-wrap justify-center items-center gap-4 container w-full">
         
         {categories?.map(category => category.show == true && (
           <div

@@ -148,8 +148,8 @@ const  Navbar=()=> {
                     </div>
                 </div>
                 <ShowCategories
-                    width="w-40"
-                    height="h-10"
+                    width={200}
+                    height={200}
                     font="text-xl"
                 />
             </div>
@@ -158,7 +158,7 @@ const  Navbar=()=> {
                 className={`center-c fixed w-full ${zindex}`}
             >
 
-                <div ref={navRef} className="w-full center-c  bg-slate-800 ">
+                <div ref={navRef} className="w-full center-c  bg-white/80 backdrop-blur-sm ">
     
                     <div className='relative flex flex-col lg:flex-row justify-between items-center w-full gap-x-4 px-20 '>
                         <div 
@@ -231,7 +231,7 @@ const  Navbar=()=> {
                                         
                                     }}
                                 >
-                                    <img className="w-5 h-5 white" src={search} alt="" />
+                                    <img className="w-5 h-5 grey" src={search} alt="" />
 
                                 </div>
                                 <Link
@@ -268,7 +268,7 @@ const  Navbar=()=> {
                     
                     
                         <div  
-                            className={`flex justify-center space-x-2 flex-wrap`}
+                            className={`flex justify-center p-4 space-x-2 flex-wrap`}
                             onClick={()=>{
                                 setIsVisible(false)
                                 window.scrollTo({
@@ -279,6 +279,8 @@ const  Navbar=()=> {
                         >
                             {cats?.map(category => category.show && (
                                 <Category 
+                                    width={150}
+                                    height={150}
                                     key={category?.id}
                                     categoria={category}
                                 />
@@ -329,14 +331,14 @@ const Types = ()=>{
         <div
             className="relative flex-col group px-4"
         >
-            <span className=" cursor-pointer text-white">Más</span>
+            <span className=" cursor-pointer ">Más</span>
             <div 
                 className="hidden group-hover:flex flex-col rounded-lg shadow-md absolute left-0  top-full bg-white p-1"
             >
                 {types?.map(typ => typ.show === true && (
                     <li 
                         key={typ.id}
-                        className="  gap-x-2 flex justify-start  group/li items-center transition-all text-sm gap-y-1 cursor-pointer hover:text-white  rounded-lg w-52 bg-white py-2 px-4 hover:bg-slate-800"
+                        className="  gap-x-2 flex justify-start  group/li items-center transition-all text-sm gap-y-1 cursor-pointer hover:text-white  rounded-lg w-52 bg-white py-2 px-4 hover:bg-teal-600"
                         onClick={()=>{
                             navigate(`/store/products/?typ=${typ.name}`)
                             window.scrollTo({
@@ -345,7 +347,7 @@ const Types = ()=>{
                             })
                         }}
                     >
-                        <img src={urlsBackend.ICON + typ.image} className="h-5 w-5 grey group-hover/li:white " alt="icon" />
+                        <img src={urlsBackend.ICON + typ.image} className="h-5 w-5 " alt="icon" />
                         {typ.name}
                     </li>
                 ))}

@@ -157,6 +157,25 @@ const AdminProvider = memo(({children}) =>{
         return handleResponse(clienteAxios(config));
     };
 
+    const requestHandler = async (method, url, sendData) => {
+        try {
+            const { data } = await clienteAxios({
+                method: method,
+                url: `/api/${url}`,
+                // Solo envía datos si no es GET o DELETE
+                data: method !== 'GET' && method !== 'DELETE' ? sendData : null,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            return { data, error: null };  // Devuelve los datos si la solicitud es exitosa
+        } catch (error) {
+            return { data: null, error: error.response?.data?.errors || {} };  // Devuelve los errores si la solicitud falla
+        }
+    };
+
+    const fetchProductById = (id) => requestHandler('GET', `products/${id}`);
+
     const newCreate = async (url, sendData) => {
         return await request(url, 'post', sendData)
     }
@@ -316,6 +335,12 @@ const AdminProvider = memo(({children}) =>{
                 groupAdmin,
                 orderAdmin,
                 suggestion,
+
+
+                
+                fetchProductById,
+
+
                 
                 handleGetCategory,
                 handleGetGroup,

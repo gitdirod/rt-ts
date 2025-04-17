@@ -32,7 +32,7 @@ const Product=({product})=> {
             <div 
                 className="w-full h-full px-4 pt-4 pb-2 cursor-pointer flex flex-col items-center gap-2"
                 onClick={() => {
-                    navigate(`/store/product/${product.name}?code=${product.code}`)
+                    navigate(`/store/product/${product.name}?code=${product.code}&pid=${product.id}`)
                     window.scrollTo({ top: 0, behavior: "smooth" })
                 }}
             >
