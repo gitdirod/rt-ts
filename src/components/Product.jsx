@@ -5,27 +5,21 @@ import { useState, useEffect, memo } from "react"
 import { urlsBackend } from "/src/data/urlsBackend"
 import UnidsAvailable from "./seller/UnidsAvailable"
 import useAdmin from "/src/hooks/useAdmin"
-import ModalViewAddProduct from "./seller/ModalViewAddProduct"
 
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
 
 
 const Product=({product})=> {
     const navigate = useNavigate()
-    const { order} = useStore()
+    const { order, setOpenDrawerCart, toggleDrawerCart} = useStore()
     const [inCart, setInCart] = useState(false)
 
     useEffect(()=>{
         order?.some( orderState =>  orderState.id === product.id ) ? setInCart(true) : setInCart(false)
     }, [order])
 
-    const {
-        handleModalStateComponent,
-        handleModalViewComponent,
-        handleCloseModals
-    } = useAdmin()
 
     return (
         <div className="flex flex-col justify-between items-center bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all min-w-[250px] w-full group">
@@ -70,12 +64,7 @@ const Product=({product})=> {
                     fullWidth
                     color="primary"
                     onClick={() => {
-                        if (!inCart) {
-                            handleModalStateComponent(true)
-                            handleModalViewComponent(<ModalViewAddProduct product={product} closeModal={handleCloseModals} />)
-                        } else {
-                            navigate('/store/cart')
-                        }
+                        toggleDrawerCart(true)
                     }}
                     startIcon={<AddShoppingCartIcon />}
                     variant="contained"

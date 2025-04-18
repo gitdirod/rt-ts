@@ -14,6 +14,7 @@ import ModalImage from "/src/components/admin/ModalImage";
 import ModalComponent from "/src/components/admin/ModalComponent";
 import WhatsAppContactButton from "/src/components/customer/WhatsAppContactButton";
 import ModalRequest from "/src/components/admin/ModalRequest";
+import CartDrawer from "/src/components/CartDrawer";
 
 
 Modal.setAppElement('#root')
@@ -56,6 +57,7 @@ const StoreLayout=()=> {
       <ModalImage onClose={handleCloseModals} />
       <ModalRequest onClose={handleCloseModals}/>
       <ToastContainer />
+      <CartDrawer/>
     </div>
   )
 }

@@ -158,9 +158,9 @@ const  Navbar=()=> {
                 className={`center-c fixed w-full  ${zindex}`}
             >
 
-                <div ref={navRef} className="w-full center-c border-b border-b-steal-500/50 bg-white/80 backdrop-blur-sm ">
+                <div ref={navRef} className="w-full center-c  border-b border-b-steal-500/50 bg-white/80 backdrop-blur-sm ">
     
-                    <div className='relative flex flex-col lg:flex-row justify-between items-center w-full gap-x-4 px-20 '>
+                    <div className='relative flex container flex-col lg:flex-row justify-between items-center w-full gap-x-4 px-20 '>
                         <div 
                             onClick={()=> handleShowMenu()}
                             className="center-c absolute md:hidden left-0 h-full px-1"
