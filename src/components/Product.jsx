@@ -1,7 +1,7 @@
 import { formatearDinero } from "/src/helpers"
 import { useNavigate } from "react-router-dom"
 import useStore from "/src/hooks/useStore"
-import { useState, memo } from "react"
+import { memo } from "react"
 import { urlsBackend } from "/src/data/urlsBackend"
 import UnidsAvailable from "./seller/UnidsAvailable"
 
@@ -15,12 +15,9 @@ const Product=({product})=> {
     const { order, toggleDrawerCart, handleAddOrder} = useStore()
     
     const inOrder = order?.find(pro => pro.id === product?.id ) ?? null
-    const [cantidad, setCantidad] = useState(inOrder ? 1 : 0);
-      
-
+   
     const updateCantidad = (nuevaCantidad) => {
         if (nuevaCantidad >= 1 && nuevaCantidad <= product.units) {
-            setCantidad(nuevaCantidad);
             handleAddOrder({ ...product, cantidad: nuevaCantidad });
         }
     };
@@ -69,7 +66,7 @@ const Product=({product})=> {
                     fullWidth
                     color="primary"
                     onClick={() => {
-                        updateCantidad(cantidad + 1)
+                        updateCantidad( inOrder? inOrder?.cantidad + 1 : 1 )
                         toggleDrawerCart(true)
                     }}
                     startIcon={<AddShoppingCartIcon />}
