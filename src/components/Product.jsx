@@ -1,10 +1,9 @@
 import { formatearDinero } from "/src/helpers"
 import { useNavigate } from "react-router-dom"
 import useStore from "/src/hooks/useStore"
-import { useState, useEffect, memo } from "react"
+import { useState, memo } from "react"
 import { urlsBackend } from "/src/data/urlsBackend"
 import UnidsAvailable from "./seller/UnidsAvailable"
-import useAdmin from "/src/hooks/useAdmin"
 
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -13,12 +12,18 @@ import { Box } from "@mui/material"
 
 const Product=({product})=> {
     const navigate = useNavigate()
-    const { order, setOpenDrawerCart, toggleDrawerCart} = useStore()
-    const [inCart, setInCart] = useState(false)
+    const { order, toggleDrawerCart, handleAddOrder} = useStore()
+    
+    const inOrder = order?.find(pro => pro.id === product?.id ) ?? null
+    const [cantidad, setCantidad] = useState(inOrder ? 1 : 0);
+      
 
-    useEffect(()=>{
-        order?.some( orderState =>  orderState.id === product.id ) ? setInCart(true) : setInCart(false)
-    }, [order])
+    const updateCantidad = (nuevaCantidad) => {
+        if (nuevaCantidad >= 1 && nuevaCantidad <= product.units) {
+            setCantidad(nuevaCantidad);
+            handleAddOrder({ ...product, cantidad: nuevaCantidad });
+        }
+    };
 
 
     return (
@@ -64,6 +69,7 @@ const Product=({product})=> {
                     fullWidth
                     color="primary"
                     onClick={() => {
+                        updateCantidad(cantidad + 1)
                         toggleDrawerCart(true)
                     }}
                     startIcon={<AddShoppingCartIcon />}
