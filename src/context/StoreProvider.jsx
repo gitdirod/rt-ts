@@ -92,11 +92,11 @@ const StoreProvider = memo(({children}) => {
         swrConfig
     )
 
-    const { data: groups, isLoading:isGroups,  mutate: mutateGroups } = useSWR('/api/groups', () => 
-        clienteAxios('/api/groups')
-        .then(res => res.data.data),
-        swrConfig
-    ) 
+    // const { data: groups, isLoading:isGroups,  mutate: mutateGroups } = useSWR('/api/groups', () => 
+    //     clienteAxios('/api/groups')
+    //     .then(res => res.data.data),
+    //     swrConfig
+    // ) 
 
     const { data: types, isLoading:isTypes,  mutate: mutateTypes } = useSWR('/api/type_products', () => 
         clienteAxios('/api/type_products')
@@ -276,7 +276,9 @@ const StoreProvider = memo(({children}) => {
             value={{
                 showProducts,
                 categories,
-                groups,
+                // groups,
+                // isGroups,
+                // mutateGroups,
                 order,
                 likes,
                 orders,
@@ -294,14 +296,12 @@ const StoreProvider = memo(({children}) => {
                 
                 navHeight,
 
-                isGroups,
                 isCategories,
                 isTypes,
                 customers,
 
                 categoriesCurrent,
                 
-                mutateGroups,
                 mutateCategories,
                 mutateLikes,
                 mutateOrders,
