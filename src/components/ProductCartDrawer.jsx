@@ -29,9 +29,9 @@ export default function ProductCartDrawer({product}) {
         display: 'flex',
         gap: 2,
         alignItems: 'center',
-        border: '1px solid #ddd',
-        borderRadius: 2,
-        p: 2,
+        p: 1,
+        // border: '1px solid #ddd',
+        // borderRadius: 2,
     }}
     >
         {/* Imagen */}
@@ -91,7 +91,7 @@ export default function ProductCartDrawer({product}) {
         </Box>
 
     {/* Eliminar */}
-    <IconButton color="error" onClick={() => handleRemoveProduct(product.id)}>
+    <IconButton  onClick={() => handleRemoveProduct(product.id)}>
         <DeleteIcon />
     </IconButton>
     </Box>
