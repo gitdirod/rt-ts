@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Accordion,
@@ -22,6 +22,12 @@ export default function FilterGroups() {
   const activeCategoryId = queryParams.get('ci');
   const activeGroupId = queryParams.get('gi');
 
+  const [expandedGroup, setExpandedGroup] = useState(null);
+
+  useEffect(() => {
+    setExpandedGroup(activeGroupId);
+  }, [activeGroupId]);
+
   const handleClick = (group, category) => {
     const searchParams = new URLSearchParams({
       cat: category.name,
@@ -41,8 +47,9 @@ export default function FilterGroups() {
       {groups?.map((gr) => gr?.show && (
         <Accordion
           key={gr?.id}
+          expanded={expandedGroup === String(gr.id)}
+          onChange={() => setExpandedGroup(expandedGroup === String(gr.id) ? null : String(gr.id))}
           disableGutters
-          defaultExpanded={String(gr.id) === activeGroupId}
           elevation={0}
           sx={{ bgcolor: 'transparent', borderBottom: '1px solid #eee' }}
         >

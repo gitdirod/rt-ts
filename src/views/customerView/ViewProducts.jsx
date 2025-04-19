@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ProductService } from '/src/services/ProductService';
 import Products from "/src/components/Products";
@@ -22,6 +22,7 @@ const CustomerView = () => {
   const [sortOrder] = useState('desc');
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
+  const buttonRef = useRef(null);
 
   const { data, totalRecords, loading } = ProductService.useProducts({
     page,
@@ -42,22 +43,43 @@ const CustomerView = () => {
 
   useEffect(() => {
     if (!data || !Array.isArray(data)) return;
-    let actualizado = false;
     setProducts(prev => {
       const nuevos = data.filter(item => !prev.some(p => p.id === item.id));
-      if (nuevos.length > 0) {
-        actualizado = true;
-        return [...prev, ...nuevos];
-      }
-      return prev;
+      return nuevos.length > 0 ? [...prev, ...nuevos] : prev;
     });
   }, [data]);
 
   const loadMore = () => setPage(prev => prev + 1);
   const noMoreProducts = products.length >= totalRecords;
 
+  // Observer refinado
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (
+          entry.isIntersecting &&
+          entry.intersectionRatio === 1 &&
+          !loading &&
+          !noMoreProducts
+        ) {
+          loadMore();
+        }
+      },
+      {
+        threshold: 1.0, // Solo se dispara cuando el botón es 100% visible
+      }
+    );
+
+    const el = buttonRef.current;
+    if (el) observer.observe(el);
+
+    return () => {
+      if (el) observer.unobserve(el);
+    };
+  }, [loading, noMoreProducts]);
+
   return (
-    <Box sx={{ display: 'flex', width: '100%'  }}>
+    <Box sx={{ display: 'flex', width: '100%' }}>
       {/* Sidebar */}
       <Box
         sx={{
@@ -69,44 +91,42 @@ const CustomerView = () => {
           overflowY: 'auto',
           px: 2,
           borderRight: '1px solid',
-          borderColor: 'divider', // Usa el color de división del theme
+          borderColor: 'divider',
           bgcolor: '#fff'
-          // bgcolor: '#fafafa'
         }}
       >
-
         <FilterGroups />
       </Box>
 
-{/* Contenido (usa scroll natural del body) */}
-<Box sx={{ flex: 1 }}>
-  <Container maxWidth="xl" sx={{ px: { xs: 2, md: 4 }, py: 3 }}>
-    <TittleName>
-      {groupName}
-      {categoryName ? ` & ${categoryName}` : ''}
-    </TittleName>
+      {/* Contenido */}
+      <Box sx={{ flex: 1 }}>
+        <Container maxWidth="xl" sx={{ px: { xs: 2, md: 4 }, py: 3 }}>
+          <TittleName>
+            {groupName}
+            {categoryName ? ` & ${categoryName}` : ''}
+          </TittleName>
 
-    <Products products={products} />
+          <Products products={products} />
 
-    <Box mt={6} display="flex" justifyContent="center">
-      <Button
-        color="primary"
-        sx={{ fontWeight: 'bold' }}
-        startIcon={<AddIcon />}
-        variant="outlined"
-        disabled={loading || noMoreProducts}
-        onClick={loadMore}
-      >
-        {loading
-          ? 'Cargando...'
-          : noMoreProducts
-          ? 'No hay más productos'
-          : 'Ver más productos'}
-      </Button>
-    </Box>
-  </Container>
-</Box>
-
+          <Box mt={6} display="flex" justifyContent="center">
+            <Button
+              ref={buttonRef}
+              color="primary"
+              sx={{ fontWeight: 'bold' }}
+              startIcon={<AddIcon />}
+              variant="outlined"
+              disabled={loading || noMoreProducts}
+              onClick={loadMore}
+            >
+              {loading
+                ? 'Cargando...'
+                : noMoreProducts
+                ? 'No hay más productos'
+                : 'Ver más productos'}
+            </Button>
+          </Box>
+        </Container>
+      </Box>
     </Box>
   );
 };

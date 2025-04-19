@@ -1,6 +1,6 @@
 import { memo } from "react"
 import { useNavigate } from "react-router-dom"
-import logo from "/src/static/img/logoWhite.svg"
+import logo from "/src/static/img/logo.svg"
 
 const Navbar = () => {
   const navigate = useNavigate()
