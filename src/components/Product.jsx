@@ -8,12 +8,15 @@ import UnidsAvailable from "./seller/UnidsAvailable"
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Box } from "@mui/material"
+import { useTheme } from '@mui/material/styles';
+
 
 
 const Product=({product})=> {
     const navigate = useNavigate()
     const { order, toggleDrawerCart, handleAddOrder} = useStore()
     
+    const theme = useTheme();
     const inOrder = order?.find(pro => pro.id === product?.id ) ?? null
    
     const updateCantidad = (nuevaCantidad) => {
@@ -52,6 +55,35 @@ const Product=({product})=> {
                         alt={product.name}
                         className="h-full object-contain transition-transform duration-300 group-hover:scale-105"
                     />
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        sx={{
+                            position: 'absolute',
+                            bottom: 1,
+                            width: '100%',
+                            bgcolor: '#fff', // fondo blanco
+                            borderColor: 'primary.main',
+                            color: 'primary.main',
+                            fontWeight: 'bold',
+                            opacity: 0,
+                            transition: 'opacity 0.3s ease-in-out',
+                            zIndex: 10,
+                            '&:hover': {
+                                bgcolor: theme.palette.primary.lightHover,
+                                borderColor: theme.palette.primary.main,
+                            },
+                        }}
+                        className="group-hover:opacity-100"
+                        onClick={(e) => {
+                            e.stopPropagation(); // evitar navigate al hacer click en el botón
+                            navigate(`/store/product/${product.name}?code=${product.code}&pid=${product.id}`)
+                        }}
+                        >
+                        Previsualizar
+                        </Button>
+
+
                 </div>
 
                 {/* Nombre y código */}
