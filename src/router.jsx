@@ -53,8 +53,7 @@ import IndexUser from '/src/views/admin/IndexUser'
 
 
 
-import SellerMakeSoldOrderLayout from './layout/SellerMakeSoldOrderLayout'
-import SelectProducts from '/src/views/seller/SelectProducts'
+
 import ViewProducts from '/src/views/customerView/ViewProducts'
 import IndexProductNew from '/src/views/admin/indexProductNew'
 
@@ -237,28 +236,6 @@ const router = createBrowserRouter([
                     },
                 ]
             },
-        ]
-    },
-
-
-
-    {
-        path:'/seller',
-        element: <SellerMakeSoldOrderLayout />,
-        children:[
-            {
-                path:'/seller/inventory',
-                element: <Outlet/>,
-                children: [
-                    {
-                        path:'/seller/inventory/products',
-                        // loader: loaderSeller,
-                        element: <SelectProducts/>
-                    }
-                    
-                ]
-            },
-            
         ]
     },
 
