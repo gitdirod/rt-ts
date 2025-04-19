@@ -12,7 +12,7 @@ import { urlsBackend } from '/src/data/urlsBackend';
 import { formatearDinero } from '/src/helpers';
 
 export default function ProductCartDrawer({product}) {
-    const { handleAddOrder, handleRemoveProduct, order } = useStore();
+    const { handleAddOrder, handleRemoveProduct } = useStore();
 
     const [cantidad, setCantidad] = useState(product.cantidad);
     

@@ -5,10 +5,12 @@ import { formatearDinero } from "../helpers"
 import IsLoading from "../components/IsLoading"
 import LikeHart from "../components/LikeHart"
 import useAdmin from "/src/hooks/useAdmin"
-import ModalViewImage from "/src/components/ModalViewImage"
 import BoltIcon from '@mui/icons-material/Bolt';
 import CropIcon from '@mui/icons-material/Crop';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 import {
   Box, Grid, Typography, IconButton, Button, Divider, Stack, Avatar
@@ -19,7 +21,6 @@ import {
 
 import UnidsAvailable from "/src/components/seller/UnidsAvailable"
 import GoToGestor from "/src/components/admin/GoToGestor"
-import ModalViewAddProduct from "/src/components/seller/ModalViewAddProduct"
 import BACKEND from "/src/data/backend"
 
 export async function loader({ params }){
@@ -32,20 +33,11 @@ const ShowProductCustomer=() => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const productId = queryParams.get('pid');
-
   
   const [productToShow, setProductToShow] = useState(null);  // Estado para el producto
-  const { products, order } = useStore()
+  const { products, order, handleAddOrder } = useStore()
 
-  const {
-    handleCloseModals,
-    handleModalStateImage,
-    handleModalViewImage,
-    handleModalStateComponent,
-    handleModalViewComponent,
-    fetchProductById
-  
-  } = useAdmin()
+  const { fetchProductById } = useAdmin()
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -60,6 +52,7 @@ const ShowProductCustomer=() => {
     setIsLoading(false);
   };
 
+
   useEffect(() => {
     if (productId) {
       getProduct(productId);  // Obtener el producto cuando se monta el componente
@@ -71,6 +64,10 @@ const ShowProductCustomer=() => {
   
   const [images, setImages] = useState([])
   const [indexImage, setIndexImage] = useState(0)
+  const [cantidad, setCantidad] = useState(1);
+
+  
+
   const upIndex=()=>{
     if(indexImage === Number(images?.length)-1){
         setIndexImage(0)
@@ -89,10 +86,19 @@ const ShowProductCustomer=() => {
     }
   }
 
+  const updateCantidad = (nuevaCantidad) => {
+    if (nuevaCantidad >= 1 && nuevaCantidad <= productToShow.units) {
+      setCantidad(nuevaCantidad);
+      handleAddOrder({ ...productToShow, cantidad: nuevaCantidad });
+    }
+  };
+
+
   useEffect(()=>{
     setImages(productToShow?.images)
     setIndexImage(0)
   },[productToShow,products])
+
 
   if(isLoading || productToShow === undefined || productToShow === null || productToShow?.units < 0 ) return <IsLoading/>
 
@@ -116,10 +122,6 @@ const ShowProductCustomer=() => {
               src={BACKEND.PRODUCTS.URL + productToShow?.images?.[indexImage]?.name}
               alt="Imagen de producto"
               sx={{ width: '100%', height: 400, objectFit: 'contain', borderRadius: 3, border: '1px solid #CCC', cursor: 'zoom-in' }}
-              onClick={() => {
-                handleModalStateImage(true);
-                handleModalViewImage(<ModalViewImage images={productToShow.images} url={BACKEND.PRODUCTS.URL} index={indexImage} closeModal={handleCloseModals} />);
-              }}
             />
             {productToShow?.images.length > 1 && (
               <>
@@ -184,18 +186,95 @@ const ShowProductCustomer=() => {
                 <Typography variant="caption" color="text.secondary">Más impuestos</Typography>
               </Box>
               <Stack direction="row" spacing={2}>
+
+                {/* Controles de cantidad */}
+                <Box
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    border: '2px solid',
+                    borderColor: 'divider',
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                    height: 50,
+                  }}
+                >
+                  <Box
+                    component="button"
+                    onClick={() => setCantidad(cantidad - 1)}
+                    disabled={cantidad <= 1}
+                    sx={{
+                      width: 50,
+                      height: 50,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: 'none',
+                      background: 'transparent',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        backgroundColor: 'grey.200',
+                      },
+                      '&:disabled': {
+                        opacity: 0.4,
+                        cursor: 'not-allowed',
+                      }
+                    }}
+                  >
+                    <RemoveIcon fontSize="medium" />
+                  </Box>
+
+                  <Box
+                    sx={{
+                      px: 3,
+                      fontWeight: 700,
+                      fontSize: '1.2rem',
+                      minWidth: 50,
+                      textAlign: 'center',
+                      color: 'text.primary'
+                    }}
+                  >
+                    {cantidad}
+                  </Box>
+
+                  <Box
+                    component="button"
+                    onClick={() => setCantidad(cantidad + 1)}
+                    disabled={cantidad >= productToShow.units}
+                    sx={{
+                      width: 50,
+                      height: 50,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: 'none',
+                      background: 'transparent',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        backgroundColor: 'grey.200',
+                      },
+                      '&:disabled': {
+                        opacity: 0.4,
+                        cursor: 'not-allowed',
+                      }
+                    }}
+                  >
+                    <AddIcon fontSize="medium" />
+                  </Box>
+                </Box>
+
+
                 <Button
                   variant="contained"
                   color="primary"
                   fullWidth
                   startIcon={<ShoppingCart />}
                   size="large"
-                  onClick={() => {
-                    handleModalStateComponent(true);
-                    handleModalViewComponent(<ModalViewAddProduct product={productToShow} closeModal={handleCloseModals} />);
+                  onClick={()=>{
+                    updateCantidad(cantidad)
                   }}
                 >
-                  {inOrder ? `(${inOrder?.cantidad}) Unidades` : 'Comprar'}
+                  Agregar al carrito
                 </Button>
                 {/* <ButtonLikeHart productId={productToShow.id} /> */}
               </Stack>
