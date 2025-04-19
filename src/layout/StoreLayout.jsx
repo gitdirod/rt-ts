@@ -13,7 +13,7 @@ const StoreLayout = () => {
   }
 
   return (
-    <div className="relative cursor-default min-h-screen bg-zinc-50">
+    <div className="relative cursor-default min-h-screen ">
       <Navbar />
 
       {/*  Aquí le das margen superior equivalente a la altura del navbar */}

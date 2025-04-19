@@ -11,7 +11,7 @@ import useStore from "/src/hooks/useStore";
 const Navbar = () => {
   const navigate = useNavigate()
 
-  const {order} = useStore()
+  const {order, toggleDrawerCart} = useStore()
 
   return (
     <nav className="sticky top-0 z-50 w-full backdrop-blur-sm bg-white/70 border-b border-zinc-200 shadow-sm transition-all">
@@ -27,8 +27,8 @@ const Navbar = () => {
         <Stack direction="row" spacing={2}>
             <SearchOutlinedIcon sx={{ cursor: 'pointer', fontSize: 30, color: 'grey.700' }} />
             <PersonOutlinedIcon sx={{ cursor: 'pointer', fontSize: 30, color: 'grey.700' }} />
-            <Badge badgeContent={order?.length} color="primary" overlap="circular">
-                <ShoppingCartOutlinedIcon sx={{ cursor: 'pointer', fontSize: 30, color: 'grey.700' }} />
+            <Badge badgeContent={order?.length} color="primary" overlap="circular" sx={{ cursor: 'pointer'}} onClick={()=>toggleDrawerCart(true)}>
+                <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: 'grey.700' }} />
             </Badge>
         </Stack>
 
