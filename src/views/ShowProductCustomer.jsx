@@ -1,27 +1,26 @@
-import useStore from "../hooks/useStore"
 import { useEffect, useState, memo } from "react"
 import { useLocation } from "react-router-dom"
+import useStore from "../hooks/useStore"
+import useAdmin from "/src/hooks/useAdmin"
 import { formatearDinero } from "../helpers"
 import IsLoading from "../components/IsLoading"
 import LikeHart from "../components/LikeHart"
-import useAdmin from "/src/hooks/useAdmin"
-import BoltIcon from '@mui/icons-material/Bolt';
-import CropIcon from '@mui/icons-material/Crop';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import UnidsAvailable from "/src/components/seller/UnidsAvailable"
+import BACKEND from "/src/data/backend"
 
 import {
   Box, Grid, Typography, IconButton, Button, Divider, Stack, Avatar
 } from '@mui/material';
+
 import {
   ArrowBackIosNew, ArrowForwardIos, ShoppingCart
 } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import BoltIcon from '@mui/icons-material/Bolt';
+import CropIcon from '@mui/icons-material/Crop';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-import UnidsAvailable from "/src/components/seller/UnidsAvailable"
-import GoToGestor from "/src/components/admin/GoToGestor"
-import BACKEND from "/src/data/backend"
 
 export async function loader({ params }){
   return params.productName
@@ -320,8 +319,6 @@ const ShowProductCustomer=() => {
           </Stack>
         </Grid>
       </Grid>
-
-      <GoToGestor to={`/admin/inventory/products/item/${productToShow.id}`} />
     </Box>
   );
 
