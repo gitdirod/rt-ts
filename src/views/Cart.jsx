@@ -6,7 +6,6 @@ import SummaryProduct from "../components/SummaryProduct";
 import SideBarClient from "../components/SideBarClient";
 
 import { useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
 import { useAuth } from "/src/hooks/useAuth";
 import TittleName from "/src/components/TittleName";
 import useAdmin from "/src/hooks/useAdmin";
@@ -36,29 +35,31 @@ const Cart=()=> {
         if(user?.email_verified_at){
             handleClickModalBuy()
         }else if(user?.email_verified_at === null){
-            toast.error(<span className="font-bold">¡Verificar cuenta!</span>, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            console.log('verificar cuenta')
+            // toast.error(<span className="font-bold">¡Verificar cuenta!</span>, {
+            //     position: "bottom-center",
+            //     autoClose: 5000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     theme: "colored",
+            // });
         }
         else{
+            console.log('inicia sesion')
             
-            toast.error(<span className="font-bold">¡Primero debes iniciar sesión!</span>, {
-                position: "bottom-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            // toast.error(<span className="font-bold">¡Primero debes iniciar sesión!</span>, {
+            //     position: "bottom-center",
+            //     autoClose: 3000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     theme: "colored",
+            // });
             setTimeout(()=>{
                 navigate('/auth/login/')
             }, 5000)

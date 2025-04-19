@@ -2,6 +2,7 @@ import { memo } from "react"
 import { useNavigate } from "react-router-dom"
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { Badge } from "@mui/material";
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import logo from "/src/static/img/logo.svg"
@@ -30,6 +31,7 @@ const Navbar = () => {
             <Badge badgeContent={order?.length} color="primary" overlap="circular" sx={{ cursor: 'pointer'}} onClick={()=>toggleDrawerCart(true)}>
                 <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: 'grey.700' }} />
             </Badge>
+            <SettingsIcon onClick={()=>navigate('/admin/inventory/products')} sx={{ cursor: 'pointer', fontSize: 30, color: 'primary.main' }}/>
         </Stack>
 
       </div>

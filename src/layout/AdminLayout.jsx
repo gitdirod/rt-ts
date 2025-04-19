@@ -1,11 +1,9 @@
 import { memo, useEffect } from "react";
 import { Outlet } from "react-router-dom"
-import { ToastContainer } from "react-toastify";
 import NavAdmin from "/src/components/admin/NavAdmin"
 import SidebarAdmin from "/src/components/admin/SidebarAdmin"
 import { useAuth } from "/src/hooks/useAuth";
 
-import "react-toastify/dist/ReactToastify.css"
 import IsLoading from "/src/components/IsLoading";
 
 import useAdmin from "/src/hooks/useAdmin";
@@ -43,7 +41,6 @@ const AdminLayout=()=> {
           <div className="flex  w-full flex-wrap p-1 overflow-y-hidden">
             <Outlet />
           </div>
-          <ToastContainer />
       </div>
 
       {/* <ModalImageVisor/> */}

@@ -1,6 +1,5 @@
 import { createContext, useCallback, memo, useState, useRef } from "react";
 import clienteAxios from "/src/config/axios"
-import { toast } from "react-toastify"
 
 const AdminContext = createContext();
 
@@ -29,16 +28,17 @@ const AdminProvider = memo(({children}) =>{
 
     const token = localStorage.getItem('AUTH_TOKEN')
     const toastMessage = (message)=>{
-        toast.success(<span className="w-full font-poppins-regular">{message}</span>,{
-            position: "bottom-left",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            // theme: "colored",
-        })
+        console.log(message)
+        // toast.success(<span className="w-full font-poppins-regular">{message}</span>,{
+        //     position: "bottom-left",
+        //     autoClose: 1000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //     // theme: "colored",
+        // })
     }
     const emailVerification = async (url, setErrores,setState, setWaiting) =>{
         setWaiting(true)

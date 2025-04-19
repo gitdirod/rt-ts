@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom"
-import { ToastContainer } from "react-toastify";
 import { useAuth } from "/src/hooks/useAuth";
 
 import Modal from 'react-modal'
 
-import "react-toastify/dist/ReactToastify.css"
 import IsLoading from "/src/components/IsLoading";
 
 import useAdmin from "/src/hooks/useAdmin";
@@ -56,7 +54,7 @@ export default function SellerMakeSoldOrderLayout(){
           <div className="flex  w-full flex-wrap overflow-y-hidden">
             <Outlet />
           </div>
-          <ToastContainer />
+        
       </div>
 
       

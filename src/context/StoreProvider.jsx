@@ -1,7 +1,6 @@
 import useSWR from 'swr'
 import clienteAxios from "/src/config/axios"
 import { createContext, useState, useEffect, memo } from "react"
-import { toast } from "react-toastify"
 import { formatearDinero2 } from '/src/helpers'
 import { swrConfig } from '/src/utils/fetchData'
 
@@ -92,12 +91,6 @@ const StoreProvider = memo(({children}) => {
         swrConfig
     )
 
-    // const { data: groups, isLoading:isGroups,  mutate: mutateGroups } = useSWR('/api/groups', () => 
-    //     clienteAxios('/api/groups')
-    //     .then(res => res.data.data),
-    //     swrConfig
-    // ) 
-
     const { data: types, isLoading:isTypes,  mutate: mutateTypes } = useSWR('/api/type_products', () => 
         clienteAxios('/api/type_products')
         .then(res => res.data.data),
@@ -164,27 +157,9 @@ const StoreProvider = memo(({children}) => {
 
     const toastMessage = (message, success = true)=>{
         if(success){
-            toast.success(<span className="font-poppins-regular">{message}</span>,{
-                position: "bottom-left",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                // theme: "colored",
-            })
+            console.log('ok')
         }else{
-            toast.warn( <span className='font-poppins-regular'>{message}</span>, {
-                position: "bottom-left",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                // theme: "colored",
-            })
+            console.log('mal')
         }
 
         
@@ -359,35 +334,3 @@ export {
     StoreProvider
 }
 export default StoreContext
-
-    // const handleClickModal = () =>{
-    //     setModal(!modal)
-    // }
-    // const handleClickModalSearch = () =>{
-    //     setModalSearch(!modalSearch)
-    // }
-    // const handleClickModalBuy = () =>{
-    //     setModalBuy(!modalBuy)
-    // }
-    // const handleClickModalImage = () =>{
-    //     setModalImage(!modalImage)
-    // }
-    // const handleClickModalVerify = () =>{
-    //     setModalVerify(!modalVerify)
-    // }
-     // const handleSetProductModal = (id, index=0) =>{
-    //     const product =  products.find((product)=> product.id === Number(id))
-    //     setProductModal(product)
-    //     setIndexProductModal(index)
-    // }
-     
-    
-    // const [modal, setModal] = useState(false)
-    // const [modalSearch, setModalSearch] = useState(false)
-    // const [modalBuy, setModalBuy] = useState(false)
-    // const [modalImage, setModalImage] = useState(false)
-    // const [productModal, setProductModal] = useState({})
-    // const [indexProductModal, setIndexProductModal] = useState(0)
-    // const [modalVerify, setModalVerify] = useState(false)
-    // const [showCategories, setShowCategories] = useState(false);
-    

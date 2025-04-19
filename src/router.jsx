@@ -56,10 +56,6 @@ import IndexUser from '/src/views/admin/IndexUser'
 import SellerMakeSoldOrderLayout from './layout/SellerMakeSoldOrderLayout'
 import SelectProducts from '/src/views/seller/SelectProducts'
 import ViewProducts from '/src/views/customerView/ViewProducts'
-import SellerAdminLayout from './layout/SellerAdminLayout'
-import SellerAdminIndexSoldOrders from '/src/views/sellerAdmin/SellerAdminIndexSoldOrders'
-import SellerAdminCreateSoldOrder from '/src/views/sellerAdmin/SellerAdminCreateSoldOrder'
-import SellerAdminIndexCustomers from '/src/views/sellerAdmin/SellerAdminIndexCustomers'
 import IndexProductNew from '/src/views/admin/indexProductNew'
 
 
@@ -265,32 +261,7 @@ const router = createBrowserRouter([
             
         ]
     },
-    {
-        path:'/sellerAdmin',
-        element: <SellerAdminLayout />,
-        children:[
-            {
-                path:'/sellerAdmin/admin',
-                element: <Outlet/>,
-                children: [
-                    {
-                        path:'/sellerAdmin/admin/cart',
-                        element: <SellerAdminCreateSoldOrder/>
-                    },
-                    {
-                        path:'/sellerAdmin/admin/quotation',
-                        element: <SellerAdminIndexSoldOrders/>
-                    },
-                    {
-                        path:'/sellerAdmin/admin/customers',
-                        element: <SellerAdminIndexCustomers/>
-                    },
-                ]
-            },
-            
-        ]
-    },
-    
+
     
 ])
 
