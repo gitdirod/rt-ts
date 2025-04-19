@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ProductService } from '/src/services/ProductService';
 import Products from "/src/components/Products";
-import { Button, Box } from "@mui/material";
+import { Button, Box, Container } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import TittleName from "/src/components/TittleName";
 import FilterGroups from "/src/components/FilterGroups";
@@ -70,39 +70,43 @@ const CustomerView = () => {
           px: 2,
           borderRight: '1px solid',
           borderColor: 'divider', // Usa el color de división del theme
-          bgcolor: '#fafafa'
+          bgcolor: '#fff'
+          // bgcolor: '#fafafa'
         }}
       >
 
         <FilterGroups />
       </Box>
 
-      {/* Contenido (usa scroll natural del body) */}
-      <Box sx={{ flex: 1, px: 4, py: 3 }}>
-        <TittleName>
-          {groupName}
-          {categoryName ? ` & ${categoryName}` : ''}
-        </TittleName>
+{/* Contenido (usa scroll natural del body) */}
+<Box sx={{ flex: 1 }}>
+  <Container maxWidth="xl" sx={{ px: { xs: 2, md: 4 }, py: 3 }}>
+    <TittleName>
+      {groupName}
+      {categoryName ? ` & ${categoryName}` : ''}
+    </TittleName>
 
-        <Products products={products} />
+    <Products products={products} />
 
-        <Box mt={6} display="flex" justifyContent="center">
-          <Button
-            color="primary"
-            sx={{ fontWeight: 'bold' }}
-            startIcon={<AddIcon />}
-            variant="outlined"
-            disabled={loading || noMoreProducts}
-            onClick={loadMore}
-          >
-            {loading
-              ? 'Cargando...'
-              : noMoreProducts
-              ? 'No hay más productos'
-              : 'Ver más productos'}
-          </Button>
-        </Box>
-      </Box>
+    <Box mt={6} display="flex" justifyContent="center">
+      <Button
+        color="primary"
+        sx={{ fontWeight: 'bold' }}
+        startIcon={<AddIcon />}
+        variant="outlined"
+        disabled={loading || noMoreProducts}
+        onClick={loadMore}
+      >
+        {loading
+          ? 'Cargando...'
+          : noMoreProducts
+          ? 'No hay más productos'
+          : 'Ver más productos'}
+      </Button>
+    </Box>
+  </Container>
+</Box>
+
     </Box>
   );
 };
