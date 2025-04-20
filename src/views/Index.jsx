@@ -1,9 +1,9 @@
-import Landing from "../components/Landing";
 import ShowCategories from "../components/store/category/ShowCategories";
 import { memo } from "react";
 // import SuggestedsProducts from "../components/SuggestedsProducts";
 import Footer from "../components/customer/Footer";
 import Memories from "../components/Memories";
+import Landing from "/src/components/store/landing/Landing";
 // import SuggestedCategory from "/src/components/SuggestedCategoryDELETE";
 
 const Inicio=()=> {
