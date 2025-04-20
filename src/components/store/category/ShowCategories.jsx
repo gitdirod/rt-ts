@@ -1,7 +1,7 @@
 import { memo } from "react"
 import useStore from "/src/hooks/useStore"
 import Category from "./Category"
-import TittleName from "./TittleName";
+import TittleName from "../../TittleName";
 
 const ShowCategories =({width='w-40', height='h-auto', font = "text-2xl"})=> {
   const {

@@ -2,9 +2,9 @@ import { useRouteError } from "react-router-dom";
 import Navbar from "/src/components/Navbar";
 import Footer from "../components/customer/Footer";
 import Memories from "/src/components/Memories";
-import ShowCategories from "/src/components/ShowCategories";
 import SuggestedsProducts from "/src/components/SuggestedsProducts";
 import errorImage from "/src/static/img/404.svg"
+import ShowCategories from "/src/components/store/category/ShowCategories";
 
 export default function ErrorView() {
     const error = useRouteError();
