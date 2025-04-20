@@ -1,24 +1,30 @@
 import { formatearDinero } from "/src/helpers"
 import { useNavigate } from "react-router-dom"
 import useStore from "/src/hooks/useStore"
-import { memo } from "react"
+import { memo, useState } from "react"
 import { urlsBackend } from "/src/data/urlsBackend"
 import UnidsAvailable from "./UnidsAvailable"
 
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Box } from "@mui/material"
+import { Box, Modal } from "@mui/material"
 import { useTheme } from '@mui/material/styles';
+import ProductDetailCard from "./ProductDetailCard"
 
 
 
 const ProductCard=({product})=> {
     const navigate = useNavigate()
     const { order, toggleDrawerCart, handleAddOrder} = useStore()
-    
     const theme = useTheme();
     const inOrder = order?.find(pro => pro.id === product?.id ) ?? null
-   
+    
+    const [openModal, setOpenModal] = useState(false)
+    const handleCloseModal = () => setOpenModal(false);
+    const handleOpenModal = () => {
+        setOpenModal(true)
+      };
+
     const updateCantidad = (nuevaCantidad) => {
         if (nuevaCantidad >= 1 && nuevaCantidad <= product.units) {
             handleAddOrder({ ...product, cantidad: nuevaCantidad });
@@ -28,6 +34,25 @@ const ProductCard=({product})=> {
 
     return (
         <div className="flex flex-col justify-between items-center bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all min-w-[250px] w-full group">
+            <Modal open={openModal} onClose={handleCloseModal}>
+                <Box
+                    sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '90%',
+                    maxWidth: 1200,
+                    bgcolor: 'background.paper',
+                    borderRadius: 2,
+                    boxShadow: 24,
+                    p: 0,
+                    }}
+                >
+                    <ProductDetailCard product={product} />
+                </Box>
+            </Modal>
+
             <div 
                 className="w-full h-full px-4 pt-4 pb-2 cursor-pointer flex flex-col items-center gap-2"
                 onClick={() => {
@@ -77,11 +102,12 @@ const ProductCard=({product})=> {
                         className="group-hover:opacity-100"
                         onClick={(e) => {
                             e.stopPropagation(); // evitar navigate al hacer click en el botón
-                            navigate(`/store/product/${product.name}?code=${product.code}&pid=${product.id}`)
+                            handleOpenModal()
+                            // navigate(`/store/product/${product.name}?code=${product.code}&pid=${product.id}`)
                         }}
                         >
                         Previsualizar
-                        </Button>
+                    </Button>
 
 
                 </div>

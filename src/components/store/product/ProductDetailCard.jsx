@@ -62,7 +62,7 @@ export default function ProductDetailCard({product}) {
       },[product])
     
     return (
-        <Box maxWidth="xl" mx="auto" my={4} p={3} bgcolor="white" borderRadius={4} boxShadow={3}>
+        <Box maxWidth="xl" mx="auto" my={0} p={3} bgcolor="white" borderRadius={2} boxShadow={3}>
         <Grid container  spacing={4}>
             {/* Galería de Imágenes */}
             <Grid container direction="column"
@@ -253,8 +253,8 @@ export default function ProductDetailCard({product}) {
                     <Typography>{productToShow?.group?.name}</Typography>
                 </Stack> */}
                 <Stack direction="row" spacing={1} color="text.secondary" alignItems="center">
-                    <Avatar src={BACKEND.ICONS.URL + product?.type?.image} sx={{ width: 20, height: 20 }} />
-                    <Typography fontSize="small">{product?.type?.name}</Typography>
+                    <Avatar src={BACKEND.ICONS.URL + product?.type_product?.image} sx={{ width: 20, height: 20 }} />
+                    <Typography fontSize="small">{product?.type_product?.name}</Typography>
                 </Stack>
                 {product?.weight && (
                     <Stack direction="row" spacing={1} alignItems="center" color="text.secondary">

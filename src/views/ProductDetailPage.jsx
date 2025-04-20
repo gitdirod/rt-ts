@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom"
 import useAdmin from "/src/hooks/useAdmin"
 import IsLoading from "../components/store/common/IsLoading"
 import ProductDetailCard from "/src/components/store/product/ProductDetailCard"
+import { Box } from "@mui/material"
 
 export async function loader({ params }){
   return params.productName
@@ -42,7 +43,9 @@ const ProductDetailPage=() => {
   if(isLoading || productToShow === undefined || productToShow === null || productToShow?.units < 0 ) return <IsLoading/>
 
   return (
-    <ProductDetailCard product={productToShow}/>
+    <Box sx={{my:4}}>
+      <ProductDetailCard product={productToShow}/>
+    </Box>
   );
 
 }
