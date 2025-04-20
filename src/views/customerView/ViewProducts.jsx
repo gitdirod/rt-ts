@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ProductService } from '/src/services/ProductService';
-import Products from "/src/components/Products";
+import Products from "/src/components/store/product/Products";
 import { Button, Box, Container } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import TittleName from "/src/components/TittleName";

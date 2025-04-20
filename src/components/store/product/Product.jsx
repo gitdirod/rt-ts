@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import useStore from "/src/hooks/useStore"
 import { memo } from "react"
 import { urlsBackend } from "/src/data/urlsBackend"
-import UnidsAvailable from "./seller/UnidsAvailable"
+import UnidsAvailable from "../../seller/UnidsAvailable"
 
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';

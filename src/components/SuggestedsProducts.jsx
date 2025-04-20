@@ -1,6 +1,7 @@
 import {memo} from 'react'
 import useStore from "/src/hooks/useStore";
-import Product from "/src/components/Product";
+import Product from "/src/components/store/product/Product";
+
 
 const SuggestedsProducts =()=> {
 

@@ -1,4 +1,4 @@
-import Product from "./Product"
+import Product from "./store/product/Product"
 import TittleName from "./TittleName";
 import useStore from "/src/hooks/useStore"
 

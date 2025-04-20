@@ -10,7 +10,7 @@ import {
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useStore from '/src/hooks/useStore';
 import TittleName from './TittleName';
-import ProductCartDrawer from './ProductCartDrawer';
+import ProductCartDrawer from './store/product/ProductCartDrawer';
 import { formatearDinero } from '/src/helpers';
 
 export default function CartDrawer() {

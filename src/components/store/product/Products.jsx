@@ -1,5 +1,6 @@
-import Product from "./Product";
+
 import { memo } from "react";
+import Product from "./Product";
 
 const Products = ({ products }) => {
   return (
