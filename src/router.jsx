@@ -55,10 +55,6 @@ import IndexUser from '/src/views/admin/IndexUser'
 
 
 import ViewProducts from '/src/views/customerView/ViewProducts'
-import IndexProductNew from '/src/views/admin/indexProductNew'
-
-
-
 
 
 
@@ -131,10 +127,6 @@ const router = createBrowserRouter([
                     {
                         path:'/admin/inventory/products',
                         element: <IndexProduct />
-                    },
-                    {
-                        path:'/admin/inventory/productsNew',
-                        element: <IndexProductNew />
                     },
                     {
                         path : "/admin/inventory/products/item/:itemId",
