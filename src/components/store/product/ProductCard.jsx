@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 
 
 
-const Product=({product})=> {
+const ProductCard=({product})=> {
     const navigate = useNavigate()
     const { order, toggleDrawerCart, handleAddOrder} = useStore()
     
@@ -119,4 +119,4 @@ const Product=({product})=> {
     )
 }
 
-export default memo(Product)
+export default memo(ProductCard)

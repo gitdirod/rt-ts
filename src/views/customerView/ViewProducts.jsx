@@ -1,11 +1,11 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ProductService } from '/src/services/ProductService';
-import Products from "/src/components/store/product/Products";
 import { Button, Box, Container } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import TittleName from "/src/components/TittleName";
 import FilterGroups from "/src/components/FilterGroups";
+import ProductGrid from "/src/components/store/product/ProductGrid";
 
 const CustomerView = () => {
   const location = useLocation();
@@ -106,7 +106,7 @@ const CustomerView = () => {
             {categoryName ? ` & ${categoryName}` : ''}
           </TittleName>
 
-          <Products products={products} />
+          <ProductGrid products={products} />
 
           <Box mt={6} display="flex" justifyContent="center">
             <Button

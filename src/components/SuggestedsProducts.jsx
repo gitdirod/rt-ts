@@ -1,6 +1,6 @@
 import {memo} from 'react'
 import useStore from "/src/hooks/useStore";
-import Product from "/src/components/store/product/Product";
+import ProductCard from './store/product/ProductCard';
 
 
 const SuggestedsProducts =()=> {
@@ -16,7 +16,7 @@ const SuggestedsProducts =()=> {
           </div>
           <div className="z-0 flex-wrap justify-center items-center grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 px-auto px-4 w-full">
             {sugg?.products?.map(product => product?.available == true && (
-              <Product
+              <ProductCard
                 key={product.id}
                 product={product}
               />
