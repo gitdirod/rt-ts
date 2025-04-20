@@ -7,7 +7,6 @@ import TableTrItemPurchaseOrder from './TableTrItemPurchaseOrder'
 import { useAuth } from '/src/hooks/useAuth'
 import { formatearDinero, formatearDinero2 } from '/src/helpers'
 import useAdmin from '/src/hooks/useAdmin'
-import IsLoading from '/src/components/IsLoading'
 import SearchComponent from '/src/components/admin/SearchComponent'
 import BlockHeader from '/src/components/admin/BlockHeader'
 
@@ -21,6 +20,7 @@ import iconEnvoice from '/src/static/icons/envoiceBlack.svg'
 import iconUpdate from '/src/static/icons/update.svg'
 import iconList from '/src/static/icons/list_circle.svg'
 import iconCart from '/src/static/icons/cart.svg'
+import IsLoading from '/src/components/store/common/IsLoading'
 
 export async function loader({ params }){
     return params.itemId

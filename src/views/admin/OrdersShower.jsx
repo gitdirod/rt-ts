@@ -3,7 +3,7 @@ import HeaderShower from "../../components/admin/HeaderShower"
 import useAdmin from "../../hooks/useAdmin"
 import TableSimpleDescription from "../../components/admin/TableSimpleDescription"
 import SoldOrderDescription from "../../components/admin/SoldOrderDescription"
-import IsLoading from "../../components/IsLoading"
+import IsLoading from "../../components/store/common/IsLoading"
 import { memo } from "react"
 import useStore from "../../hooks/useStore"
 

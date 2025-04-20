@@ -1,6 +1,6 @@
 import useStore from "/src/hooks/useStore"
 import { useNavigate } from "react-router-dom"
-import IsLoading from "/src/components/IsLoading"
+
 import { memo } from "react"
 import add from '/src/static/icons/add.svg'
 import iconItem from '/src/static/icons/item.svg'
@@ -14,6 +14,7 @@ import LinkBtn from "../../components/admin/LinkBtn"
 import { formatearDinero, formatearDinero2 } from "/src/helpers"
 import ImageTable from "/src/components/admin/ImageTable"
 import LabelSimpleWithoutLine from "/src/components/admin/LabelSimpleWithoutLines"
+import IsLoading from "/src/components/store/common/IsLoading"
 
 
 const IndexProductNew =()=> {

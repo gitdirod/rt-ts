@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import useStore from '/src/hooks/useStore'
-import IsLoading from '/src/components/IsLoading'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import BlockType from '/src/components/admin/BlockType'
 import iconAdd from '/src/static/icons/add.svg'
@@ -9,6 +8,7 @@ import BlockStoreType from '/src/components/admin/BlockStoreType'
 import Btn from '/src/components/admin/Btn'
 import useAdmin from '/src/hooks/useAdmin'
 import ModalViewStoreUpdateType from '/src/components/admin/modals/ModalViewStoreUpdateType'
+import IsLoading from '/src/components/store/common/IsLoading'
 
 
 export default function IndexType(){

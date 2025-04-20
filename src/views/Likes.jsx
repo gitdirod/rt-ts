@@ -4,7 +4,7 @@ import SideBarClient from "../components/SideBarClient";
 import BottomBarClient from "../components/BottomBarClient";
 import useStore from "../hooks/useStore";
 import LikeHart from "../components/LikeHart";
-import IsLoading from "../components/IsLoading";
+import IsLoading from "../components/store/common/IsLoading";
 
 import { useAuth } from "../hooks/useAuth";
 import TittleName from "/src/components/TittleName";

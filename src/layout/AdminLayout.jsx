@@ -4,14 +4,13 @@ import NavAdmin from "/src/components/admin/NavAdmin"
 import SidebarAdmin from "/src/components/admin/SidebarAdmin"
 import { useAuth } from "/src/hooks/useAuth";
 
-import IsLoading from "/src/components/IsLoading";
-
 import useAdmin from "/src/hooks/useAdmin";
 import useStore from "/src/hooks/useStore";
 import ModalRequest from "/src/components/admin/ModalRequest";
 import ModalComponent from "/src/components/admin/ModalComponent";
 import ModalImage from "/src/components/admin/ModalImage";
 import ModalDelete from "/src/components/admin/ModalDelete";
+import IsLoading from "/src/components/store/common/IsLoading";
 
 const AdminLayout=()=> {
 

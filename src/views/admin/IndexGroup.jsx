@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import useStore from '/src/hooks/useStore'
-import IsLoading from '../../components/IsLoading'
+import IsLoading from '../../components/store/common/IsLoading'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import BlockItemOne from '/src/components/admin/BlockItemOne'
 import BlockStoreItemOne from '/src/components/admin/BlockStoreItemOne'

@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom"
 
 import useStore from "../../hooks/useStore"
-import IsLoading from "../../components/IsLoading"
+import IsLoading from "../../components/store/common/IsLoading"
 import SoldOrderDescription from "/src/components/admin/SoldOrderDescription"
 import iconPhone from '/src/static/icons/phone.svg'
 import iconEmail from '/src/static/icons/email.svg'

@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom"
-import IsLoading from "../../components/IsLoading"
+import IsLoading from "../../components/store/common/IsLoading"
 import useAdmin from "../../hooks/useAdmin"
 import useStore from "../../hooks/useStore"
 import HeaderTables from "../../components/admin/HeaderTables"

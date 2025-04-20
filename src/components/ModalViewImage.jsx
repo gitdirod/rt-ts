@@ -4,7 +4,7 @@ import {
     useState
 } from "react"
 
-import IsLoading from "./IsLoading"
+import IsLoading from "./store/common/IsLoading"
 import iconClose from '/src/static/icons/seller/close.svg'
 import iconDelete from "/src/static/icons/admin/delete.svg"
 import Btn from "./admin/Btn"

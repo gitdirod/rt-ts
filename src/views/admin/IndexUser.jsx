@@ -1,4 +1,4 @@
-import IsLoading from '../../components/IsLoading'
+import IsLoading from '../../components/store/common/IsLoading'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import iconUser from '/src/static/icons/user.svg'
 import iconEmail from '/src/static/icons/email.svg'

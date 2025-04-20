@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useStore from '/src/hooks/useStore';
-import IsLoading from './IsLoading';
+import IsLoading from './store/common/IsLoading';
 import { DEVICE_TYPES } from '/src/data/deviceTypes';
 
 

@@ -1,5 +1,4 @@
 import { memo } from "react"
-import IsLoading from "/src/components/IsLoading"
 import { formatearDinero } from "/src/helpers"
 
 import BlockHeader from "/src/components/admin/BlockHeader"
@@ -7,6 +6,7 @@ import iconItem from '/src/static/icons/item.svg'
 import LinkBtn from './LinkBtn';
 import iconList from '/src/static/icons/list_circle.svg'
 import { timeToText } from '/src/helpers';
+import IsLoading from "/src/components/store/common/IsLoading";
 
 
 const ProductDescription=({product})=> {

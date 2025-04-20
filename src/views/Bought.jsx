@@ -3,7 +3,7 @@ import OrderBought from "../components/OrderBought";
 import SideBarClient from "../components/SideBarClient";
 import BottomBarClient from "../components/BottomBarClient";
 import { useAuth } from "../hooks/useAuth";
-import IsLoading from "../components/IsLoading";
+import IsLoading from "../components/store/common/IsLoading";
 import TittleName from "/src/components/TittleName";
 
 

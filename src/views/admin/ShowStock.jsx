@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate } from "react-router-dom"
 import useStore from "../../hooks/useStore"
-import IsLoading from "../../components/IsLoading"
+import IsLoading from "../../components/store/common/IsLoading"
 import { formatearDinero } from '/src/helpers'
 import BlockKardex from "/src/components/admin/BlockKardex"
 

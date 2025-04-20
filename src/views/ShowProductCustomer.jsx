@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom"
 import useStore from "../hooks/useStore"
 import useAdmin from "/src/hooks/useAdmin"
 import { formatearDinero } from "../helpers"
-import IsLoading from "../components/IsLoading"
+import IsLoading from "../components/store/common/IsLoading"
 import LikeHart from "../components/LikeHart"
 import BACKEND from "/src/data/backend"
 

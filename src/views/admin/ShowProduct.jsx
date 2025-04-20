@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom"
 import { memo } from "react"
 import useStore from "../../hooks/useStore"
-import IsLoading from "../../components/IsLoading"
+import IsLoading from "../../components/store/common/IsLoading"
 import ProductDescription from "../../components/admin/ProductDescription"
 import TableSimple from "../../components/admin/TableSimple"
 

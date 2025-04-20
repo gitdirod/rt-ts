@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import { memo, useState } from "react"
-import IsLoading from "/src/components/IsLoading"
 import { formatearDinero } from "/src/helpers"
 import ImagesShower from "./ImagesShower"
 
@@ -21,6 +20,7 @@ import iconStore from '/src/static/icons/store.svg'
 import iconItem from '/src/static/icons/item.svg'
 import LinkBtn from "/src/components/admin/LinkBtn"
 import { urlsBackend } from "/src/data/urlsBackend"
+import IsLoading from "/src/components/store/common/IsLoading"
 
 const ProductDescription=({product})=> {
 

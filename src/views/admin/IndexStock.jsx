@@ -1,5 +1,5 @@
 import useStore from '/src/hooks/useStore'
-import IsLoading from '../../components/IsLoading'
+import IsLoading from '../../components/store/common/IsLoading'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import iconStock from '/src/static/icons/kardex.svg'
 import { formatearDinero2 } from '/src/helpers'

@@ -1,6 +1,5 @@
 import { memo, useState } from 'react'
 import useStore from '/src/hooks/useStore'
-import IsLoading from '/src/components/IsLoading'
 import BlockItemOne from '/src/components/admin/BlockItemOne'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import IconAdd from '/src/static/icons/add.svg'
@@ -13,6 +12,7 @@ import BlockStoreItemOne from '/src/components/admin/BlockStoreItemOne'
 import Btn from '/src/components/admin/Btn'
 import ModalViewStoreUpdateItem from '/src/components/admin/modals/ModalViewStoreUpdateItem'
 import useAdmin from '/src/hooks/useAdmin'
+import IsLoading from '/src/components/store/common/IsLoading'
 
 
 

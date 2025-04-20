@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import useStore from "../../hooks/useStore";
 import useAdmin from "../../hooks/useAdmin";
-import IsLoading from "../../components/IsLoading";
+import IsLoading from "../../components/store/common/IsLoading";
 import add from '/src/static/icons/add.svg'
 
 import ImageTable from "../../components/admin/ImageTable";

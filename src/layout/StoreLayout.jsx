@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Outlet } from "react-router-dom"
 import Navbar from "../components/Navbar"
-import IsLoading from "../components/IsLoading";
+import IsLoading from "../components/store/common/IsLoading";
 import CartDrawer from "/src/components/CartDrawer";
 import { GroupService } from "/src/services/GroupService";
 

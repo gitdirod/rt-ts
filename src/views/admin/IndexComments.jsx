@@ -1,5 +1,4 @@
 import useStore from '/src/hooks/useStore'
-import IsLoading from '/src/components/IsLoading'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import BlockComment from '/src/components/admin/BlockComment'
 import { useState } from 'react'
@@ -8,6 +7,7 @@ import Btn from '/src/components/admin/Btn'
 
 import iconAdd from '/src/static/icons/add.svg'
 import IconComment from '/src/static/icons/comment.svg'
+import IsLoading from '/src/components/store/common/IsLoading'
 
 export default function IndexComments(){
     const {memories} = useStore()

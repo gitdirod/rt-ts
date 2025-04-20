@@ -1,5 +1,5 @@
 import useStore from '/src/hooks/useStore'
-import IsLoading from '../../components/IsLoading'
+import IsLoading from '../../components/store/common/IsLoading'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import iconDesktop from '/src/static/icons/desktop.svg'
 import BlockLanding from '/src/components/admin/BlockLanding'

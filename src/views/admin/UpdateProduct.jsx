@@ -9,8 +9,6 @@ import {useLoaderData} from "react-router-dom"
 import useStore from "../../hooks/useStore"
 import useAdmin from "../../hooks/useAdmin"
 
-import IsLoading from "/src/components/IsLoading"
-
 import ImagesShower from "../../components/admin/ImagesShower"
 import Alert from "../../components/Alert"
 import UploadImage from "/src/components/admin/UploadImage"
@@ -35,6 +33,7 @@ import iconEnergy from '/src/static/icons/energyBlack.svg'
 import iconWeight from '/src/static/icons/weightBlack.svg'
 import iconText from '/src/static/icons/text.svg'
 import iconProduct from '/src/static/icons/item.svg'
+import IsLoading from "/src/components/store/common/IsLoading"
 
 
 
