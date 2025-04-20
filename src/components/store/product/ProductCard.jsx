@@ -41,8 +41,15 @@ const ProductCard=({product})=> {
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '90%',
-                    maxWidth: 1200,
+                    width: {
+                        xs: '95%',  // móviles
+                        sm: '90%',  // tablets pequeñas
+                        md: '80%',  // tablets grandes
+                        lg: '70%',  // pantallas grandes
+                        xl: '60%'   // pantallas extra grandes
+                    },
+                    maxHeight: '90vh',  // evita que se desborde verticalmente
+                    overflowY: 'auto',  // scroll si es necesario
                     bgcolor: 'background.paper',
                     borderRadius: 2,
                     boxShadow: 24,
@@ -52,6 +59,7 @@ const ProductCard=({product})=> {
                     <ProductDetailCard product={product} />
                 </Box>
             </Modal>
+
 
             <div 
                 className="w-full h-full px-4 pt-4 pb-2 cursor-pointer flex flex-col items-center gap-2"
