@@ -1,12 +1,8 @@
-import { useAuth } from "/src/hooks/useAuth"
 import { memo } from "react"
-import { Link } from "react-router-dom"
-import bell from '/src/static/icons/bell_filled.svg'
-import store from '/src/static/icons/store.svg'
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "/src/hooks/useAuth"
 import logo from "/src/static/img/logo.svg"
-import logout from "/src/static/icons/power.svg"
-import ButtomViews from "/src/components/common/ButtomViews"
-
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 
 const NavAdmin =()=> {
 
@@ -14,6 +10,8 @@ const NavAdmin =()=> {
       middleware: 'auth',
       url: '/admin'
     })
+
+    const navigate = useNavigate()
     
     return (
     
@@ -36,8 +34,10 @@ const NavAdmin =()=> {
             <p>Hola! {user.name}</p>
           )}
         </div>
-        <ButtomViews/>
-        
+        <StoreMallDirectoryIcon 
+          sx={{cursor:'pointer', color:'primary.main', fontSize:30}}
+          onClick={()=>navigate('/store')}
+        />
       </div>
     
     ) 
