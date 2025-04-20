@@ -52,6 +52,7 @@ const Cart=()=> {
             <Stack direction={{ xs: 'column', sm: 'row' }} sx={{width:1}}>
                 {/* Contenedor de productos */}
                 <Box
+                    order={{ xs: 2, sm: 1 }}
                     sx={{
                         flexGrow: 1,
                         overflowY: 'auto',
@@ -68,7 +69,7 @@ const Cart=()=> {
                 </Box>
 
                 {/* Contenedor de resumen */}
-                <Stack maxWidth={{ sx:100, md:500 }}>
+                <Stack order={{ xs: 1, sm: 2 }} maxWidth={{ sx:100, md:500 }}>
                     <TittleName>Resumen de Compra</TittleName>
                     <Box
                         sx={{
