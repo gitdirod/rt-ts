@@ -1,16 +1,15 @@
 import { memo } from "react";
 import useStore from "../hooks/useStore";
 import { formatearDinero } from "../helpers";
-import SummaryProduct from "../components/SummaryProduct";
 
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "/src/hooks/useAuth";
 import TittleName from "/src/components/store/common/TittleName";
 import useAdmin from "/src/hooks/useAdmin";
-import ModalViewPurchase from "/src/components/customer/ModalViewPurchase";
 import NoProductsToShow from "/src/components/common/NoProductsToShow";
-import iconCuestion from "/src/static/img/cuestions.svg"
-import { urlsSocial } from '/src/data/urlsSocial'
+import { Box, List, ListItem, Stack, Typography } from "@mui/material";
+import ProductCartDrawer from "/src/components/store/product/ProductCartDrawer";
+import { Container } from '@mui/material';
 
 const Cart=()=> {
     const navigate = useNavigate()
@@ -23,41 +22,17 @@ const Cart=()=> {
 
     const { user } = useAuth({middleware: 'guest'})
 
-    const {
-        handleModalStateComponent,
-        handleModalViewComponent,
-        handleCloseModals
-    } = useAdmin()
+
 
     const handleBuy = ()=>{
         if(user?.email_verified_at){
             handleClickModalBuy()
         }else if(user?.email_verified_at === null){
             console.log('verificar cuenta')
-            // toast.error(<span className="font-bold">¡Verificar cuenta!</span>, {
-            //     position: "bottom-center",
-            //     autoClose: 5000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     theme: "colored",
-            // });
         }
         else{
             console.log('inicia sesion')
-            
-            // toast.error(<span className="font-bold">¡Primero debes iniciar sesión!</span>, {
-            //     position: "bottom-center",
-            //     autoClose: 3000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     theme: "colored",
-            // });
+    
             setTimeout(()=>{
                 navigate('/auth/login/')
             }, 5000)
@@ -67,99 +42,86 @@ const Cart=()=> {
     }
     
     return (
-    <div className="flex flex-1 w-full cursor-default text-slate-700 ">
-        {/* {
-            user? <BottomBarClient/>: ''
-        } */}
-        <div className="flex w-full">
-        {/* {
-            user? <SideBarClient/>:''
-        } */}
-        <div 
-            className="mx-auto w-full pb-10 mt-4 flex justify-center items-center flex-col relative"
-        >
-        {/* Contenedor de productos y resumen */}
-        {order.length === 0 ? (
-            <NoProductsToShow icon={iconCuestion} goTo='/store/'/>
-        ):(
 
-        <div className="flex flex-1 w-full flex-col items-center md:flex-row md:items-start md:space-x-4 md:px-4 rounded-sm pb-4">
-            {/* Contenedor de productos */}
-            <div className="flex flex-col justify-between w-11/12 md:w-2/3 overflow-y-auto">
-            
-                <TittleName style='bg-cyanPrimary text-white my-2'>Mi carrito</TittleName>
+        <Container>
+            {/* Contenedor de productos y resumen */}
+            {order.length === 0 ? (
+                <NoProductsToShow goTo='/store/'/>
+                ):(
 
-                <div className="center-c gap-1">
-                    {/* Contenedor de producto */}
-                    <div className="font-bold text-white px-4 py-2 bg-red-700 rounded-md cursor-pointer font-normal">
-                        <a href={urlsSocial.facebook} target="_blank">
-                        Valor a pagar <span className="font-bold">NO INCLUYE GASTOS DE ENVÍO</span>, Antes de realizar tu pago, consulta primero con nuestros asesores. Click aquí para contactar con un vendedor.
-                        </a>
-                    </div>
+            <Stack direction={{ xs: 'column', sm: 'row' }} sx={{width:1}}>
+                {/* Contenedor de productos */}
+                <Box
+                    sx={{
+                        flexGrow: 1,
+                        overflowY: 'auto',
+                        px: 2,
+                    }}
+                >
+                    <List>
+                        {order?.map((product, index) => (
+                        <ListItem divider key={product.id || index} sx={{ mb: 2, p: 0 }}>
+                            <ProductCartDrawer product={product} />
+                        </ListItem>
+                        ))}
+                    </List>
+                </Box>
 
-                    {order.map(product =>(
-                        <SummaryProduct 
-                            key={product.id}
-                            product={product}
-                        />
-                    ))}
-                    
-                </div>
-            </div>
-
-            {/* Contenedor de resumen */}
-            <div className="flex flex-col md:items-center w-11/12  md:w-1/3 font-poppins-bold overflow-y-hidden ">
-                
-                 <TittleName font style='bg-slate-700 text-white my-2'>Resumen de Compra</TittleName>
-
-                <div className="flex flex-col w-full bg-white overflow-hidden border rounded-lg">
-                    
-                    <div className="py-4 px-4">
-                        <div className="flex justify-between items-center px-4">
-                            <p className="font-poppins-regular"> Subtotal</p>
-                            <p>{formatearDinero(subtotal)}</p>
-                        </div>
-                        <div className="flex justify-between items-center px-4">
-                            <p className="font-poppins-regular">Impuestos</p>
-                            <p>{formatearDinero(subtotal * 0.15)}</p>
-                        </div>
-                    </div>
-                    <div className="flex justify-between items-center px-8 py-4 border-t border-t-slate-300">
-                        <p className="font-poppins-regular">Total:</p>
-                        <p>{formatearDinero(subtotal* 1.15)}</p>
-                    </div>
-                    <div className="w-full">
-                        <div 
-                            className="w-full bg-cyanPrimary py-2 hover:bg-slate-700 duration-150 transition-all cursor-pointer"
-                            onClick={()=>{
-                                handleModalStateComponent(true)
-                                handleModalViewComponent(<ModalViewPurchase closeModal={handleCloseModals}/>)
-                            }}
+                {/* Contenedor de resumen */}
+                <Stack maxWidth={{ sx:100, md:500 }}>
+                    <TittleName>Resumen de Compra</TittleName>
+                    <Box
+                        sx={{
+                            border: '1px solid #ddd',
+                            px: 3,
+                            py: 2,
+                            backgroundColor: '#f9f9f9',
+                        }}
+                    >
+                        <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            mb={1}
                         >
-                            <div
-                                className="flex justify-center items-center gap-x-2 text-white font-bold uppercase"
-                            >
-                                <span>Proceder con el pago</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
-                                </svg>
+                            <Typography variant="body2" color="text.secondary">
+                            Subtotal
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                            {formatearDinero(subtotal)}
+                            </Typography>
+                        </Box>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
+                        <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                        >
+                            <Typography variant="body2" color="text.secondary">
+                            Impuestos
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                            {formatearDinero(0.15 * subtotal)}
+                            </Typography>
+                        </Box>
 
-            </div>
-
-        </div>
-
-        )}
-        
-            
-        </div>
-    </div>
-    </div>
+                        <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                        >
+                            <Typography variant="h6" fontWeight="bold">
+                            Total
+                            </Typography>
+                            <Typography variant="h5" fontWeight="bold" sx={{fontFamily: 'poppins-extrabold'}} color="primary">
+                            {formatearDinero(subtotal * 1.15)}
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Stack>
+            </Stack>
+            )}
+        </Container>
     )
 }
 
