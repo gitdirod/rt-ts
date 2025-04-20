@@ -11,7 +11,7 @@ import iconCheck from "/src/static/icons/seller/check.svg"
 import iconDelete from "/src/static/icons/admin/delete.svg"
 
 import {formatearDinero} from "/src/helpers/index"
-import UnidsAvailable from "./UnidsAvailable"
+import UnidsAvailable from "../store/product/UnidsAvailable"
 import { urlsBackend } from "/src/data/urlsBackend"
 
 

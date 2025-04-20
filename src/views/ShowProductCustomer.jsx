@@ -5,7 +5,6 @@ import useAdmin from "/src/hooks/useAdmin"
 import { formatearDinero } from "../helpers"
 import IsLoading from "../components/IsLoading"
 import LikeHart from "../components/LikeHart"
-import UnidsAvailable from "/src/components/seller/UnidsAvailable"
 import BACKEND from "/src/data/backend"
 
 import {
@@ -20,6 +19,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import BoltIcon from '@mui/icons-material/Bolt';
 import CropIcon from '@mui/icons-material/Crop';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import UnidsAvailable from "/src/components/store/product/UnidsAvailable"
 
 
 export async function loader({ params }){

@@ -5,7 +5,7 @@ import { useState, useEffect, memo } from "react"
 import iconCart from '/src/static/icons/cart.svg'
 import Btn from "./admin/Btn"
 import { urlsBackend } from "/src/data/urlsBackend"
-import UnidsAvailable from "./seller/UnidsAvailable"
+import UnidsAvailable from "./store/product/UnidsAvailable"
 import useAdmin from "/src/hooks/useAdmin"
 import ModalViewAddProduct from "./seller/ModalViewAddProduct"
 

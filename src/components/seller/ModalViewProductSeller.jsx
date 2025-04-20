@@ -9,7 +9,7 @@ import iconClose from '/src/static/icons/seller/close.svg'
 import iconItem from "/src/static/icons/item.svg"
 
 import {formatearDinero} from "/src/helpers/index"
-import UnidsAvailable from "./UnidsAvailable"
+import UnidsAvailable from "../store/product/UnidsAvailable"
 import BlockHeader from "/src/components/admin/BlockHeader"
 
 import iconClasificacion from '/src/static/icons/clasificacion_color.svg'
