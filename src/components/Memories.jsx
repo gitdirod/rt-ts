@@ -1,6 +1,6 @@
 import {memo} from 'react'
 import useStore from '/src/hooks/useStore'
-import TittleName from './TittleName'
+import TittleName from './store/common/TittleName'
 import { urlsBackend } from '/src/data/urlsBackend'
 
 const Memories=({})=> {

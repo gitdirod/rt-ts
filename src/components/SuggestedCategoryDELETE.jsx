@@ -1,5 +1,5 @@
 import Product from "./store/product/ProductCard"
-import TittleName from "./TittleName";
+import TittleName from "./store/common/TittleName";
 import useStore from "/src/hooks/useStore"
 
 import React, { useState, useEffect } from 'react';

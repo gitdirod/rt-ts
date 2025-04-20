@@ -5,7 +5,7 @@ import SummaryProduct from "../components/SummaryProduct";
 
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "/src/hooks/useAuth";
-import TittleName from "/src/components/TittleName";
+import TittleName from "/src/components/store/common/TittleName";
 import useAdmin from "/src/hooks/useAdmin";
 import ModalViewPurchase from "/src/components/customer/ModalViewPurchase";
 import NoProductsToShow from "/src/components/common/NoProductsToShow";

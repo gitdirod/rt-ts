@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useStore from '/src/hooks/useStore';
-import TittleName from './TittleName';
+import TittleName from './store/common/TittleName';
 import ProductCartDrawer from './store/product/ProductCartDrawer';
 import { formatearDinero } from '/src/helpers';
 

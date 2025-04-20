@@ -2,7 +2,7 @@ import useStore from "../hooks/useStore"
 import OrderBought from "../components/OrderBought";
 import { useAuth } from "../hooks/useAuth";
 import IsLoading from "../components/store/common/IsLoading";
-import TittleName from "/src/components/TittleName";
+import TittleName from "/src/components/store/common/TittleName";
 
 
 export default function Bought(){
