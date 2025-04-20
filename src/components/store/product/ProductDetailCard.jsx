@@ -241,11 +241,18 @@ export default function ProductDetailCard({product}) {
 
                 <Divider />
 
-                <Box>
-                <Typography  variant="body2" color="text.secondary" mt={1}>
-                {product.description}
-                </Typography>
+                <Box
+                    sx={{
+                        maxHeight: 150, // altura máxima en px
+                        overflowY: 'auto', // scroll vertical
+                        pr: 1 // padding a la derecha para evitar que el texto se esconda detrás del scroll
+                    }}
+                    >
+                    <Typography variant="body2" color="text.secondary" mt={1}>
+                        {product.description}
+                    </Typography>
                 </Box>
+
 
                 <Stack direction={'row'} spacing={4}>
                 {/* <Stack direction="row" spacing={1} alignItems="center">
