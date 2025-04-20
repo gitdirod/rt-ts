@@ -34,9 +34,12 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, re
         transform: 'translate(-50%, -50%)',
         width: 1000,
         bgcolor: 'background.paper',
-        border: '1px solid #000',
+        maxHeight: '95vh',  // evita que se desborde verticalmente
+        overflowY: 'auto',  // scroll si es necesario
+        // border: '1px solid #000',
         boxShadow: 24,
         p: 4,
+        borderRadius: 2,
     };
 
     const [productName, setProductName] = useState(product?.name || '')
