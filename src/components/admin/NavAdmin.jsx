@@ -1,8 +1,9 @@
 import { memo } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useAuth } from "/src/hooks/useAuth"
 import logo from "/src/static/img/logo.svg"
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
+import { Box, Stack } from "@mui/material";
 
 const NavAdmin =()=> {
 
@@ -14,31 +15,34 @@ const NavAdmin =()=> {
     const navigate = useNavigate()
     
     return (
-    
-      <div className="flex  items-center w-full justify-between  h-[50px] border-b bg-white md:px-2">
-        <Link
-          
-          to={'/admin/inventory/products'}
-        >
-          <div  className="">
-            <img 
-              className=" h-10 w-32 object-fill " 
-              src={logo} 
-              alt="logo" 
-            />
-
-          </div>
-        </Link>
-        <div className="flex justify-center items-center text-sm font-bold text-slate-700">
+      <Stack 
+        direction="row"
+        sx={{
+          height:50,
+          px:'2rem',
+          bgcolor:'white',
+          borderBottom:'1px solid #ddd',
+          justifyContent:'space-between',
+          alignItems:'center'
+        }}
+      >
+        <Box sx={{cursor:'pointer'}} onClick={()=>navigate('/admin/inventory/products')}>
+          <img 
+            className=" h-10 w-32 object-fill " 
+            src={logo} 
+            alt="logo" 
+          />
+        </Box>
+        <Stack >
           {user?.name && (
             <p>Hola! {user.name}</p>
           )}
-        </div>
+        </Stack>
         <StoreMallDirectoryIcon 
-          sx={{cursor:'pointer', color:'primary.main', fontSize:30}}
+          sx={{cursor:'pointer', color:'grey.700', fontSize:30}}
           onClick={()=>navigate('/store')}
         />
-      </div>
+      </Stack>
     
     ) 
 }
