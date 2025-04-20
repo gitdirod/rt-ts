@@ -1,6 +1,4 @@
 import { memo, useEffect, useState } from "react"
-import BottomBarClient from "../components/BottomBarClient";
-import SideBarClient from "../components/SideBarClient";
 import { useAuth } from "../hooks/useAuth";
 import {  useNavigate } from "react-router-dom";
 import { timeToText } from "/src/helpers";
@@ -40,9 +38,9 @@ const User=()=> {
       
     return (
           <div className="relative flex flex-col w-full">
-            <BottomBarClient/>
+            {/* <BottomBarClient/> */}
           <div className="flex w-full">
-            <SideBarClient/>
+            {/* <SideBarClient/> */}
             <div 
               className="mx-auto w-full pb-10 mt-4 flex flex-col relative"
             >

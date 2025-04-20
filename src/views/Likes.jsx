@@ -1,7 +1,5 @@
 import { memo } from "react"
 import { useNavigate } from "react-router-dom"
-import SideBarClient from "../components/SideBarClient";
-import BottomBarClient from "../components/BottomBarClient";
 import useStore from "../hooks/useStore";
 import LikeHart from "../components/LikeHart";
 import IsLoading from "../components/store/common/IsLoading";
@@ -23,9 +21,9 @@ const Likes=()=> {
     
     return (
         <div className="relative flex w-full">
-            <BottomBarClient/>
+            {/* <BottomBarClient/> */}
           <div className="flex w-full">
-            <SideBarClient/>
+            {/* <SideBarClient/> */}
             <div 
               className="mx-auto w-full pb-10 mt-4 flex flex-col relative"
             >

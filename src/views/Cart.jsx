@@ -1,9 +1,7 @@
 import { memo } from "react";
 import useStore from "../hooks/useStore";
-import BottomBarClient from "../components/BottomBarClient";
 import { formatearDinero } from "../helpers";
 import SummaryProduct from "../components/SummaryProduct";
-import SideBarClient from "../components/SideBarClient";
 
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "/src/hooks/useAuth";
@@ -70,13 +68,13 @@ const Cart=()=> {
     
     return (
     <div className="flex flex-1 w-full cursor-default text-slate-700 ">
-        {
+        {/* {
             user? <BottomBarClient/>: ''
-        }
+        } */}
         <div className="flex w-full">
-        {
+        {/* {
             user? <SideBarClient/>:''
-        }
+        } */}
         <div 
             className="mx-auto w-full pb-10 mt-4 flex justify-center items-center flex-col relative"
         >

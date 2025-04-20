@@ -1,7 +1,5 @@
 import useStore from "../hooks/useStore"
 import OrderBought from "../components/OrderBought";
-import SideBarClient from "../components/SideBarClient";
-import BottomBarClient from "../components/BottomBarClient";
 import { useAuth } from "../hooks/useAuth";
 import IsLoading from "../components/store/common/IsLoading";
 import TittleName from "/src/components/TittleName";
@@ -20,9 +18,9 @@ export default function Bought(){
 
   return (
     <div className="relative flex w-full">
-        <BottomBarClient/>
+        {/* <BottomBarClient/> */}
       <div className="flex w-full">
-        <SideBarClient/>
+        {/* <SideBarClient/> */}
         <div 
           className="mx-auto w-full pb-10 mt-4 flex flex-col relative"
         >
