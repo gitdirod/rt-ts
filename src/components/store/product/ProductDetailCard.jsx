@@ -21,8 +21,7 @@ import UnidsAvailable from "/src/components/store/product/UnidsAvailable"
 
 export default function ProductDetailCard({product}) {
 
-    const { handleAddOrder } = useStore()
-
+    const { handleAddOrder, toggleDrawerCart } = useStore()
     
     const [images, setImages] = useState([])
     const [indexImage, setIndexImage] = useState(0)
@@ -231,6 +230,7 @@ export default function ProductDetailCard({product}) {
                     size="large"
                     onClick={()=>{
                         updateCantidad(cantidad)
+                        toggleDrawerCart(true)
                     }}
                     >
                     Agregar al carrito
