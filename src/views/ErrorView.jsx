@@ -1,10 +1,10 @@
 import { useRouteError } from "react-router-dom";
-import Navbar from "/src/components/Navbar";
 import Footer from "../components/customer/Footer";
 import Memories from "/src/components/Memories";
 import SuggestedsProducts from "/src/components/SuggestedsProducts";
 import errorImage from "/src/static/img/404.svg"
 import ShowCategories from "/src/components/store/category/ShowCategories";
+import StoreNavbar from "/src/components/store/navbar/StoreNavbar";
 
 export default function ErrorView() {
     const error = useRouteError();
@@ -14,7 +14,7 @@ export default function ErrorView() {
           id="error-page"
           className="min-h-screen bg-slate-100"
         >
-          <Navbar/>
+          <StoreNavbarNavbar/>
           <div
             className="flex justify-center items-center flex-1 "
           >

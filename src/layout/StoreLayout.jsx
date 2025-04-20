@@ -1,9 +1,9 @@
 import { memo } from "react";
 import { Outlet } from "react-router-dom"
-import Navbar from "../components/Navbar"
 import IsLoading from "../components/store/common/IsLoading";
 import CartDrawer from "/src/components/CartDrawer";
 import { GroupService } from "/src/services/GroupService";
+import StoreNavbar from "../components/store/navbar/StoreNavbar";
 
 const StoreLayout = () => {
   const { data } = GroupService.useAllGroups();
@@ -14,7 +14,7 @@ const StoreLayout = () => {
 
   return (
     <div className="relative cursor-default min-h-screen ">
-      <Navbar />
+      <StoreNavbar/>
 
       {/*  Aquí le das margen superior equivalente a la altura del navbar */}
       <div className="flex flex-col  transition-all">

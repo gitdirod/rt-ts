@@ -9,7 +9,7 @@ import logo from "/src/static/img/logo.svg"
 import { Stack } from "@mui/material";
 import useStore from "/src/hooks/useStore";
 
-const Navbar = () => {
+const StoreNavbar = () => {
   const navigate = useNavigate()
 
   const {order, toggleDrawerCart} = useStore()
@@ -54,4 +54,4 @@ const LogoStore = ({ action, logo }) => {
   )
 }
 
-export default memo(Navbar)
+export default memo(StoreNavbar)
