@@ -48,13 +48,13 @@ import UpdatePurchaseOrder,{
 import UpdateProduct,{
     loader as loaderEditItem
 } from './views/admin/UpdateProduct'
-import ShowProductCustomer from '/src/views/ShowProductCustomer'
 import IndexUser from '/src/views/admin/IndexUser'
 
 
 
 
 import ViewProducts from '/src/views/customerView/ViewProducts'
+import ProductDetailPage from '/src/views/ProductDetailPage'
 
 
 
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
             },
             {
                 path:"/store/product/:productName",
-                element: <ShowProductCustomer />,
+                element: <ProductDetailPage />,
             },
             {
                 path:"/store/cart/",
