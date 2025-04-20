@@ -1,4 +1,3 @@
-import {memo, useState} from 'react'
 
 export default function Point() {
 

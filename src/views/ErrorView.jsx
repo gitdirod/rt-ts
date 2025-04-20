@@ -1,10 +1,10 @@
 import { useRouteError } from "react-router-dom";
-import Footer from "../components/customer/Footer";
-import Memories from "/src/components/Memories";
+import Footer from "../components/store/footer/Footer";
+
 import SuggestedsProducts from "/src/components/SuggestedsProducts";
 import errorImage from "/src/static/img/404.svg"
 import ShowCategories from "/src/components/store/category/ShowCategories";
-import StoreNavbar from "/src/components/store/navbar/StoreNavbar";
+import Memories from "/src/components/store/memories/Memories";
 
 export default function ErrorView() {
     const error = useRouteError();

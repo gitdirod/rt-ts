@@ -1,5 +1,5 @@
 import {memo} from 'react'
-import Point from '../Point';
+import Point from './Point';
 import mail from '/src/static/icons/email.svg'
 import iconStore from '/src/static/icons/store.svg'
 import iconComment from '/src/static/icons/commentBlack.svg'
