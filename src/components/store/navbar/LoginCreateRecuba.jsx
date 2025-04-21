@@ -7,15 +7,11 @@ import {
   Tab,
   IconButton,
   Box,
-  TextField,
-  Button,
   Menu,
   MenuItem
 } from '@mui/material';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import PasswordIcon from '@mui/icons-material/Password';
 import { useAuth } from "/src/hooks/useAuth";
 import LoginModal from './LoginModal';
 
@@ -33,15 +29,9 @@ export default function LoginCreateRecuba() {
         setAnchorEl(event.currentTarget);
       } else {
         setOpenDialog(true);
-        console.log('iniciar')
       }
     }
   };
-
-  console.log(user)
-  console.log(isLoading)
-
-
 
   const handleCloseDialog = () => setOpenDialog(false);
   const handleCloseMenu = () => setAnchorEl(null);
