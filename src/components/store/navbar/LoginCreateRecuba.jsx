@@ -8,12 +8,23 @@ import {
   IconButton,
   Box,
   Menu,
-  MenuItem
+  MenuItem,
+  ListItemIcon,
+  Typography,
+  Divider
 } from '@mui/material';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAuth } from "/src/hooks/useAuth";
 import LoginModal from './LoginModal';
+
+
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+
 
 export default function LoginCreateRecuba() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -45,19 +56,63 @@ export default function LoginCreateRecuba() {
       />
 
       {/* Menú desplegable para usuario autenticado */}
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
-        <MenuItem onClick={() => { navigate('/store/user'); handleCloseMenu(); }}>Mi perfil</MenuItem>
-        <MenuItem onClick={() => { navigate('/store/bought'); handleCloseMenu(); }}>Mis compras</MenuItem>
-        <MenuItem onClick={() => { navigate('/store/likes'); handleCloseMenu(); }}>Me gustan</MenuItem>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        slotProps={{
+          paper: {
+            sx: {
+              borderRadius: 2,
+              minWidth: 220,
+              mt: 1,
+              p: 1,
+            },
+          },
+        }}
+      >
+        <Typography sx={{ px: 2, py: 1, fontWeight: 'bold', color: 'text.secondary' }}>
+          ¡Hola, {user?.name}!
+        </Typography>
+
+        <Divider sx={{ my: 1 }} />
+
+        <MenuItem onClick={() => { navigate('/store/user'); handleCloseMenu(); }}>
+          <ListItemIcon>
+            <AccountCircleIcon fontSize="small" />
+          </ListItemIcon>
+          Mi perfil
+        </MenuItem>
+
+        <MenuItem onClick={() => { navigate('/store/bought'); handleCloseMenu(); }}>
+          <ListItemIcon>
+            <ShoppingBagIcon fontSize="small" />
+          </ListItemIcon>
+          Mis compras
+        </MenuItem>
+
+        <MenuItem onClick={() => { navigate('/store/likes'); handleCloseMenu(); }}>
+          <ListItemIcon>
+            <FavoriteBorderIcon fontSize="small" />
+          </ListItemIcon>
+          Me gustan
+        </MenuItem>
+
+        <Divider sx={{ my: 1 }} />
+
         <MenuItem
           onClick={() => {
-            logout(); // o tu función de logout personalizada
+            logout();
             handleCloseMenu();
           }}
         >
+          <ListItemIcon>
+            <LogoutIcon fontSize="small" />
+          </ListItemIcon>
           Cerrar sesión
         </MenuItem>
       </Menu>
+
 
       {/* Dialog de login / registro / recuperación */}
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="xs" fullWidth>
