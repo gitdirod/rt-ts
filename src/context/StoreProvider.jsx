@@ -18,7 +18,7 @@ const StoreProvider = memo(({children}) => {
     
     const [enableUser, setEnableUser] = useState(false)
     const [enableAdminUser, setEnableAdminUser] = useState(false)
-    const [categoriesCurrent, setCategoriesCurrent] = useState([])
+    // const [categoriesCurrent, setCategoriesCurrent] = useState([])
     const [groupToShow, setGroupToShow] = useState({});
     const [order, setOrder] = useState(localStorage.getItem('productsCart')===null ? [] :JSON.parse(localStorage.getItem('productsCart')) )
     const [orderBuy, setOrderBuy] = useState(localStorage.getItem('productsBuy')===null ? [] :JSON.parse(localStorage.getItem('productsBuy')) )
@@ -97,11 +97,11 @@ const StoreProvider = memo(({children}) => {
         swrConfig
     ) 
 
-    const { data: categories, isLoading:isCategories, mutate: mutateCategories } = useSWR('/api/categories', () => 
-        clienteAxios('/api/categories')
-        .then(res => res.data.data),
-        swrConfig
-    )
+    // const { data: categories, isLoading:isCategories, mutate: mutateCategories } = useSWR('/api/categories', () => 
+    //     clienteAxios('/api/categories')
+    //     .then(res => res.data.data),
+    //     swrConfig
+    // )
 
     const { data: landings, mutate: mutateLandings } = useSWR('/api/landings', () => 
         clienteAxios('/api/landings')
@@ -149,10 +149,10 @@ const StoreProvider = memo(({children}) => {
         }
         
     }
-    const handleGetCategories = (id) => {
-        const categoriasGrupo = categories?.filter(categoria => categoria.group_id === id)
-        setCategoriesCurrent(categoriasGrupo)
-    }
+    // const handleGetCategories = (id) => {
+    //     const categoriasGrupo = categories?.filter(categoria => categoria.group_id === id)
+    //     setCategoriesCurrent(categoriasGrupo)
+    // }
    
 
     const toastMessage = (message, success = true)=>{
@@ -240,20 +240,26 @@ const StoreProvider = memo(({children}) => {
     
 
     
-    const handleClikCategoryCurrent= id =>{
-        const categoria = categories?.filter(categoria => categoria.id === id)[0]
-        setCategoryCurrent(categoria)
-    }
+    // const handleClikCategoryCurrent= id =>{
+    //     const categoria = categories?.filter(categoria => categoria.id === id)[0]
+    //     setCategoryCurrent(categoria)
+    // }
     
 
     return(
         <StoreContext.Provider
             value={{
                 showProducts,
-                categories,
                 // groups,
                 // isGroups,
                 // mutateGroups,
+
+                // categories,
+                // isCategories,
+                // mutateCategories,
+                // categoriesCurrent,
+                // handleGetCategories,
+                // handleClikCategoryCurrent,
                 order,
                 likes,
                 orders,
@@ -271,13 +277,10 @@ const StoreProvider = memo(({children}) => {
                 
                 navHeight,
 
-                isCategories,
                 isTypes,
                 customers,
 
-                categoriesCurrent,
                 
-                mutateCategories,
                 mutateLikes,
                 mutateOrders,
                 mutateSoldOrders,
@@ -293,13 +296,11 @@ const StoreProvider = memo(({children}) => {
                 mutateCustomers,
                 
                 
-                handleGetCategories,
                 handleSetMenu,
                 handleGroupToShow,
                 groupToShow,
                 handleSetNavHeight,
                 
-                handleClikCategoryCurrent,
                 categoryCurrent,
     
 

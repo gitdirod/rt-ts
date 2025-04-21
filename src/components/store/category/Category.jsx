@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { memo } from "react";
 import { Card, CardMedia, CardActionArea, CardContent, Typography, Box } from "@mui/material";
-import useStore from "/src/hooks/useStore";
 import { urlsBackend } from "/src/data/urlsBackend";
 
 const Category = ({ categoria, width = 128, height = 100 }) => {
   const navigate = useNavigate();
-  const { handleClikCategoryCurrent, handleSetMenu } = useStore();
+  // const { handleClikCategoryCurrent, handleSetMenu } = useStore();
+
 
   const handleClick = () => {
-    handleClikCategoryCurrent(categoria?.id);
-    handleSetMenu(false);
+    // handleClikCategoryCurrent(categoria?.id);
+    // handleSetMenu(false);
     navigate(
       `/store/products/?cat=${categoria?.name}&ci=${[categoria?.id].join(",")}&gro=${categoria?.group_name}&gi=${categoria?.group_id}`
     );
