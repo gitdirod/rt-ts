@@ -83,6 +83,7 @@ const CustomerView = () => {
       {/* Sidebar */}
       <Box
         sx={{
+          display: { xs: 'none', md: 'block' }, //  oculto en xs y sm, visible desde md
           width: 260,
           position: 'sticky',
           top: 64,
@@ -92,11 +93,12 @@ const CustomerView = () => {
           px: 2,
           borderRight: '1px solid',
           borderColor: 'divider',
-          bgcolor: '#fff'
+          bgcolor: '#fff',
         }}
       >
         <FilterGroups />
       </Box>
+
 
       {/* Contenido */}
       <Box sx={{ flex: 1 }}>

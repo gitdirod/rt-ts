@@ -9,9 +9,10 @@ import {
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useStore from '/src/hooks/useStore';
-import TittleName from './store/common/TittleName';
+
 import ProductCartDrawer from './store/product/ProductCartDrawer';
 import { formatearDinero } from '/src/helpers';
+import TittleName from './store/common/TittleName';
 
 export default function CartDrawer() {
   const { openDrawerCart, toggleDrawerCart, order, subtotal } = useStore();
@@ -20,11 +21,7 @@ export default function CartDrawer() {
     <Drawer anchor="right" open={openDrawerCart} onClose={() => toggleDrawerCart(false)}>
       <Box
         sx={{
-          width: {
-            sx:'90%',
-            md:'50%',
-            lg:500
-          },
+          width: 380,
           height: '100%',
           display: 'flex',
           flexDirection: 'column',

@@ -25,15 +25,15 @@ export default function ProductCartDrawer({product}) {
 
     return (
         <Box
-        sx={{
-            width: '100%',
-            display: 'flex',
-            gap: 2,
-            alignItems: 'center',
-            p: 1,
-            // border: '1px solid #ddd',
-            // borderRadius: 2,
-        }}
+            sx={{
+                width: '100%',
+                display: 'flex',
+                gap: 2,
+                alignItems: 'center',
+                p: 1,
+                // border: '1px solid #ddd',
+                // borderRadius: 2,
+            }}
         >
             {/* Imagen */}
             <Box sx={{ flexShrink: 0 }}>
@@ -91,10 +91,10 @@ export default function ProductCartDrawer({product}) {
                 </Box>
             </Box>
 
-        {/* Eliminar */}
-        <IconButton  onClick={() => handleRemoveProduct(product.id)}>
-            <DeleteIcon />
-        </IconButton>
+            {/* Eliminar */}
+            <IconButton  onClick={() => handleRemoveProduct(product.id)}>
+                <DeleteIcon />
+            </IconButton>
         </Box>
     )
 }
