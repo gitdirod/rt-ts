@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { useNavigate } from 'react-router-dom';
 import clienteAxios from "../config/axios";
 
-export const useAuth = ({ middleware, url } = {}) => {
+export const useAuth = ({ middleware, url, urlLogin } = {}) => {
     const navigate = useNavigate();
     
     const [token, setToken] = useState(localStorage.getItem('AUTH_TOKEN'));
@@ -66,7 +66,7 @@ export const useAuth = ({ middleware, url } = {}) => {
             setErrores({});
             setIsUser(true);
             await userMutate(); // Refresh user data
-            navigate('/admin/inventory/products'); // Redirect after login
+            navigate(urlLogin); // Redirect after login
         } catch (error) {
             setErrores(error.response.data.errors);
         }
