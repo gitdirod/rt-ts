@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Box,
+  Button,
   Drawer,
   List,
   ListItem,
@@ -14,9 +15,11 @@ import useStore from '/src/hooks/useStore';
 import ProductCartDrawer from './store/product/ProductCartDrawer';
 import { formatearDinero } from '/src/helpers';
 import TittleName from './store/common/TittleName';
+import { useNavigate } from 'react-router-dom';
 
 export default function CartDrawer() {
   const { openDrawerCart, toggleDrawerCart, order, subtotal } = useStore();
+  const navigate = useNavigate()
 
   return (
     <Drawer anchor="right" open={openDrawerCart} onClose={() => toggleDrawerCart(false)}>
@@ -129,6 +132,17 @@ export default function CartDrawer() {
                 {formatearDinero(subtotal * 1.15)}
                 </Typography>
             </Box>
+            {order?.length > 0 && (
+              <Button variant='contained' onClick={()=>{
+                navigate('/store/cart')
+                toggleDrawerCart(false)
+
+              }} sx={{
+                width:1
+              }}>
+                Terminar pedido
+              </Button>
+            )}
         </Box>
 
       </Box>
