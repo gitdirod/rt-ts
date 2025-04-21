@@ -43,7 +43,7 @@ const Cart=()=> {
     
     return (
 
-        <Container>
+        <Container sx={{pt:4}}>
             {/* Contenedor de productos y resumen */}
             {order.length === 0 ? (
                 <NoProductsToShow goTo='/store/'/>
