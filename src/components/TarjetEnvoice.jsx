@@ -1,263 +1,160 @@
 import {
-    memo,
-    useRef,
-    useState, 
-    useEffect
-} from 'react'
-import useAdmin from '/src/hooks/useAdmin'
-import { useAuth } from "/src/hooks/useAuth";
-import Alert from './Alert'
-import add from '/src/static/icons/add.svg'
-import close from '/src/static/icons/close.svg'
-import imgUpdate from '/src/static/icons/update.svg'
+Box, Typography, Button, TextField, Stack, Paper, IconButton, Alert
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import { useRef, useState, useEffect, memo } from 'react';
+import { useAuth } from '/src/hooks/useAuth';
 import { ADDRESSES_TYPES } from '/src/data/addressesTypes';
-import Btn from './admin/Btn';
+import useAdmin from '/src/hooks/useAdmin';
 
 
-const TarjetEnvoice=({children, envoiceAddress, envoice = true})=> {
-
-    const {
-        create,
-      } = useAdmin()
-
-    const { 
-        userMutate
-    } = useAuth({
-        middleware: 'auth',
-        url: '/'
-      })
-
-    const [createNew, setCreateNew] = useState(false)
-    const [stateNewTarjet, setStateNewTarjet] = useState(false)
-    const [waitingNewTarjet, setWaitingNewTarjet] = useState(false)
-    const [errorNewTarjet, setErrorNewTarjet] = useState(false)
+const TarjetEnvoice = ({ children, envoiceAddress, envoice = true }) => {
+    const { userMutate } = useAuth({ middleware: 'auth', url: '/' });
+    const { newCreate}= useAdmin()
     
-    const nameRef = useRef()
-    const [ccruc, setCcruc] = useState(envoiceAddress?.['ccruc']?envoiceAddress?.['ccruc']:"")
-    const [phone, setPhone] = useState(envoiceAddress?.phone ? envoiceAddress?.phone : "")
-    const cityRef = useRef()
-    const addressRef = useRef()
-    
-
-
-
-    const handleAddTarjetSubmit = async e =>{
-        e.preventDefault()
-        const tarjetEnvoice = {
-            type: envoice? ADDRESSES_TYPES.ENVOICE: ADDRESSES_TYPES.SEND,
-            people: nameRef.current.value,
-            ccruc: ccruc.replace(/\s+/g, ''),
-            city: cityRef.current.value,
-            address: addressRef.current.value,
-            phone: phone.replace(/\s+/g, '')
-        }
-        create('addresses',tarjetEnvoice, setErrorNewTarjet, setStateNewTarjet, setWaitingNewTarjet)
+    const [formOpen, setFormOpen] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+  
+    const nameRef = useRef();
+    const cityRef = useRef();
+    const addressRef = useRef();
+    const [ccruc, setCcruc] = useState('');
+    const [phone, setPhone] = useState('');
+  
+    useEffect(() => {
+      setCcruc(envoiceAddress?.ccruc ?? '');
+      setPhone(envoiceAddress?.phone ?? '');
+    }, [envoiceAddress]);
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      const sendData = {
+        type: envoice ? ADDRESSES_TYPES.ENVOICE : ADDRESSES_TYPES.SEND,
+        people: nameRef.current.value,
+        ccruc: ccruc.replace(/\s+/g, ''),
+        city: cityRef.current.value,
+        address: addressRef.current.value,
+        phone: phone.replace(/\s+/g, '')
+      };
+  
+      try {
+        await newCreate('/api/addresses', sendData);
+        setFormOpen(false);
+        setErrors({});
+        userMutate();
+      } catch (error) {
+        setErrors(error?.response?.data?.errors || {});
+      } finally {
+        setLoading(false);
       }
-      const updateNumber = (e) => {
-        const val = e.target.value
-        if (e.target.validity.valid) {
-            setPhone(e.target.value)
-        }
-          else if (val === '' || val === '-' ) {
-            setPhone(val)
-          }
-      }
-      const updateCcRuc = (e) => {
-        const val = e.target.value
-        if (e.target.validity.valid) {
-            setCcruc(e.target.value)
-        }
-          else if (val === '' || val === '-' ) {
-            setCcruc(val)
-          }
-      }
-      useEffect(()=>{
-        setPhone(envoiceAddress?.phone ? envoiceAddress?.phone :"")
-        setCcruc(envoiceAddress?.['ccruc']?envoiceAddress?.['ccruc']:"")
-      },[envoiceAddress])
-
-      useEffect(()=>{
-        if(stateNewTarjet){
-            userMutate()
-            setStateNewTarjet(false)
-            setCreateNew(false)
-        }
-      },[waitingNewTarjet])
-
-  return (
-    <div 
-        className=" border p-2 rounded-lg flex-1 bg-white"
-    >
+    };
+  
+    return (
+      <Paper sx={{ p: 3, flex: 1 }}>
         {children}
-        {
-        Object.keys(envoiceAddress). length > 0 && createNew=== false ?
-        <div 
-            className=""
-        >
-            
-            <div className="mt-2 font-poppins-regular">
-                <p className=" font-poppins-semibold">Nombre: <span className="font-poppins-regular"> {envoiceAddress?.['people']}</span></p>
-                <p className=" font-poppins-semibold">CC o RUC: <span className="font-poppins-regular "> {envoiceAddress?.['ccruc']}</span></p>
-                
-                <p className=" font-poppins-semibold">Telefono: <span className=" font-poppins-regular"> {envoiceAddress?.phone}</span></p>
-            </div>
-
-            <div className="border-t">
-                <p className=" font-poppins-semibold">Ciudad: <span className="font-poppins-regular"> {envoiceAddress?.['city']}</span></p>
-            </div>
-
-            <div className="">
-                <p className="font-poppins-semibold">Direción: <span className="font-poppins-regular"> {envoiceAddress?.['address']}</span></p>
-            </div>
-
-            <div className='flex items-center justify-center pt-2'>
-                <div 
-                    className=" py-0.5 text-sm shadow-md w-fit px-4 cursor-pointer bg-[#15A7AE] hover:bg-[#2D565E] transition-all rounded-sm text-center text-white  flex  justify-center items-center gap-x-2 font-bold"
-                    onClick={()=>setCreateNew(true)}
-                >
-                    <img className="w-4 h-4 white" src={imgUpdate} alt="" />
-                    Actualizar
-                </div>
-            </div>
-        </div>
-        :
-        <>
-            {
-                !createNew && (
-                    <div 
-                        className={`cursor-pointer flex items-center gap-x-2 ${envoice ? 'text-pinkPrimary':'text-cyanPrimary'}`}
-                        onClick={()=>setCreateNew(!createNew)}
-                    >
-                        <img 
-                            className={`w-6 h-6 ${envoice?'pink':'cyan'}`}
-                            src={add}
-                            alt="" 
-                        />
-                        <span className=" font-poppins-bold">{envoice ? 'Agregar datos de facturación':'Agregar datos de envío'}</span>
-                    </div>
-                )
-            }
-        </>
-        
-        }
-        {
-            createNew && (
-                <form 
-                className='w-full font-poppins-regular'
-                onSubmit={handleAddTarjetSubmit}
+  
+        {!formOpen && Object.keys(envoiceAddress).length > 0 ? (
+          <>
+            <Stack spacing={1} mt={2}>
+              <Typography><strong>Nombre:</strong> {envoiceAddress?.people}</Typography>
+              <Typography><strong>CC o RUC:</strong> {envoiceAddress?.ccruc}</Typography>
+              <Typography><strong>Teléfono:</strong> {envoiceAddress?.phone}</Typography>
+              <Typography><strong>Ciudad:</strong> {envoiceAddress?.city}</Typography>
+              <Typography><strong>Dirección:</strong> {envoiceAddress?.address}</Typography>
+            </Stack>
+            <Button
+              startIcon={<EditIcon />}
+              variant="contained"
+              sx={{ mt: 2, backgroundColor: '#15A7AE', '&:hover': { backgroundColor: '#2D565E' } }}
+              onClick={() => setFormOpen(true)}
             >
-                <div className='py-1'>
-                    <label 
-                        htmlFor="name"
-                    >
-                        <span className='font-poppins-bold'>Nombre:</span>
-                    </label>
-                    <input 
-                        id='name'
-                        type="text" 
-                        className='border py-1 px-2'
-                        placeholder='Ingresa nombre de destinatario'
-                        defaultValue={envoiceAddress?.['people']}
-                        ref={nameRef}
-                    />
-                    {errorNewTarjet?.people ? <Alert>{errorNewTarjet.people}</Alert> : null}
-                </div>
-
-                <div className='py-1'>
-                    <label 
-                        htmlFor="ccruc"
-                    >
-                        <span className='font-poppins-bold'>CC o RUC:</span>
-                    </label>
-                    <input 
-                        id='ccruc'
-                        type="text" 
-                        className='border py-1 px-2'
-                        placeholder='CC o RUC de destinatario'
-                        onChange={updateCcRuc}
-                        pattern="^-?[0-9]\d*\.?\d*$"
-                        value={ccruc}
-                    />
-                    {errorNewTarjet?.ccruc ? <Alert>{errorNewTarjet.ccruc}</Alert> : null}
-                </div>
-
-                <div className='py-1'>
-                    <label 
-                        htmlFor="phone"
-                    >
-                        <span className='font-poppins-bold'>Telefono:</span>
-                    </label>
-                    <input 
-                        id='phone'
-                        type="tel" 
-                        className='border py-1 px-2'
-                        placeholder='Ingresa # de telefono'
-                        onChange={updateNumber}
-                        pattern="^-?[0-9]\d*\.?\d*$"
-                        value={phone}
-                    />
-                    {errorNewTarjet?.['phone.number'] ? <Alert>{errorNewTarjet['phone.number'][0]}</Alert> : null}
-                    
-
-                </div>
-
-                <div className='py-1'>
-                    <label 
-                        htmlFor="city"
-                    >
-                        <span className='font-poppins-bold'>Ciudad:</span>
-                    </label>
-                    <input 
-                        id='city'
-                        type="text" 
-                        className='border py-1 px-2'
-                        placeholder='Ingresa ciudad de destino'
-                        defaultValue={envoiceAddress?.['city']}
-                        ref={cityRef}
-                    />
-                    {errorNewTarjet?.city ? <Alert>{errorNewTarjet.city}</Alert> : null}
-                </div>
-                <div className='py-1'>
-                    <label 
-                        htmlFor="address"
-                    >
-                        <span className='font-poppins-bold'>Dirección:</span>
-                    </label>
-                    <input 
-                        id='address'
-                        type="text" 
-                        className='border py-1 px-2'
-                        placeholder='Ingresa dirección de destino'
-                        defaultValue={envoiceAddress?.['address']}
-                        ref={addressRef}
-
-                    />
-                    {errorNewTarjet?.address ? <Alert>{errorNewTarjet.address}</Alert> : null}
-                </div>
-                <div className='center-r gap-x-4  mt-1'>
-                    <Btn
-                        icon={add}
-                        text='Guardar'
-                        style='bg-cyanPrimary'
-                    />
-                    <Btn
-                        icon={close}
-                        text='Cancelar'
-                        isButton={false}
-                        action={()=>{
-                            setCreateNew(false)
-                            setErrorNewTarjet({})
-                        }}
-                    />
-                </div>
-            </form>
-            )
-        }
-
-    
-
-    </div>
-  )
-}
-
-export default memo(TarjetEnvoice)
+              Actualizar
+            </Button>
+          </>
+        ) : (
+          <>
+            {!formOpen && (
+              <Button
+                startIcon={<AddIcon />}
+                onClick={() => setFormOpen(true)}
+                sx={{ mt: 2, color: envoice ? 'primary.main' : 'secondary.main' }}
+              >
+                {envoice ? 'Agregar datos de facturación' : 'Agregar datos de envío'}
+              </Button>
+            )}
+          </>
+        )}
+  
+        {formOpen && (
+          <Box component="form" mt={2} onSubmit={handleSubmit}>
+            <Stack spacing={2}>
+              <TextField
+                label="Nombre"
+                defaultValue={envoiceAddress?.people}
+                inputRef={nameRef}
+                error={!!errors.people}
+                helperText={errors.people}
+                fullWidth
+              />
+              <TextField
+                label="CC o RUC"
+                value={ccruc}
+                onChange={(e) => setCcruc(e.target.value)}
+                error={!!errors.ccruc}
+                helperText={errors.ccruc}
+                fullWidth
+              />
+              <TextField
+                label="Teléfono"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                error={!!errors['phone.number']}
+                helperText={errors['phone.number']}
+                fullWidth
+              />
+              <TextField
+                label="Ciudad"
+                defaultValue={envoiceAddress?.city}
+                inputRef={cityRef}
+                error={!!errors.city}
+                helperText={errors.city}
+                fullWidth
+              />
+              <TextField
+                label="Dirección"
+                defaultValue={envoiceAddress?.address}
+                inputRef={addressRef}
+                error={!!errors.address}
+                helperText={errors.address}
+                fullWidth
+              />
+  
+              <Stack direction="row" spacing={2}>
+                <Button type="submit" variant="contained" color="primary" disabled={loading}>
+                  Guardar
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  startIcon={<CloseIcon />}
+                  onClick={() => {
+                    setFormOpen(false);
+                    setErrors({});
+                  }}
+                >
+                  Cancelar
+                </Button>
+              </Stack>
+            </Stack>
+          </Box>
+        )}
+      </Paper>
+    );
+  };
+  
+  export default memo(TarjetEnvoice);
+  

@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 
 import LogoutIcon from '@mui/icons-material/Logout';
-import UpdateIcon from '@mui/icons-material/Update';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import PersonIcon from '@mui/icons-material/Person';
@@ -72,27 +71,25 @@ const User = () => {
           </Stack>
           <Stack direction="row" alignItems="center" spacing={1}>
             <PhoneIphoneIcon color="action" />
-            <Typography>Teléfono: {user.phone}</Typography>
+            <Typography>
+              Teléfonos:&nbsp;
+              {user.phones && user.phones.length > 0
+                ? user.phones.join(', ')
+                : 'No registrados'}
+            </Typography>
           </Stack>
-          <Button
-            startIcon={<UpdateIcon />}
-            variant="contained"
-            sx={{ mt: 2, alignSelf: 'start', backgroundColor: '#15A7AE', '&:hover': { backgroundColor: '#2D565E' } }}
-          >
-            Actualizar
-          </Button>
         </Stack>
       </Paper>
 
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
         <TarjetEnvoice envoiceAddress={envoiceAddress}>
-          <Typography color="primary" fontWeight="bold" variant="h6" display="flex" alignItems="center" gap={1}>
+          <Typography color="grey.800" fontWeight="bold" variant="h6" display="flex" alignItems="center" gap={1}>
             <ReceiptIcon /> Datos de facturación
           </Typography>
         </TarjetEnvoice>
 
         <TarjetEnvoice envoiceAddress={sendAddress} envoice={false}>
-          <Typography color="secondary" fontWeight="bold" variant="h6" display="flex" alignItems="center" gap={1}>
+          <Typography color="grey.800" fontWeight="bold" variant="h6" display="flex" alignItems="center" gap={1}>
             <LocalShippingIcon /> Datos de envío
           </Typography>
         </TarjetEnvoice>
