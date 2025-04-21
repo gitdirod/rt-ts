@@ -1,8 +1,8 @@
-import useStore from "../hooks/useStore"
-import OrderBought from "../components/OrderBought";
-import { useAuth } from "../hooks/useAuth";
-import IsLoading from "../components/store/common/IsLoading";
+import useStore from "/src/hooks/useStore"
+import { useAuth } from "/src/hooks/useAuth";
+import IsLoading from "/src/components/store/common/IsLoading";
 import TittleName from "/src/components/store/common/TittleName";
+import OrderBought from "/src/components/OrderBought";
 
 
 export default function Bought(){

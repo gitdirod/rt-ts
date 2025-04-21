@@ -1,11 +1,11 @@
 import { memo } from "react"
 import { useNavigate } from "react-router-dom"
-import useStore from "../hooks/useStore";
-import LikeHart from "../components/LikeHart";
-import IsLoading from "../components/store/common/IsLoading";
+import useStore from "/src/hooks/useStore";
+import IsLoading from "/src/components/store/common/IsLoading";
 
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "/src/hooks/useAuth";
 import TittleName from "/src/components/store/common/TittleName";
+import LikeHart from "/src/components/LikeHart";
 
 
 const Likes=()=> {

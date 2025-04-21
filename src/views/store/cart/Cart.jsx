@@ -1,6 +1,6 @@
 import { memo } from "react";
-import useStore from "../hooks/useStore";
-import { formatearDinero } from "../helpers";
+import useStore from "../../../hooks/useStore";
+import { formatearDinero } from "../../../helpers";
 
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "/src/hooks/useAuth";

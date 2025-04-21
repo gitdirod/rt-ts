@@ -1,7 +1,7 @@
 import { useEffect, useState, memo } from "react"
 import { useLocation } from "react-router-dom"
 import useAdmin from "/src/hooks/useAdmin"
-import IsLoading from "../components/store/common/IsLoading"
+import IsLoading from "/src/components/store/common/IsLoading"
 import ProductDetailCard from "/src/components/store/product/ProductDetailCard"
 import { Box } from "@mui/material"
 

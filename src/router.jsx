@@ -3,13 +3,12 @@ import {createBrowserRouter, Outlet, Navigate } from 'react-router-dom'
 // Vista consumidor
 import AuthLayout from './layout/AuthLayout'
 import StoreLayout from './layout/StoreLayout'
-import Cart from './views/Cart'
+import Cart from './views/store/cart/Cart'
 import Index from './views/Index'
 import Login from './views/auth/Login'
 import Register from './views/auth/Register'
-import User from './views/User'
-import Bought from './views/Bought'
-import Likes from './views/Likes'
+import User from './views/store/user/User'
+
 
 //  Vista Administrador
 import ErrorView from "/src/views/ErrorView"
@@ -53,8 +52,10 @@ import ErrorView from "/src/views/ErrorView"
 
 
 
-import ViewProducts from '/src/views/customerView/ViewProducts'
-import ProductDetailPage from '/src/views/ProductDetailPage'
+import Bought from '/src/views/store/bought/Bought'
+import ProductDetailPage from '/src/views/store/product/ProductDetailPage'
+import ViewProducts from '/src/views/store/product/ViewProducts'
+import Likes from '/src/views/store/likes/Likes'
 
 
 
