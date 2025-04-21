@@ -95,7 +95,7 @@ export const useAuth = ({ middleware, url, urlLogin } = {}) => {
             });
             localStorage.removeItem('AUTH_TOKEN');
             localStorage.removeItem('USER_ROLE');
-            localStorage.removeItem('productsCart');
+            // localStorage.removeItem('productsCart');
             userMutate(undefined, false); // Clear user data
             navigate(url); // Redirect after logout
         } catch (error) {

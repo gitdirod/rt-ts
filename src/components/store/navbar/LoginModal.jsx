@@ -26,7 +26,7 @@ export default function LoginModal() {
   return (
     <Box component="form" onSubmit={handleSubmit} mt={2}>
       <Box sx={{ display: 'flex', flexDirection: 'column',  mb: 2, gap:1 }}>
-        <Stack direction="row">
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 2 }}>
           <AlternateEmailIcon sx={{ color: 'action.active', mr: 1 }} />
           <TextField 
             value={email}
@@ -36,7 +36,7 @@ export default function LoginModal() {
             type="email" 
             fullWidth 
           />
-        </Stack>
+        </Box>
         {errores?.email && (
             <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
             {errores?.email}
@@ -44,7 +44,7 @@ export default function LoginModal() {
         )}
       </Box>
       <Box sx={{ display: 'flex', flexDirection:'column', mb: 2, gap:1 }}>
-        <Stack direction="row">
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 2 }}>
           <PasswordIcon sx={{ color: 'action.active', mr: 1 }} />
           <TextField 
             value={password}
@@ -54,7 +54,7 @@ export default function LoginModal() {
             type="password" 
             fullWidth 
           />
-        </Stack>
+        </Box>
         {errores?.password && (
             <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
             {errores?.password}
