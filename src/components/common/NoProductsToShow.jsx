@@ -6,13 +6,13 @@ export default function NoProductsToShow({goTo}) {
   return (
     <Link 
       to={goTo}
-      className="  font-poppins-bold p-8 center-c gap-y-4 text-slate-700 text-md border shadow rounded-lg bg-white "
+      className="  font-poppins-bold p-8 center-c gap-y-4 text-zinc-700 text-md border shadow rounded-lg bg-white "
     >
 
-        <ProductionQuantityLimitsIcon sx={{fontSize:'10rem'}}/>
+        <ProductionQuantityLimitsIcon color='error' sx={{fontSize:'10rem'}}/>
         <div className="center-c">
             <p className="text-4xl md:px-10">Aún no tienes productos para mostrar</p>
-            <span className="font-normal text-xl">Vuelve cuando hayas cargado un artículo al carrito.</span>
+            <span className="font-normal text-xl">Vuelve cuando hayas cargado artículos al carrito.</span>
         </div>
     </Link>
   )
