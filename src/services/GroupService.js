@@ -3,6 +3,7 @@ import { fetchData, swrConfig} from '/src/utils/fetchData';
 import BACKEND from '/src/data/backend';
 
 export const GroupService = {
+    
     useAllGroups: () => {
         const url = BACKEND.GROUPS.KEY;
 

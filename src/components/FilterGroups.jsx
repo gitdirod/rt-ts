@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import {
   Typography,
   Accordion,
@@ -8,14 +8,15 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Divider
+  Box,
+  CircularProgress
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { GroupService } from '/src/services/GroupService';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-export default function FilterGroups() {
-  const { data: groups } = GroupService.useAllGroups();
+const FilterGroups= () => {
+  const { data: groups, loading } = GroupService.useAllGroups();
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -37,6 +38,14 @@ export default function FilterGroups() {
     });
     navigate(`/store/products/?${searchParams.toString()}`);
   };
+
+  if (loading || !groups) {
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -100,3 +109,5 @@ export default function FilterGroups() {
     </>
   );
 }
+
+export default memo(FilterGroups)

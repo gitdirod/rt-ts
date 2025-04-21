@@ -17,7 +17,7 @@ const StoreProvider = memo(({children}) => {
     const [enableUser, setEnableUser] = useState(false)
     const [enableAdminUser, setEnableAdminUser] = useState(false)
     // const [categoriesCurrent, setCategoriesCurrent] = useState([])
-    const [groupToShow, setGroupToShow] = useState({});
+    // const [groupToShow, setGroupToShow] = useState({});
     const [order, setOrder] = useState(localStorage.getItem('productsCart')===null ? [] :JSON.parse(localStorage.getItem('productsCart')) )
     const [orderBuy, setOrderBuy] = useState(localStorage.getItem('productsBuy')===null ? [] :JSON.parse(localStorage.getItem('productsBuy')) )
     const [subtotal, setSubtotal] = useState(0)
@@ -130,15 +130,15 @@ const StoreProvider = memo(({children}) => {
     }, [orderBuy])
 
    
-    const handleGroupToShow= (id = null) =>{
-        if(id){
-            const group = groups?.filter(group => group.id === id)[0]
-            setGroupToShow(group)
-        }else{
-            setGroupToShow({})
-        }
+    // const handleGroupToShow= (id = null) =>{
+    //     if(id){
+    //         const group = groups?.filter(group => group.id === id)[0]
+    //         setGroupToShow(group)
+    //     }else{
+    //         setGroupToShow({})
+    //     }
         
-    }
+    // }
 
     const toastMessage = (message, success = true)=>{
         if(success){
@@ -266,8 +266,8 @@ const StoreProvider = memo(({children}) => {
                 
                 
                 handleSetMenu,
-                handleGroupToShow,
-                groupToShow,
+                // handleGroupToShow,
+                // groupToShow,
                 handleSetNavHeight,
 
                 handleClearOrder,

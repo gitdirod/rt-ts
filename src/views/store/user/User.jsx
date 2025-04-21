@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "/src/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { timeToText } from "/src/helpers";
 import TarjetEnvoice from "/src/components/TarjetEnvoice";

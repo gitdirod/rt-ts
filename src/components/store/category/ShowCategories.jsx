@@ -2,10 +2,19 @@ import { memo } from "react"
 import Category from "./Category"
 import TittleName from "../common/TittleName";
 import { CategoryService } from "/src/services/CategoryService";
+import { Box, CircularProgress } from "@mui/material";
 
 const ShowCategories =({width='w-40', height='h-auto', font = "text-2xl"})=> {
   
-  const {data:categories} = CategoryService.useAllCategories()
+  const {data:categories, loading} = CategoryService.useAllCategories()
+
+  if (loading || !categories) {
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     
     <div
