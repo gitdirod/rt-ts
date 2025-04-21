@@ -4,8 +4,6 @@ import { createContext, useState, useEffect, memo } from "react"
 import { formatearDinero2 } from '/src/helpers'
 import { swrConfig } from '/src/utils/fetchData'
 
-
-
 const StoreContext = createContext()
 
 const StoreProvider = memo(({children}) => { 
@@ -14,7 +12,7 @@ const StoreProvider = memo(({children}) => {
     const [openDrawerCart, setOpenDrawerCart] = useState(false)
     const toggleDrawerCart = (newOpen) => {
         setOpenDrawerCart(newOpen);
-      };
+    };
     
     const [enableUser, setEnableUser] = useState(false)
     const [enableAdminUser, setEnableAdminUser] = useState(false)
@@ -28,8 +26,6 @@ const StoreProvider = memo(({children}) => {
     const [showMenu, setShowMenu] = useState(false)
     const [showProducts, setShowProducts] = useState([])
     const [navHeight, setNavHeight] = useState(0)
-    const [categoryCurrent, setCategoryCurrent] = useState({})    
-    
 
     const handleSetNavHeight=(higth)=>{
         setNavHeight(higth)
@@ -97,12 +93,6 @@ const StoreProvider = memo(({children}) => {
         swrConfig
     ) 
 
-    // const { data: categories, isLoading:isCategories, mutate: mutateCategories } = useSWR('/api/categories', () => 
-    //     clienteAxios('/api/categories')
-    //     .then(res => res.data.data),
-    //     swrConfig
-    // )
-
     const { data: landings, mutate: mutateLandings } = useSWR('/api/landings', () => 
         clienteAxios('/api/landings')
         .then(res => res.data.data),
@@ -149,15 +139,10 @@ const StoreProvider = memo(({children}) => {
         }
         
     }
-    // const handleGetCategories = (id) => {
-    //     const categoriasGrupo = categories?.filter(categoria => categoria.group_id === id)
-    //     setCategoriesCurrent(categoriasGrupo)
-    // }
-   
 
     const toastMessage = (message, success = true)=>{
         if(success){
-            console.log('ok')
+            console.log(message)
         }else{
             console.log('mal')
         }
@@ -239,27 +224,11 @@ const StoreProvider = memo(({children}) => {
     }
     
 
-    
-    // const handleClikCategoryCurrent= id =>{
-    //     const categoria = categories?.filter(categoria => categoria.id === id)[0]
-    //     setCategoryCurrent(categoria)
-    // }
-    
-
     return(
         <StoreContext.Provider
             value={{
                 showProducts,
-                // groups,
-                // isGroups,
-                // mutateGroups,
-
-                // categories,
-                // isCategories,
-                // mutateCategories,
-                // categoriesCurrent,
-                // handleGetCategories,
-                // handleClikCategoryCurrent,
+        
                 order,
                 likes,
                 orders,
@@ -300,9 +269,6 @@ const StoreProvider = memo(({children}) => {
                 handleGroupToShow,
                 groupToShow,
                 handleSetNavHeight,
-                
-                categoryCurrent,
-    
 
                 handleClearOrder,
                 handleAddOrder,
