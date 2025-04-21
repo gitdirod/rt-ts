@@ -16,8 +16,8 @@ const Inicio=()=> {
       </div> */}
       {/* <SuggestedsProducts/> */}
       <ShowCategories
-        width={200}
-        height={200}
+        width={160}
+        height={160}
         font="text-lg"
       />
   

@@ -99,7 +99,7 @@ const ProductCard=({product})=> {
                             borderColor: 'primary.main',
                             color: 'primary.main',
                             fontWeight: 'bold',
-                            opacity: 0,
+                            opacity: {sx:100, md:0},
                             transition: 'opacity 0.3s ease-in-out',
                             zIndex: 10,
                             '&:hover': {
@@ -107,7 +107,7 @@ const ProductCard=({product})=> {
                                 borderColor: theme.palette.primary.main,
                             },
                         }}
-                        className="group-hover:opacity-100"
+                        className="group-hover:opacity-100 opacity-100 md:opacity-0 "
                         onClick={(e) => {
                             e.stopPropagation(); // evitar navigate al hacer click en el botón
                             handleOpenModal()
