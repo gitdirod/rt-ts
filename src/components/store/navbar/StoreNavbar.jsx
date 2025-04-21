@@ -4,10 +4,11 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Badge } from "@mui/material";
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+
 import logo from "/src/static/img/logo.svg"
 import { Stack } from "@mui/material";
 import useStore from "/src/hooks/useStore";
+import LoginCreateRecuba from "./LoginCreateRecuba";
 
 const StoreNavbar = () => {
   const navigate = useNavigate()
@@ -27,7 +28,7 @@ const StoreNavbar = () => {
         {/* Aquí podrías poner botones, links, etc */}
         <Stack direction="row" spacing={2}>
             <SearchOutlinedIcon sx={{ cursor: 'pointer', fontSize: 30, color: 'grey.700' }} />
-            <PersonOutlinedIcon sx={{ cursor: 'pointer', fontSize: 30, color: 'grey.700' }} />
+            <LoginCreateRecuba/>
             <Badge badgeContent={order?.length} color="primary" overlap="circular" sx={{ cursor: 'pointer'}} onClick={()=>toggleDrawerCart(true)}>
                 <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: 'grey.700' }} />
             </Badge>
