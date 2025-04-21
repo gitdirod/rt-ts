@@ -143,12 +143,15 @@ export default function ProductDetailCard({product}) {
                     </Typography>
                     <Typography variant="caption" color="text.secondary">Más impuestos</Typography>
                 </Box>
-                <Stack direction="row" spacing={2}>
+                <Stack direction={{sx:'column', sm:'row'}} sx={{
+                    justifyContent:'center', gap:1
+                }} spacing={2}>
 
                     {/* Controles de cantidad */}
                     <Box
                     sx={{
-                        display: 'inline-flex',
+                        display: 'flex',
+                        justifyContent:'center',
                         alignItems: 'center',
                         border: '2px solid',
                         borderColor: 'divider',
@@ -157,68 +160,68 @@ export default function ProductDetailCard({product}) {
                         height: 50,
                     }}
                     >
-                    <Box
-                        component="button"
-                        onClick={() => setCantidad(cantidad - 1)}
-                        disabled={cantidad <= 1}
-                        sx={{
-                        width: 50,
-                        height: 50,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        border: 'none',
-                        background: 'transparent',
-                        cursor: 'pointer',
-                        '&:hover': {
-                            backgroundColor: 'grey.200',
-                        },
-                        '&:disabled': {
-                            opacity: 0.4,
-                            cursor: 'not-allowed',
-                        }
-                        }}
-                    >
-                        <RemoveIcon fontSize="medium" />
-                    </Box>
+                        <Box
+                            component="button"
+                            onClick={() => setCantidad(cantidad - 1)}
+                            disabled={cantidad <= 1}
+                            sx={{
+                            width: 50,
+                            height: 50,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: 'none',
+                            background: 'transparent',
+                            cursor: 'pointer',
+                            '&:hover': {
+                                backgroundColor: 'grey.200',
+                            },
+                            '&:disabled': {
+                                opacity: 0.4,
+                                cursor: 'not-allowed',
+                            }
+                            }}
+                        >
+                            <RemoveIcon fontSize="medium" />
+                        </Box>
 
-                    <Box
-                        sx={{
-                        px: 3,
-                        fontWeight: 700,
-                        fontSize: '1.2rem',
-                        minWidth: 50,
-                        textAlign: 'center',
-                        color: 'text.primary'
-                        }}
-                    >
-                        {cantidad}
-                    </Box>
+                        <Box
+                            sx={{
+                            px: 3,
+                            fontWeight: 700,
+                            fontSize: '1.2rem',
+                            minWidth: 50,
+                            textAlign: 'center',
+                            color: 'text.primary'
+                            }}
+                        >
+                            {cantidad}
+                        </Box>
 
-                    <Box
-                        component="button"
-                        onClick={() => setCantidad(cantidad + 1)}
-                        disabled={cantidad >= product.units}
-                        sx={{
-                        width: 50,
-                        height: 50,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        border: 'none',
-                        background: 'transparent',
-                        cursor: 'pointer',
-                        '&:hover': {
-                            backgroundColor: 'grey.200',
-                        },
-                        '&:disabled': {
-                            opacity: 0.4,
-                            cursor: 'not-allowed',
-                        }
-                        }}
-                    >
-                        <AddIcon fontSize="medium" />
-                    </Box>
+                        <Box
+                            component="button"
+                            onClick={() => setCantidad(cantidad + 1)}
+                            disabled={cantidad >= product.units}
+                            sx={{
+                            width: 50,
+                            height: 50,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: 'none',
+                            background: 'transparent',
+                            cursor: 'pointer',
+                            '&:hover': {
+                                backgroundColor: 'grey.200',
+                            },
+                            '&:disabled': {
+                                opacity: 0.4,
+                                cursor: 'not-allowed',
+                            }
+                            }}
+                        >
+                            <AddIcon fontSize="medium" />
+                        </Box>
                     </Box>
 
 

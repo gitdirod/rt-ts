@@ -16,7 +16,7 @@ const StoreNavbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 w-full backdrop-blur-sm bg-white/70 border-b border-zinc-200 shadow-sm transition-all">
-      <div className="container mx-auto flex items-center justify-between  py-2">
+      <div className="container mx-auto flex items-center justify-between  py-2 px-2 sx:px-0">
         <LogoStore
           action={() => {
             navigate('/store')

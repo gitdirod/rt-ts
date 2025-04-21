@@ -4,10 +4,11 @@ import {
   Drawer,
   List,
   ListItem,
-  Divider,
   Typography,
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from '@mui/material';
 import useStore from '/src/hooks/useStore';
 
 import ProductCartDrawer from './store/product/ProductCartDrawer';
@@ -28,10 +29,35 @@ export default function CartDrawer() {
         }}
       >
         {/* Título */}
-        <Box p={2}>
+        <Box p={2} sx={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
           <TittleName>
             <ShoppingCartIcon sx={{ fontSize: 40 }} color="primary" /> Carrito ({order?.length})
           </TittleName>
+
+          {/* Botón de cerrar SOLO en pantallas pequeñas */}
+      <Box
+        sx={{
+          display: { xs: 'flex', md: 'none' },
+          justifyContent: 'flex-end',
+          p: 1,
+        }}
+      >
+        <IconButton
+          onClick={() => toggleDrawerCart(false)}
+          sx={{
+            bgcolor: 'grey.100',
+            boxShadow: 2,
+            width: 40,
+            height: 40,
+            borderRadius: '50%',
+            '&:hover': {
+              bgcolor: 'grey.200',
+            },
+          }}
+        >
+          <CloseIcon sx={{ fontSize: 24, color: 'grey.800' }} />
+        </IconButton>
+      </Box>
         </Box>
 
         {/* Lista con scroll */}
