@@ -11,6 +11,7 @@ export default function LoginModal() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  // const { login, errores } = useAuth({ middleware: 'guest', urlLogin:'/'});
   const { login, errores } = useAuth({ middleware: 'guest', urlLogin:'/'});
 
   const handleSubmit = async (e) => {

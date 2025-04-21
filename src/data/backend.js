@@ -20,6 +20,7 @@ const BACKEND = {
     NUMBERS: createEndpoint('number_colors'),
     NUMBERS_ALL: createEndpoint('number_colors_all'),
     PRODUCTS: createEndpoint('products'),
+    PUBLIC_PRODUCTS: createEndpoint('public-products'),
     BULK_PRODUCTS: createEndpoint('bulk_products'),
     NO_SUGGESTED_PRODUCTS: createEndpoint('no-suggested-products'),
     TAXES: createEndpoint('taxes'),

@@ -66,7 +66,8 @@ export const useAuth = ({ middleware, url, urlLogin } = {}) => {
             setErrores({});
             setIsUser(true);
             await userMutate(); // Refresh user data
-            navigate(urlLogin); // Redirect after login
+            if(urlLogin)
+            {navigate(urlLogin)}
         } catch (error) {
             setErrores(error.response.data.errors);
         }

@@ -24,7 +24,7 @@ const CustomerView = () => {
   const [page, setPage] = useState(1);
   const buttonRef = useRef(null);
 
-  const { data, totalRecords, loading } = ProductService.useProducts({
+  const { data, totalRecords, loading } = ProductService.usePublicProducts({
     page,
     perPage: rowsPerPage,
     name: '',
