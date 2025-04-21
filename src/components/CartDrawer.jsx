@@ -20,7 +20,11 @@ export default function CartDrawer() {
     <Drawer anchor="right" open={openDrawerCart} onClose={() => toggleDrawerCart(false)}>
       <Box
         sx={{
-          width: 550,
+          width: {
+            sx:'90%',
+            md:'50%',
+            lg:500
+          },
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
