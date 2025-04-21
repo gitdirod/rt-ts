@@ -14,10 +14,15 @@ import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PasswordIcon from '@mui/icons-material/Password';
+import useAdmin from '/src/hooks/useAdmin';
 
 export default function LoginCreateRecuba() {
   const [open, setOpen] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
+
+  const { logout, user } = useAdmin()
+
+  console.log(user)
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
