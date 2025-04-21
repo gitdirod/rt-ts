@@ -50,6 +50,13 @@ export const useAuth = ({ middleware, url } = {}) => {
         }
     }, [user, error]);
 
+    useEffect(() => {
+        if (!token) {
+            setIsLoading(false);
+        }
+    }, [token]);
+    
+
 
     const login = async (datos) => {
         try {
