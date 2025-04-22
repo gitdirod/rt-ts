@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { useNavigate } from 'react-router-dom';
 import clienteAxios from "../config/axios";
 
-export const useAuth = ({ middleware, url, urlLogin } = {}) => {
+export const useAuth = ({ middleware, url } = {}) => {
     const navigate = useNavigate();
     
     const [token, setToken] = useState(localStorage.getItem('AUTH_TOKEN'));
@@ -58,7 +58,7 @@ export const useAuth = ({ middleware, url, urlLogin } = {}) => {
     
 
 
-    const login = async (datos) => {
+    const login = async (datos, reload) => {
         try {
             const { data } = await clienteAxios.post('/api/login', datos);
             localStorage.setItem('AUTH_TOKEN', data.token);
@@ -66,8 +66,13 @@ export const useAuth = ({ middleware, url, urlLogin } = {}) => {
             setErrores({});
             setIsUser(true);
             await userMutate(); // Refresh user data
-            if(urlLogin)
-            {navigate(urlLogin)}
+            if(reload)
+            {
+                reload()
+            }else{
+                    
+                navigate('/')
+            }
         } catch (error) {
             setErrores(error.response.data.errors);
         }

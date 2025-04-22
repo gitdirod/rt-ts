@@ -3,6 +3,8 @@ import { Box, Button, TextField, Alert, Stack } from '@mui/material'
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PasswordIcon from '@mui/icons-material/Password';
 import { useAuth } from '/src/hooks/useAuth';
+import { useLocation } from 'react-router-dom';
+
 
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
 
@@ -10,6 +12,10 @@ export default function LoginModal() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const location = useLocation();
+  const urlActual = location.pathname + location.search;
+
 
   // const { login, errores } = useAuth({ middleware: 'guest', urlLogin:'/'});
   const { login, errores } = useAuth({ middleware: 'guest', urlLogin:'/'});
@@ -21,7 +27,7 @@ export default function LoginModal() {
       return;
     }
 
-    await login({ email, password });
+    await login({ email, password }, () => window.location.reload());
   };
 
   return (

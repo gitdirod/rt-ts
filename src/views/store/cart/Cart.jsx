@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import useStore from "../../../hooks/useStore";
 import { formatearDinero } from "../../../helpers";
 
@@ -7,49 +7,55 @@ import { useAuth } from "/src/hooks/useAuth";
 import TittleName from "/src/components/store/common/TittleName";
 import useAdmin from "/src/hooks/useAdmin";
 import NoProductsToShow from "/src/components/common/NoProductsToShow";
-import { Box, List, ListItem, Stack, Typography } from "@mui/material";
+import { Box, Button, List, ListItem, Stack, Typography } from "@mui/material";
 import ProductCartDrawer from "/src/components/store/product/ProductCartDrawer";
 import { Container } from '@mui/material';
+import CheckoutModal from "/src/components/store/cart/CheckoutModal";
+import LoginCreateRecuba from "/src/components/store/navbar/LoginCreateRecuba";
+
+
 
 const Cart=()=> {
     const navigate = useNavigate()
+
+    const [openLogin, setOpenLogin] = useState(false);
+
     
     const {
             order, 
             subtotal, 
-            handleClickModalBuy
+            // handleClickModalBuy
         } = useStore()  
 
     const { user } = useAuth({middleware: 'guest'})
 
 
 
-    const handleBuy = ()=>{
-        if(user?.email_verified_at){
-            handleClickModalBuy()
-        }else if(user?.email_verified_at === null){
-            console.log('verificar cuenta')
-        }
-        else{
-            console.log('inicia sesion')
-    
-            setTimeout(()=>{
-                navigate('/auth/login/')
-            }, 5000)
-            
-        }
+    const [openCheckout, setOpenCheckout] = useState(false);
 
-    }
+    const handleBuy = () => {
+        if (user?.email_verified_at) {
+          setOpenCheckout(true);
+        } else {
+          setOpenLogin(true); // Abre el modal local
+        }
+      };
+      
     
     return (
 
         <Container sx={{pt:4}}>
+            <LoginCreateRecuba openExternal={openLogin} onCloseExternal={() => setOpenLogin(false)} />
+
+
+            <TittleName>Resumen de Compra</TittleName>
             {/* Contenedor de productos y resumen */}
             {order.length === 0 ? (
                 <NoProductsToShow goTo='/store/'/>
                 ):(
 
             <Stack direction={{ xs: 'column', sm: 'row' }} sx={{width:1}}>
+                
                 {/* Contenedor de productos */}
                 <Box
                     order={{ xs: 2, sm: 1 }}
@@ -69,8 +75,8 @@ const Cart=()=> {
                 </Box>
 
                 {/* Contenedor de resumen */}
-                <Stack order={{ xs: 1, sm: 2 }} maxWidth={{ sx:100, md:500 }}>
-                    <TittleName>Resumen de Compra</TittleName>
+                <Stack order={{ xs: 1, sm: 2 }} sx={{gap:2}} width={{ xs:1, sm:0.5, md:0.4 }}>
+                    
                     <Box
                         sx={{
                             border: '1px solid #ddd',
@@ -118,7 +124,12 @@ const Cart=()=> {
                             {formatearDinero(subtotal * 1.15)}
                             </Typography>
                         </Box>
+                        <Button variant="contained" fullWidth sx={{fontWeight:'bold'}} color="primary" onClick={handleBuy}>
+                            Terminar pedido
+                        </Button>
                     </Box>
+                    <CheckoutModal open={openCheckout} onClose={() => setOpenCheckout(false)} />
+                    {/* <CheckoutStepper/> */}
                 </Stack>
             </Stack>
             )}
