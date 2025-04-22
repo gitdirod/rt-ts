@@ -12,7 +12,7 @@ export default function BankDescription({ bank }) {
     <Card variant="outlined" sx={{ mb: 3 }}>
       <CardContent>
         <Grid container spacing={2} alignItems="center">
-          <Grid item>
+          <Grid>
             <Avatar
               variant="rounded"
               src={`/banks/${bank.img}`}
@@ -20,7 +20,7 @@ export default function BankDescription({ bank }) {
               sx={{ width: 'auto', height: 56 }}
             />
           </Grid>
-          <Grid item xs>
+          <Grid>
             <Typography variant="h6" fontWeight="bold">
               {bank.name}
             </Typography>

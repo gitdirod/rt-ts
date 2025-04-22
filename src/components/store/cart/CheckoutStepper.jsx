@@ -20,7 +20,6 @@ export default function CheckoutStepper({ onClose, stepContent1, stepContent2 })
     order, 
     total, 
     subtotal, 
-    mutateSoldOrders,
     handleClearOrder
   } = useStore()
 
@@ -67,7 +66,6 @@ export default function CheckoutStepper({ onClose, stepContent1, stepContent2 })
     const response = await request(BACKEND.SOLD_ORDERS.KEY, 'POST', newOrder);
   
     if (response.success) {
-      mutateSoldOrders();
       handleClearOrder();
     } else {
       console.log(response.errors);
