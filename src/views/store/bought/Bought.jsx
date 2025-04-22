@@ -3,11 +3,13 @@ import { useAuth } from "/src/hooks/useAuth";
 import IsLoading from "/src/components/store/common/IsLoading";
 import TittleName from "/src/components/store/common/TittleName";
 import OrderBought from "/src/components/OrderBought";
+import { SoldOrderService } from "/src/services/SoldOrderService";
 
 
 export default function Bought(){
   
-  const {soldOrders} = useStore()
+  
+  const {data:soldOrders} = SoldOrderService.useAllSoldOrders()
 
   const { user } = useAuth({
     middleware: 'auth',
