@@ -1,6 +1,7 @@
 // src/components/store/cart/CheckoutStepper.jsx
 import { Box, Button, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useState } from 'react';
+import StepOneDeliverySite from './StepOneDeliverySite';
 
 const steps = ['Ubicación de entrega', 'Forma de pago', 'Confirmar pedido'];
 
@@ -19,7 +20,7 @@ export default function CheckoutStepper({
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return stepContent1 || <Typography>Contenido del paso 1</Typography>;
+        return stepContent1 || <StepOneDeliverySite/>;
       case 1:
         return stepContent2 || <Typography>Contenido del paso 2</Typography>;
       case 2:
