@@ -8,6 +8,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import router from './router'
 import theme from './theme'
 import './index.css'
+import './static/fonts/fonts.css';
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
