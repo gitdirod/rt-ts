@@ -6,6 +6,7 @@ const createEndpoint = (endpoint) => ({
 
 const BACKEND = {
     ADS: createEndpoint('ads_youtube'),
+    ADDRESSES: createEndpoint('addresses'),
     USERS: createEndpoint('users'),
     CATEGORIES: createEndpoint('categories'),
     CATEGORIES_ALL: createEndpoint('categories_all'),

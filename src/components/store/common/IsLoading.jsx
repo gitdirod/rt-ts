@@ -4,8 +4,8 @@ import { Box, CircularProgress } from "@mui/material"
 
 const IsLoading = ({bg}) => {
   return (
-    <div className={` h-screen center-r text-center flex-1 ${bg}`}>
-        <div className="absolute center-c">
+    <div className={` h-screen center-r  ${bg}`}>
+        <div className=" center-c">
             <img 
                 className="w-64"
                 src={logo} 

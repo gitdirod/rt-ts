@@ -1,5 +1,5 @@
 import {
-Box, Typography, Button, TextField, Stack, Paper, IconButton, Alert
+Box, Typography, Button, TextField, Stack, Paper
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,21 +8,21 @@ import { useRef, useState, useEffect, memo } from 'react';
 import { useAuth } from '/src/hooks/useAuth';
 import { ADDRESSES_TYPES } from '/src/data/addressesTypes';
 import useAdmin from '/src/hooks/useAdmin';
+import BACKEND from '/src/data/backend';
 
 
 const TarjetEnvoice = ({ children, envoiceAddress, envoice = true }) => {
-    const { userMutate } = useAuth({ middleware: 'auth', url: '/' });
+    const { userMutate, isLoading } = useAuth({ middleware: 'auth', url: '/' });
     const { newCreate}= useAdmin()
     
     const [formOpen, setFormOpen] = useState(false);
-    const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(false);
   
     const nameRef = useRef();
     const cityRef = useRef();
     const addressRef = useRef();
     const [ccruc, setCcruc] = useState('');
     const [phone, setPhone] = useState('');
+    const [errores, setErrores] = useState({});
   
     useEffect(() => {
       setCcruc(envoiceAddress?.ccruc ?? '');
@@ -31,7 +31,7 @@ const TarjetEnvoice = ({ children, envoiceAddress, envoice = true }) => {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
-      setLoading(true);
+      
       const sendData = {
         type: envoice ? ADDRESSES_TYPES.ENVOICE : ADDRESSES_TYPES.SEND,
         people: nameRef.current.value,
@@ -41,16 +41,15 @@ const TarjetEnvoice = ({ children, envoiceAddress, envoice = true }) => {
         phone: phone.replace(/\s+/g, '')
       };
   
-      try {
-        await newCreate('/api/addresses', sendData);
-        setFormOpen(false);
-        setErrors({});
+      const response = await newCreate(BACKEND.ADDRESSES.KEY, sendData);
+      if(response.success){
+        setErrores({})
         userMutate();
-      } catch (error) {
-        setErrors(error?.response?.data?.errors || {});
-      } finally {
-        setLoading(false);
+        setFormOpen(false);
+      }else{
+        setErrores(response.errors)
       }
+
     };
   
     return (
@@ -96,45 +95,45 @@ const TarjetEnvoice = ({ children, envoiceAddress, envoice = true }) => {
                 label="Nombre"
                 defaultValue={envoiceAddress?.people}
                 inputRef={nameRef}
-                error={!!errors.people}
-                helperText={errors.people}
+                error={!!errores.people}
+                helperText={errores.people}
                 fullWidth
               />
               <TextField
                 label="CC o RUC"
                 value={ccruc}
                 onChange={(e) => setCcruc(e.target.value)}
-                error={!!errors.ccruc}
-                helperText={errors.ccruc}
+                error={!!errores.ccruc}
+                helperText={errores.ccruc}
                 fullWidth
               />
               <TextField
                 label="Teléfono"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                error={!!errors['phone.number']}
-                helperText={errors['phone.number']}
+                error={!!errores.phone}
+                helperText={errores.phone}
                 fullWidth
               />
               <TextField
                 label="Ciudad"
                 defaultValue={envoiceAddress?.city}
                 inputRef={cityRef}
-                error={!!errors.city}
-                helperText={errors.city}
+                error={!!errores.city}
+                helperText={errores.city}
                 fullWidth
               />
               <TextField
                 label="Dirección"
                 defaultValue={envoiceAddress?.address}
                 inputRef={addressRef}
-                error={!!errors.address}
-                helperText={errors.address}
+                error={!!errores.address}
+                helperText={errores.address}
                 fullWidth
               />
   
               <Stack direction="row" spacing={2}>
-                <Button type="submit" variant="contained" color="primary" disabled={loading}>
+                <Button type="submit" variant="contained" color="primary" disabled={isLoading}>
                   Guardar
                 </Button>
                 <Button
@@ -143,7 +142,7 @@ const TarjetEnvoice = ({ children, envoiceAddress, envoice = true }) => {
                   startIcon={<CloseIcon />}
                   onClick={() => {
                     setFormOpen(false);
-                    setErrors({});
+                    setErrores({});
                   }}
                 >
                   Cancelar
