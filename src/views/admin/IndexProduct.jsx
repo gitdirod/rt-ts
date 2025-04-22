@@ -177,12 +177,12 @@ export default function MiTablaConPaginacion() {
           </div>
         )}
             name={  
-            <div className='flex items-center'>
+            <Stack direction="row">
               <Inventory2OutlinedIcon color="primary" fontSize="large"/>
-                <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold', fontSize:'2rem'}}>
-                  Productos <Chip label={totalRecords || 0} color="primary"  sx={{font:'bold'}} /> 
-                </Typography>
-            </div>
+              <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold', fontSize:'2rem', color:'grey.800'}}>
+                Productos <Chip label={totalRecords || 0} color="primary"  sx={{font:'bold'}} /> 
+              </Typography>
+            </Stack>
             }
             
         >
