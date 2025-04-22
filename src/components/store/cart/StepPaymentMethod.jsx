@@ -35,7 +35,7 @@ export default function StepPaymentMethod({ onUploadChange }) {
   
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="sm">
       <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
         <Typography variant="h5" color="primary" textAlign="center" sx={{ fontWeight: 'bold', mb: 2 }}>
           Total a pagar: {formatearDinero(total)}
