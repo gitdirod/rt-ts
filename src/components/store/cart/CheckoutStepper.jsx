@@ -2,6 +2,7 @@
 import { Box, Button, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useState } from 'react';
 import StepOneDeliverySite from './StepOneDeliverySite';
+import StepTwoPaymentMethod from './StepTwoPaymentMethod';
 
 const steps = ['Ubicación de entrega', 'Forma de pago', 'Confirmar pedido'];
 
@@ -22,7 +23,7 @@ export default function CheckoutStepper({
       case 0:
         return stepContent1 || <StepOneDeliverySite/>;
       case 1:
-        return stepContent2 || <Typography>Contenido del paso 2</Typography>;
+        return stepContent2 || <StepTwoPaymentMethod/>;
       case 2:
         return stepContent3 || <Typography>Contenido del paso 3</Typography>;
       default:

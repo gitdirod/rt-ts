@@ -43,7 +43,7 @@ export default function StepOneDeliverySite() {
             <FormControlLabel
               value="fuera"
               control={<Radio />}
-              label="Entregas fuera de Quito - Consultar primero con un asesor (pueden aplicar cargos adicionales)"
+              label="Entregas fuera de Quito - Consultar primero con un asesor (aplicar cargos adicionales)"
               disabled
             />
           </RadioGroup>
