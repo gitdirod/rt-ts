@@ -21,5 +21,21 @@ export const SoldOrderService = {
             error,
             mutate
         };
+    },
+    useSoldOrderById: (id) => {
+        const url = `${BACKEND.SOLD_ORDERS.KEY}/${id}`;
+
+        const { data, error, mutate } = useSWR(
+            id ? url : null, // evita llamada si id es null/undefined
+            fetchData,
+            swrConfig
+        );
+
+        return {
+            data: data?.data || null,
+            loading: !data && !error,
+            error,
+            mutate
+        };
     }
 };
