@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import TarjetEnvoice from './TarjetEnvoice'
 import { useAuth } from '/src/hooks/useAuth';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 
 export default function StepBillingInformation() {
@@ -18,10 +18,12 @@ export default function StepBillingInformation() {
         address?.envoice && setEnvoiceAddress(address.envoice);
     }, [user]);
     return (
-        <TarjetEnvoice envoiceAddress={envoiceAddress}>
+        <Container maxWidth="sm">
+            <TarjetEnvoice envoiceAddress={envoiceAddress}>
             <Typography color="grey.800" fontWeight="bold" variant="h6" display="flex" alignItems="center" gap={1}>
             <ReceiptIcon /> Datos de facturación
             </Typography>
         </TarjetEnvoice>
+        </Container>
     )
 }
