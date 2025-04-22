@@ -1,7 +1,6 @@
 import {  memo, useEffect, useState } from "react"
 import IsLoading from "../../components/store/common/IsLoading"
 import { useNavigate } from "react-router-dom"
-import useStore from "../../hooks/useStore"
 import BlockHeader from "/src/components/admin/BlockHeader"
 // import TableTrOrder from "/src/components/admin/TableTrOrder"
 import Total from '/src/components/admin/Total'
@@ -11,10 +10,12 @@ import TableHeader from "/src/components/admin/TableHeader"
 import TagPayment from '/src/components/admin/TagPayment'
 import TagTracking from '/src/components/admin/TagTracking'
 import { formatearDinero } from '/src/helpers'
+import { SoldOrderService } from "/src/services/SoldOrderService"
 
 
 const IndexSoldOrder= () => {
-  const {soldOrders} = useStore()
+
+  const {data: soldOrders} = SoldOrderService.useAllSoldOrders()
 
   const navigate = useNavigate()
   const handleSelect =(id)=>{
