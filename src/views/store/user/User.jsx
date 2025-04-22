@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { useAuth } from "/src/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { timeToText } from "/src/helpers";
-import TarjetEnvoice from "/src/components/TarjetEnvoice";
+
 
 import {
   Box,
@@ -20,6 +20,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import CircularProgress from '@mui/material/CircularProgress';
 import TittleName from "/src/components/store/common/TittleName";
+import TarjetEnvoice from "/src/components/store/cart/TarjetEnvoice";
 
 const User = () => {
   const navigate = useNavigate();

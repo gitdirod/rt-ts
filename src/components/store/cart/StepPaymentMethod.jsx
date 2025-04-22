@@ -18,7 +18,7 @@ import BankDescription from './BankDescription';
 import useStore from '/src/hooks/useStore';
 import { formatearDinero } from '/src/helpers';
 
-export default function StepTwoPaymentMethod() {
+export default function StepPaymentMethod() {
   const [paymentMethod, setPaymentMethod] = useState('transfer');
 
   const handlePaymentChange = (event) => {
@@ -33,12 +33,11 @@ export default function StepTwoPaymentMethod() {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
             <Typography
                 variant="h5"
                 color="primary"
-                fullWidth
                 textAlign="center"
                 sx={{ fontWeight: 'bold', mb: 2 }}
             >

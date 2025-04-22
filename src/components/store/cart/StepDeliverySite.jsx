@@ -10,7 +10,7 @@ import {
   Paper
 } from '@mui/material';
 
-export default function StepOneDeliverySite() {
+export default function StepDeliverySite() {
   const [deliveryOption, setDeliveryOption] = useState('local');
 
   const handleChange = (event) => {
