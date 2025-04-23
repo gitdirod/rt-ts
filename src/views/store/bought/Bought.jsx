@@ -1,12 +1,30 @@
-import useStore from "/src/hooks/useStore"
 import { useAuth } from "/src/hooks/useAuth";
 import IsLoading from "/src/components/store/common/IsLoading";
 import TittleName from "/src/components/store/common/TittleName";
-import OrderBought from "/src/components/OrderBought";
 import { SoldOrderService } from "/src/services/SoldOrderService";
+import { formatearDinero, timeToText } from "/src/helpers";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Container,
+} from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Bought(){
+
+  const navigate = useNavigate()
+  const handleClick = (order) => {
+    // handleClikCategoryCurrent(categoria?.id);
+    // handleSetMenu(false);
+    navigate(`/store/bought/${order.id}`);
+  };
   
   
   const {data:soldOrders} = SoldOrderService.useAllSoldOrders()
@@ -19,56 +37,40 @@ export default function Bought(){
   if(user === undefined) return(<IsLoading/>)
 
   return (
-    <div className="relative flex w-full">
-        {/* <BottomBarClient/> */}
-      <div className="flex w-full">
-        {/* <SideBarClient/> */}
-        <div 
-          className="mx-auto w-full pb-10 mt-4 flex flex-col relative"
-        >
-          <div 
-            className="flex flex-col items-center md:flex-row md:items-start md:space-x-4 md:px-4 rounded-md pb-4"
-          >
-            <div className="flex flex-col justify-between w-full">
-              
-              <div className="flex flex-col justify-center items-start w-full my-2">
-                <TittleName style='bg-cyanPrimary text-white'>
-                  Mis Compras
-                </TittleName>
-              </div>
-
-
-              <div className="flex flex-col gap-1 items-center p-2 ">
-                  {/* Contenedor de producto */}
-                <div className="w-full center-r font-poppins-bold text-white bg-slate-700 rounded-lg">
-                  <div className="w-1/4 center-r">
-                    Orden
-                  </div>
-                  <div className="w-1/4 center-r">
-                    Fecha
-                  </div>
-                  <div className="w-1/4 center-r">
-                    Total
-                  </div>
-                  <div className="w-1/4 center-r">
-                    Estado
-                  </div>
-                </div>
-                  {soldOrders?.map(order =>(
-                    <OrderBought 
-                      order={order}
-                      key={order.id}
-                    />
-                      
-                  ))}
-                  
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    
+    <Container maxWidth="lg" sx={{py:6}}>
+      <TittleName>
+        Mis compras
+      </TittleName>
+      <TableContainer component={Paper} sx={{ mx: 'auto', my: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>ID</strong></TableCell>
+              <TableCell><strong>Fecha</strong></TableCell>
+              <TableCell align="right"><strong>Total</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {soldOrders?.map((order) => (
+              <TableRow 
+                sx={{cursor:'pointer'}}
+                key={order.id}
+                onClick={() => {
+                  handleClick(order); // por ejemplo, abrir modal de vista
+                }}
+              >
+                <TableCell>#{order.id}</TableCell>
+                <TableCell>
+                  {timeToText(order.created_at, 'dddd D [de] MMMM [de] YYYY - HH:mm')}
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                  {formatearDinero(order.total)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   )
 }

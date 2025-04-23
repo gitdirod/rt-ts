@@ -10,6 +10,7 @@ import {
   Stack,
   Button,
   Paper,
+  Container,
 } from "@mui/material";
 
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -49,12 +50,12 @@ const User = () => {
   }
 
   return (
-    <Box className="container mx-auto px-2 py-6">
+    <Container maxWidth="lg" sx={{py:6}}>
       <TittleName>
         Mi Perfil
       </TittleName>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, my: 2 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="subtitle2" color="text.secondary">
             Desde: {timeToText(user?.created_at, 'LLL')}
@@ -106,7 +107,7 @@ const User = () => {
           Cerrar sesión
         </Button>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

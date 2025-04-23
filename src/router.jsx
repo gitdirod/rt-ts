@@ -58,6 +58,7 @@ import Bought from '/src/views/store/bought/Bought'
 import ProductDetailPage from '/src/views/store/product/ProductDetailPage'
 import ViewProducts from '/src/views/store/product/ViewProducts'
 import Likes from '/src/views/store/likes/Likes'
+import BoughtDetailPage from '/src/views/store/bought/BoughtDetailPage'
 
 
 
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
             {
                 path:"/store/bought/",
                 element:<Bought/>,
+            },
+            {
+                path: "/store/bought/:id",
+                element: <BoughtDetailPage />,
             },
             {
                 path:"/store/likes/",
