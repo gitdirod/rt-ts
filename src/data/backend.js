@@ -14,6 +14,7 @@ const BACKEND = {
     ICONS: createEndpoint('iconos'),
     MEMORIES: createEndpoint('memories'),
     LANDING: createEndpoint('landings'),
+    LIKES: createEndpoint('likes'),
     SUGGESTIONS: createEndpoint('suggestions'),
     SUGGESTEDS: createEndpoint('suggesteds'),
     SIZES: createEndpoint('sizes'),
