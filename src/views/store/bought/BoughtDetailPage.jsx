@@ -27,7 +27,7 @@ export default function BoughtDetailPage() {
   const { user } = useAuth({ middleware: 'auth', url: '/' });
 
   if (!user || isLoading || !order) return <IsLoading />;
-  console.log(order)
+  // console.log(order)
 
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>
