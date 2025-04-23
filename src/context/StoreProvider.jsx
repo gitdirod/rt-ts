@@ -40,8 +40,8 @@ const StoreProvider = memo(({children}) => {
         setEnableAdminUser(user)
     }
 
-    const { data: likes, mutate: mutateLikes } = useSWR(enableUser ? '/api/likes': null, () => 
-        clienteAxios('/api/likes').then(res => res.data.data), swrConfig)
+    // const { data: likes, mutate: mutateLikes } = useSWR(enableUser ? '/api/likes': null, () => 
+    //     clienteAxios('/api/likes').then(res => res.data.data), swrConfig)
     
 
     // const { data: orders, mutate: mutateOrders } = useSWR(enableAdminUser || enableUser ?'/api/orders':null, () => 
@@ -230,10 +230,14 @@ const StoreProvider = memo(({children}) => {
                 showProducts,
         
                 order,
-                likes,
+                // likes,
+                // mutateLikes,
+                // mutateOrders,
                 // orders,
                 // soldOrders,
                 // mutateSoldOrders,
+                // handleGroupToShow,
+                // groupToShow,
                 purchases,
                 showMenu,
                 types,
@@ -251,8 +255,6 @@ const StoreProvider = memo(({children}) => {
                 customers,
 
                 
-                mutateLikes,
-                // mutateOrders,
                 mutatePurchases,
                 mutateTypes,
                 mutateLandings,
@@ -266,8 +268,6 @@ const StoreProvider = memo(({children}) => {
                 
                 
                 handleSetMenu,
-                // handleGroupToShow,
-                // groupToShow,
                 handleSetNavHeight,
 
                 handleClearOrder,
