@@ -13,8 +13,8 @@ export default function SidebarAdmin() {
 
 
 return (
-    <div className='flex  border-r shadow bg-white'>
-        <div className='w-fit p-1'>
+    <div className='flex  border-r bg-white'>
+        <div className='w-fit'>
         {
             storeViews?.map(page=>
                 {
@@ -28,7 +28,7 @@ return (
                     return(
                         (
                             <div
-                                className={` ${isPage?'shadow bg-slate-700':''} rounded-lg  my-1 overflow-hidden`} 
+                                className={` ${isPage?' bg-slate-700':''} rounded-lg  my-1 overflow-hidden`} 
                                 key={page.id}
                             >
                                 <Link

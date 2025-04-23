@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, TablePagination,
@@ -27,11 +26,6 @@ import ModalSeeProduct from '/src/components/admin/modals/ModalSeeProduct';
 import ModalStoreUpdateProduct from '/src/components/admin/modals/ModalStoreUpdateProduct';
 
 export default function MiTablaConPaginacion() {
-
-  const navigate = useNavigate()
-  const addProduct =()=>{
-    navigate(`/admin/inventory/storeProduct`)
-  }
  
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
@@ -130,8 +124,6 @@ export default function MiTablaConPaginacion() {
       <Modal
         open={open}
         onClose={handleClose}
-        // aria-labelledby="modal-modal-title"
-        // aria-describedby="modal-modal-description"
       >
         <ModalSeeProduct product={selectedProduct}/>
       </Modal>
@@ -153,10 +145,18 @@ export default function MiTablaConPaginacion() {
           }}
         />
       </Modal>
+        <Box sx={{display:'flex', my:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
+          <Stack direction="row" flexShrink={0} alignItems="center">
+            <Inventory2OutlinedIcon color="primary" fontSize="large"/>
+            <Typography 
+              component="div" 
+              sx={{ fontWeight: 'bold', fontSize:'1.8rem', color:'grey.800' }}
+            >
+              Productos <Chip label={totalRecords || 0} color="primary" sx={{ fontWeight: 'bold', fontSize: '1rem' }} />
+            </Typography>
 
-      <BlockHeader
-        middle = {(
-          <div className='flex items-center'>
+          </Stack>
+          <Stack direction="row" alignItems="center" >
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
               <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
               <TextField id="input-with-sx" label="Nombre" variant="standard" 
@@ -173,44 +173,56 @@ export default function MiTablaConPaginacion() {
                 }}
               />
             </Box>
-
-          </div>
-        )}
-            name={  
-            <Stack direction="row">
-              <Inventory2OutlinedIcon color="primary" fontSize="large"/>
-              <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold', fontSize:'2rem', color:'grey.800'}}>
-                Productos <Chip label={totalRecords || 0} color="primary"  sx={{font:'bold'}} /> 
-              </Typography>
-            </Stack>
-            }
-            
-        >
-          <Stack direction="row" spacing={2}>
-            <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} 
-            onClick={() => {
-              handleEdit(null); // por ejemplo, abrir modal de vista
-            }}
-            // onClick={addProduct} 
-            >
-              Nuevo
-            </Button>
           </Stack>
-        </BlockHeader>
-      <div className='flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto ' >
-        <div className=' w-full absolute '>
-          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer>
+          <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
+            onClick={() => {
+            handleEdit(null); // por ejemplo, abrir modal de vista
+          }}
+          >
+            Nuevo
+          </Button>
+        </Box>
+      
+
+        <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1 }}>
+            <TableContainer  sx={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto', borderRadius: 2 }}>
               <Table stickyHeader>
                 <TableHead>
-                  <TableRow>
-                    <TableCell><span className='font-bold'>Dis.</span></TableCell>
-                    <TableCell><span className='font-bold'>Código</span></TableCell>
-                    <TableCell><span className='font-bold'>Nombre</span></TableCell>
-                    <TableCell><span className='font-bold'>Grupo - Categoría</span></TableCell>
-                    <TableCell><span className='font-bold'>Tipo</span></TableCell>
-                    <TableCell><span className='font-bold'>Precio</span></TableCell>
-                    <TableCell><span className='font-bold'>Imagen</span></TableCell>
+                  <TableRow >
+                    <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Dis.
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Código
+                    </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Nombre
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Grupo & Caategoria
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Tipo
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Precio
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Imagen
+                      </Typography></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -223,23 +235,22 @@ export default function MiTablaConPaginacion() {
                         transition: 'background-color 0.2s ease-in-out',
                         '&:hover': {
                           backgroundColor: 'rgba(0, 0, 0, 0.05)', // claro en light mode
-                          // backgroundColor: 'rgba(255,255,255,0.08)', // en dark mode
                         }
                       }}
                       onClick={() => {
-                        handleOpen(product); // por ejemplo, abrir modal de vista
-                      }}
-                      onContextMenu={(e) => {
-                        e.preventDefault(); //  evitar que se abra el menú por defecto
                         handleEdit(product)
                       }}
+                      // onContextMenu={(e) => {
+                      //   e.preventDefault(); //  evitar que se abra el menú por defecto
+                        
+                      // }}
                     >
                       <TableCell>{product?.available ? <CheckCircleOutlinedIcon color='primary'/> : <CancelOutlinedIcon /> }</TableCell>
-                      <TableCell>{product?.code}</TableCell>
-                      <TableCell>{product?.name}</TableCell>
-                      <TableCell><span>{`${product?.group?.name} - ${product?.category.name}`}</span></TableCell>
-                      <TableCell>{product?.type_product?.name}</TableCell>
-                      <TableCell>{formatearDinero(product?.price)}</TableCell>
+                      <TableCell><Typography variant="body2">{product?.code}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{product?.name}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{`${product?.group?.name} - ${product?.category.name}`}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{product?.type_product?.name}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{formatearDinero(product?.price)}</Typography></TableCell>
                       <TableCell>
                         <ImageTable 
                           images={product?.images}
@@ -263,8 +274,6 @@ export default function MiTablaConPaginacion() {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Paper>
-        </div>
-      </div>
     </div>
   );
 }

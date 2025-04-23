@@ -5,6 +5,8 @@ import request from './request';
 
 export const ProductService = {
     fetchById: (id) => request(`${BACKEND.PRODUCTS.KEY}/${id}`, 'GET'),
+    create: (data) => request(BACKEND.PRODUCTS.KEY, 'POST', data),
+    update: (id, data) => request(`${BACKEND.PRODUCTS.KEY}/${id}`, 'POST', data),
     useProducts: ({ page, perPage, name, code, group_id, categories, types, sortField, sortOrder }) => {
         // Construcción de la URL con los parámetros
         const url = `${BACKEND.PRODUCTS.KEY}?page=${page}&perPage=${perPage}&name=${name}&code=${code}&group_id=${group_id}&categories=${categories}&types=${types}&sortField=${sortField}&sortOrder=${sortOrder}`;

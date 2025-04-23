@@ -31,13 +31,13 @@ const AdminLayout=()=> {
     return (<IsLoading/>)
   }
   return (
-    <div className="flex cursor-default bg-gray-100 flex-col">
+    <div className="flex cursor-default bg-gray-50 flex-col">
       <NavAdmin />
         
       <div className="flex h-[calc(100vh-50px)]" >
         <SidebarAdmin />
           
-          <div className="flex  w-full flex-wrap p-1 overflow-y-hidden">
+          <div className="flex  w-full flex-wrap px-1">
             <Outlet />
           </div>
       </div>

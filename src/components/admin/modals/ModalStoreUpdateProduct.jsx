@@ -2,7 +2,6 @@ import React, { forwardRef, useState } from 'react';
 import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Button, InputLabel, MenuItem, Select, TextareaAutosize, TextField, Typography, Alert } from '@mui/material';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import QrCodeIcon from '@mui/icons-material/QrCode';
-import useStore from '/src/hooks/useStore';
 import ImageUploader from '/src/components/ImageUploader';
 import CropOutlinedIcon from '@mui/icons-material/CropOutlined';
 import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined';
@@ -12,20 +11,17 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithChangesOutlined';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
-import useAdmin from '/src/hooks/useAdmin';
-import BACKEND from '/src/data/backend';
 
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
+import { CategoryService } from '/src/services/CategoryService';
+import { TypeService } from '/src/services/TypeService';
+import { ProductService } from '/src/services/ProductService';
 
 
 const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, ref) => {
 
-    const {
-        categories, 
-        types
-    } = useStore()
-
-    const { newCreate, newUpdate } = useAdmin()
+    const {data:categories} = CategoryService.useAllCategories()
+    const {data:types} = TypeService.useAllTypes()
 
     const style = {
         position: 'absolute',
@@ -79,18 +75,24 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, re
     
         }
 
-        const response = product ? await newUpdate(BACKEND.PRODUCTS.KEY, pro) : await newCreate(BACKEND.PRODUCTS.KEY, pro)
+        const response = product 
+        ? await ProductService.update(product.id, pro) 
+        : await ProductService.create(pro);
+      
         
         if (response.success) {
-            // console.log("Producto actualizado");
             setErrores({})
             if (onUpdated) onUpdated();
           } else {
-            // console.log(response.errors);
             setErrores(response.errors)
           }
         
       }
+
+    if (!categories?.length || !types?.length) {
+    return <Box sx={style}><Typography>Cargando categorías y tipos...</Typography></Box>
+    }
+      
 
     return (
     <Box sx={style}>
