@@ -28,8 +28,6 @@ import IndexPurchaseOrder from "/src/views/admin/IndexPurchaseOrder"
 import IndexStock from "/src/views/admin/IndexStock"
 
 import StorePurchaseOrder from '/src/views/admin/StorePurchaseOrder'
-import StoreProduct from './views/admin/StoreProduct'
-
 
 import ShowProduct,{
     loader as loaderItem
@@ -46,9 +44,6 @@ import UpdatePurchaseOrder,{
     loader as loaderPurchase
 } from '/src/views/admin/UpdatePurchaseOrder'
 
-import UpdateProduct,{
-    loader as loaderEditItem
-} from './views/admin/UpdateProduct'
 import IndexUser from '/src/views/admin/IndexUser'
 
 
@@ -140,15 +135,6 @@ const router = createBrowserRouter([
                         path : "/admin/inventory/products/item/:itemId",
                         loader: loaderItem,
                         element: <ShowProduct />
-                    },
-                    {
-                        path : "/admin/inventory/products/item/edit/:itemId",
-                        loader: loaderEditItem,
-                        element: <UpdateProduct />
-                    },
-                    {
-                        path:'/admin/inventory/storeProduct',
-                        element: <StoreProduct />
                     },
                     {
                         path:'/admin/inventory/stock',
