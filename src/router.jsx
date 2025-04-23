@@ -132,6 +132,14 @@ const router = createBrowserRouter([
                         element: <IndexProduct />
                     },
                     {
+                        path:'/admin/inventory/groups',
+                        element: <IndexGroup />
+                    },
+                    {
+                        path:'/admin/inventory/type',
+                        element: <IndexType />
+                    },
+                    {
                         path : "/admin/inventory/products/item/:itemId",
                         loader: loaderItem,
                         element: <ShowProduct />
@@ -187,7 +195,7 @@ const router = createBrowserRouter([
                 element: <Outlet />,
                 children: [
                     {
-                        index:true,
+                        path : "/admin/users/users",
                         element: <IndexUser />,
                     },
                 ]
@@ -196,14 +204,7 @@ const router = createBrowserRouter([
                 path:'/admin/settings',
                 element: <Outlet />,
                 children: [
-                    {
-                        path:'/admin/settings/groups',
-                        element: <IndexGroup />
-                    },
-                    {
-                        path:'/admin/settings/type',
-                        element: <IndexType />
-                    },
+                    
                     {
                         path:'/admin/settings/more',
                         element: <IndexMore />

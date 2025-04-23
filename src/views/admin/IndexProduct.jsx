@@ -184,7 +184,7 @@ export default function MiTablaConPaginacion() {
         </Box>
       
 
-        <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1 }}>
+        <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
             <TableContainer  sx={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto', borderRadius: 2 }}>
               <Table stickyHeader>
                 <TableHead>

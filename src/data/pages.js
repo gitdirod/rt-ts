@@ -1,169 +1,57 @@
-const storeViews = [
+export const adminNavigation = [
     {
-        name: "Inventario bodega",
-        id:1,
-        image: "iconStock",
-        url: "/admin/inventory/products",
-        urlMain:"/admin/inventory"
+      id: 1,
+      name: "Inventario bodega",
+      icon: "iconStock",
+      urlMain: "/admin/inventory",
+      children: [
+        { id: 1, name: "Productos", url: "/admin/inventory/products" },
+        { id: 2, name: "Grupos & Categorías", url: "/admin/inventory/groups" },
+        { id: 3, name: "Tipo de Producto", url: "/admin/inventory/type" },
+        { id: 12, name: "Resumen existencias", url: "/admin/inventory/stock" },
+      ],
     },
     {
-        name: "Ventas cliente",
-        id:2,
-        image: "iconEnvoice",
-        url: "/admin/orders/orders",
-        urlMain:"/admin/order"
+      id: 2,
+      name: "Ventas cliente",
+      icon: "iconEnvoice",
+      urlMain: "/admin/order",
+      children: [
+        { id: 11, name: "Prefacturas", url: "/admin/orders/orders" },
+      ],
     },
     {
-        name: "Compras proveedores",
-        id:3,
-        image: "iconCart",
-        url: "/admin/purchases/purchases",
-        urlMain:"/admin/purchases"
-
+      id: 3,
+      name: "Compras proveedores",
+      icon: "iconCart",
+      urlMain: "/admin/purchases",
+      children: [
+        { id: 9, name: "Compras", url: "/admin/purchases/purchases" },
+        { id: 10, name: "Nueva compra", url: "/admin/purchases/storePurchase" },
+      ],
     },
     {
-        name: "Usuarios",
-        id:4,
-        image: "iconUsers",
-        url: "/admin/users",
-        urlMain:"/admin/users"
+      id: 4,
+      name: "Usuarios",
+      icon: "iconUsers",
+      urlMain: "/admin/users",
+      children: [
+        { id: 8, name: "Usuarios", url: "/admin/users/users" },
+      ], // Agrega hijos si los necesitas después
     },
     {
-        name: "Pagina",
-        id:5,
-        image: "iconPage",
-        url: "/admin/settings/groups",
-        urlMain:"/admin/settings"
+      id: 5,
+      name: "Página",
+      icon: "iconPage",
+      urlMain: "/admin/settings",
+      children: [
+        
+        
+        { id: 4, name: "Ajustes adicionales", url: "/admin/settings/more" },
+        { id: 5, name: "Landing", url: "/admin/settings/landing" },
+        { id: 6, name: "Productos sugeridos", url: "/admin/settings/suggested" },
+        { id: 7, name: "Comentarios", url: "/admin/settings/comments" },
+      ],
     },
-
-    
-
-]
-const adminViews = [
-    {
-        name: "Productos",
-        id:1,
-        page_id:1,
-        url: "/admin/inventory/products",
-        block: 'product'
-    },
-    {
-        name: "Nuevo Producto",
-        id:2,
-        page_id:1,
-        url: "/admin/inventory/storeProduct",
-        block: 'product'
-
-    },
-    {
-        name: "Grupos & Categorías",
-        id:3,
-        page_id:5,
-        url: "/admin/settings/groups",
-        block: 'settings'
-
-    },
-    {
-        name: "Tipo de Producto",
-        id:4,
-        page_id:5,
-        url: "/admin/settings/type",
-        block: 'settings'
-
-    },
-    {
-        name: "Ajustes adicionales",
-        id:5,
-        page_id:5,
-        url: "/admin/settings/more",
-        block: 'settings'
-
-    },
-    {
-        name: "Landing",
-        id:6,
-        page_id:5,
-        url: "/admin/settings/landing",
-        block: 'settings'
-
-    },
-    {
-        name: "Productos sujeridos",
-        id:7,
-        page_id:5,
-        url: "/admin/settings/suggested",
-        block: 'settings'
-
-    },
-    {
-        name: "Comentarios",
-        id:8,
-        page_id:5,
-        url: "/admin/settings/comments",
-        block: 'settings'
-
-    },
-
-
-    {
-        name: "Compras",
-        id:9,
-        page_id:3,
-        url: "/admin/purchases/purchases",
-        block: 'purchases'
-
-    },
-    {
-        name: "Nueva compra",
-        id:10,
-        page_id:3,
-        url: "/admin/purchases/storePurchase",
-        block: 'purchases'
-
-    },
-    {
-        name: "Prefacturas",
-        id:11,
-        page_id:2,
-        url: "/admin/orders/orders",
-        block: 'orders'
-
-    },
-    {
-        name: "Resumen existencias",
-        id:12,
-        page_id:1,
-        url: "/admin/inventory/stock",
-        block: 'product'
-    }
-]
-
-const views =[
-    {
-        id: 1,
-        name:"Gestor",
-        url:"/admin/inventory/products",
-        blockUrl:"/admin",
-        icon:"config"
-    },
-    {
-        id: 2,
-        name:"Tienda",
-        url:"/store/",
-        blockUrl:"/store",
-        icon:"shop"
-    },
-    {
-        id: 3,
-        name:"Vendedor",
-        url:"/seller/inventory/products/",
-        blockUrl:"/seller",
-        icon:"sellerMan"
-    },
-]
-
-export {
-    storeViews,
-    adminViews,
-    views
-}
+  ];
+  

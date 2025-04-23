@@ -1,55 +1,58 @@
-import { memo, useEffect } from "react";
-import { Outlet } from "react-router-dom"
-import NavAdmin from "/src/components/admin/NavAdmin"
-import SidebarAdmin from "/src/components/admin/SidebarAdmin"
+import { Outlet } from "react-router-dom";
+import { memo, useEffect, useState } from "react";
 import { useAuth } from "/src/hooks/useAuth";
-
-import useAdmin from "/src/hooks/useAdmin";
-import useStore from "/src/hooks/useStore";
-import ModalRequest from "/src/components/admin/ModalRequest";
-import ModalComponent from "/src/components/admin/ModalComponent";
-import ModalImage from "/src/components/admin/ModalImage";
-import ModalDelete from "/src/components/admin/ModalDelete";
+import SidebarAdmin from "/src/components/admin/SidebarAdmin";
+import NavAdmin from "/src/components/admin/NavAdmin";
 import IsLoading from "/src/components/store/common/IsLoading";
+import useStore from "/src/hooks/useStore";
+import { Box } from "@mui/material";
 
-const AdminLayout=()=> {
+const AdminLayout = () => {
+  const { user } = useAuth({ middleware: "admin", url: "/store" });
+  const { handleSetEnableAdminUser } = useStore();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  const { user } = useAuth({
-    middleware: 'admin',
-    url: '/store'
-  })
+  useEffect(() => {
+    handleSetEnableAdminUser(user?.role === "admin");
+  }, [user]);
 
-  const { handleCloseModals } = useAdmin()
+  if (user === undefined) return <IsLoading />;
 
-  const { handleSetEnableAdminUser } = useStore()
-  
-  useEffect(()=>{
-    user?.role == "admin" ? handleSetEnableAdminUser(true) : handleSetEnableAdminUser(false)
-  },[user])
+  const sidebarWidth = sidebarCollapsed ? 60 : 240;
 
-  if(user === undefined){
-    return (<IsLoading/>)
-  }
   return (
-    <div className="flex cursor-default bg-gray-50 flex-col">
-      <NavAdmin />
-        
-      <div className="flex h-[calc(100vh-50px)]" >
-        <SidebarAdmin />
-          
-          <div className="flex  w-full flex-wrap px-1">
-            <Outlet />
-          </div>
-      </div>
+    <Box sx={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+      {/* Sidebar */}
+      <Box
+        sx={{
+          width: sidebarWidth,
+          flexShrink: 0,
+          transition: 'width 0.3s ease',
+          backgroundColor: '#fff',
+          borderRight: '1px solid #e0e0e0'
+        }}
+      >
+        <SidebarAdmin collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
+      </Box>
 
-      {/* <ModalImageVisor/> */}
-      <ModalComponent onClose={()=>handleCloseModals()} />
-      <ModalImage onClose={()=>handleCloseModals()} />
-      <ModalDelete onClose={()=>handleCloseModals()}/>
-      <ModalRequest onClose={()=>handleCloseModals()}/>
-    </div>
-  )
-}
+      {/* Main content */}
+      <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <NavAdmin />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            px: 1,
+            overflowY: "auto",
+            backgroundColor: "#f9fafb",
+            transition: 'margin 0.3s ease'
+          }}
+        >
+          <Outlet />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
-
-export default memo(AdminLayout)
+export default memo(AdminLayout);
