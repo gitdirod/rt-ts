@@ -10,11 +10,15 @@ import iconGroupColor from '/src/static/icons/group.svg'
 import BlockCategory from "/src/components/admin/BlockCategory";
 import BlockStoreCategory from '/src/components/admin/BlockStoreCategory'
 import Btn from '/src/components/admin/Btn'
+import { GroupService } from '/src/services/GroupService'
+import { CategoryService } from '/src/services/CategoryService'
 
 
 export default function IndexGroup (){
-    const {groups, categories} = useStore()
-    const {mutateGroups} = useStore()
+
+    const { data:groups, mutate:mutateGroups } = GroupService.useAllGroups() 
+    const { data:categories } = CategoryService.useAllCategories() 
+ 
 
     const[ activeAdd, setActiveAdd] = useState(false)
     const[ addCategory, setAddCategory] = useState(false)
