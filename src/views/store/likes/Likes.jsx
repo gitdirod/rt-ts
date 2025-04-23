@@ -5,7 +5,8 @@ import IsLoading from "/src/components/store/common/IsLoading";
 
 import { useAuth } from "/src/hooks/useAuth";
 import TittleName from "/src/components/store/common/TittleName";
-import LikeHart from "/src/components/LikeHart";
+import LikeHart from "/src/components/store/product/LikeHart";
+
 
 
 const Likes=()=> {

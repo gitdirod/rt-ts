@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useState } from "react"
 import useStore from "/src/hooks/useStore"
 import { formatearDinero } from "/src/helpers"
-import LikeHart from "/src/components/LikeHart"
+
 import BACKEND from "/src/data/backend"
 
 import {
@@ -18,6 +18,7 @@ import BoltIcon from '@mui/icons-material/Bolt';
 import CropIcon from '@mui/icons-material/Crop';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import UnidsAvailable from "/src/components/store/product/UnidsAvailable"
+import LikeHart from './LikeHart'
 
 export default function ProductDetailCard({product}) {
 
@@ -127,7 +128,7 @@ export default function ProductDetailCard({product}) {
                 <Stack spacing={4}>
                 <Stack direction="column"  spacing={0}>
                     <Stack direction="row" spacing={4}>
-                    <LikeHart size="w-4" productId={product.id} />
+                    <LikeHart size="w-4" product={product} />
                     <Typography sx={{fontFamily: 'poppins-extrabold, sans-serif', fontWeight: 800 }} variant="h5" fontWeight="" textTransform="uppercase">
                         {product.name} <span className="text-zinc-500">({product?.code})</span>
                     </Typography>
