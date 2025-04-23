@@ -16,7 +16,10 @@ import {
   Typography,
   Box,
   Divider,
+  Stack,
 } from '@mui/material';
+import EstadoPedido from "/src/components/store/cart/EstadoPedido";
+import PagoPedido from "/src/components/store/cart/PagoPedido";
 
 export default function BoughtDetailPage() {
   const { id } = useParams();
@@ -33,6 +36,11 @@ export default function BoughtDetailPage() {
       <Typography variant="body2" sx={{ mt: 1, mb: 3 }}>
         Fecha: {timeToText(order.created_at, 'dddd D [de] MMMM [de] YYYY - HH:mm')}
       </Typography>
+
+      <Stack direction="row" gap={2}>
+        <EstadoPedido estado={order?.soldOrderTracking?.state} />
+        <PagoPedido estado={order?.soldOrderPayment?.state} />
+      </Stack>
 
       <TableContainer component={Paper} elevation={3} sx={{ borderRadius: 2, mt: 2 }}>
         <Table size="medium">

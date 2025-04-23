@@ -15,6 +15,8 @@ import {
   Container,
 } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import PagoPedido from "/src/components/store/cart/PagoPedido";
+import EstadoPedido from "/src/components/store/cart/EstadoPedido";
 
 
 export default function Bought(){
@@ -47,6 +49,8 @@ export default function Bought(){
             <TableRow>
               <TableCell><strong>ID</strong></TableCell>
               <TableCell><strong>Fecha</strong></TableCell>
+              <TableCell><strong>Pago</strong></TableCell>
+              <TableCell><strong>Estado</strong></TableCell>
               <TableCell align="right"><strong>Total</strong></TableCell>
             </TableRow>
           </TableHead>
@@ -63,6 +67,12 @@ export default function Bought(){
                 <TableCell>
                   {timeToText(order.created_at, 'dddd D [de] MMMM [de] YYYY - HH:mm')}
                 </TableCell>
+                <TableCell>
+                  <PagoPedido estado={order?.soldOrderPayment?.state} />
+                </TableCell>
+                <TableCell>
+                  <EstadoPedido estado={order?.soldOrderTracking?.state} />
+                </TableCell>
                 <TableCell align="right" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
                   {formatearDinero(order.total)}
                 </TableCell>
@@ -74,3 +84,5 @@ export default function Bought(){
     </Container>
   )
 }
+
+        
