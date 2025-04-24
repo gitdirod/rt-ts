@@ -1,9 +1,13 @@
 import useSWR from 'swr';
 import { fetchData, swrConfig} from '/src/utils/fetchData';
 import BACKEND from '/src/data/backend';
+import request from './request';
 
 export const TypeService = {
-    
+
+    fetchById: (id) => request(`${BACKEND.TYPE_PRODUCT.KEY}/${id}`, 'GET'),
+    create: (data) => request(BACKEND.TYPE_PRODUCT.KEY, 'POST', data),
+    update: (id, data) => request(`${BACKEND.TYPE_PRODUCT.KEY}/${id}`, 'POST', data),
     useAllTypes: () => {
         const url = BACKEND.TYPE_PRODUCT.KEY;
 

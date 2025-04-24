@@ -1,67 +1,145 @@
 import { useState } from 'react'
-import useStore from '/src/hooks/useStore'
-import BlockHeader from '/src/components/admin/BlockHeader'
-import BlockType from '/src/components/admin/BlockType'
-import iconAdd from '/src/static/icons/add.svg'
-import IconTag from '/src/static/icons/tag.svg'
-import BlockStoreType from '/src/components/admin/BlockStoreType'
-import Btn from '/src/components/admin/Btn'
-import useAdmin from '/src/hooks/useAdmin'
-import ModalViewStoreUpdateType from '/src/components/admin/modals/ModalViewStoreUpdateType'
 import IsLoading from '/src/components/store/common/IsLoading'
+import { Box, Button, Chip, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { TypeService } from '/src/services/TypeService'
+import BACKEND from '/src/data/backend';
 
 
 export default function IndexType(){
-    const {types} = useStore()
-    const[ activeAdd, setActiveAdd] = useState(false)
 
-    const { 
-        handleModalStateComponent,
-        handleModalViewComponent
-      } =useAdmin()
+    const{data:types} = TypeService.useAllTypes()
 
-    const addType=()=>{
-        handleModalViewComponent(<ModalViewStoreUpdateType setAction={setActiveAdd}/>)
-        handleModalStateComponent(true)
+
+    const handleEditType =()=>{
+        console.log('pendiente')
     }
 
     if(types === undefined) return(<IsLoading/>)
 
     return (
-    <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>
-        <BlockHeader
-            name={
-                <div className='flex'>
-                    <img src={IconTag} alt="save" className='w-8 h-8 pr-2' />
-                    Tipos de producto ({types?.length})
-                </div>
-            }
-        >
-            {
-                !activeAdd && (
-                    <Btn
-                        icon={iconAdd}
-                        text='Nuevo'
-                        style='bg-green-500'
-                        action={addType}
-                    />
-                )
-            }
-        </BlockHeader>
-        <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-            <div className='w-full'>
-                {activeAdd && ( <BlockStoreType setAction={setActiveAdd}/>)}
-                <div className='pb-1 pr-1'>
-                {types?.map(type => (
-                    <BlockType
-                        key={type.id}
-                        type={type}
-                    />
-                ))}
-                </div>
-            </div>
-        </div>
+        <Box className="flex flex-col flex-1 overflow-hidden">
+
+            {/* Cabecera de la pagina, indica el titulo y las opciones para agregar */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    p: 1,
+                    my: 1,
+                    bgcolor: 'white',
+                    borderRadius: 1,
+                    border: '1px solid #ccc'
+                }}
+            >
+                <Stack direction="row" spacing={2} alignItems="center">
+                    <LocalOfferRoundedIcon color="primary" />
+                    <Typography variant="h5" fontWeight="bold">
+                        Tipos de productos
+                    </Typography>
+                    <Chip label={types.length} color="primary" />
+                </Stack>
+                <Button onClick={()=>handleEditType(null)} variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+                    Tipo de producto
+                </Button>
+            </Box>
+
+
+            <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
+            <TableContainer  sx={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', borderRadius: 2 }}>
+              <Table stickyHeader>
+                <TableHead>
+                    <TableRow >
+                        <TableCell>
+                            <Typography variant="subtitle2" color="text.secondary">
+                                ID
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography variant="subtitle2" color="text.secondary">
+                                Nombre
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography variant="subtitle2" color="text.secondary">
+                                Imagen
+                            </Typography>
+                        </TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(types || []).map((type, index) => (
+                    <TableRow 
+                      key={index}
+                      hover
+                      sx={{
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s ease-in-out',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 0, 0, 0.05)', // claro en light mode
+                        }
+                      }}
+                      onClick={() => {
+                        handleEditType(type)
+                      }}
+                    >
+                        <TableCell><Typography variant="body2">{type?.id}</Typography></TableCell>
+                        <TableCell><Typography variant="body2">{type?.name}</Typography></TableCell>
+                        <TableCell>
+                            <img
+                                src={BACKEND.ICONS.URL + type?.image}
+                                alt={type.name}
+                                style={{ height: 40, objectFit: 'contain' }}
+                            />
+                        </TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+
+
+        </Box>
+
+
+
+    // <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>
+    //     <BlockHeader
+    //         name={
+    //             <div className='flex'>
+    //                 <img src={IconTag} alt="save" className='w-8 h-8 pr-2' />
+    //                 Tipos de producto ({types?.length})
+    //             </div>
+    //         }
+    //     >
+    //         {
+    //             !activeAdd && (
+    //                 <Btn
+    //                     icon={iconAdd}
+    //                     text='Nuevo'
+    //                     style='bg-green-500'
+    //                     action={addType}
+    //                 />
+    //             )
+    //         }
+    //     </BlockHeader>
+    //     <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
+    //         <div className='w-full'>
+    //             {activeAdd && ( <BlockStoreType setAction={setActiveAdd}/>)}
+    //             <div className='pb-1 pr-1'>
+    //             {types?.map(type => (
+    //                 <BlockType
+    //                     key={type.id}
+    //                     type={type}
+    //                 />
+    //             ))}
+    //             </div>
+    //         </div>
+    //     </div>
         
-    </div>
+    // </div>
   )
 }
