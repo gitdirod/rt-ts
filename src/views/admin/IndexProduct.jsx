@@ -21,8 +21,6 @@ import BACKEND from '/src/data/backend';
 import { ProductService } from '/src/services/ProductService';
 import { formatearDinero } from '/src/helpers';
 import ImageTable from '/src/components/admin/ImageTable';
-import BlockHeader from '/src/components/admin/BlockHeader';
-import ModalSeeProduct from '/src/components/admin/modals/ModalSeeProduct';
 import ModalStoreUpdateProduct from '/src/components/admin/modals/ModalStoreUpdateProduct';
 
 export default function MiTablaConPaginacion() {
@@ -71,19 +69,13 @@ export default function MiTablaConPaginacion() {
   const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
   const currentPage = Math.min(page, totalPages - 1 >= 0 ? totalPages - 1 : 0);
 
-
-
-  const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
-  const handleOpen = (product) => {
-    setSelectedProduct(product)
-    setOpen(true)
-  };
+
   const handleEdit = (product) => {
     setSelectedProduct(product)
     setEdit(true)
   };
-  const handleClose = () => setOpen(false);
+
   const handleCloseEdit = () => setEdit(false);
 
 
@@ -121,13 +113,6 @@ export default function MiTablaConPaginacion() {
 
   return (
     <div className="overflow-y-hidden flex flex-col flex-1 pb-2">
-      <Modal
-        open={open}
-        onClose={handleClose}
-      >
-        <ModalSeeProduct product={selectedProduct}/>
-      </Modal>
-
       <Modal
         open={edit}
         onClose={(event, reason) => {

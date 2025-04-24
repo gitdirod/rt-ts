@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {
   Box, Typography, Accordion, AccordionSummary, AccordionDetails,
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, Chip, Button, Stack
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Button, Stack,
+  Modal
 } from '@mui/material';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -10,41 +10,100 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CategoryIcon from '@mui/icons-material/Category';
 
 import { GroupService } from '/src/services/GroupService';
-import { CategoryService } from '/src/services/CategoryService';
+import EditIcon from '@mui/icons-material/Edit';
 import BACKEND from '/src/data/backend';
-import IsLoading from '/src/components/store/common/IsLoading';
+import ModalStoreUpdateGroup from '/src/components/admin/modals/ModalStoreUpdateGroup';
+import ModalStoreUpdateCategory from '/src/components/admin/modals/ModalStoreUpdateCategory';
 
 export default function IndexGroupAccordion() {
-  const { data: groups } = GroupService.useAllGroups();
-  const { data: categories } = CategoryService.useAllCategories();
+  const { data: groups, mutate } = GroupService.useAllGroups();
 
-  if (!groups) return <IsLoading />;
+//  Modal crear editar grupo  
+  const [editGroup, setEditGroup] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState({})
+  
+  const handleEditGroup = (group) => {
+    setSelectedGroup(group)
+    setEditGroup(true)
+  };
+  const handleCloseEditGroup = () => setEditGroup(false);
+
+// Modal crear editar categoria
+
+const [editCategory, setEditCategory] = useState(false);
+const [selectedCategory, setSelectedCategory] = useState({})
+
+const handleEditCategory = (group) => {
+  setSelectedCategory(group)
+  setEditCategory(true)
+};
+const handleCloseEditCategory = () => setEditCategory(false);
+
 
   return (
     <Box className="flex flex-col flex-1 overflow-hidden">
-      <Box
+        <Modal
+            open={editCategory}
+            onClose={(event, reason) => {
+                if (reason !== 'backdropClick') {
+                    handleCloseEditCategory();
+                }
+            }}
+        >
+            <ModalStoreUpdateCategory 
+                category={selectedCategory}
+                onCancel={handleCloseEditCategory}
+                onUpdated={() => {
+                    handleCloseEditCategory();
+                mutate();
+                }}
+            />
+        </Modal>
+        <Modal
+            open={editGroup}
+            onClose={(event, reason) => {
+                if (reason !== 'backdropClick') {
+                    handleCloseEditGroup();
+                }
+            }}
+        >
+            <ModalStoreUpdateGroup 
+                group={selectedGroup}
+                onCancel={handleCloseEditGroup}
+                onUpdated={() => {
+                    handleCloseEditGroup();
+                mutate();
+                }}
+            />
+        </Modal>
+    <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          p: 1,
-          my: 1,
-          bgcolor: 'white',
-          borderRadius: 1,
-          border: '1px solid #ccc'
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            p: 1,
+            my: 1,
+            bgcolor: 'white',
+            borderRadius: 1,
+            border: '1px solid #ccc'
         }}
-      >
+    >
         <Stack direction="row" spacing={2} alignItems="center">
-          <CategoryIcon color="primary" />
-          <Typography variant="h5" fontWeight="bold">
-            Grupos y Categorías
-          </Typography>
-          <Chip label={groups.length} color="primary" />
+            <CategoryIcon color="primary" />
+            <Typography variant="h5" fontWeight="bold">
+                Grupos y Categorías
+            </Typography>
+            <Chip label={groups.length} color="primary" />
         </Stack>
-        <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
-          Nuevo
-        </Button>
-      </Box>
+        <Stack direction="row" gap={2}>
+            <Button onClick={()=>handleEditGroup(null)} variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+            Grupo
+            </Button>
+            <Button onClick={()=>handleEditCategory(null)} variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+            Categoría
+            </Button>
+        </Stack>
+    </Box>
 
       <Box sx={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', pr: 1 }}>
         {groups.map((group) => (
@@ -62,17 +121,39 @@ export default function IndexGroupAccordion() {
           }}
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography fontWeight="bold">{group.name}</Typography>
-            </AccordionSummary>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                    <Typography>{group.name}</Typography>
+                    <EditIcon 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditGroup(group);
+                        }}
+                        sx={{ 
+                            ml: 2, 
+                            fontSize: 20, 
+                            cursor: 'pointer', 
+                            color: 'grey.500',
+                            transition: 'color 0.2s ease-in-out',
+                            '&:hover': {
+                            color: 'primary.main', // o 'grey.700' si prefieres mantener el tono neutro
+                            }
+                        }} 
+                    />
+                    {/* <Button variant="outlined">Editar</Button> */}
+
+
+                </Box>
+            </AccordionSummary >
+            
             <AccordionDetails>
               {group.categories?.length ? (
                 <TableContainer sx={{ borderRadius: 1, overflow: 'hidden', border:"1px solid #ccc" }}>
                   <Table size="small">
                     <TableHead>
                       <TableRow sx={{ backgroundColor: 'grey.100' }}>
-                        <TableCell><strong>Categoría</strong></TableCell>
-                        <TableCell><strong>Imagen</strong></TableCell>
-                        <TableCell><strong>¿Sugerida?</strong></TableCell>
+                        <TableCell>Categoría</TableCell>
+                        <TableCell>Imagen</TableCell>
+                        <TableCell>¿Sugerida?</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>

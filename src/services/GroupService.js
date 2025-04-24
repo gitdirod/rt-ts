@@ -1,9 +1,13 @@
 import useSWR from 'swr';
 import { fetchData, swrConfig} from '/src/utils/fetchData';
 import BACKEND from '/src/data/backend';
+import request from './request';
 
 export const GroupService = {
-    
+
+    fetchById: (id) => request(`${BACKEND.GROUPS.KEY}/${id}`, 'GET'),
+    create: (data) => request(BACKEND.GROUPS.KEY, 'POST', data),
+    update: (id, data) => request(`${BACKEND.GROUPS.KEY}/${id}`, 'POST', data),
     useAllGroups: () => {
         const url = BACKEND.GROUPS.KEY;
 
