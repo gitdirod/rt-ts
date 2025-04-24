@@ -32,11 +32,11 @@ const StoreProvider = memo(({children}) => {
     }
 
 
-    const { data: purchases, mutate: mutatePurchases } = useSWR(enableAdminUser ?'/api/purchase_orders':null, () => 
-        clienteAxios('/api/purchase_orders')
-        .then(res => res.data.data),
-        swrConfig
-    )
+    // const { data: purchases, mutate: mutatePurchases } = useSWR(enableAdminUser ?'/api/purchase_orders':null, () => 
+    //     clienteAxios('/api/purchase_orders')
+    //     .then(res => res.data.data),
+    //     swrConfig
+    // )
     
     const { data: numbers,  mutate: mutateNumbers } = useSWR(enableAdminUser?'/api/number_colors':null, () => 
         clienteAxios('/api/number_colors')
@@ -153,12 +153,12 @@ const StoreProvider = memo(({children}) => {
             value={{
                 
                 order,
-                purchases,
+                // purchases,
+                // mutatePurchases,
                 sizes,
                 numbers,
                 inventory,
                 
-                mutatePurchases,
                 mutateSizes,
                 mutateNumbers,
                 mutateInventory,

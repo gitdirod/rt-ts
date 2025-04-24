@@ -1,4 +1,3 @@
-import useStore from '/src/hooks/useStore'
 import { memo, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import { formatearDinero } from '/src/helpers'
@@ -16,15 +15,17 @@ import TableHeader from '/src/components/admin/TableHeader'
 import moment from 'moment/dist/moment';
 import 'moment/dist/locale/es'
 import localization from 'moment/locale/es';
+import { PurchaseOrderService } from '/src/services/PurchaseOrderService'
 
 moment.suppressDeprecationWarnings = true;
 moment.updateLocale('es', localization);
 
 const IndexPurchaseOrder=()=> {
 
-    const {
-        purchases
-    } = useStore()
+    // const {
+    //     purchases
+    // } = useStore()
+    const {data:purchases} = PurchaseOrderService.useAllPurchaseOrders()
     const { user } = useAuth({
         middleware: 'guest',
     })
