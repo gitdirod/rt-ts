@@ -49,7 +49,7 @@ export default function IndexType(){
             }
         </BlockHeader>
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-            <div className='w-full absolute'>
+            <div className='w-full'>
                 {activeAdd && ( <BlockStoreType setAction={setActiveAdd}/>)}
                 <div className='pb-1 pr-1'>
                 {types?.map(type => (
