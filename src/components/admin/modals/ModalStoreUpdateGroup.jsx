@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from 'react';
 import { Box, Button, TextField, Typography, Alert } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithChangesOutlined';
+import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
@@ -57,12 +57,12 @@ const ModalStoreUpdateGroup = forwardRef(({ group, onUpdated, onCancel }, ref) =
         <Box sx={{ display: 'flex', flex: 1, gap: 2, alignItems: 'center', justifyContent:'center', width: '100%', mb: 2 }}>
             {
                 group ? 
-                    <PublishedWithChangesOutlinedIcon color='primary' sx={{fontSize: 40}} /> 
+                    <DriveFileRenameOutlineRoundedIcon color='primary' sx={{fontSize: 40}} /> 
                     : 
                     <NoteAddOutlinedIcon color='primary' sx={{fontSize: 40}}/> 
             }
             <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold'}}>
-                {group ? 'Actualizar grupo':'Crear grupo'}
+                {group ? 'Renombrar grupo':'Crear grupo'}
             </Typography>
         </Box>
 
