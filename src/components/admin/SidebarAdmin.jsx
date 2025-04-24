@@ -31,7 +31,17 @@ const iconMap = {
 
 export default function SidebarAdmin({ collapsed, onToggle }) {
   const location = useLocation();
-  const [openSections, setOpenSections] = useState({});
+
+  const [openSections, setOpenSections] = useState(() => {
+    const initialState = {};
+    adminNavigation.forEach(section => {
+      if (location.pathname.startsWith(section.urlMain)) {
+        initialState[section.id] = true;
+      }
+    });
+    return initialState;
+  });
+  
 
   const toggleSection = (id) => {
     setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -92,7 +102,7 @@ export default function SidebarAdmin({ collapsed, onToggle }) {
                         component={Link}
                         to={view.url}
                         selected={location.pathname === view.url}
-                        sx={{ pl: 4 }}
+                        sx={{ pl: 4}}
                       >
                         <ListItemText primary={view.name} />
                       </ListItemButton>
