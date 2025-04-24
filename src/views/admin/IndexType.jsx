@@ -1,25 +1,49 @@
 import { useState } from 'react'
 import IsLoading from '/src/components/store/common/IsLoading'
-import { Box, Button, Chip, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, Chip, Modal, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { TypeService } from '/src/services/TypeService'
 import BACKEND from '/src/data/backend';
+import ModalStoreUpdateType from '/src/components/admin/modals/ModalStoreUpdateType';
 
 
 export default function IndexType(){
 
-    const{data:types} = TypeService.useAllTypes()
+    const{data:types, mutate} = TypeService.useAllTypes()
 
+    //  Modal crear editar grupo  
+      const [editType, setEditType] = useState(false);
+      const [selectedType, setSelectedType] = useState({})
+      
+      const handleEditType = (type) => {
+        setSelectedType(type)
+        setEditType(true)
+      };
+      const handleCloseEditType = () => setEditType(false);
 
-    const handleEditType =()=>{
-        console.log('pendiente')
-    }
 
     if(types === undefined) return(<IsLoading/>)
 
     return (
         <Box className="flex flex-col flex-1 overflow-hidden">
+            <Modal
+                open={editType}
+                onClose={(event, reason) => {
+                    if (reason !== 'backdropClick') {
+                        handleCloseEditType();
+                    }
+                }}
+            >
+                <ModalStoreUpdateType 
+                    type={selectedType}
+                    onCancel={handleCloseEditType}
+                    onUpdated={() => {
+                        handleCloseEditType();
+                    mutate();
+                    }}
+                />
+        </Modal>
 
             {/* Cabecera de la pagina, indica el titulo y las opciones para agregar */}
             <Box

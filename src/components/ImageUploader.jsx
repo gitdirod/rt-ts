@@ -8,7 +8,7 @@ const HiddenInput = styled('input')({
   display: 'none',
 });
 
-export default function ImageUploader({ onImagesChange, maxImages = 5 }) {
+export default function ImageUploader({ onImagesChange, maxImages = 5, message="Subir imágenes" }) {
   const [previewImages, setPreviewImages] = useState([]);
 
   const handleImageUpload = (event) => {
@@ -52,7 +52,7 @@ export default function ImageUploader({ onImagesChange, maxImages = 5 }) {
         startIcon={<UploadFileIcon />}
         disabled={previewImages.length >= maxImages}
       >
-        Subir imágenes
+        {message}
         <HiddenInput
           accept="image/*"
           multiple

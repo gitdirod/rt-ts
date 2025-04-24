@@ -121,28 +121,35 @@ const handleCloseEditCategory = () => setEditCategory(false);
           }}
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                    <Typography>{group.name}</Typography>
-                    <EditIcon 
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleEditGroup(group);
-                        }}
-                        sx={{ 
-                            ml: 2, 
-                            fontSize: 20, 
-                            cursor: 'pointer', 
-                            color: 'grey.500',
-                            transition: 'color 0.2s ease-in-out',
-                            '&:hover': {
-                            color: 'primary.main', // o 'grey.700' si prefieres mantener el tono neutro
-                            }
-                        }} 
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography fontWeight="medium">{group.name}</Typography>
+                    <Chip
+                    label={`${group?.categories?.length || 0}`}
+                    size="small"
+                    color="primary"
+                    sx={{ fontSize: '0.75rem', height: 20 }}
                     />
-                    {/* <Button variant="outlined">Editar</Button> */}
-
-
                 </Box>
+
+                <EditIcon 
+                    onClick={(e) => {
+                    e.stopPropagation();
+                    handleEditGroup(group);
+                    }}
+                    sx={{ 
+                    ml: 2, 
+                    fontSize: 20, 
+                    cursor: 'pointer', 
+                    color: 'grey.500',
+                    transition: 'color 0.2s ease-in-out',
+                    '&:hover': {
+                        color: 'primary.main',
+                    }
+                    }} 
+                />
+</Box>
+
             </AccordionSummary >
             
             <AccordionDetails>
@@ -152,6 +159,7 @@ const handleCloseEditCategory = () => setEditCategory(false);
                     <TableHead>
                       <TableRow sx={{ backgroundColor: 'grey.100' }}>
                         <TableCell>Categoría</TableCell>
+                        <TableCell>Productos</TableCell>
                         <TableCell>Imagen</TableCell>
                         <TableCell>¿Sugerida?</TableCell>
                       </TableRow>
@@ -160,6 +168,7 @@ const handleCloseEditCategory = () => setEditCategory(false);
                       {group.categories.map((cat) => (
                         <TableRow key={cat.id} onClick={()=>handleEditCategory(cat)} sx={{cursor:'pointer'}} hover>
                           <TableCell>{cat.name}</TableCell>
+                          <TableCell>{cat.products}</TableCell>
                           <TableCell>
                             <img
                               src={BACKEND.CATEGORIES.URL + cat?.images?.[0]?.name}
