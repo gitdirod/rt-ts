@@ -9,11 +9,15 @@ import logo from "/src/static/img/logo.svg"
 import { Stack } from "@mui/material";
 import useStore from "/src/hooks/useStore";
 import LoginCreateRecuba from "./LoginCreateRecuba";
+import { useAuth } from "/src/hooks/useAuth";
 
 const StoreNavbar = () => {
   const navigate = useNavigate()
 
+  const {user}= useAuth({middleware:'guest'})
+
   const {order, toggleDrawerCart} = useStore()
+
 
   return (
     <nav className="sticky top-0 z-50 w-full backdrop-blur-sm bg-white/70 border-b border-zinc-200 shadow-sm transition-all">
@@ -32,7 +36,7 @@ const StoreNavbar = () => {
             <Badge badgeContent={order?.length} color="primary" overlap="circular" sx={{ cursor: 'pointer'}} onClick={()=>toggleDrawerCart(true)}>
                 <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: 'grey.700' }} />
             </Badge>
-            <SettingsIcon onClick={()=>navigate('/admin/inventory/products')} sx={{ cursor: 'pointer', fontSize: 30, color: 'primary.main' }}/>
+            {user?.role == "admin" && (<SettingsIcon onClick={()=>navigate('/admin/inventory/products')} sx={{ cursor: 'pointer', fontSize: 30, color: 'primary.main' }}/>)}
         </Stack>
 
       </div>

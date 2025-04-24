@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import useStore from '/src/hooks/useStore';
+// import useStore from '/src/hooks/useStore';
 
 import { DEVICE_TYPES } from '/src/data/deviceTypes';
 import IsLoading from '../common/IsLoading';
+import { LandingService } from '/src/services/LandingService';
 
 
 export default function LandingImage(){
-    const { landings } = useStore();
+
+    const {data:landings} =LandingService.useAllLandings()
 
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,

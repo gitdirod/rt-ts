@@ -14,49 +14,23 @@ const StoreProvider = memo(({children}) => {
         setOpenDrawerCart(newOpen);
     };
     
-    const [enableUser, setEnableUser] = useState(false)
-    const [enableAdminUser, setEnableAdminUser] = useState(false)
-    // const [categoriesCurrent, setCategoriesCurrent] = useState([])
-    // const [groupToShow, setGroupToShow] = useState({});
+    
     const [order, setOrder] = useState(localStorage.getItem('productsCart')===null ? [] :JSON.parse(localStorage.getItem('productsCart')) )
     const [orderBuy, setOrderBuy] = useState(localStorage.getItem('productsBuy')===null ? [] :JSON.parse(localStorage.getItem('productsBuy')) )
     const [subtotal, setSubtotal] = useState(0)
     const [subtotalBuy, setSubtotalBuy] = useState(0)
     const [total, setTotal] = useState(0)
-    const [showMenu, setShowMenu] = useState(false)
-    const [showProducts, setShowProducts] = useState([])
-    const [navHeight, setNavHeight] = useState(0)
-
-    const handleSetNavHeight=(higth)=>{
-        setNavHeight(higth)
-    }
-    const handleSetShowProducts=(products)=>{
-        setShowProducts(products)
-    }
+        
+    const [enableUser, setEnableUser] = useState(false)
     const handleSetEnableUser=(user)=>{
         setEnableUser(user)
     }
+    
+    const [enableAdminUser, setEnableAdminUser] = useState(false)
     const handleSetEnableAdminUser=(user)=>{
         setEnableAdminUser(user)
     }
 
-    // const { data: likes, mutate: mutateLikes } = useSWR(enableUser ? '/api/likes': null, () => 
-    //     clienteAxios('/api/likes').then(res => res.data.data), swrConfig)
-    
-
-    // const { data: orders, mutate: mutateOrders } = useSWR(enableAdminUser || enableUser ?'/api/orders':null, () => 
-    //     clienteAxios('/api/orders')
-    //     .then(res => res.data.data),
-    //     swrConfig
-
-    // )
-
-    // const { data: soldOrders, mutate: mutateSoldOrders } = useSWR(enableAdminUser || enableUser ?'/api/sold_orders':null, () => 
-    //     clienteAxios('/api/sold_orders')
-    //     .then(res => res.data.data),
-    //     swrConfig
-
-    // )
 
     const { data: purchases, mutate: mutatePurchases } = useSWR(enableAdminUser ?'/api/purchase_orders':null, () => 
         clienteAxios('/api/purchase_orders')
@@ -80,42 +54,6 @@ const StoreProvider = memo(({children}) => {
         .then(res => res.data.data),
         swrConfig
     )
-
-    const { data: memories, isLoading:isMemories,  mutate: mutateMemories } = useSWR('/api/memories', () => 
-        clienteAxios('/api/memories')
-        .then(res => res.data.data),
-        swrConfig
-    )
-
-    const { data: types, isLoading:isTypes,  mutate: mutateTypes } = useSWR('/api/type_products', () => 
-        clienteAxios('/api/type_products')
-        .then(res => res.data.data),
-        swrConfig
-    ) 
-
-    const { data: landings, mutate: mutateLandings } = useSWR('/api/landings', () => 
-        clienteAxios('/api/landings')
-        .then(res => res.data.data),
-        swrConfig
-    )
-
-    const { data: suggesteds, mutate: mutateSuggesteds } = useSWR('/api/suggesteds', () => 
-        clienteAxios('/api/suggesteds')
-        .then(res => res.data.data),
-        swrConfig
-    )
-    const { data: suggestions, mutate: mutateSuggestions } = useSWR('/api/suggestions', () => 
-        clienteAxios('/api/suggestions')
-        .then(res => res.data.data),
-        swrConfig
-    )
-    const { data: customers, mutate: mutateCustomers } = useSWR(enableAdminUser?'/api/customers':null, () => 
-        clienteAxios('/api/customers')
-        .then(res => res.data.data),
-        swrConfig
-    )
-    
-
     
 
     useEffect(()=>{
@@ -130,15 +68,6 @@ const StoreProvider = memo(({children}) => {
     }, [orderBuy])
 
    
-    // const handleGroupToShow= (id = null) =>{
-    //     if(id){
-    //         const group = groups?.filter(group => group.id === id)[0]
-    //         setGroupToShow(group)
-    //     }else{
-    //         setGroupToShow({})
-    //     }
-        
-    // }
 
     const toastMessage = (message, success = true)=>{
         if(success){
@@ -209,11 +138,6 @@ const StoreProvider = memo(({children}) => {
         }
     }
 
-
-
-    const handleSetMenu =(state)=>{
-        setShowMenu(state)
-    }
     const handleClearOrder = ()=>{
         setOrder([])
         localStorage.setItem('productsCart', JSON.stringify([]))
@@ -227,49 +151,19 @@ const StoreProvider = memo(({children}) => {
     return(
         <StoreContext.Provider
             value={{
-                showProducts,
-        
+                
                 order,
-                // likes,
-                // mutateLikes,
-                // mutateOrders,
-                // orders,
-                // soldOrders,
-                // mutateSoldOrders,
-                // handleGroupToShow,
-                // groupToShow,
                 purchases,
-                showMenu,
-                types,
-                landings,
-                suggestions,
-                suggesteds,
-                memories,
                 sizes,
                 numbers,
                 inventory,
                 
-                navHeight,
-
-                isTypes,
-                customers,
-
-                
                 mutatePurchases,
-                mutateTypes,
-                mutateLandings,
-                mutateSuggestions,
-                mutateSuggesteds,
-                mutateMemories,
                 mutateSizes,
                 mutateNumbers,
                 mutateInventory,
-                mutateCustomers,
                 
                 
-                handleSetMenu,
-                handleSetNavHeight,
-
                 handleClearOrder,
                 handleAddOrder,
                 handleRemoveProduct,
@@ -277,14 +171,13 @@ const StoreProvider = memo(({children}) => {
                 subtotal,
                 handleSetEnableUser,
                 handleSetEnableAdminUser,
-                handleSetShowProducts,
-
+                
                 handleClearOrderBuy,
                 handleRemoveProductBuy,
                 handleAddBuy,
                 orderBuy,
                 subtotalBuy,
-
+                
                 openDrawerCart,
                 setOpenDrawerCart,
                 toggleDrawerCart
