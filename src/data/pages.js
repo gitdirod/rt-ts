@@ -8,7 +8,7 @@ export const adminNavigation = [
         { id: 1, name: "Productos", url: "/admin/inventory/products" },
         { id: 2, name: "Grupos & Categorías", url: "/admin/inventory/groups" },
         { id: 3, name: "Tipo de Producto", url: "/admin/inventory/type" },
-        { id: 12, name: "Resumen existencias", url: "/admin/inventory/stock" },
+        // { id: 12, name: "Resumen existencias", url: "/admin/inventory/stock" },
       ],
     },
     {

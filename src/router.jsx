@@ -25,7 +25,7 @@ import IndexLanding from '/src/views/admin/IndexLanding'
 import IndexSuggested from '/src/views/admin/IndexSuggested'
 import IndexComments from '/src/views/admin/IndexComments'
 import IndexPurchaseOrder from "/src/views/admin/IndexPurchaseOrder"
-import IndexStock from "/src/views/admin/IndexStock"
+// import IndexStock from "/src/views/admin/IndexStock"
 
 import StorePurchaseOrder from '/src/views/admin/StorePurchaseOrder'
 
@@ -144,10 +144,10 @@ const router = createBrowserRouter([
                         loader: loaderItem,
                         element: <ShowProduct />
                     },
-                    {
-                        path:'/admin/inventory/stock',
-                        element: <IndexStock/>
-                    },
+                    // {
+                    //     path:'/admin/inventory/stock',
+                    //     element: <IndexStock/>
+                    // },
                     {
                         path : "/admin/inventory/stock/product/:itemId",
                         loader: loaderStock,
