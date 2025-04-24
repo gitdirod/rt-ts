@@ -24,7 +24,7 @@ export default function IndexLanding() {
            
         </BlockHeader>
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-            <div className='w-full absolute'>
+            <div className='w-full'>
                 <div className='pb-1 pr-1 flex gap-2 flex-wrap'>
                     <BlockLanding
                         type={DEVICE_TYPES.MOBILE}

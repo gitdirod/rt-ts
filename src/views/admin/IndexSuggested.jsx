@@ -63,7 +63,7 @@ export default function IndexSuggested() {
             }
         </BlockHeader>
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-            <div className='w-full absolute'>
+            <div className='w-full'>
 
                 {
                     activeAdd && (

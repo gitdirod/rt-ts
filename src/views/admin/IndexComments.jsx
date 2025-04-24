@@ -36,7 +36,7 @@ export default function IndexComments(){
         </BlockHeader>
         
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-            <div className='w-full absolute'>
+            <div className='w-full'>
                 <div className='flex flex-col gap-1'>
 
                     { adding && ( <BlockStoreComment setAction={setAdding} />) }
