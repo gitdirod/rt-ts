@@ -8,13 +8,19 @@ const HiddenInput = styled('input')({
   display: 'none',
 });
 
-export default function ImageUploader({ onImagesChange }) {
+export default function ImageUploader({ onImagesChange, maxImages = 5 }) {
   const [previewImages, setPreviewImages] = useState([]);
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
 
-    const readers = files.map((file) => {
+    // Limitar la cantidad de imágenes
+    const remainingSlots = maxImages - previewImages.length;
+    if (remainingSlots <= 0) return;
+
+    const limitedFiles = files.slice(0, remainingSlots);
+
+    const readers = limitedFiles.map((file) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () =>
@@ -44,6 +50,7 @@ export default function ImageUploader({ onImagesChange }) {
         color="primary"
         component="label"
         startIcon={<UploadFileIcon />}
+        disabled={previewImages.length >= maxImages}
       >
         Subir imágenes
         <HiddenInput
@@ -97,3 +104,4 @@ export default function ImageUploader({ onImagesChange }) {
     </Box>
   );
 }
+

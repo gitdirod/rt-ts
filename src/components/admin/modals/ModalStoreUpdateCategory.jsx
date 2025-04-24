@@ -9,15 +9,14 @@ import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithC
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
+import { GroupService } from '/src/services/GroupService';
 import { CategoryService } from '/src/services/CategoryService';
-import { TypeService } from '/src/services/TypeService';
-import { ProductService } from '/src/services/ProductService';
+import BACKEND from '/src/data/backend';
 
 
 const ModalStoreUpdateCategory = forwardRef(({ category, onUpdated, onCancel }, ref) => {
 
-    const {data:categories} = CategoryService.useAllCategories()
-    const {data:types} = TypeService.useAllTypes()
+    const {data:groups} = GroupService.useAllGroups()
 
     const style = {
         position: 'absolute',
@@ -36,9 +35,8 @@ const ModalStoreUpdateCategory = forwardRef(({ category, onUpdated, onCancel }, 
 
     const [categoryName, setCategoryName] = useState(category?.name || '')
     const [groupId, setGroupId] = useState(category?.group_id || '')
-    const [visible, setVisible] = useState(category?.available ? true : false)
+    const [suggested, setSuggested] = useState(category?.suggested ? true : false)
     const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
-    const [imagesToDelete, setImagesToDelete] = useState([]);
     const [errores, setErrores] = useState({});
 
     const handleSubmit = async e =>{
@@ -46,20 +44,15 @@ const ModalStoreUpdateCategory = forwardRef(({ category, onUpdated, onCancel }, 
         const pro = {
             _method: category?.id ? 'PUT' : 'POST',
             id: category?.id,
-            name: productName,
-            category: groupId,
-            available: visible ? 1 : 0,
+            name: categoryName,
+            group_id: groupId,
+            suggested: suggested ? 1 : 0,
             images: imagenesSeleccionadas,
-            deleted: imagesToDelete?.map(img =>(
-                {
-                    id:img.id
-                }
-            ))
         }
 
         const response = category 
-        ? await ProductService.update(category.id, pro) 
-        : await ProductService.create(pro);
+        ? await CategoryService.update(category.id, pro) 
+        : await CategoryService.create(pro);
       
         
         if (response.success) {
@@ -71,7 +64,7 @@ const ModalStoreUpdateCategory = forwardRef(({ category, onUpdated, onCancel }, 
         
       }
 
-    if (!categories?.length || !types?.length) {
+    if (!groups?.length ) {
     return <Box sx={style}><Typography>Cargando grupos...</Typography></Box>
     }
       
@@ -120,32 +113,32 @@ const ModalStoreUpdateCategory = forwardRef(({ category, onUpdated, onCancel }, 
                     <MenuItem value="">
                         <em>Seleccionar grupo</em>
                     </MenuItem>
-                    {categories?.map((category) => (
-                        <MenuItem key={category.id} value={category.id}>
-                        {category.name}
+                    {groups?.map((gr) => (
+                        <MenuItem key={gr.id} value={gr.id}>
+                        {gr.name}
                         </MenuItem>
                     ))}
                     </Select>
                 </FormControl>
-                {errores?.category && (
+                {errores?.group_id && (
                     <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
-                    {errores?.category}
+                    {errores?.group_id}
                     </Alert>
                 )}
 
                 <FormControlLabel
                     control={
                     <Checkbox
-                        checked={visible}
-                        onChange={(e) => setVisible(e.target.checked)}
+                        checked={suggested}
+                        onChange={(e) => setSuggested(e.target.checked)}
                         color="primary"
                     />
                     }
-                    label="Visible en tienda"
+                    label="Categoría sugerida"
                     sx={{ mt: 1 }}
                 />
 
-                <ImageUploader onImagesChange={setImagenesSeleccionadas} />
+                <ImageUploader onImagesChange={setImagenesSeleccionadas} maxImages={1} />
                 {errores?.images && (
                     <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
                     {errores?.images}
@@ -156,9 +149,9 @@ const ModalStoreUpdateCategory = forwardRef(({ category, onUpdated, onCancel }, 
                 {category?.images && (
                     <ImagePreviewManager
                         images={category?.images}
-                        url={import.meta.env.VITE_API_URL + "/products/"}
-                        edit={true}
-                        setDelete={setImagesToDelete}
+                        url={BACKEND.CATEGORIES.URL}
+                        edit={false}
+                        
                     />
                 )}
 

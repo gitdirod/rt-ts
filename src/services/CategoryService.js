@@ -1,8 +1,12 @@
 import useSWR from 'swr';
 import { fetchData, swrConfig} from '/src/utils/fetchData';
 import BACKEND from '/src/data/backend';
+import request from './request';
 
 export const CategoryService = {
+    fetchById: (id) => request(`${BACKEND.CATEGORIES.KEY}/${id}`, 'GET'),
+    create: (data) => request(BACKEND.CATEGORIES.KEY, 'POST', data),
+    update: (id, data) => request(`${BACKEND.CATEGORIES.KEY}/${id}`, 'POST', data),
     useAllCategories: () => {
         const url = BACKEND.CATEGORIES.KEY;
 

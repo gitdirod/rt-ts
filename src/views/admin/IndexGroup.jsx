@@ -158,7 +158,7 @@ const handleCloseEditCategory = () => setEditCategory(false);
                     </TableHead>
                     <TableBody>
                       {group.categories.map((cat) => (
-                        <TableRow key={cat.id} hover>
+                        <TableRow key={cat.id} onClick={()=>handleEditCategory(cat)} sx={{cursor:'pointer'}} hover>
                           <TableCell>{cat.name}</TableCell>
                           <TableCell>
                             <img
