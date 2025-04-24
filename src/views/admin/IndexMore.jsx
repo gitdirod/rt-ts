@@ -58,7 +58,7 @@ const IndexMore =()=>{
         
         </BlockHeader>
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-scroll">
-            <div className='w-full absolute '>
+            <div className='w-full '>
                 <div className='flex  flex-wrap gap-4 flex-col md:flex-row pb-1 pr-1'>
 
                     <div className='flex flex-col flex-1 shrink-0'>
