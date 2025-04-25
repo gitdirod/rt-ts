@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import BlockHeader from './BlockHeader'
 import { formatearDinero } from '/src/helpers'
 import LabelSimple from './LabelSimple'
-import ShowBankImages from '/src/components/admin/ShowBankImages'
+
 
 import iconCashBlack from '/src/static/icons/cash.svg'
 import iconUpdate from '/src/static/icons/update.svg'
-import iconEnvoice from '/src/static/icons/envoice.svg'
 import iconProduct from '/src/static/icons/itemBlack.svg'
 import iconEnvoiceBlack from '/src/static/icons/envoiceBlack.svg'
 import iconPlane from '/src/static/icons/plane.svg'
@@ -15,7 +13,7 @@ import useStore from '/src/hooks/useStore'
 import { ORDER_PAYMENT_TYPES } from '/src/data/orderPaymentTypes'
 import { ORDER_STATE_TYPES } from '/src/data/orderStateTypes'
 import Btn from './Btn'
-import ModalViewRequest from './ModalViewRequest'
+
 import ShowTotal from '/src/components/common/ShowTotal'
 import AddressTarget from '/src/components/sellerAdmin/SellerAdminAddressTarget'
 import iconCash from '/src/static/icons/common/cash.svg'
@@ -30,8 +28,7 @@ export default function SoldOrderDescription({order}) {
 
     const { 
         update,
-        handleModalViewRequest,
-        handleModalStateRequest
+
     } =useAdmin()
     const { 
         mutateSoldOrders,
@@ -73,14 +70,7 @@ export default function SoldOrderDescription({order}) {
         }
     }
 
-    useEffect(()=>{
-        if(state){
-            mutateSoldOrders()
-            setState(false)
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconUpdate}/>)
-        handleModalStateRequest(waiting)
-    },[waiting])
+
  
 
     useEffect(()=>{
@@ -94,21 +84,7 @@ export default function SoldOrderDescription({order}) {
 
     return (
         <div className='overflow-y-hidden flex flex-col flex-1 h-full'>
-            <BlockHeader
-                name={
-                    <div className='flex items-center'>
-                        <img src={iconEnvoice} alt="save" className='w-8 h-8 pr-2' />
-                        {'Prefactura #'+ order?.id}
-                    </div>
-                }
-                middle={
-                    <div className='w-full center-r bg-slate-800 font-poppins-bold rounded-lg text-white'>
-                        Total: {formatearDinero(order?.total)}
-                    </div>
-                }
-            >
-                
-                <form
+            <form
                     noValidate
                     onSubmit={handleSubmit}
                 >
@@ -118,8 +94,6 @@ export default function SoldOrderDescription({order}) {
                         style="bg-green-500"
                     />
                 </form>
-                    
-            </BlockHeader>
             <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
                 <div className='w-full'>
 
@@ -199,7 +173,6 @@ export default function SoldOrderDescription({order}) {
                             
                         </div>
 
-                        <ShowBankImages order ={order}/>
 
                         <div>
                             <div className='flex gap-x-1'>

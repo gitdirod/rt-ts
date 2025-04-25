@@ -5,7 +5,7 @@ import ImageTable from './admin/ImageTable'
 import TableHeader from './admin/TableHeader'
 import LabelSimple from './admin/LabelSimple'
 import Btn from './admin/Btn'
-import ModalViewRequest from './admin/ModalViewRequest'
+
 import iconClose from '/src/static/icons/close.svg'
 import iconSearch from '/src/static/icons/search.svg'
 import iconUpdate from '/src/static/icons/update.svg'
@@ -16,8 +16,7 @@ const ModalViewSuggested=({closeModal})=> {
     const {
         create,
         suggestion,
-        handleModalViewRequest,
-        handleModalStateRequest
+
     } = useAdmin()
     const {
         mutateSuggesteds,
@@ -41,14 +40,7 @@ const ModalViewSuggested=({closeModal})=> {
         }
     }
 
-    useEffect(()=>{
-        if(state){
-            mutateSuggesteds()
-            setState(false)
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconUpdate}/>)
-        handleModalStateRequest(waiting)
-    },[waiting])
+ 
     
     const rest = products.map((e1) => {
         if (!suggesteds.filter(e2 => e2.id === e1.id).length > 0)return e1

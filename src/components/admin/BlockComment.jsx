@@ -12,7 +12,7 @@ import UploadImage from "/src/components/admin/UploadImage"
 import useStore from "/src/hooks/useStore"
 import useAdmin from "/src/hooks/useAdmin"
 import BtnsUpdate from "./BtnsUpdate";
-import ModalViewRequest from "./ModalViewRequest";
+
 import BlockSubHeader from "./BlockSubHeader";
 
 import iconEdit from '/src/static/icons/edit.svg'
@@ -30,8 +30,7 @@ export default function BlockComment({comment}) {
 
     const {
         update,  
-        handleModalViewRequest,
-        handleModalStateRequest
+  
     } = useAdmin()
     const {mutateMemories} = useStore()
     const [showOptions, setShowOptions] = useState(false)
@@ -64,16 +63,7 @@ export default function BlockComment({comment}) {
         }
     }
 
-    useEffect(()=>{
-        if(state){
-            mutateMemories()
-            setState(false)
-            setActiveEdit(false)
-            setShowOptions(false)
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconUpdate}/> )
-        handleModalStateRequest(waiting)
-    },[waiting])
+
     return (
         <div 
             className={`relative flex justify-between items-center border p-2 rounded-lg ${activeEdit?

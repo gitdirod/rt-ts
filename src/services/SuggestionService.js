@@ -3,12 +3,12 @@ import { fetchData, swrConfig} from '/src/utils/fetchData';
 import BACKEND from '/src/data/backend';
 import request from './request';
 
-export const SuggestedsService = {
-    fetchById: (id) => request(`${BACKEND.SUGGESTEDS.KEY}/${id}`, 'GET'),
-    create: (data) => request(BACKEND.SUGGESTEDS.KEY, 'POST', data),
-    update: (id, data) => request(`${BACKEND.SUGGESTEDS.KEY}/${id}`, 'POST', data),
-    useAllSuggesteds: () => {
-        const url = BACKEND.SUGGESTEDS.KEY;
+export const SuggestionService = {
+    fetchById: (id) => request(`${BACKEND.SUGGESTIONS.KEY}/${id}`, 'GET'),
+    create: (data) => request(BACKEND.SUGGESTIONS.KEY, 'POST', data),
+    update: (id, data) => request(`${BACKEND.SUGGESTIONS.KEY}/${id}`, 'POST', data),
+    useAllSuggestions: () => {
+        const url = BACKEND.SUGGESTIONS.KEY;
 
         // Uso de SWR con fetchData como fetcher
         const { data, error, mutate } = useSWR(
@@ -25,4 +25,5 @@ export const SuggestedsService = {
             mutate
         };
     }
+
 };

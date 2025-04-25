@@ -1,10 +1,9 @@
 import { memo } from "react"
 import { formatearDinero } from "/src/helpers"
 
-import BlockHeader from "/src/components/admin/BlockHeader"
+
 import iconItem from '/src/static/icons/item.svg'
-import LinkBtn from './LinkBtn';
-import iconList from '/src/static/icons/list_circle.svg'
+
 import { timeToText } from '/src/helpers';
 import IsLoading from "/src/components/store/common/IsLoading";
 
@@ -18,22 +17,10 @@ const ProductDescription=({product})=> {
         
         <div className="flex flex-wrap flex-col flex-1 ">
             {/* Top bar */}
-            <BlockHeader
-            name={  
-                <div className='flex items-center'>
+            <div className='flex items-center'>
                   <img src={iconItem} alt="save" className='w-8 h-8 pr-2' />
                   {product?.name}
                 </div>
-                }
-                code={product?.code}
-            >
-                <LinkBtn
-                    to="/admin/inventory/stock"
-                    icon={iconList}
-                    text='Lista'
-                    imageColor='white'
-                />
-            </BlockHeader>
 
             {/* Bottom part */}
             <div className="overflow-y-auto flex-1 relative text-sm font-poppins-regular">

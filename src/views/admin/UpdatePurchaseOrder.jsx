@@ -8,17 +8,15 @@ import { useAuth } from '/src/hooks/useAuth'
 import { formatearDinero, formatearDinero2 } from '/src/helpers'
 import useAdmin from '/src/hooks/useAdmin'
 import SearchComponent from '/src/components/admin/SearchComponent'
-import BlockHeader from '/src/components/admin/BlockHeader'
 
-import LinkBtn from '/src/components/admin/LinkBtn'
-import Btn from '/src/components/admin/Btn'
+
+
 import TableHeader from '/src/components/admin/TableHeader'
 import LabelSimple from '/src/components/admin/LabelSimple'
-import ModalViewRequest from '/src/components/admin/ModalViewRequest'
+
 
 import iconEnvoice from '/src/static/icons/envoiceBlack.svg'
-import iconUpdate from '/src/static/icons/update.svg'
-import iconList from '/src/static/icons/list_circle.svg'
+
 import iconCart from '/src/static/icons/cart.svg'
 import IsLoading from '/src/components/store/common/IsLoading'
 import { ProductService } from '/src/services/ProductService'
@@ -60,8 +58,7 @@ const UpdatePurchaseOrder=()=> {
     const purchaseUrl = useLoaderData()
     const {
         update,
-        handleModalViewRequest,
-        handleModalStateRequest
+
     } = useAdmin()
 
     
@@ -175,14 +172,7 @@ const UpdatePurchaseOrder=()=> {
         setSubtotal(subTotal)
     }, [productsToUpdate])
 
-    useEffect(()=>{
-        if(state){
-          mutatePurchases()
-          setState(false)
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconUpdate}/>)
-        handleModalStateRequest(waiting)
-    },[waiting])
+
 
     if(Object.keys(orderToUpdate).length === 0){
         return <IsLoading/>
@@ -194,16 +184,12 @@ const UpdatePurchaseOrder=()=> {
             className=' flex-1 flex flex-col  h-[100%] pb-4'
         >
             {/* Cabecera */}
-            <BlockHeader
-                name={  
-                    <div className='flex items-center'>
+            
+            <div>
+            <div className='flex items-center'>
                         <img src={iconCart} alt="save" className='w-8 h-8 pr-2' />
                         {'Actualizar compra: #'+ orderToUpdate?.id}
                     </div>
-                }
-                // name={'Actualizar compra: #'+ orderToUpdate?.id} 
-                code={orderToUpdate?.code}
-                middle={
                     <div className='w-full center-r font-poppins-bold text-sm border rounded-lg bg-slate-700 text-white px-4 p-1 gap-8 '>
                         <div className='center-r gap-x-2'>
                             <p>Subtotal: <span className='font-poppins-regular'>{formatearDinero(subTotal)}</span></p>
@@ -212,26 +198,8 @@ const UpdatePurchaseOrder=()=> {
                             <p>Total: <span className='font-poppins-regular'>{formatearDinero(subTotal * 1.12)}</span></p>
                         </div>
                     </div>
-                }
-            >
-                <LinkBtn
-                    to="/admin/purchases/purchases"
-                    icon={iconList}
-                    text='Lista'
-                    imageColor='white'
-                />
-        
-                <form
-                    onSubmit={handleSubmit}
-                    noValidate
-                >
-                    <Btn
-                        icon={iconUpdate}
-                        text='Actualizar'
-                        style='bg-green-500'
-                    />
-                </form>
-            </BlockHeader>
+
+            </div>
             
             {/* Contenido */}
             <div

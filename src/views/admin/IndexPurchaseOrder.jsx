@@ -4,7 +4,6 @@ import { formatearDinero } from '/src/helpers'
 
 import { useAuth } from '/src/hooks/useAuth'
 
-import BlockHeader from '/src/components/admin/BlockHeader'
 import add from '/src/static/icons/add.svg'
 import iconCart from '/src/static/icons/cart.svg'
 import Total from '/src/components/admin/Total'
@@ -45,17 +44,14 @@ const IndexPurchaseOrder=()=> {
         className=' overflow-y-hidden flex flex-col flex-1'
     >
         {/* Cabecera */}
-        <BlockHeader
-            name={
+        <div>
                 <div className='flex'>
                     <img src={iconCart} alt="save" className='w-8 h-8 pr-2' />
                     Compras ({purchases?.length})
                 </div>
-            }
-            middle={
                 <Total purchases={purchases} />
-            }
-        >
+            
+        
             <LinkBtn
                 to='/admin/purchases/storePurchase'
                 icon={add}
@@ -63,7 +59,7 @@ const IndexPurchaseOrder=()=> {
                 style='bg-cyanPrimary'
                 imageColor='white'
             />
-        </BlockHeader>
+        </div>
         
         {/* Contenido */}
         

@@ -20,18 +20,13 @@ import IndexProduct from './views/admin/IndexProduct'
 import IndexSoldOrder from './views/admin/IndexSoldOrder'
 import IndexGroup from './views/admin/IndexGroup'
 import IndexType from '/src/views/admin/IndexType'
-import IndexMore from '/src/views/admin/IndexMore'
 import IndexLanding from '/src/views/admin/IndexLanding'
 import IndexSuggested from '/src/views/admin/IndexSuggested'
 import IndexComments from '/src/views/admin/IndexComments'
 import IndexPurchaseOrder from "/src/views/admin/IndexPurchaseOrder"
-// import IndexStock from "/src/views/admin/IndexStock"
+
 
 import StorePurchaseOrder from '/src/views/admin/StorePurchaseOrder'
-
-import ShowProduct,{
-    loader as loaderItem
-} from './views/admin/ShowProduct'
 
 import ShowSoldOrder,{
     loader as loaderSoldOrder
@@ -140,15 +135,6 @@ const router = createBrowserRouter([
                         element: <IndexType />
                     },
                     {
-                        path : "/admin/inventory/products/item/:itemId",
-                        loader: loaderItem,
-                        element: <ShowProduct />
-                    },
-                    // {
-                    //     path:'/admin/inventory/stock',
-                    //     element: <IndexStock/>
-                    // },
-                    {
                         path : "/admin/inventory/stock/product/:itemId",
                         loader: loaderStock,
                         element: <ShowStock />
@@ -205,10 +191,6 @@ const router = createBrowserRouter([
                 element: <Outlet />,
                 children: [
                     
-                    {
-                        path:'/admin/settings/more',
-                        element: <IndexMore />
-                    },
                     {
                         path:'/admin/settings/landing',
                         element: <IndexLanding />

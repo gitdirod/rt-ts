@@ -6,10 +6,10 @@ import LabelSimple from "/src/components/admin/LabelSimple"
 import edit from '/src/static/icons/edit.svg'
 import iconDelete from '/src/static/icons/delete.svg'
 import options from '/src/static/icons/options.svg'
-import iconUpdate from '/src/static/icons/update.svg'
+
 import BlockSubHeader from "./BlockSubHeader"
 import BtnsUpdate from "./BtnsUpdate"
-import ModalViewRequest from "./ModalViewRequest"
+
 
 
 
@@ -19,8 +19,7 @@ export default function BlockItemOne({children, group, url, mutate, nameBlock, d
 
     const {
         update,  
-        handleModalViewRequest,
-        handleModalStateRequest
+
     } = useAdmin()
     
     const [showOptions, setShowOptions] = useState(false)
@@ -45,16 +44,7 @@ export default function BlockItemOne({children, group, url, mutate, nameBlock, d
         }
     }
 
-    useEffect(()=>{
-        if(stateUpdate){
-            mutate()
-            setStateUpdate(false)
-            setActiveEdit(false)
-            setShowOptions(false)
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconUpdate}/>)
-        handleModalStateRequest(waitingUpdate)
-    },[waitingUpdate])
+
     return (
         <div 
             className={`relative  font-poppins-regular flex justify-between items-center border mt-0.5 rounded-lg  overflow-hidden ${activeEdit?

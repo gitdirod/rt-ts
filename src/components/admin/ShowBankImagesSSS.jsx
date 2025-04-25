@@ -5,7 +5,7 @@ import ModalViewImage from "/src/components/ModalViewImage"
 import { urlsBackend } from "/src/data/urlsBackend"
 
 
-const ShowBankImages=({order})=> {
+const ShowBankImagesSSS=({order})=> {
     
     const images = order?.payments
 
@@ -51,4 +51,4 @@ const ShowBankImages=({order})=> {
   )
 }
 
-export default memo(ShowBankImages)
+export default memo(ShowBankImagesSSS)

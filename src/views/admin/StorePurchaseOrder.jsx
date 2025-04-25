@@ -7,14 +7,13 @@ import useAdmin from '/src/hooks/useAdmin'
 import { useNavigate } from "react-router-dom"
 import SearchComponent from '/src/components/admin/SearchComponent'
 import iconCart from '/src/static/icons/cart.svg'
-import BlockHeader from '/src/components/admin/BlockHeader'
 import Btn from '/src/components/admin/Btn'
 import LabelSimple from '/src/components/admin/LabelSimple'
 import TableHeader from '/src/components/admin/TableHeader'
 import iconDelete from '/src/static/icons/delete.svg'
 import iconSave from '/src/static/icons/save_filled.svg'
 import iconEnvoice from '/src/static/icons/envoiceBlack.svg'
-import ModalViewRequest from '/src/components/admin/ModalViewRequest'
+
 
 
 const StorePurchaseOrder=()=> {
@@ -34,8 +33,7 @@ const StorePurchaseOrder=()=> {
 
     const {
         create,
-        handleModalViewRequest,
-        handleModalStateRequest
+  
     } = useAdmin()
 
     
@@ -87,16 +85,7 @@ const StorePurchaseOrder=()=> {
         { title: '$ Precio', className: '' },
         { title: 'Unidades', className: '' },
       ];
-    useEffect(()=>{
-        if(state){
-          mutatePurchases()
-          setState(false)
-          handleClearOrderBuy()
-          navigate('/admin/purchases/purchases')
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconSave} spin={false}/> )
-        handleModalStateRequest(waiting)
-    },[waiting])
+
 
 
     useEffect(()=>{
@@ -116,15 +105,12 @@ const StorePurchaseOrder=()=> {
         className=' flex-1 flex flex-col  h-[100%]'
     >
         {/* Cabecera */}
-        <BlockHeader
-            name={  
-                <div className='flex items-center'>
-                  <img src={iconCart} alt="save" className='w-8 h-8 pr-2' />
-                  Nueva compra
-                </div>
-                }
-            middle={
-                <div className='w-full center-r font-poppins-bold text-sm border rounded-lg bg-slate-700 text-white px-4 p-1 gap-8 '>
+        <div>
+            <div className='flex items-center'>
+            <img src={iconCart} alt="save" className='w-8 h-8 pr-2' />
+            Nueva compra
+          </div>
+          <div className='w-full center-r font-poppins-bold text-sm border rounded-lg bg-slate-700 text-white px-4 p-1 gap-8 '>
                     <div className='center-r gap-x-2'>
                         <p>Subtotal: <span className='font-poppins-regular'>{formatearDinero(subtotalBuy)}</span></p>
                     </div>
@@ -132,8 +118,7 @@ const StorePurchaseOrder=()=> {
                         <p>Total: <span className='font-poppins-regular'>{formatearDinero(subtotalBuy * 1.12)}</span></p>
                     </div>
                 </div>
-            }
-        >
+        
             
             <Btn
                 icon={iconDelete}
@@ -150,7 +135,7 @@ const StorePurchaseOrder=()=> {
                     style="bg-green-500"
                 />
             </form>
-        </BlockHeader>
+        </div>
         {/* Contenido */}
         <div
             className='center-r w-full mb-2'

@@ -10,18 +10,17 @@ moment.updateLocale('es', localization);
 import UploadImage from '/src/components/admin/UploadImage';
 
 import BtnsUpdate from './BtnsUpdate';
-import ModalViewRequest from './ModalViewRequest';
+
 
 import iconEdit from '/src/static/icons/edit_filled.svg'
 import iconCalendar from '/src/static/icons/calendar.svg'
-import iconUpdate from '/src/static/icons/update.svg'
+
 
 export default function BlockLanding({children, item, type}) {
 
     const {
         create,
-        handleModalViewRequest,
-        handleModalStateRequest
+
     }= useAdmin()
     const {mutateLandings} = useStore()
 
@@ -42,15 +41,7 @@ export default function BlockLanding({children, item, type}) {
         }
     }
 
-    useEffect(()=>{
-        if(state){
-            mutateLandings()
-            setState(false)
-            setImage([])
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconUpdate}/>)
-        handleModalStateRequest(waiting)
-    },[waiting])
+
 
     return (
         <div className=' border rounded-lg center-c flex-1 flex-wrap'>

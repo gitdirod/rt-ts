@@ -1,5 +1,4 @@
 import IsLoading from '../../components/store/common/IsLoading'
-import BlockHeader from '/src/components/admin/BlockHeader'
 import iconDesktop from '/src/static/icons/desktop.svg'
 import BlockLanding from '/src/components/admin/BlockLanding'
 import { DEVICE_TYPES } from '/src/data/deviceTypes'
@@ -8,22 +7,15 @@ import { LandingService } from '/src/services/LandingService'
 
 export default function IndexLanding() {
 
-    
-    const {data:landings} = LandingService.useAllLandings()
 
+    const {data:landings}= LandingService.useAllLandings()
     if(landings === undefined) return(<IsLoading/>)
     return (
     <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>
-        <BlockHeader
-            name={
-                <div className='flex'>
+        <div className='flex'>
                 <img src={iconDesktop} alt="save" className='w-8 h-8 pr-2' />
                 Landing
                 </div>
-            }
-        >
-           
-        </BlockHeader>
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
             <div className='w-full'>
                 <div className='pb-1 pr-1 flex gap-2 flex-wrap'>
