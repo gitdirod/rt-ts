@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import BlockHeader from './BlockHeader'
 import { formatearDinero } from '/src/helpers'
 import LabelSimple from './LabelSimple'
-import ShowBankImages from '/src/components/admin/ShowBankImages'
+
 
 import iconCashBlack from '/src/static/icons/cash.svg'
 import iconUpdate from '/src/static/icons/update.svg'
@@ -199,7 +199,6 @@ export default function SoldOrderDescription({order}) {
                             
                         </div>
 
-                        <ShowBankImages order ={order}/>
 
                         <div>
                             <div className='flex gap-x-1'>
