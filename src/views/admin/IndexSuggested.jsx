@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SuggestionService } from '/src/services/SuggestionService';
 import {
-    Accordion, AccordionDetails, AccordionSummary, Box, Button, Chip, Stack,
+    Accordion, AccordionDetails, AccordionSummary, Box, Button, Chip, Modal, Stack,
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -13,6 +13,8 @@ import ImageTable from '/src/components/admin/ImageTable';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { SuggestedService } from '/src/services/SuggestedService';
 import { Tooltip } from '@mui/material';
+import ModalStoreUpdateSuggestion from '/src/components/admin/modals/ModalStoreUpdateSuggestion';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 
@@ -36,6 +38,9 @@ export default function IndexSuggested() {
         mutate()
     };
 
+    
+    
+
     const handleDeleteProductToGroup = async (product, group) => {
         
         const deleteSuggested = {
@@ -54,8 +59,36 @@ export default function IndexSuggested() {
         }
     };
 
+    //  Modal crear editar grupo  
+      const [editSuggestion, setEditSuggestion] = useState(false);
+      const [selectedSuggestion, setSelectedSuggestion] = useState({})
+      
+      const handleEditSuggestion = (group) => {
+        setSelectedSuggestion(group)
+        setEditSuggestion(true)
+      };
+      const handleCloseEditSuggestion = () => setEditSuggestion(false);
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
+
+            <Modal
+                open={editSuggestion}
+                onClose={(event, reason) => {
+                    if (reason !== 'backdropClick') {
+                        handleCloseEditSuggestion();
+                    }
+                }}
+            >
+                <ModalStoreUpdateSuggestion 
+                    group={selectedSuggestion}
+                    onCancel={handleCloseEditSuggestion}
+                    onUpdated={() => {
+                        handleCloseEditSuggestion();
+                    mutate();
+                    }}
+                />
+            </Modal>
             {/* Header */}
             <Box sx={{
                 display: 'flex',
@@ -74,7 +107,7 @@ export default function IndexSuggested() {
                     </Typography>
                     <Chip label={suggestions.length} color="primary" />
                 </Stack>
-                <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+                <Button onClick={()=>handleEditSuggestion(null)} variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
                     Grupo
                 </Button>
             </Box>
@@ -96,22 +129,40 @@ export default function IndexSuggested() {
                                     <Typography fontWeight="medium">{sug.name}</Typography>
                                     <Chip label={`${sug?.products?.length || 0}`} size="small" color="primary" sx={{ fontSize: '0.75rem', height: 20 }} />
                                 </Box>
-                                <Tooltip title="Agregar producto" arrow>
-                                    <AddCircleOutlineIcon
-                                        onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleAddProduct(sug);
-                                        }}
-                                        sx={{
-                                        ml: 2,
-                                        fontSize: 20,
-                                        cursor: 'pointer',
-                                        color: 'grey.500',
-                                        transition: 'color 0.2s ease-in-out',
-                                        '&:hover': { color: 'primary.main' }
-                                        }}
-                                    />
-                                </Tooltip>
+                                <Stack direction="row">
+                                    <Tooltip title="Renombrar grupo" arrow>
+                                        <EditIcon
+                                            onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleEditSuggestion(sug);
+                                            }}
+                                            sx={{
+                                            ml: 2,
+                                            fontSize: 20,
+                                            cursor: 'pointer',
+                                            color: 'grey.500',
+                                            transition: 'color 0.2s ease-in-out',
+                                            '&:hover': { color: 'primary.main' }
+                                            }}
+                                        />
+                                    </Tooltip>
+                                    <Tooltip title="Agregar producto" arrow>
+                                        <AddCircleOutlineIcon
+                                            onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleAddProduct(sug);
+                                            }}
+                                            sx={{
+                                            ml: 2,
+                                            fontSize: 20,
+                                            cursor: 'pointer',
+                                            color: 'grey.500',
+                                            transition: 'color 0.2s ease-in-out',
+                                            '&:hover': { color: 'primary.main' }
+                                            }}
+                                        />
+                                    </Tooltip>
+                                </Stack>
 
                             </Box>
                         </AccordionSummary>
