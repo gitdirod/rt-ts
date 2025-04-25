@@ -14,7 +14,7 @@ import TableHeader from '/src/components/admin/TableHeader'
 import iconDelete from '/src/static/icons/delete.svg'
 import iconSave from '/src/static/icons/save_filled.svg'
 import iconEnvoice from '/src/static/icons/envoiceBlack.svg'
-import ModalViewRequest from '/src/components/admin/ModalViewRequest'
+
 
 
 const StorePurchaseOrder=()=> {
@@ -34,8 +34,7 @@ const StorePurchaseOrder=()=> {
 
     const {
         create,
-        handleModalViewRequest,
-        handleModalStateRequest
+  
     } = useAdmin()
 
     
@@ -87,16 +86,7 @@ const StorePurchaseOrder=()=> {
         { title: '$ Precio', className: '' },
         { title: 'Unidades', className: '' },
       ];
-    useEffect(()=>{
-        if(state){
-          mutatePurchases()
-          setState(false)
-          handleClearOrderBuy()
-          navigate('/admin/purchases/purchases')
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconSave} spin={false}/> )
-        handleModalStateRequest(waiting)
-    },[waiting])
+
 
 
     useEffect(()=>{

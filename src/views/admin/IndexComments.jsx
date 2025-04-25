@@ -1,8 +1,8 @@
 import useStore from '/src/hooks/useStore'
 import BlockHeader from '/src/components/admin/BlockHeader'
-import BlockComment from '/src/components/admin/BlockComment'
+
 import { useState } from 'react'
-import BlockStoreComment from '/src/components/admin/BlockStoreComment'
+
 import Btn from '/src/components/admin/Btn'
 
 import iconAdd from '/src/static/icons/add.svg'
@@ -37,16 +37,7 @@ export default function IndexComments(){
         
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
             <div className='w-full'>
-                <div className='flex flex-col gap-1'>
-
-                    { adding && ( <BlockStoreComment setAction={setAdding} />) }
-                    {memories?.map(comment => (
-                        <BlockComment
-                            key={comment.id}
-                            comment={comment}
-                        />
-                    ))}
-                </div>
+                
             </div>
         </div>
         

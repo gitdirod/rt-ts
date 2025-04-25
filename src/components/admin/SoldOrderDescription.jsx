@@ -15,7 +15,7 @@ import useStore from '/src/hooks/useStore'
 import { ORDER_PAYMENT_TYPES } from '/src/data/orderPaymentTypes'
 import { ORDER_STATE_TYPES } from '/src/data/orderStateTypes'
 import Btn from './Btn'
-import ModalViewRequest from './ModalViewRequest'
+
 import ShowTotal from '/src/components/common/ShowTotal'
 import AddressTarget from '/src/components/sellerAdmin/SellerAdminAddressTarget'
 import iconCash from '/src/static/icons/common/cash.svg'
@@ -30,8 +30,7 @@ export default function SoldOrderDescription({order}) {
 
     const { 
         update,
-        handleModalViewRequest,
-        handleModalStateRequest
+
     } =useAdmin()
     const { 
         mutateSoldOrders,
@@ -73,14 +72,7 @@ export default function SoldOrderDescription({order}) {
         }
     }
 
-    useEffect(()=>{
-        if(state){
-            mutateSoldOrders()
-            setState(false)
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconUpdate}/>)
-        handleModalStateRequest(waiting)
-    },[waiting])
+
  
 
     useEffect(()=>{

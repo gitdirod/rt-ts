@@ -14,7 +14,7 @@ import LinkBtn from '/src/components/admin/LinkBtn'
 import Btn from '/src/components/admin/Btn'
 import TableHeader from '/src/components/admin/TableHeader'
 import LabelSimple from '/src/components/admin/LabelSimple'
-import ModalViewRequest from '/src/components/admin/ModalViewRequest'
+
 
 import iconEnvoice from '/src/static/icons/envoiceBlack.svg'
 import iconUpdate from '/src/static/icons/update.svg'
@@ -39,8 +39,7 @@ const UpdatePurchaseOrder=()=> {
     const purchaseUrl = useLoaderData()
     const {
         update,
-        handleModalViewRequest,
-        handleModalStateRequest
+
     } = useAdmin()
 
     
@@ -154,14 +153,7 @@ const UpdatePurchaseOrder=()=> {
         setSubtotal(subTotal)
     }, [productsToUpdate])
 
-    useEffect(()=>{
-        if(state){
-          mutatePurchases()
-          setState(false)
-        }
-        handleModalViewRequest(<ModalViewRequest text="Actualizando..." icon={iconUpdate}/>)
-        handleModalStateRequest(waiting)
-    },[waiting])
+
 
     if(Object.keys(orderToUpdate).length === 0){
         return <IsLoading/>

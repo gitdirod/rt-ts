@@ -3,15 +3,14 @@ import BlockSubHeader from './BlockSubHeader'
 import useAdmin from '/src/hooks/useAdmin'
 import LabelSimple from '/src/components/admin/LabelSimple'
 import BtnsUpdate from './BtnsUpdate'
-import ModalViewRequest from './ModalViewRequest'
+
 import iconSave from '/src/static/icons/save_filled.svg'
 
 export default function BlockStoreItemOne({url, itemName, labelName='', mutate, setAction, icon}) {
 
     const {
         create,  
-        handleModalViewRequest,
-        handleModalStateRequest
+       
     } = useAdmin()
 
     const [errores, setErrores] = useState({})
@@ -32,15 +31,7 @@ export default function BlockStoreItemOne({url, itemName, labelName='', mutate, 
         }
     }
 
-    useEffect(()=>{
-        if(state){
-            mutate()
-            setState(false)
-            setAction(false)
-        }
-        handleModalViewRequest(<ModalViewRequest text="Guardando..." icon={iconSave} spin={false}/> )
-        handleModalStateRequest(waiting)
-    },[waiting])
+
 
     return (
         <div className='border border-green-500 mb-4 h-fit bg-white rounded'>
