@@ -50,7 +50,7 @@ export const adminNavigation = [
         // { id: 4, name: "Ajustes adicionales", url: "/admin/settings/more" },
         { id: 5, name: "Landing", url: "/admin/settings/landing" },
         { id: 6, name: "Productos sugeridos", url: "/admin/settings/suggested" },
-        { id: 7, name: "Comentarios", url: "/admin/settings/comments" },
+        { id: 7, name: "Memorias", url: "/admin/settings/memories" },
       ],
     },
   ];

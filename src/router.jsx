@@ -22,7 +22,6 @@ import IndexGroup from './views/admin/IndexGroup'
 import IndexType from '/src/views/admin/IndexType'
 import IndexLanding from '/src/views/admin/IndexLanding'
 import IndexSuggested from '/src/views/admin/IndexSuggested'
-import IndexComments from '/src/views/admin/IndexComments'
 import IndexPurchaseOrder from "/src/views/admin/IndexPurchaseOrder"
 
 
@@ -49,6 +48,7 @@ import ProductDetailPage from '/src/views/store/product/ProductDetailPage'
 import ViewProducts from '/src/views/store/product/ViewProducts'
 import Likes from '/src/views/store/likes/Likes'
 import BoughtDetailPage from '/src/views/store/bought/BoughtDetailPage'
+import IndexMemory from '/src/views/admin/IndexMemory'
 
 
 
@@ -200,8 +200,8 @@ const router = createBrowserRouter([
                         element: <IndexSuggested />
                     },
                     {
-                        path:'/admin/settings/comments',
-                        element: <IndexComments />
+                        path:'/admin/settings/memories',
+                        element: <IndexMemory />
                     },
                 ]
             },
