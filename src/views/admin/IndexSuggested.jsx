@@ -15,7 +15,7 @@ export default function IndexSuggested() {
     }
     
     return (
-        <Box className="flex flex-col flex-1 overflow-hidden">
+        <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
             <Box
                 sx={{
                     display: 'flex',
