@@ -1,8 +1,5 @@
-import useSWR from 'swr'
-import clienteAxios from "/src/config/axios"
 import { createContext, useState, useEffect, memo } from "react"
 import { formatearDinero2 } from '/src/helpers'
-import { swrConfig } from '/src/utils/fetchData'
 
 const StoreContext = createContext()
 
@@ -20,41 +17,7 @@ const StoreProvider = memo(({children}) => {
     const [subtotal, setSubtotal] = useState(0)
     const [subtotalBuy, setSubtotalBuy] = useState(0)
     const [total, setTotal] = useState(0)
-        
-    const [enableUser, setEnableUser] = useState(false)
-    const handleSetEnableUser=(user)=>{
-        setEnableUser(user)
-    }
-    
-    const [enableAdminUser, setEnableAdminUser] = useState(false)
-    const handleSetEnableAdminUser=(user)=>{
-        setEnableAdminUser(user)
-    }
 
-
-    // const { data: purchases, mutate: mutatePurchases } = useSWR(enableAdminUser ?'/api/purchase_orders':null, () => 
-    //     clienteAxios('/api/purchase_orders')
-    //     .then(res => res.data.data),
-    //     swrConfig
-    // )
-    
-    const { data: numbers,  mutate: mutateNumbers } = useSWR(enableAdminUser?'/api/number_colors':null, () => 
-        clienteAxios('/api/number_colors')
-        .then(res => res.data.data),
-        swrConfig
-    )
-
-    const { data: sizes,  mutate: mutateSizes } = useSWR(enableAdminUser?'/api/sizes':null, () => 
-        clienteAxios('/api/sizes')
-        .then(res => res.data.data),
-        swrConfig
-    )
-    const { data: inventory, mutate: mutateInventory } = useSWR(enableAdminUser?'/api/inventory':null, () => 
-        clienteAxios('/api/inventory')
-        .then(res => res.data.data),
-        swrConfig
-    )
-    
 
     useEffect(()=>{
         const newSubtotal = order?.reduce((subtotal, product) => (product.price * product.cantidad) + subtotal, 0)
@@ -152,25 +115,13 @@ const StoreProvider = memo(({children}) => {
         <StoreContext.Provider
             value={{
                 
-                order,
-                // purchases,
-                // mutatePurchases,
-                sizes,
-                numbers,
-                inventory,
-                
-                mutateSizes,
-                mutateNumbers,
-                mutateInventory,
-                
+                order,            
                 
                 handleClearOrder,
                 handleAddOrder,
                 handleRemoveProduct,
                 total,
                 subtotal,
-                handleSetEnableUser,
-                handleSetEnableAdminUser,
                 
                 handleClearOrderBuy,
                 handleRemoveProductBuy,

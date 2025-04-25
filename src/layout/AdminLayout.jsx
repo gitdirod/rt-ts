@@ -1,20 +1,15 @@
 import { Outlet } from "react-router-dom";
-import { memo, useEffect, useState } from "react";
+import { memo, useState } from "react";
 import { useAuth } from "/src/hooks/useAuth";
 import SidebarAdmin from "/src/components/admin/SidebarAdmin";
 import NavAdmin from "/src/components/admin/NavAdmin";
 import IsLoading from "/src/components/store/common/IsLoading";
-import useStore from "/src/hooks/useStore";
 import { Box } from "@mui/material";
 
 const AdminLayout = () => {
   const { user } = useAuth({ middleware: "admin", url: "/store" });
-  const { handleSetEnableAdminUser } = useStore();
+  
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
-  useEffect(() => {
-    handleSetEnableAdminUser(user?.role === "admin");
-  }, [user]);
 
   if (user === undefined) return <IsLoading />;
 

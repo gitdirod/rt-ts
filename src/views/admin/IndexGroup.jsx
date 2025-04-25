@@ -121,34 +121,34 @@ const handleCloseEditCategory = () => setEditCategory(false);
           }}
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Typography fontWeight="medium">{group.name}</Typography>
-                    <Chip
-                    label={`${group?.categories?.length || 0}`}
-                    size="small"
-                    color="primary"
-                    sx={{ fontSize: '0.75rem', height: 20 }}
-                    />
+                  <Typography fontWeight="medium">{group.name}</Typography>
+                  <Chip
+                  label={`${group?.categories?.length || 0}`}
+                  size="small"
+                  color="primary"
+                  sx={{ fontSize: '0.75rem', height: 20 }}
+                  />
                 </Box>
 
                 <EditIcon 
-                    onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditGroup(group);
-                    }}
-                    sx={{ 
-                    ml: 2, 
-                    fontSize: 20, 
-                    cursor: 'pointer', 
-                    color: 'grey.500',
-                    transition: 'color 0.2s ease-in-out',
-                    '&:hover': {
-                        color: 'primary.main',
-                    }
-                    }} 
+                  onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditGroup(group);
+                  }}
+                  sx={{ 
+                  ml: 2, 
+                  fontSize: 20, 
+                  cursor: 'pointer', 
+                  color: 'grey.500',
+                  transition: 'color 0.2s ease-in-out',
+                  '&:hover': {
+                      color: 'primary.main',
+                  }
+                  }} 
                 />
-</Box>
+              </Box>
 
             </AccordionSummary >
             

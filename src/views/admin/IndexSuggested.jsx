@@ -1,204 +1,124 @@
-import { useState } from 'react'
-import useStore from '/src/hooks/useStore'
-import useAdmin from '/src/hooks/useAdmin'
-import IsLoading from '../../components/store/common/IsLoading'
-
-import BlockItemOne from '/src/components/admin/BlockItemOne'
-import BlockStoreItemOne from '/src/components/admin/BlockStoreItemOne'
-import ImageTable from '/src/components/admin/ImageTable'
-import Btn from '/src/components/admin/Btn'
-import TableHeader from '/src/components/admin/TableHeader'
-import iconAdd from '/src/static/icons/add.svg'
-
-import iconFireBlack from '/src/static/icons/fireBlack.svg'
-import ModalViewSuggested from '/src/components/ModalViewSuggested'
 import { SuggestionService } from '/src/services/SuggestionService'
-import { SuggestedService } from '/src/services/SuggestedService'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Chip, Stack, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import StarPurple500Icon from '@mui/icons-material/StarPurple500';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function IndexSuggested() {
-    const {data:suggesteds}= SuggestedService.useAllSuggesteds()
+
     const {data:suggestions}= SuggestionService.useAllSuggestions()
 
-    const {
-        handleModalStateComponent,
-        handleModalViewComponent,
-        handleCloseModals
-    } = useAdmin()
-    const {mutateSuggestions} = useStore()
-    const[ activeAdd, setActiveAdd] = useState(false)
-
-    const columns = [
-        { title: '#', className: 'w-10' },
-        { title: 'Nombre', className: '' },
-        { title: 'Grupo', className: '' },
-        { title: 'Categoría', className: '' },
-        { title: 'Tipo', className: '' },
-        { title: 'Imagenes', className: '' }
-      ];
     
-    if(suggestions === undefined && suggesteds === undefined) return(<IsLoading/>)
-
+    const handleAddProduct = (group)=>{
+        console.log(group.name)
+    }
+    
     return (
-    <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>
+        <Box className="flex flex-col flex-1 overflow-hidden">
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    p: 1,
+                    my: 1,
+                    bgcolor: 'white',
+                    borderRadius: 1,
+                    border: '1px solid #ccc'
+                }}
+            >
+                <Stack direction="row" spacing={2} alignItems="center">
+                    <StarPurple500Icon color="primary" />
+                    <Typography variant="h5" fontWeight="bold">
+                        Productos sugeridos
+                    </Typography>
+                    <Chip label={suggestions.length} color="primary" />
+                </Stack>
+                <Button 
+                // onClick={()=>handleEditGroup(null)} 
+                variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+                    Grupo
+                </Button>
+            </Box>
+
+            <Box sx={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', pr: 1 }}>
+                {suggestions.map((group) => (
+                    <Accordion
+                        key={group.id}
+                        disableGutters
+                        square={false}
+                        sx={{
+                        mb: 1,
+                        border: '1px solid #e0e0e0',
+                        borderRadius: 1,
+                        boxShadow: '0px 1px 3px rgba(0,0,0,0.05)',
+                        '&:before': { display: 'none' },
+                        overflow: 'hidden', // <- importante para que el borderRadius afecte a todo
+                        }}
+                    >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Typography fontWeight="medium">{group.name}</Typography>
+                            <Chip
+                            label={`${group?.productos?.length || 0}`}
+                            size="small"
+                            color="primary"
+                            sx={{ fontSize: '0.75rem', height: 20 }}
+                            />
+                        </Box>
         
-        <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-            <div className='w-full'>
-
-                {
-                    activeAdd && (
-                        <BlockStoreItemOne
-                            url='suggestions'
-                            icon={iconFireBlack}
-                            labelName='Grupo sugerido:'
-                            itemName='Nuevo grupo'
-                            setAction={setActiveAdd}
-                            mutate={mutateSuggestions}
+                        <EditIcon 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleAddProduct(group);
+                            }}
+                            sx={{ 
+                            ml: 2, 
+                            fontSize: 20, 
+                            cursor: 'pointer', 
+                            color: 'grey.500',
+                            transition: 'color 0.2s ease-in-out',
+                            '&:hover': {
+                                color: 'primary.main',
+                            }
+                            }} 
                         />
-                    )
-                }
-                <div className='pb-1 pr-1 flex flex-col  gap-y-2'>
-                    {suggestions?.map(suggestion => (
-                        <div
-                            key={suggestion.id}
-                        >
-                            <BlockItemOne
-                                nameBlock={"Editar grupo sugerido: " + suggestion?.name}
-                                url='suggestions'
-                                icon={iconFireBlack}
-                                group={suggestion}
-                                mutate={mutateSuggestions}
-                                styleName="font-bold border-b"
-                                divEdit={
-                                    <div className='center-c gap-1 relative w-full p-1'>
-                                        
-                                        <Btn
-                                            text='Agregar producto'
-                                            icon={iconAdd}
-                                            textColor='text-green-500'
-                                            imageColor='green'
-                                            style="border border-green-500"
-                                            isButton={false}
-                                            action={()=>{
-                                                handleModalStateComponent(true)
-                                                handleModalViewComponent(<ModalViewSuggested closeModal={handleCloseModals}/>)
-                                                // handleSetModalSuggested(true)
-                                                // handleSetSuggestion(suggestion)
-                                            }}
-                                        />
-                                        <table className=" table-fixed  w-full text-slate-600 ">
-                                            <TableHeader columns={columns} z='z-0' style='base-th-class-green' />
-                                            <tbody className='w-full  '>
-                                            {
-                                                suggesteds?.map(item=> item?.suggestion?.id === suggestion?.id && (
-                                                    <ItemListSuggested
-                                                        key={item.id}
-                                                        item={item}
-                                                    />
-                                                ))
-                                            } 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                }
-                                
-                            >
-
-                                <div className='flex justify-start items-center flex-wrap gap-2 p-2'>
-                                {
-                                    suggesteds?.map(item=> item?.suggestion?.id === suggestion?.id && (
-                                        <SuggestedProduct
-                                            key={item.id}
-                                            item={item}
-                                        />
-                                    ))
-                                }   
-
-                                <div
-                                    className=' hover:bg-green-100 rounded-lg hover:border-green-400 border border-transparent  cursor-pointer h-20 w-20 flex justify-center items-center group/add'
-                                    onClick={()=>{
-                                        handleModalStateComponent(true)
-                                        handleModalViewComponent(<ModalViewSuggested closeModal={handleCloseModals}/>)
-                                        // handleSetModalSuggested(true)
-                                        // handleSetSuggestion(suggestion)
-                                    }}
-                                >
-                                    <img src={iconAdd} alt="save" className='w-6 h-6 green group-hover/add:scale-125 transition-all'/>
-                                </div>
-                                </div>
-                            </BlockItemOne>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
+                        </Box>
         
-    </div>
-  )
-}
-
-const ItemListSuggested = ({item})=>{
-
-    return(
-        <tr className=' group/item text-green-500'>
-
-            <Td style='w-10 group-hover/item:border-l-green-500 rounded-l-lg border-l ' >
-                {item?.id}
-            </Td>
-            <Td style='flex-col'>
-                <span>{item.name}</span>
-                <span className=' text-sm'>{item.code}</span>
-            </Td>
-            <Td style='text-sm'>
-                <span>{item?.group?.name}</span>
-            </Td>
-            <Td style='text-sm'>
-            <span>{item?.category?.name}</span>
-            </Td>
-            <Td style='text-sm'>
-                <div className="flex justify-center items-center gap-2">
-                    <div className="flex w-4 h-4">
-                        <img 
-                        src={import.meta.env.VITE_API_URL + "/iconos/" + item.type_product?.image}
-                        alt="Tipo de producto" 
-                        />
-                    </div>
-                    <span className='text-center'>{item?.type_product?.name}</span>
-                </div>
-            </Td>
-            <Td style='group-hover/item:border-r-green-400 border-r rounded-r-lg'>
-                <ImageTable 
-                    images={item?.images}
-                    url={import.meta.env.VITE_API_URL + "/products/"}
-                    higth={14}
-                    count={true}
-                />
-            </Td>
-            
-        </tr>
+                    </AccordionSummary >
+                    
+                    <AccordionDetails>
+                        {group.products?.length ? (
+                        <TableContainer sx={{ borderRadius: 1, overflow: 'hidden', border:"1px solid #ccc" }}>
+                            <Table size="small">
+                            <TableHead>
+                                <TableRow sx={{ backgroundColor: 'grey.100' }}>
+                                <TableCell>Id</TableCell>
+                                <TableCell>Nombre</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {group.products.map((cat) => (
+                                <TableRow key={cat.id} 
+                                // onClick={()=>handleEditCategory(cat)} 
+                                sx={{cursor:'pointer'}} hover>
+                                    <TableCell>{cat.name}</TableCell>
+                                    
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        </TableContainer>
+                        ) : (
+                        <Typography variant="body2" color="text.secondary">Este grupo no tiene productos.</Typography>
+                        )}
+                    </AccordionDetails>
+                    </Accordion>
+                ))}
+                </Box>
+        </Box>
     )
 }
 
-const SuggestedProduct = ({item})=>{
-    return(
-        <div className='py-0.5'>
-            <img 
-                className="h-20 rounded"
-                src={import.meta.env.VITE_API_URL + "/products/" + item.images[0].name} 
-                alt="imagen" 
-            />
-        </div>
-    )
-}
-
-const Td = ({children, style='',id, select})=>{
-    return(
-        <td
-            className='px-0'
-            onClick={()=>{id? select(id):null}}
-        >
-        <div className={`py-1 text-sm bg-white group-hover/item:border-y-green-400 transition-all h-16 flex flex-1 items-center justify-center group-hover/item:font-bold border-y ${style}`}>
-            {children}
-        </div>
-    </td>
-    )
-}
