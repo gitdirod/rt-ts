@@ -1,21 +1,48 @@
 import { useState } from 'react'
 import IsLoading from '/src/components/store/common/IsLoading'
 import { MemoryService } from '/src/services/MemoryService'
-import { Box, Button, Chip, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, Chip, Modal, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CommentIcon from '@mui/icons-material/Comment';
 import BACKEND from '/src/data/backend';
+import ModalStoreUpdateMemory from '/src/components/admin/modals/ModalStoreUpdateMemory';
 
 export default function IndexMemory(){
 
 
-    const {data:memories} = MemoryService.useAllMemories()
+    const {data:memories, mutate} = MemoryService.useAllMemories()
 
-    if(memories === undefined) return(<IsLoading/>)
+    // Modal crear editar categoria
+    
+    const [editMemory, setEditMemory] = useState(false);
+    const [selectedMemory, setSelectedMemory] = useState({})
+    
+    const handleEditMemory = (group) => {
+      setSelectedMemory(group)
+      setEditMemory(true)
+    };
+    const handleCloseEditMemory = () => setEditMemory(false);
 
     return (
 
         <Box className="flex flex-col flex-1 overflow-hidden">
+            <Modal
+                open={editMemory}
+                onClose={(event, reason) => {
+                    if (reason !== 'backdropClick') {
+                        handleCloseEditMemory();
+                    }
+                }}
+            >
+                <ModalStoreUpdateMemory 
+                    memory={selectedMemory}
+                    onCancel={handleCloseEditMemory}
+                    onUpdated={() => {
+                        handleCloseEditMemory();
+                    mutate();
+                    }}
+                />
+            </Modal>
             <Box
                 sx={{
                     display: 'flex',
@@ -36,7 +63,7 @@ export default function IndexMemory(){
                     <Chip label={memories.length} color="primary" />
                 </Stack>
                 <Button 
-                // onClick={()=>handleEditGroup(null)} 
+                onClick={()=>handleEditMemory(null)} 
                 variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
                     Memoria
                 </Button>
@@ -82,13 +109,9 @@ export default function IndexMemory(){
                           backgroundColor: 'rgba(0, 0, 0, 0.05)', // claro en light mode
                         }
                       }}
-                    //   onClick={() => {
-                    //     handleEdit(product)
-                    //   }}
-                      // onContextMenu={(e) => {
-                      //   e.preventDefault(); //  evitar que se abra el menú por defecto
-                        
-                      // }}
+                      onClick={() => {
+                        handleEditMemory(memory)
+                      }}
                     >
                       
                         <TableCell><Typography variant="body2">{memory?.id}</Typography></TableCell>
