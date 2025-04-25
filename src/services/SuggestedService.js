@@ -3,7 +3,7 @@ import { fetchData, swrConfig} from '/src/utils/fetchData';
 import BACKEND from '/src/data/backend';
 import request from './request';
 
-export const SuggestedsService = {
+export const SuggestedService = {
     fetchById: (id) => request(`${BACKEND.SUGGESTEDS.KEY}/${id}`, 'GET'),
     create: (data) => request(BACKEND.SUGGESTEDS.KEY, 'POST', data),
     update: (id, data) => request(`${BACKEND.SUGGESTEDS.KEY}/${id}`, 'POST', data),
