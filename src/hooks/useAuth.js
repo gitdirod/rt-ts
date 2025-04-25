@@ -78,15 +78,21 @@ export const useAuth = ({ middleware, url } = {}) => {
         }
     };
 
-    const register = async (datos) => {
+    const register = async (datos, reload) => {
         try {
             const { data } = await clienteAxios.post('/api/register', datos);
             localStorage.setItem('AUTH_TOKEN', data.token);
             localStorage.setItem('USER_ROLE', data.user.role);
             setErrores({});
             setIsUser(true);
-            userMutate(); // Refresh user data
-            navigate('/admin/inventory/products'); // Redirect after registration
+            await userMutate(); // Refresh user data
+            if(reload)
+            {
+                reload()
+            }else{
+                    
+                navigate('/')
+            }
         } catch (error) {
             setErrores(error.response.data.errors);
         }

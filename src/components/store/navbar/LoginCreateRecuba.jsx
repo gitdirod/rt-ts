@@ -22,6 +22,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LogoutIcon from '@mui/icons-material/Logout';
+import RegisterModal from './RegisterModal';
 
 export default function LoginCreateRecuba({ openExternal = false, onCloseExternal = null }) {
   const [openDialog, setOpenDialog] = useState(false);
@@ -128,7 +129,7 @@ export default function LoginCreateRecuba({ openExternal = false, onCloseExterna
 
         <DialogContent>
           {tabIndex === 0 && <LoginModal />}
-          {tabIndex === 1 && <Box mt={2}>Crear cuenta aquí</Box>}
+          {tabIndex === 1 && <RegisterModal/>}
           {tabIndex === 2 && <Box mt={2}>Recuperar contraseña aquí</Box>}
         </DialogContent>
       </Dialog>
