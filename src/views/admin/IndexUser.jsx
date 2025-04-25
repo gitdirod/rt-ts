@@ -1,5 +1,4 @@
 import IsLoading from '../../components/store/common/IsLoading'
-import BlockHeader from '/src/components/admin/BlockHeader'
 import iconUser from '/src/static/icons/user.svg'
 import iconEmail from '/src/static/icons/email.svg'
 import iconPhone from '/src/static/icons/phone.svg'
@@ -15,16 +14,10 @@ export default function IndexGroup (){
     if(users === undefined) return(<IsLoading/>)
     return (
         <div className='overflow-y-hidden flex flex-col flex-1'>
-            <BlockHeader
-                name={
-                    <div className='flex'>
+            <div className='flex'>
                     <img src={iconUser} alt="save" className='w-8 h-8 pr-2' />
                         Usuarios ({users?.length})
                     </div>
-                }
-            >
-        
-            </BlockHeader>
             <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
                 <div className='w-full absolute'>
 

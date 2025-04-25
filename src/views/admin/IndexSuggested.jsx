@@ -2,14 +2,14 @@ import { useState } from 'react'
 import useStore from '/src/hooks/useStore'
 import useAdmin from '/src/hooks/useAdmin'
 import IsLoading from '../../components/store/common/IsLoading'
-import BlockHeader from '/src/components/admin/BlockHeader'
+
 import BlockItemOne from '/src/components/admin/BlockItemOne'
 import BlockStoreItemOne from '/src/components/admin/BlockStoreItemOne'
 import ImageTable from '/src/components/admin/ImageTable'
 import Btn from '/src/components/admin/Btn'
 import TableHeader from '/src/components/admin/TableHeader'
 import iconAdd from '/src/static/icons/add.svg'
-import iconFire from '/src/static/icons/fire.svg'
+
 import iconFireBlack from '/src/static/icons/fireBlack.svg'
 import ModalViewSuggested from '/src/components/ModalViewSuggested'
 
@@ -42,26 +42,7 @@ export default function IndexSuggested() {
 
     return (
     <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>
-        <BlockHeader
-            name={
-                <div className='flex'>
-                <img src={iconFire} alt="save" className='w-8 h-8 pr-2' />
-                Productos sugeridos
-                </div>
-            }
-        >
-            {
-                !activeAdd && (
-                    <Btn
-                        icon={iconAdd}
-                        text='Nuevo grupo'
-                        action={()=>setActiveAdd(true)}
-                        isButton={false}
-                        style="bg-green-500"
-                    />
-                )
-            }
-        </BlockHeader>
+        
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
             <div className='w-full'>
 

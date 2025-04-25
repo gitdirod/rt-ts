@@ -1,5 +1,4 @@
 import useStore from '/src/hooks/useStore'
-import BlockHeader from '/src/components/admin/BlockHeader'
 
 import { useState } from 'react'
 
@@ -17,23 +16,17 @@ export default function IndexComments(){
 
     return (
     <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>
-        <BlockHeader
-            name={
-                <div className='flex'>
+        <div className='flex'>
                     <img src={IconComment} alt="save" className='w-8 h-8 pr-2' />
                     Comentarios de clientes
                 </div>
-            }
-        >
-            {!adding && (
                 <Btn
                     icon={iconAdd}
                     text='Nuevo'
                     style='bg-green-500'
                     action={()=>setAdding(true)}
                 />
-            )}
-        </BlockHeader>
+
         
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
             <div className='w-full'>

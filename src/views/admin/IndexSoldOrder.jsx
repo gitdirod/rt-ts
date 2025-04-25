@@ -1,8 +1,7 @@
 import {  memo, useEffect, useState } from "react"
 import IsLoading from "../../components/store/common/IsLoading"
 import { useNavigate } from "react-router-dom"
-import BlockHeader from "/src/components/admin/BlockHeader"
-// import TableTrOrder from "/src/components/admin/TableTrOrder"
+
 import Total from '/src/components/admin/Total'
 import iconEnvoice from '/src/static/icons/envoice.svg'
 import TableHeader from "/src/components/admin/TableHeader"
@@ -36,18 +35,11 @@ const IndexSoldOrder= () => {
   return (
     <div className="overflow-y-hidden flex flex-col flex-1">
       {/* Titulo y nuevo */}
-        <BlockHeader
-          name={
-            <div className='flex'>
+      <div className='flex'>
               <img src={iconEnvoice} alt="save" className='w-8 h-8 pr-2' />
                 Prefacturas ({soldOrders?.length})
             </div>
-          }
-          middle={
-            <Total purchases={soldOrders} />
-          }
-        >
-        </BlockHeader>
+        
 
         <table className=" table-fixed w-full text-slate-600">
           <TableHeader columns={columns} />
