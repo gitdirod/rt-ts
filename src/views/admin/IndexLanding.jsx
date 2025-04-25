@@ -1,15 +1,16 @@
-import useStore from '/src/hooks/useStore'
 import IsLoading from '../../components/store/common/IsLoading'
 import BlockHeader from '/src/components/admin/BlockHeader'
 import iconDesktop from '/src/static/icons/desktop.svg'
 import BlockLanding from '/src/components/admin/BlockLanding'
 import { DEVICE_TYPES } from '/src/data/deviceTypes'
+import { LandingService } from '/src/services/LandingService'
 
 
 export default function IndexLanding() {
 
     
-    const {landings} = useStore()
+    const {data:landings} = LandingService.useAllLandings()
+
     if(landings === undefined) return(<IsLoading/>)
     return (
     <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>

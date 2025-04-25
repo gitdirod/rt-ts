@@ -12,16 +12,14 @@ import iconAdd from '/src/static/icons/add.svg'
 import iconFire from '/src/static/icons/fire.svg'
 import iconFireBlack from '/src/static/icons/fireBlack.svg'
 import ModalViewSuggested from '/src/components/ModalViewSuggested'
+import { SuggestedsService } from '/src/services/SuggestedsService'
+import { SuggestionsService } from '/src/services/SuggestionsService'
 
 export default function IndexSuggested() {
-    const { 
-        suggestions, 
-        suggesteds
-    } = useStore()
-    const {
-        handleSetModalSuggested,
-        handleSetSuggestion,
 
+    const {data:suggesteds} = SuggestedsService.useAllSuggesteds()
+    const {data:suggestions} = SuggestionsService.useAllSuggestions()
+    const {
         handleModalStateComponent,
         handleModalViewComponent,
         handleCloseModals

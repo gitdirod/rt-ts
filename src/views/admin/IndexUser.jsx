@@ -4,13 +4,12 @@ import iconUser from '/src/static/icons/user.svg'
 import iconEmail from '/src/static/icons/email.svg'
 import iconPhone from '/src/static/icons/phone.svg'
 import { useAuth } from '/src/hooks/useAuth'
+import { UserService } from '/src/services/UserService'
 
 
 export default function IndexGroup (){
-    const {users} = useAuth({
-        middleware: 'auth',
-        url: '/admin'
-      })
+    
+    const {data:users} = UserService.useAllUsers()
 
     if(users === undefined) return(<IsLoading/>)
     return (
@@ -26,7 +25,7 @@ export default function IndexGroup (){
         
             </BlockHeader>
             <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-                <div className='w-full absolute'>
+                <div className='w-full'>
 
                     
                     <div className='pb-1 pr-1 flex flex-col gap-0.5'>

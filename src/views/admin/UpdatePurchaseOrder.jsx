@@ -21,6 +21,8 @@ import iconUpdate from '/src/static/icons/update.svg'
 import iconList from '/src/static/icons/list_circle.svg'
 import iconCart from '/src/static/icons/cart.svg'
 import IsLoading from '/src/components/store/common/IsLoading'
+import { ProductService } from '/src/services/ProductService'
+import { PurchaseOrderService } from '/src/services/PurchaseOrderService'
 
 export async function loader({ params }){
     return params.itemId
@@ -28,11 +30,30 @@ export async function loader({ params }){
 
 const UpdatePurchaseOrder=()=> {
 
-    const {
-        products,
-        purchases,
-        mutatePurchases
-    } = useStore()
+    const {data:purchases, mutate:mutatePurchases} = PurchaseOrderService.useAllPurchaseOrders()
+    
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [first, setFirst] = useState(0);
+    const [sortField, setSortField] = useState('id');
+    const [sortOrder, setSortOrder] = useState('desc');
+    const [filterName, setFilterName] = useState('')
+    const [filterCode, setFilterCode] = useState('')
+    
+    const { data: products, totalRecords, loading, mutate } = ProductService.useProducts({
+        page: Math.floor(first / rowsPerPage) + 1,
+        perPage: rowsPerPage,
+        name: '',
+        code: '',
+        categories: [],
+        types: [],
+        group_id: '',
+        // categories: selectedCategories.map(sel => sel.id).join(','),
+        // types: selectedTypes.map(sel => sel.id).join(','),
+        sortField,
+        sortOrder
+    });
+
     const { user } = useAuth({
         middleware: 'guest',
     })
