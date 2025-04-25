@@ -20,7 +20,6 @@ import IndexProduct from './views/admin/IndexProduct'
 import IndexSoldOrder from './views/admin/IndexSoldOrder'
 import IndexGroup from './views/admin/IndexGroup'
 import IndexType from '/src/views/admin/IndexType'
-import IndexMore from '/src/views/admin/IndexMore'
 import IndexLanding from '/src/views/admin/IndexLanding'
 import IndexSuggested from '/src/views/admin/IndexSuggested'
 import IndexComments from '/src/views/admin/IndexComments'
@@ -205,10 +204,6 @@ const router = createBrowserRouter([
                 element: <Outlet />,
                 children: [
                     
-                    {
-                        path:'/admin/settings/more',
-                        element: <IndexMore />
-                    },
                     {
                         path:'/admin/settings/landing',
                         element: <IndexLanding />
