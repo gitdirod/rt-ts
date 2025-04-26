@@ -113,7 +113,7 @@ export default function IndexSuggested() {
             </Box>
 
             {/* Lista de grupos */}
-            <Box sx={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', pr: 1 }}>
+            <Box sx={{ maxHeight: 'calc(100vh - 95px)', overflowY: 'auto', pr: 1 }}>
                 {suggestions.map((sug) => (
                     <Accordion key={sug.id} disableGutters square={false} sx={{
                         mb: 1,

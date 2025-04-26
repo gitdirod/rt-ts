@@ -105,7 +105,7 @@ const handleCloseEditCategory = () => setEditCategory(false);
         </Stack>
     </Box>
 
-      <Box sx={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', pr: 1 }}>
+      <Box sx={{ maxHeight: 'calc(100vh - 85px)', overflowY: 'auto', pr: 1 }}>
         {groups.map((group) => (
           <Accordion
           key={group.id}

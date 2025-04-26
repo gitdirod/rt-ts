@@ -32,7 +32,7 @@ const AdminLayout = () => {
 
       {/* Main content */}
       <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        <NavAdmin />
+        {/* <NavAdmin /> */}
         <Box
           component="main"
           sx={{

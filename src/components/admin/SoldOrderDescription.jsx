@@ -15,10 +15,10 @@ import { ORDER_STATE_TYPES } from '/src/data/orderStateTypes'
 import Btn from './Btn'
 
 import ShowTotal from '/src/components/common/ShowTotal'
-import AddressTarget from '/src/components/sellerAdmin/SellerAdminAddressTarget'
+// import AddressTarget from '/src/components/sellerAdmin/SellerAdminAddressTarget'
 import iconCash from '/src/static/icons/common/cash.svg'
 import iconSend from '/src/static/icons/common/send.svg'
-import SellerAdminCustomerTarget from '/src/components/sellerAdmin/SellerAdminCustomerTarget'
+// import SellerAdminCustomerTarget from '/src/components/sellerAdmin/SellerAdminCustomerTarget'
 import TableHeader from './TableHeader'
 import { urlsBackend } from '/src/data/urlsBackend'
 
@@ -165,10 +165,10 @@ export default function SoldOrderDescription({order}) {
 
 
                         <div className='flex gap-2 flex-wrap font-normal bg-white p-1 rounded-lg border'>
-                            <SellerAdminCustomerTarget customer={order?.user}/> 
+                            {/* <SellerAdminCustomerTarget customer={order?.user}/>  */}
                             <div className='flex gap-2 flex-1  shrink-0'>
-                                <AddressTarget cursor address={order?.addresses?.envoice} icon={iconCash}/>
-                                <AddressTarget cursor address={order?.addresses?.send} icon={iconSend} title='Datos de envio'/>
+                                {/* <AddressTarget cursor address={order?.addresses?.envoice} icon={iconCash}/>
+                                <AddressTarget cursor address={order?.addresses?.send} icon={iconSend} title='Datos de envio'/> */}
                             </div>
                             
                         </div>

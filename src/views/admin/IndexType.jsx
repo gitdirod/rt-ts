@@ -72,7 +72,7 @@ export default function IndexType(){
 
 
             <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
-            <TableContainer  sx={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', borderRadius: 2 }}>
+            <TableContainer  sx={{ maxHeight: 'calc(100vh - 95px)', overflowY: 'auto', borderRadius: 2 }}>
               <Table stickyHeader>
                 <TableHead>
                     <TableRow >

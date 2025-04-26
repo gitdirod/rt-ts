@@ -131,28 +131,29 @@ export default function MiTablaConPaginacion() {
         />
       </Modal>
         <Box sx={{display:'flex', my:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
-          <Stack direction="row" flexShrink={0} alignItems="center">
+          <Stack direction="row" spacing={2} alignItems="center">
             <Inventory2OutlinedIcon color="primary" fontSize="large"/>
-            <Typography 
-              component="div" 
-              sx={{ fontWeight: 'bold', fontSize:'1.8rem', color:'grey.800' }}
-            >
-              Productos <Chip label={totalRecords || 0} color="primary" sx={{ fontWeight: 'bold', fontSize: '1rem' }} />
+            <Typography variant="h5" fontWeight="bold">
+              Productos
             </Typography>
-
+            <Chip label={totalRecords || 0} color="primary" />
           </Stack>
-          <Stack direction="row" alignItems="center" >
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-              <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-              <TextField id="input-with-sx" label="Nombre" variant="standard" 
+          <Stack direction="row" gap={1} alignItems="center" >
+            <Box sx={{ display: 'flex', alignItems: 'flex-end', maxWidth:200 }}>
+              <TextField
+                label="Buscar por nombre"
+                id="outlined-size-small"
+                size="small"
                 onChange={(event) => {
                   setFilterName(event.target.value);
                 }}
               />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-              <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-              <TextField id="input-with-sx" label="Código" variant="standard"
+            <Box sx={{ display: 'flex', alignItems: 'flex-end', maxWidth:200}}>
+              <TextField
+                label="Buscar por código"
+                id="outlined-size-small"
+                size="small"
                 onChange={(event) => {
                   setFilterCode(event.target.value);
                 }}
@@ -170,7 +171,7 @@ export default function MiTablaConPaginacion() {
       
 
         <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
-            <TableContainer  sx={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto', borderRadius: 2 }}>
+            <TableContainer  sx={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', borderRadius: 2 }}>
               <Table stickyHeader>
                 <TableHead>
                   <TableRow >

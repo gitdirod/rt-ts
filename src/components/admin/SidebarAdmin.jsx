@@ -1,20 +1,18 @@
-// SidebarAdmin.jsx
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {
   List, ListItemButton, ListItemIcon, ListItemText,
-  Collapse, Divider, Box, IconButton, Tooltip,
-  Typography
+  Collapse, Divider, Box, IconButton, Tooltip, Typography
 } from '@mui/material';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 
 import { adminNavigation } from '/src/data/pages';
 import { useState } from 'react';
 
-// Tus iconos personalizados
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
@@ -31,7 +29,7 @@ const iconMap = {
 
 export default function SidebarAdmin({ collapsed, onToggle }) {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const [openSections, setOpenSections] = useState(() => {
     const initialState = {};
     adminNavigation.forEach(section => {
@@ -41,7 +39,6 @@ export default function SidebarAdmin({ collapsed, onToggle }) {
     });
     return initialState;
   });
-  
 
   const toggleSection = (id) => {
     setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -49,71 +46,97 @@ export default function SidebarAdmin({ collapsed, onToggle }) {
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        <Box
-            sx={{
-                p: 1,
-                height: 50,
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-            }}
-        >
-        {/* Texto centrado solo si no está colapsado */}
+      {/* Header */}
+      <Box
+        sx={{
+          p: 1,
+          height: 50,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 1,
+        }}
+      >
         {!collapsed && (
-            <Typography
+          <Typography
             variant="body1"
             color="text.primary"
             fontWeight="bold"
             sx={{ flexGrow: 1, textAlign: 'center' }}
-            >
-            Panel
-            </Typography>
+          >
+            TECNITOOLS
+          </Typography>
         )}
 
         <Tooltip title={collapsed ? "Expandir" : "Colapsar"}>
-            <IconButton size="small" onClick={onToggle}>
+          <IconButton size="small" onClick={onToggle}>
             {collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
+          </IconButton>
         </Tooltip>
-        </Box>
-
+      </Box>
 
       <Divider />
 
-      <List>
-        {adminNavigation.map((section) => {
-          const isActive = location.pathname.startsWith(section.urlMain);
-          const isOpen = openSections[section.id];
+      {/* Lista de navegación */}
+      <Box sx={{ flexGrow: 1, overflowY: 'auto', overflowX: 'hidden' }}>
+        <List>
+          {adminNavigation.map((section) => {
+            const isActive = location.pathname.startsWith(section.urlMain);
+            const isOpen = openSections[section.id];
 
-          return (
-            <Box key={section.id}>
-              <ListItemButton onClick={() => toggleSection(section.id)} selected={isActive}>
-                <ListItemIcon>{iconMap[section.icon]}</ListItemIcon>
-                {!collapsed && <ListItemText primary={section.name} />}
-                {!collapsed && (isOpen ? <ExpandLess /> : <ExpandMore />)}
-              </ListItemButton>
+            return (
+              <Box key={section.id}>
+                <ListItemButton onClick={() => toggleSection(section.id)} selected={isActive}>
+                  <ListItemIcon>{iconMap[section.icon]}</ListItemIcon>
+                  {!collapsed && <ListItemText primary={section.name} />}
+                  {!collapsed && (isOpen ? <ExpandLess /> : <ExpandMoreIcon />)}
+                </ListItemButton>
 
-              {!collapsed && (
-                <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    {section.children.map((view) => (
-                      <ListItemButton
-                        key={view.id}
-                        component={Link}
-                        to={view.url}
-                        selected={location.pathname === view.url}
-                        sx={{ pl: 4}}
-                      >
-                        <ListItemText primary={view.name} />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </Collapse>
-              )}
-            </Box>
-          );
-        })}
-      </List>
+                {/* Submenú */}
+                {!collapsed && (
+                  <Collapse in={isOpen} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      {section.children.map((view) => (
+                        <ListItemButton
+                          key={view.id}
+                          component={Link}
+                          to={view.url}
+                          selected={location.pathname === view.url}
+                          sx={{ pl: 4 }}
+                        >
+                          <ListItemText primary={view.name} />
+                        </ListItemButton>
+                      ))}
+                    </List>
+                  </Collapse>
+                )}
+              </Box>
+            );
+          })}
+        </List>
+      </Box>
+
+      <Divider />
+
+      {/* Botón Ir a Tienda debajo */}
+      <Box sx={{ p: 1 }}>
+        <ListItemButton
+          onClick={() => navigate('/store')}
+          sx={{ justifyContent: collapsed ? 'center' : 'flex-start', px: collapsed ? 1 : 2 }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: collapsed ? 'auto' : 40,
+              justifyContent: 'center',
+            }}
+          >
+            <StoreMallDirectoryIcon color="primary" />
+          </ListItemIcon>
+          {!collapsed && (
+            <ListItemText primary="Ir a tienda" sx={{ color: 'primary.main', fontWeight: 'bold' }} />
+          )}
+        </ListItemButton>
+      </Box>
     </Box>
   );
 }
