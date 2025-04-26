@@ -30,9 +30,6 @@ import StorePurchaseOrder from '/src/views/admin/StorePurchaseOrder'
 import ShowSoldOrder,{
     loader as loaderSoldOrder
 } from './views/admin/ShowSoldOrder'
-import ShowStock,{
-    loader as loaderStock
-} from './views/admin/ShowStock'
 
 import UpdatePurchaseOrder,{
     loader as loaderPurchase
@@ -133,12 +130,7 @@ const router = createBrowserRouter([
                     {
                         path:'/admin/inventory/type',
                         element: <IndexType />
-                    },
-                    {
-                        path : "/admin/inventory/stock/product/:itemId",
-                        loader: loaderStock,
-                        element: <ShowStock />
-                    },
+                    }
                     
                 ]
             },
