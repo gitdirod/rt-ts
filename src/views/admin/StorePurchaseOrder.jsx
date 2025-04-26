@@ -30,7 +30,7 @@ export default function MiTablaConPaginacion() {
 
   return (
     <div className="overflow-y-hidden flex flex-col flex-1 ">
-        <Box sx={{display:'flex', my:0, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
+        <Box sx={{display:'flex', mt:1, px:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
             <Stack direction="row" spacing={2} alignItems="center">
                 <ShoppingCartCheckoutIcon color="primary"/>
                 <Typography variant="h5" fontWeight="bold">
@@ -49,7 +49,7 @@ export default function MiTablaConPaginacion() {
         </Box>
 
         {/* Contenido según el tab */}
-        <Box sx={{ flexGrow: 1, mt: 1 }}>
+        <Box sx={{ flexGrow: 1, pt: 1 }}>
             {tabIndex === 0 && <PasoSeleccion />}
             {tabIndex === 1 && <PasoUnidades />}
             {tabIndex === 2 && <PasoResumen />}
