@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Button, InputLabel, MenuItem, Select, TextareaAutosize, TextField, Typography, Alert } from '@mui/material';
+import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Button, InputLabel, MenuItem, Select, TextareaAutosize, TextField, Typography, Alert, ListSubheader } from '@mui/material';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import ImageUploader from '/src/components/ImageUploader';
@@ -13,14 +13,15 @@ import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithC
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
-import { CategoryService } from '/src/services/CategoryService';
 import { TypeService } from '/src/services/TypeService';
 import { ProductService } from '/src/services/ProductService';
+import { GroupService } from '/src/services/GroupService';
 
 
 const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, ref) => {
 
-    const {data:categories} = CategoryService.useAllCategories()
+
+    const {data:groups} = GroupService.useAllGroups()
     const {data:types} = TypeService.useAllTypes()
 
     const style = {
@@ -89,7 +90,7 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, re
         
       }
 
-    if (!categories?.length || !types?.length) {
+    if (!types?.length || !groups?.length) {
     return <Box sx={style}><Typography>Cargando categorías y tipos...</Typography></Box>
     }
       
@@ -111,6 +112,7 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, re
         <Box sx={{ display: 'flex', gap: 4 }}>
             {/* Columna izquierda */}
             <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+
                 <Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 2 }}>
                     <Inventory2OutlinedIcon sx={{ color: 'action.active', mr: 1 }} />
                     <TextField
@@ -147,18 +149,24 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel }, re
                 <FormControl variant="standard" fullWidth sx={{ mb: 2 }}>
                     <InputLabel>Categoría</InputLabel>
                     <Select
-                    value={categoryId}
-                    label="Categoría"
-                    onChange={(e) => setCategoryId(e.target.value)}
+                        value={categoryId}
+                        label="Categoría"
+                        onChange={(e) => setCategoryId(e.target.value)}
                     >
-                    <MenuItem value="">
+                        <MenuItem value="">
                         <em>Seleccionar categoría</em>
-                    </MenuItem>
-                    {categories?.map((category) => (
-                        <MenuItem key={category.id} value={category.id}>
-                        {category.name}
                         </MenuItem>
-                    ))}
+
+                        {groups?.map((group) => (
+                        [
+                            <ListSubheader key={`group-${group.id}`}>{group.name}</ListSubheader>,
+                            group.categories.map((category) => (
+                            <MenuItem key={category.id} value={category.id}>
+                                {category.name}
+                            </MenuItem>
+                            ))
+                        ]
+                        ))}
                     </Select>
                 </FormControl>
                 {errores?.category && (

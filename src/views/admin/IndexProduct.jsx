@@ -14,14 +14,13 @@ import Stack from '@mui/material/Stack';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
-import SearchIcon from '@mui/icons-material/Search';
 
 import BACKEND from '/src/data/backend';
 import { ProductService } from '/src/services/ProductService';
 import { formatearDinero } from '/src/helpers';
 import ImageTable from '/src/components/admin/ImageTable';
 import ModalStoreUpdateProduct from '/src/components/admin/modals/ModalStoreUpdateProduct';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 export default function MiTablaConPaginacion() {
  
@@ -132,7 +131,7 @@ export default function MiTablaConPaginacion() {
       </Modal>
         <Box sx={{display:'flex', my:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
           <Stack direction="row" spacing={2} alignItems="center">
-            <Inventory2OutlinedIcon color="primary" fontSize="large"/>
+            <InventoryIcon color="primary"/>
             <Typography variant="h5" fontWeight="bold">
               Productos
             </Typography>
@@ -171,7 +170,7 @@ export default function MiTablaConPaginacion() {
       
 
         <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
-            <TableContainer  sx={{ maxHeight: 'calc(100vh - 150px)', overflowY: 'auto', borderRadius: 2 }}>
+            <TableContainer  sx={{ maxHeight: 'calc(100vh - 155px)', overflowY: 'auto', borderRadius: 2 }}>
               <Table stickyHeader>
                 <TableHead>
                   <TableRow >
@@ -231,7 +230,7 @@ export default function MiTablaConPaginacion() {
                         
                       // }}
                     >
-                      <TableCell>{product?.available ? <CheckCircleOutlinedIcon color='primary'/> : <CancelOutlinedIcon /> }</TableCell>
+                      <TableCell>{product?.available ? <CheckCircleOutlinedIcon color='primary'/> : <CancelOutlinedIcon sx={{color:'grey.600'}} /> }</TableCell>
                       <TableCell><Typography variant="body2">{product?.code}</Typography></TableCell>
                       <TableCell><Typography variant="body2">{product?.name}</Typography></TableCell>
                       <TableCell><Typography variant="body2">{`${product?.group?.name} - ${product?.category.name}`}</Typography></TableCell>
