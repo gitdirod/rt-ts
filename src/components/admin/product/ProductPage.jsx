@@ -90,18 +90,20 @@ export default function ProductPage() {
           <Chip label={totalRecords || 0} color="primary" />
         </Stack>
 
-        <ProductFilters
-          setDebouncedFilterName={setDebouncedFilterName}
-          setDebouncedFilterCode={setDebouncedFilterCode}
-        />
+        <Stack direction="row" gap={1}>
+          <ProductFilters
+            setDebouncedFilterName={setDebouncedFilterName}
+            setDebouncedFilterCode={setDebouncedFilterCode}
+          />
 
-        <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
-          onClick={() => {
-          handleEdit(null); // por ejemplo, abrir modal de vista
-        }}
-        >
-          Nuevo
-        </Button>
+          <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
+            onClick={() => {
+            handleEdit(null); // por ejemplo, abrir modal de vista
+          }}
+          >
+            Nuevo
+          </Button>
+        </Stack>
       </Box>
       
       <ProductTable
