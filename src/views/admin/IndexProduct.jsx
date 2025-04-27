@@ -10,9 +10,9 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ProductService } from '/src/services/ProductService';
-import ModalStoreUpdateProduct from '/src/components/admin/modals/ModalStoreUpdateProduct';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ProductTable from '/src/components/admin/product/ProductTable';
+import ModalStoreUpdateProduct from '/src/components/admin/product/ModalStoreUpdateProduct';
 
 export default function MiTablaConPaginacion() {
  

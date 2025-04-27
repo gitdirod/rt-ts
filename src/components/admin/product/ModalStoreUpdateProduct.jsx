@@ -110,7 +110,7 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel, open
       >
 
       <Box sx={style}>
-        {(!types?.length || !groups?.length || !product) ? (
+        {(!types?.length || !groups?.length ) ? (
           <Typography>Cargando categorías y tipos...</Typography>
         ) : (
           <>
