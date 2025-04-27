@@ -29,6 +29,8 @@ export default function ProductPage() {
   //variables filtrado
   const [debouncedFilterName, setDebouncedFilterName] = useState('');
   const [debouncedFilterCode, setDebouncedFilterCode] = useState('');
+  const [filterCategories, setFilterCategories] = useState([]);
+  const [filterTypes, setFilterTypes] = useState([]);
 
 
   // Variables paginación
@@ -40,17 +42,31 @@ export default function ProductPage() {
     perPage: rowsPerPage,
     name: debouncedFilterName,
     code: debouncedFilterCode,
-    categories: [],
-    types: [],
+    categories: filterCategories,
+    types: filterTypes,
     group_id: '',
     sortField:'id',
     sortOrder:'desc'
   });
 
+  
+  const handleDebouncedFilterName = (name) => {
+    setDebouncedFilterName(name);
+    setPage(0);
+  };
+  const handleDebouncedFilterCode = (code) => {
+    setDebouncedFilterCode(code);
+    setPage(0);
+  };
+  const handleChangeCategories = (categories) =>{
+    setFilterCategories(categories)
+    setPage(0);
+  }
+  
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);  // Siempre vuelve a página 0 cuando cambias el tamaño
@@ -92,8 +108,9 @@ export default function ProductPage() {
 
         <Stack direction="row" gap={1}>
           <ProductFilters
-            setDebouncedFilterName={setDebouncedFilterName}
-            setDebouncedFilterCode={setDebouncedFilterCode}
+            handleDebouncedFilterName={handleDebouncedFilterName}
+            handleDebouncedFilterCode={handleDebouncedFilterCode}
+            handleChangeCategories={handleChangeCategories}
           />
 
           <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
