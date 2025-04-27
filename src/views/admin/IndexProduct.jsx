@@ -6,15 +6,10 @@ import {
   Chip
 } from '@mui/material';
 
-import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-
-
 import { ProductService } from '/src/services/ProductService';
-
 import ModalStoreUpdateProduct from '/src/components/admin/modals/ModalStoreUpdateProduct';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ProductTable from '/src/components/admin/product/ProductTable';
@@ -40,8 +35,6 @@ export default function MiTablaConPaginacion() {
   };
 
   
-
-
   const { data: products, totalRecords, loading, mutate } = ProductService.useProducts({
     page: page + 1,
     perPage: rowsPerPage,
@@ -66,12 +59,6 @@ export default function MiTablaConPaginacion() {
   const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
   const safePage = (totalPages === 0) ? 0 : (page >= totalPages ? totalPages - 1 : page);
   
-
-  
-
-
-  
-
 
   // Debounce para el nombre
   useEffect(() => {
@@ -103,77 +90,72 @@ export default function MiTablaConPaginacion() {
       setPage(totalPages - 1);
     }
   }, [totalRecords, rowsPerPage]);
-  
-  
 
   return (
-    <div className="overflow-y-hidden flex flex-col flex-1 pb-2">
-      <Modal
+    <Box>
+    {/* <div className="overflow-y-hidden flex flex-col flex-1"> */}
+      <ModalStoreUpdateProduct 
         open={edit}
-        onClose={(event, reason) => {
-          if (reason !== 'backdropClick') {
-            handleCloseEdit();
-          }
+        product={selectedProduct} 
+        onCancel= {handleCloseEdit}
+        onUpdated={()=>{
+          handleCloseEdit();
+          mutate();
         }}
-      >
-        <ModalStoreUpdateProduct 
-          product={selectedProduct}
-          onCancel={handleCloseEdit}
-          onUpdated={() => {
-            handleCloseEdit();
-            mutate();
-          }}
-        />
-      </Modal>
-        <Box sx={{display:'flex', my:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <InventoryIcon color="primary"/>
-            <Typography variant="h5" fontWeight="bold">
-              Productos
-            </Typography>
-            <Chip label={totalRecords || 0} color="primary" />
-          </Stack>
-          <Stack direction="row" gap={1} alignItems="center" >
-            <Box sx={{ display: 'flex', alignItems: 'flex-end', maxWidth:200 }}>
-              <TextField
-                label="Buscar por nombre"
-                id="outlined-size-small"
-                size="small"
-                onChange={(event) => {
-                  setFilterName(event.target.value);
-                }}
-              />
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'flex-end', maxWidth:200}}>
-              <TextField
-                label="Buscar por código"
-                id="outlined-size-small"
-                size="small"
-                onChange={(event) => {
-                  setFilterCode(event.target.value);
-                }}
-              />
-            </Box>
-          </Stack>
-          <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
-            onClick={() => {
-            handleEdit(null); // por ejemplo, abrir modal de vista
-          }}
-          >
-            Nuevo
-          </Button>
-        </Box>
-        
-        <ProductTable
-          products={products}
-          totalRecords={totalRecords}
-          page={safePage}
-          rowsPerPage={rowsPerPage}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
-          handleEdit={handleEdit}
-        />
+        handleEdit={handleEdit} 
+        handleCloseEdit={handleCloseEdit}
+      />
+      
+      <Box sx={{display:'flex', my:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <InventoryIcon color="primary"/>
+          <Typography variant="h5" fontWeight="bold">
+            Productos
+          </Typography>
+          <Chip label={totalRecords || 0} color="primary" />
+        </Stack>
+        <Stack direction="row" gap={1} alignItems="center" >
+          <Box sx={{ display: 'flex', alignItems: 'flex-end', maxWidth:200 }}>
+            <TextField
+              label="Buscar por nombre"
+              id="outlined-size-small"
+              size="small"
+              onChange={(event) => {
+                setFilterName(event.target.value);
+              }}
+            />
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end', maxWidth:200}}>
+            <TextField
+              label="Buscar por código"
+              id="outlined-size-small"
+              size="small"
+              onChange={(event) => {
+                setFilterCode(event.target.value);
+              }}
+            />
+          </Box>
+        </Stack>
+        <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
+          onClick={() => {
+          handleEdit(null); // por ejemplo, abrir modal de vista
+        }}
+        >
+          Nuevo
+        </Button>
+      </Box>
+      
+      <ProductTable
+        products={products}
+        totalRecords={totalRecords}
+        page={safePage}
+        rowsPerPage={rowsPerPage}
+        handleChangePage={handleChangePage}
+        handleChangeRowsPerPage={handleChangeRowsPerPage}
+        handleEdit={handleEdit}
+      />
 
-    </div>
+    {/* </div> */}
+    </Box>
   );
 }

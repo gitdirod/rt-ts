@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { 
   Modal, Box, Checkbox, FormControl, FormControlLabel, FormLabel, Button, 
   InputLabel, MenuItem, Select, TextareaAutosize, TextField, Typography, Alert, ListSubheader 
@@ -21,7 +21,9 @@ import { TypeService } from '/src/services/TypeService';
 import { ProductService } from '/src/services/ProductService';
 import { GroupService } from '/src/services/GroupService';
 
-const ModalStoreUpdateProduct = forwardRef(({ open, product, onUpdated, onCancel }, ref) => {
+const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel, open, handleCloseEdit }, ref) => {
+
+ 
 
   const { data: groups } = GroupService.useAllGroups();
   const { data: types } = TypeService.useAllTypes();
@@ -83,9 +85,32 @@ const ModalStoreUpdateProduct = forwardRef(({ open, product, onUpdated, onCancel
     }
   };
 
+  useEffect(() => {
+    setProductName(product?.name || '');
+    setProductCode(product?.code || '');
+    setCategoryId(product?.category?.id || '');
+    setTypeId(product?.type_product?.id || '');
+    setVisible(product?.available ? true : false);
+    setProductDescripcion(product?.description || '');
+    setProductSize(product?.size || '');
+    setProductWeight(product?.weight || '');
+    setProductPower(product?.number_color || '');
+  }, [product]);
+  
+
   return (
-    <Box sx={style}>
-        {(!types?.length || !groups?.length) ? (
+
+    <Modal
+        open={open}
+        onClose={(event, reason) => {
+          if (reason !== 'backdropClick') {
+            handleCloseEdit();
+          }
+        }}
+      >
+
+      <Box sx={style}>
+        {(!types?.length || !groups?.length || !product) ? (
           <Typography>Cargando categorías y tipos...</Typography>
         ) : (
           <>
@@ -243,6 +268,16 @@ const ModalStoreUpdateProduct = forwardRef(({ open, product, onUpdated, onCancel
           </>
         )}
       </Box>
+        {/* <ModalStoreUpdateProduct 
+          product={selectedProduct}
+          onCancel={handleCloseEdit}
+          onUpdated={() => {
+            handleCloseEdit();
+            mutate();
+          }}
+        /> */}
+      </Modal>
+    
   );
 });
 
