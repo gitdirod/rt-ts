@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Stack, TextField, Button, Popover, MenuItem, ListSubheader, InputLabel, FormControl, Select, Chip } from '@mui/material';
+import { Box, TextField, Button, Popover, MenuItem, ListSubheader, InputLabel, FormControl, Select, Chip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { GroupService } from '/src/services/GroupService';
+import { TypeService } from '/src/services/TypeService';
 
-export default function ProductFilters({ handleDebouncedFilterName, handleDebouncedFilterCode, handleChangeCategories }) {
+export default function ProductFilters({ handleDebouncedFilterName, handleDebouncedFilterCode, handleChangeCategories, handleChangeTypes }) {
   const [anchorEl, setAnchorEl] = useState(null);   // Controla si el popover está abierto
 
   const {data:groups} = GroupService.useAllGroups()
+  const {data:types} = TypeService.useAllTypes()
 
   //   Filtros
   const [categoryIds, setCategoryIds] = useState([]);
-  const [typeId, setTypeId] = useState('')
+  const [typeIds, setTypeIds] = useState([])
   const [filterName, setFilterName] = useState('');
   const [filterCode, setFilterCode] = useState('');
 
@@ -44,6 +46,10 @@ export default function ProductFilters({ handleDebouncedFilterName, handleDeboun
   useEffect(() => {
     handleChangeCategories(categoryIds)
   },[categoryIds])
+
+  useEffect(() => {
+    handleChangeTypes(typeIds)
+  },[typeIds])
 
   return (
     <>
@@ -107,6 +113,28 @@ export default function ProductFilters({ handleDebouncedFilterName, handleDeboun
               ))}
             </Select>
         </FormControl>
+
+        <FormControl variant="standard" fullWidth sx={{ mb: 2 }}>
+          <InputLabel>Tipo de producto</InputLabel>
+          <Select
+            multiple
+            value={typeIds}
+            onChange={(e) => setTypeIds(
+              typeof e.target.value === 'string' ? e.target.value.split(',') : e.target.value
+            )}
+            renderValue={(selected) => selected.map((id) => {
+              const type = types?.find(t => t.id === id);
+              return type ? type.name : id;
+            }).join(', ')}
+          >
+            {types?.map((type) => (
+              <MenuItem key={type.id} value={type.id}>
+                {type.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         </Box>
       </Popover>
     </>

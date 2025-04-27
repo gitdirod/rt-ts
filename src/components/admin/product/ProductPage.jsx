@@ -62,6 +62,10 @@ export default function ProductPage() {
     setFilterCategories(categories)
     setPage(0);
   }
+  const handleChangeTypes = (types) =>{
+    setFilterTypes(types)
+    setPage(0);
+  }
   
   
   const handleChangePage = (event, newPage) => {
@@ -111,6 +115,7 @@ export default function ProductPage() {
             handleDebouncedFilterName={handleDebouncedFilterName}
             handleDebouncedFilterCode={handleDebouncedFilterCode}
             handleChangeCategories={handleChangeCategories}
+            handleChangeTypes={handleChangeTypes}
           />
 
           <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
