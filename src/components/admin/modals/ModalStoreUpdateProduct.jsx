@@ -84,16 +84,7 @@ const ModalStoreUpdateProduct = forwardRef(({ open, product, onUpdated, onCancel
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={(event, reason) => {
-        if (reason !== 'backdropClick') {
-          onCancel();
-        }
-      }}
-      disableAutoFocus
-    >
-      <Box sx={style} ref={ref}>
+    <Box sx={style}>
         {(!types?.length || !groups?.length) ? (
           <Typography>Cargando categorías y tipos...</Typography>
         ) : (
@@ -252,7 +243,6 @@ const ModalStoreUpdateProduct = forwardRef(({ open, product, onUpdated, onCancel
           </>
         )}
       </Box>
-    </Modal>
   );
 });
 

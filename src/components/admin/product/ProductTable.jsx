@@ -1,12 +1,13 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material'
 import React from 'react'
-import ImageTable from '../ImageTable'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material'
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { formatearDinero } from '/src/helpers';
-import BACKEND from '/src/data/backend'
+import ImageTable from '/src/components/admin/ImageTable';
+import BACKEND from '/src/data/backend';
 
-export default function ProductTable({products, handleEdit}) {
+export default function ProductTable({products, totalRecords, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage, handleEdit}) {
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
       <TableContainer  sx={{ maxHeight: 'calc(100vh - 155px)', overflowY: 'auto', borderRadius: 2 }}>
@@ -91,7 +92,7 @@ export default function ProductTable({products, handleEdit}) {
       <TablePagination
         component="div"
         count={totalRecords || 0}
-        page={currentPage}
+        page={page}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25, 50]}
         onPageChange={handleChangePage}
