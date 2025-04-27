@@ -15,8 +15,6 @@ import ErrorView from "/src/views/ErrorView"
 
 
 import AdminLayout from './layout/AdminLayout'
-
-import IndexProduct from './views/admin/IndexProduct'
 import IndexSoldOrder from './views/admin/IndexSoldOrder'
 import IndexGroup from './views/admin/IndexGroup'
 import IndexType from '/src/views/admin/IndexType'
@@ -46,6 +44,7 @@ import ViewProducts from '/src/views/store/product/ViewProducts'
 import Likes from '/src/views/store/likes/Likes'
 import BoughtDetailPage from '/src/views/store/bought/BoughtDetailPage'
 import IndexMemory from '/src/views/admin/IndexMemory'
+import ProductPage from '/src/components/admin/product/ProductPage'
 
 
 
@@ -121,7 +120,7 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path:'/admin/inventory/products',
-                        element: <IndexProduct />
+                        element: <ProductPage />
                     },
                     {
                         path:'/admin/inventory/groups',
