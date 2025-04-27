@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, TablePagination,
   TextField,
   Box,
   Typography,
@@ -31,8 +29,17 @@ export default function MiTablaConPaginacion() {
   const [debouncedFilterCode, setDebouncedFilterCode] = useState('');
 
   const [selectedProduct, setSelectedProduct] = useState({})
+
+
   const [edit, setEdit] = useState(false);
 
+  const handleCloseEdit = () => setEdit(false);
+  const handleEdit = (product) => {
+    setSelectedProduct(product)
+    setEdit(true)
+  };
+
+  
 
 
   const { data: products, totalRecords, loading, mutate } = ProductService.useProducts({
@@ -63,12 +70,7 @@ export default function MiTablaConPaginacion() {
   
 
 
-  const handleEdit = (product) => {
-    setSelectedProduct(product)
-    setEdit(true)
-  };
-
-  const handleCloseEdit = () => setEdit(false);
+  
 
 
   // Debounce para el nombre
