@@ -35,8 +35,6 @@ export default function MiTablaConPaginacion() {
     const [filterName, setFilterName] = useState('')
     const [filterCode, setFilterCode] = useState('')
 
-    const [selectedProduct, setSelectedProduct] = useState({})
-
     const [debouncedFilterName, setDebouncedFilterName] = useState('');
     const [debouncedFilterCode, setDebouncedFilterCode] = useState('');
 
@@ -73,8 +71,6 @@ export default function MiTablaConPaginacion() {
 
     const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
     const currentPage = Math.min(page, totalPages - 1 >= 0 ? totalPages - 1 : 0);
-
-    const [edit, setEdit] = useState(false);
 
     const handleAddProduct = (product) => {
         
