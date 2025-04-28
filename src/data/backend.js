@@ -22,6 +22,7 @@ const BACKEND = {
     NUMBERS: createEndpoint('number_colors'),
     NUMBERS_ALL: createEndpoint('number_colors_all'),
     PRODUCTS: createEndpoint('products'),
+    PRODUCTS_SEARCH: createEndpoint('products/search'),
     PUBLIC_PRODUCTS: createEndpoint('public-products'),
     BULK_PRODUCTS: createEndpoint('bulk_products'),
     NO_SUGGESTED_PRODUCTS: createEndpoint('no-suggested-products'),

@@ -86,6 +86,7 @@ export default function ProductPage() {
     }
   }, [totalRecords, rowsPerPage]);
 
+  // return
   return (
     <Box>
     {/* <div className="overflow-y-hidden flex flex-col flex-1"> */}
