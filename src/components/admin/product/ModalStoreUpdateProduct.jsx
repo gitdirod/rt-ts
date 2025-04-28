@@ -70,7 +70,8 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel, open
       number_color: productPower,
       weight: productWeight,
       images: imagenesSeleccionadas,
-      deleted: imagesToDelete.map(img => ({ id: img.id }))
+      deleted: imagesToDelete.map(img => img.id) 
+      // deleted: imagesToDelete.map(img => ({ id: img.id }))
     };
 
     const response = product
