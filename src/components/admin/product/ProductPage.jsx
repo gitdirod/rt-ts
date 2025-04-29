@@ -111,25 +111,24 @@ export default function ProductPage() {
           <Chip label={totalRecords || 0} color="primary" />
         </Stack>
 
-        <Stack direction="row" gap={1}>
+        <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
+            onClick={() => {
+            handleEdit(null); // por ejemplo, abrir modal de vista
+          }}
+          >
+          Nuevo
+        </Button>
+      </Box>
+      
+      <ProductTable
+        searchComponente={(
           <ProductFilters
             handleDebouncedFilterName={handleDebouncedFilterName}
             handleDebouncedFilterCode={handleDebouncedFilterCode}
             handleChangeCategories={handleChangeCategories}
             handleChangeTypes={handleChangeTypes}
           />
-
-          <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
-            onClick={() => {
-            handleEdit(null); // por ejemplo, abrir modal de vista
-          }}
-          >
-            Nuevo
-          </Button>
-        </Stack>
-      </Box>
-      
-      <ProductTable
+        )}
         products={products}
         totalRecords={totalRecords}
         page={safePage}

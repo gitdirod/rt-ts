@@ -1,12 +1,21 @@
 import React from 'react'
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material'
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material'
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { formatearDinero } from '/src/helpers';
 import ImageTable from '/src/components/admin/ImageTable';
 import BACKEND from '/src/data/backend';
 
-export default function ProductTable({products, totalRecords, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage, handleEdit}) {
+export default function ProductTable({
+  products, 
+  totalRecords, 
+  page, 
+  rowsPerPage, 
+  handleChangePage, 
+  handleChangeRowsPerPage, 
+  handleEdit,
+  searchComponente
+}) {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
@@ -89,15 +98,27 @@ export default function ProductTable({products, totalRecords, page, rowsPerPage,
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={totalRecords || 0}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25, 50]}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', mt: 1 }}>
+        
+        {/* Aquí inyectas dinámicamente el filtro que quieras */}
+        {searchComponente && (
+          <Box sx={{ ml: 2 }}>
+            {searchComponente}
+          </Box>
+        )}
+        <TablePagination
+          component="div"
+          count={totalRecords || 0}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[5, 10, 25, 50]}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+
+        
+      </Box>
+
     </Paper>
   )
 }
