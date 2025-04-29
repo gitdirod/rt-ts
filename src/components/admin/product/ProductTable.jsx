@@ -8,6 +8,7 @@ import BACKEND from '/src/data/backend';
 
 export default function ProductTable({
   products, 
+  selectedProducts = [],
   totalRecords, 
   page, 
   rowsPerPage, 
@@ -16,6 +17,8 @@ export default function ProductTable({
   handleEdit,
   searchComponente
 }) {
+
+  const selectedIds = selectedProducts.map(p => p.id);
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
@@ -60,41 +63,39 @@ export default function ProductTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {(products || []).map((product, index) => (
-              <TableRow 
-                key={index}
-                hover
-                sx={{
-                  cursor: 'pointer',
-                  transition: 'background-color 0.2s ease-in-out',
-                  '&:hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.05)', // claro en light mode
-                  }
-                }}
-                onClick={() => {
-                  handleEdit(product)
-                }}
-                // onContextMenu={(e) => {
-                //   e.preventDefault(); //  evitar que se abra el menú por defecto
-                  
-                // }}
-              >
-                <TableCell>{product?.available ? <CheckCircleOutlinedIcon color='primary'/> : <CancelOutlinedIcon sx={{color:'grey.600'}} /> }</TableCell>
-                <TableCell><Typography variant="body2">{product?.code}</Typography></TableCell>
-                <TableCell><Typography variant="body2">{product?.name}</Typography></TableCell>
-                <TableCell><Typography variant="body2">{`${product?.group?.name} - ${product?.category.name}`}</Typography></TableCell>
-                <TableCell><Typography variant="body2">{product?.type_product?.name}</Typography></TableCell>
-                <TableCell><Typography variant="body2">{formatearDinero(product?.price)}</Typography></TableCell>
-                <TableCell>
-                  <ImageTable 
-                    images={product?.images}
-                    url={BACKEND.PRODUCTS.URL}
-                    higth={14}
-                    count={true}
+            {(products || []).map((product, index) => {
+              const isSelected = selectedIds.includes(product.id);
+              return (
+                <TableRow
+                  key={index}
+                  hover
+                  sx={{
+                    cursor: 'pointer',
+                    backgroundColor: isSelected ? 'rgba(0, 255, 0, 0.1)' : 'transparent', // verde suave
+                    '&:hover': {
+                      backgroundColor: isSelected ? 'rgba(0, 255, 0, 0.2)' : 'rgba(0, 0, 0, 0.05)',
+                    },
+                    transition: 'background-color 0.2s ease-in-out',
+                  }}
+                  onClick={() => handleEdit(product)}
+                >
+                  <TableCell>{product?.available ? <CheckCircleOutlinedIcon color='primary' /> : <CancelOutlinedIcon sx={{ color: 'grey.600' }} />}</TableCell>
+                  <TableCell><Typography variant="body2">{product?.code}</Typography></TableCell>
+                  <TableCell><Typography variant="body2">{product?.name}</Typography></TableCell>
+                  <TableCell><Typography variant="body2">{`${product?.group?.name} - ${product?.category?.name}`}</Typography></TableCell>
+                  <TableCell><Typography variant="body2">{product?.type_product?.name}</Typography></TableCell>
+                  <TableCell><Typography variant="body2">{formatearDinero(product?.price)}</Typography></TableCell>
+                  <TableCell>
+                    <ImageTable
+                      images={product?.images}
+                      url={BACKEND.PRODUCTS.URL}
+                      higth={14}
+                      count={true}
                     />
-                </TableCell>
-              </TableRow>
-              ))}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

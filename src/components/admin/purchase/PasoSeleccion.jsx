@@ -36,6 +36,7 @@ export default function ProductPage() {
 
     const {
         handleAddBuy,
+        orderBuy
     } = useStore()
 
     const addToCart = (prod) =>{
@@ -93,6 +94,7 @@ export default function ProductPage() {
         )}
         products={products}
         totalRecords={totalRecords}
+        selectedProducts={orderBuy}
         page={safePage}
         rowsPerPage={rowsPerPage}
         handleChangePage={handleChangePage}
