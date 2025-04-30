@@ -14,6 +14,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import PasoSeleccion from '/src/components/admin/purchase/PasoSeleccion';
 import PasoUnidades from '/src/components/admin/purchase/PasoUnidades';
 import PasoResumen from '/src/components/admin/purchase/PasoResumen';
+import useStore from '/src/hooks/useStore';
 
 export default function MiTablaConPaginacion() {
  
@@ -21,11 +22,13 @@ export default function MiTablaConPaginacion() {
 
   const [tabIndex, setTabIndex] = useState(0);
 
+  const {orderBuy}= useStore()
+
   const handleChangeTab = (event, newValue) => {
     setTabIndex(newValue);
   };
 
-  const totalRecords = 500; // Ejemplo
+ 
   
 
   return (
@@ -36,7 +39,7 @@ export default function MiTablaConPaginacion() {
                 <Typography variant="h5" fontWeight="bold">
                 Ingreso de unidades
                 </Typography>
-                <Chip label={totalRecords || 0} color="primary" />
+                <Chip label={orderBuy.length || 0} color="primary" />
             </Stack>
             <Stack direction="row" gap={2} alignItems="center">
                 {/* Aquí van los Tabs */}

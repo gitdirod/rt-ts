@@ -61,37 +61,99 @@ const StoreProvider = memo(({children}) => {
             toastMessage('Agregado al carrito')
         }
     }
-    const handleRemoveProduct = id => {
-        if(order.some( orderState => orderState.id === id)){
-            const OrderUpdated = order.filter(orderState => orderState.id !== id)
-            setOrder(OrderUpdated)
-            localStorage.setItem('productsCart', JSON.stringify(OrderUpdated))
-            toastMessage('Producto eliminado!')
+    const handleRemoveProduct = (id, silent = false) => {
+        const newOrder = order.filter(p => p.id !== id);
+        if (newOrder.length !== order.length) {
+          setOrder(newOrder);
+          localStorage.setItem('productsCart', JSON.stringify(newOrder));
+          if (!silent) toastMessage('Producto eliminado!');
         }
-    }
-    const handleAddBuy = ({available,category_id, description, ...product}, notify= true) =>{
-        if(orderBuy.some( orderState =>  orderState.id === product.id )){
-            const OrderUpdated = orderBuy.map( orderState => {
-                if(orderState.id === product.id && (orderState.quantity != product.quantity || orderState.price != product.price)){
-                    if(notify){
-                        toastMessage('Guardado correctamente!')
-                    }
-                    return product
-                }else{
-                    return orderState
+      };
+      
+    const handleAddBuy = ({ available, category_id, description, ...product }, notify = true) => {
+        let updated = false;
+      
+        const OrderUpdated = orderBuy.map(orderState => {
+            if (orderState.id === product.id) {
+                updated = true;
+                if (
+                orderState.quantity !== product.quantity ||
+                orderState.price !== product.price
+                ) {
+                if (notify) toastMessage('Guardado correctamente!');
+                return product;
                 }
-            })
-            setOrderBuy(OrderUpdated) 
-            localStorage.setItem('productsBuy', JSON.stringify(OrderUpdated))
-
-        }else{
-            setOrderBuy([...orderBuy, product])
-            localStorage.setItem('productsBuy', JSON.stringify([...orderBuy, product]))
-            if(notify){
-                toastMessage('Agregado al carrito')
+                return orderState;
             }
+            return orderState;
+        });
+      
+        const finalOrder = updated ? OrderUpdated : [...orderBuy, product];
+        setOrderBuy(finalOrder);
+        localStorage.setItem('productsBuy', JSON.stringify(finalOrder));
+        if (!updated && notify) toastMessage('Agregado al carrito');
+    };
+
+    
+
+      // Agregar todos los productos visibles
+    const handleAddAllProducts = (orderBuy, products) => {
+        const productosActuales = [...orderBuy];
+        const nuevos = [];
+
+        products?.forEach((p) => {
+        const existe = productosActuales.find((o) => o.id === p.id);
+        if (!existe) {
+            nuevos.push({ ...p, quantity: 1 });
         }
+        });
+        const actualizados = [...productosActuales, ...nuevos];
+        setOrderBuy(actualizados);
+        localStorage.setItem('productsBuy', JSON.stringify(actualizados));
+        console.log('Todos los productos visibles fueron agregados');
     }
+
+      // Eliminar todos los productos visibles
+    const handleRemoveAllProducts = (orderBuy, products) => {
+        const idsAEliminar = new Set(products.map(p => p.id));
+        const actualizados = orderBuy.filter(p => !idsAEliminar.has(p.id));
+        setOrderBuy(actualizados);
+        localStorage.setItem('productsBuy', JSON.stringify(actualizados));
+        console.log('Todos los productos visibles fueron eliminados');
+    };
+
+    // const handleRemoveProduct = id => {
+    //     if(order.some( orderState => orderState.id === id)){
+    //         const OrderUpdated = order.filter(orderState => orderState.id !== id)
+    //         setOrder(OrderUpdated)
+    //         localStorage.setItem('productsCart', JSON.stringify(OrderUpdated))
+    //         toastMessage('Producto eliminado!')
+    //     }
+    // }
+      
+    // const handleAddBuy = ({available,category_id, description, ...product}, notify= true) =>{
+    //     if(orderBuy.some( orderState =>  orderState.id === product.id )){
+    //         const OrderUpdated = orderBuy.map( orderState => {
+    //             if(orderState.id === product.id && (orderState.quantity != product.quantity || orderState.price != product.price)){
+    //                 if(notify){
+    //                     toastMessage('Guardado correctamente!')
+    //                 }
+    //                 return product
+    //             }else{
+    //                 return orderState
+    //             }
+    //         })
+    //         setOrderBuy(OrderUpdated) 
+    //         localStorage.setItem('productsBuy', JSON.stringify(OrderUpdated))
+
+    //     }else{
+    //         setOrderBuy([...orderBuy, product])
+    //         localStorage.setItem('productsBuy', JSON.stringify([...orderBuy, product]))
+    //         if(notify){
+    //             toastMessage('Agregado al carrito')
+    //         }
+    //     }
+    // }
     const handleRemoveProductBuy = id => {
         if(orderBuy.some( orderState => orderState.id === id)){
             const OrderUpdated = orderBuy.filter(orderState => orderState.id !== id)
@@ -131,8 +193,11 @@ const StoreProvider = memo(({children}) => {
                 
                 openDrawerCart,
                 setOpenDrawerCart,
-                toggleDrawerCart
-                
+                toggleDrawerCart,
+                setOrderBuy,
+
+                handleAddAllProducts,
+                handleRemoveAllProducts
             }}
         
         >{children}

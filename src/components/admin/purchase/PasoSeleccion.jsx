@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Box,
-  Stack
-} from '@mui/material';
-
+import { Box } from '@mui/material';
 
 import { ProductService } from '/src/services/ProductService';
 import ProductTable from '../product/ProductTable';
@@ -11,52 +7,49 @@ import ProductFilters from '../product/ProductFilters';
 import useStore from '/src/hooks/useStore';
 import SelectActionMode from './SelectActionMode';
 
-
 export default function ProductPage() {
- 
-    //variables filtrado
-    const [debouncedFilterName, setDebouncedFilterName] = useState('');
-    const [debouncedFilterCode, setDebouncedFilterCode] = useState('');
-    const [filterCategories, setFilterCategories] = useState([]);
-    const [filterTypes, setFilterTypes] = useState([]);
 
-    // Variables paginación
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(25);
-  
-    const { data: products, totalRecords, loading, mutate } = ProductService.useProducts({
-        page: page + 1,
-        perPage: rowsPerPage,
-        name: debouncedFilterName,
-        code: debouncedFilterCode,
-        categories: filterCategories,
-        types: filterTypes,
-        group_id: '',
-        sortField:'id',
-        sortOrder:'desc'
-    });
+  // Filtros
+  const [debouncedFilterName, setDebouncedFilterName] = useState('');
+  const [debouncedFilterCode, setDebouncedFilterCode] = useState('');
+  const [filterCategories, setFilterCategories] = useState([]);
+  const [filterTypes, setFilterTypes] = useState([]);
 
-    const {
-      orderBuy,
-      handleAddBuy,
-      handleRemoveProductBuy,
-    } = useStore()
+  // Paginación
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
 
-    const [actionMode, setActionMode] = useState('add'); // "add" por defecto
+  const { data: products, totalRecords } = ProductService.useProducts({
+    page: page + 1,
+    perPage: rowsPerPage,
+    name: debouncedFilterName,
+    code: debouncedFilterCode,
+    categories: filterCategories,
+    types: filterTypes,
+    group_id: '',
+    sortField: 'id',
+    sortOrder: 'desc'
+  });
 
-    const handleProductClick = (prod) => {
-      if (actionMode === 'add') {
-        handleAddBuy({ ...prod, quantity: 1 });
-      } else if (actionMode === 'remove') {
-        handleRemoveProductBuy(prod.id);
-      }
-    };
+  const {
+    orderBuy,
+    handleAddBuy,
+    handleRemoveProductBuy,
+    handleAddAllProducts,
+    handleRemoveAllProducts
+  } = useStore();
 
-    const addToCart = (prod) =>{
-        handleAddBuy({...prod, quantity: 1})
-    } 
+  const [actionMode, setActionMode] = useState('add'); // Por defecto agregar
 
-  
+  const handleProductClick = (prod) => {
+    if (actionMode === 'add') {
+      handleAddBuy({ ...prod, quantity: 1 });
+    } else if (actionMode === 'remove') {
+      handleRemoveProductBuy(prod.id);
+    }
+  };
+
+  // Filtros
   const handleDebouncedFilterName = (name) => {
     setDebouncedFilterName(name);
     setPage(0);
@@ -65,37 +58,35 @@ export default function ProductPage() {
     setDebouncedFilterCode(code);
     setPage(0);
   };
-  const handleChangeCategories = (categories) =>{
-    setFilterCategories(categories)
+  const handleChangeCategories = (categories) => {
+    setFilterCategories(categories);
     setPage(0);
-  }
-  const handleChangeTypes = (types) =>{
-    setFilterTypes(types)
+  };
+  const handleChangeTypes = (types) => {
+    setFilterTypes(types);
     setPage(0);
-  }
-  
-  
+  };
+
+  // Paginación
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);  // Siempre vuelve a página 0 cuando cambias el tamaño
+    setPage(0);
   };
 
   const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
   const safePage = (totalPages === 0) ? 0 : (page >= totalPages ? totalPages - 1 : page);
-  
+
   useEffect(() => {
-    const totalPages = Math.ceil((totalRecords || 0) / rowsPerPage);
     if (page >= totalPages && totalPages > 0) {
       setPage(totalPages - 1);
     }
   }, [totalRecords, rowsPerPage]);
 
-  // return
   return (
-    <Box>      
+    <Box>
       <ProductTable
         searchComponente={(
           <ProductFilters
@@ -106,7 +97,12 @@ export default function ProductPage() {
           />
         )}
         optionComponent={(
-          <SelectActionMode mode={actionMode} onChange={setActionMode} />
+          <SelectActionMode
+            mode={actionMode}
+            onChange={setActionMode}
+            onAddAll={()=>handleAddAllProducts(orderBuy, products)}
+            onRemoveAll={()=>handleRemoveAllProducts(orderBuy,products)}
+          />
         )}
         products={products}
         totalRecords={totalRecords}
