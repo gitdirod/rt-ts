@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
-  Box
+  Box,
+  Stack
 } from '@mui/material';
 
 
@@ -8,6 +9,7 @@ import { ProductService } from '/src/services/ProductService';
 import ProductTable from '../product/ProductTable';
 import ProductFilters from '../product/ProductFilters';
 import useStore from '/src/hooks/useStore';
+import SelectActionMode from './SelectActionMode';
 
 
 export default function ProductPage() {
@@ -35,9 +37,20 @@ export default function ProductPage() {
     });
 
     const {
-        handleAddBuy,
-        orderBuy
+      orderBuy,
+      handleAddBuy,
+      handleRemoveProductBuy,
     } = useStore()
+
+    const [actionMode, setActionMode] = useState('add'); // "add" por defecto
+
+    const handleProductClick = (prod) => {
+      if (actionMode === 'add') {
+        handleAddBuy({ ...prod, quantity: 1 });
+      } else if (actionMode === 'remove') {
+        handleRemoveProductBuy(prod.id);
+      }
+    };
 
     const addToCart = (prod) =>{
         handleAddBuy({...prod, quantity: 1})
@@ -92,6 +105,9 @@ export default function ProductPage() {
             handleChangeTypes={handleChangeTypes}
           />
         )}
+        optionComponent={(
+          <SelectActionMode mode={actionMode} onChange={setActionMode} />
+        )}
         products={products}
         totalRecords={totalRecords}
         selectedProducts={orderBuy}
@@ -99,7 +115,7 @@ export default function ProductPage() {
         rowsPerPage={rowsPerPage}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
-        handleEdit={addToCart}
+        handleEdit={handleProductClick}
       />
     </Box>
   );

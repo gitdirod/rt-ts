@@ -15,7 +15,8 @@ export default function ProductTable({
   handleChangePage, 
   handleChangeRowsPerPage, 
   handleEdit,
-  searchComponente
+  searchComponente,
+  optionComponent
 }) {
 
   const selectedIds = selectedProducts.map(p => p.id);
@@ -105,6 +106,11 @@ export default function ProductTable({
         {searchComponente && (
           <Box sx={{ ml: 2 }}>
             {searchComponente}
+          </Box>
+        )}
+        {optionComponent && (
+          <Box sx={{ ml: 2 }}>
+            {optionComponent}
           </Box>
         )}
         <TablePagination
