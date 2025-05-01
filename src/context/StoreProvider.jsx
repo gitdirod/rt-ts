@@ -70,7 +70,7 @@ const StoreProvider = memo(({children}) => {
         }
       };
       
-    const handleAddBuy = ({ available, category_id, description, ...product }, notify = true) => {
+    const handleAddBuy = ({...product }, notify = true) => {
         let updated = false;
       
         const OrderUpdated = orderBuy.map(orderState => {
