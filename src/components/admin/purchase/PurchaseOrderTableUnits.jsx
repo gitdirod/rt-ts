@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
-import { formatearDinero } from '/src/helpers';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import ImageTable from '/src/components/admin/ImageTable';
 import BACKEND from '/src/data/backend';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import { TextField, InputAdornment } from '@mui/material';
 
@@ -10,6 +10,7 @@ export default function PurchaseOrderTableUnits({
   products,
   selectedProducts = [],
   handleUpdateProduct,
+  handleRemoveProductBuy,
   searchComponente,
   optionComponent
 }) {
@@ -31,6 +32,7 @@ export default function PurchaseOrderTableUnits({
               <TableCell>Nombre</TableCell>
               <TableCell>Cantidad</TableCell>
               <TableCell>Precio</TableCell>
+              <TableCell>Eliminar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -101,6 +103,22 @@ export default function PurchaseOrderTableUnits({
                           }
                         }}
                       />
+                    </TableCell>
+                    <TableCell>
+                      <DeleteOutlineIcon
+                        onClick={(e) => {
+                          // e.stopPropagation();
+                          handleRemoveProductBuy(product.id);
+                        }}
+                        sx={{
+                          ml: 2,
+                          fontSize: 20,
+                          cursor: 'pointer',
+                          color: 'grey.500',
+                          transition: 'color 0.2s ease-in-out',
+                          '&:hover': { color: 'primary.main' }
+                        }}
+                    />
                     </TableCell>
                 </TableRow>
               );
