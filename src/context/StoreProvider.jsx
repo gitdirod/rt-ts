@@ -61,40 +61,30 @@ const StoreProvider = memo(({children}) => {
             toastMessage('Agregado al carrito')
         }
     }
-    const handleRemoveProduct = (id, silent = false) => {
-        const newOrder = order.filter(p => p.id !== id);
-        if (newOrder.length !== order.length) {
-          setOrder(newOrder);
-          localStorage.setItem('productsCart', JSON.stringify(newOrder));
-          if (!silent) toastMessage('Producto eliminado!');
-        }
-      };
-      
-    const handleAddBuy = ({...product }, notify = true) => {
-        let updated = false;
-      
-        const OrderUpdated = orderBuy.map(orderState => {
-            if (orderState.id === product.id) {
-                updated = true;
-                if (
-                orderState.quantity !== product.quantity ||
-                orderState.price !== product.price
-                ) {
-                if (notify) toastMessage('Guardado correctamente!');
-                return product;
-                }
-                return orderState;
-            }
-            return orderState;
+
+    const handleUpdateProduct = (order, id, field, value) => {
+        const updated = order.map(p => {
+        if (p.id === id) return { ...p, [field]: value };
+        return p;
         });
-      
-        const finalOrder = updated ? OrderUpdated : [...orderBuy, product];
+        setOrderBuy(updated);
+        localStorage.setItem('productsBuy', JSON.stringify(updated));
+    };
+    const handleAddBuy = ({ ...product }, notify = true) => {
+        // Verificar si ya existe el producto en la lista
+        const exists = orderBuy.some(orderState => orderState.id === product.id);
+        
+        if (exists) {
+            if (notify) console.log('Este producto ya fue agregado');
+            return; // no hace nada si ya está
+        }
+        
+        const finalOrder = [...orderBuy, product];
         setOrderBuy(finalOrder);
         localStorage.setItem('productsBuy', JSON.stringify(finalOrder));
-        if (!updated && notify) toastMessage('Agregado al carrito');
+        
+        if (notify) console.log('Agregado al carrito');
     };
-
-    
 
       // Agregar todos los productos visibles
     const handleAddAllProducts = (orderBuy, products) => {
@@ -122,38 +112,6 @@ const StoreProvider = memo(({children}) => {
         console.log('Todos los productos visibles fueron eliminados');
     };
 
-    // const handleRemoveProduct = id => {
-    //     if(order.some( orderState => orderState.id === id)){
-    //         const OrderUpdated = order.filter(orderState => orderState.id !== id)
-    //         setOrder(OrderUpdated)
-    //         localStorage.setItem('productsCart', JSON.stringify(OrderUpdated))
-    //         toastMessage('Producto eliminado!')
-    //     }
-    // }
-      
-    // const handleAddBuy = ({available,category_id, description, ...product}, notify= true) =>{
-    //     if(orderBuy.some( orderState =>  orderState.id === product.id )){
-    //         const OrderUpdated = orderBuy.map( orderState => {
-    //             if(orderState.id === product.id && (orderState.quantity != product.quantity || orderState.price != product.price)){
-    //                 if(notify){
-    //                     toastMessage('Guardado correctamente!')
-    //                 }
-    //                 return product
-    //             }else{
-    //                 return orderState
-    //             }
-    //         })
-    //         setOrderBuy(OrderUpdated) 
-    //         localStorage.setItem('productsBuy', JSON.stringify(OrderUpdated))
-
-    //     }else{
-    //         setOrderBuy([...orderBuy, product])
-    //         localStorage.setItem('productsBuy', JSON.stringify([...orderBuy, product]))
-    //         if(notify){
-    //             toastMessage('Agregado al carrito')
-    //         }
-    //     }
-    // }
     const handleRemoveProductBuy = id => {
         if(orderBuy.some( orderState => orderState.id === id)){
             const OrderUpdated = orderBuy.filter(orderState => orderState.id !== id)
@@ -162,6 +120,15 @@ const StoreProvider = memo(({children}) => {
             toastMessage('Producto eliminado de lista!', false)
         }
     }
+
+    const handleRemoveProduct = (id, silent = false) => {
+        const newOrder = order.filter(p => p.id !== id);
+        if (newOrder.length !== order.length) {
+          setOrder(newOrder);
+          localStorage.setItem('productsCart', JSON.stringify(newOrder));
+          if (!silent) toastMessage('Producto eliminado!');
+        }
+    };
 
     const handleClearOrder = ()=>{
         setOrder([])
@@ -177,7 +144,8 @@ const StoreProvider = memo(({children}) => {
         <StoreContext.Provider
             value={{
                 
-                order,            
+                order,  
+                          
                 
                 handleClearOrder,
                 handleAddOrder,
@@ -188,6 +156,7 @@ const StoreProvider = memo(({children}) => {
                 handleClearOrderBuy,
                 handleRemoveProductBuy,
                 handleAddBuy,
+                handleUpdateProduct,
                 orderBuy,
                 subtotalBuy,
                 

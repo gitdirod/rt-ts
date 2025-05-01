@@ -66,7 +66,7 @@ export default function PurchaseOrderTableUnits({
                         // Solo números enteros positivos
                         const regex = /^\d*$/;
                         if (value === '' || regex.test(value)) {
-                          handleUpdateProduct(product.id, 'quantity', parseInt(value, 10) || 0);
+                          handleUpdateProduct(products, product.id, 'quantity', parseInt(value, 10) || 0);
                         }
                       }}
                       slotProps={{
@@ -90,7 +90,7 @@ export default function PurchaseOrderTableUnits({
                           // Solo números positivos con hasta 3 decimales
                           const regex = /^\d*\.?\d{0,3}$/;
                           if (value === '' || regex.test(value)) {
-                            handleUpdateProduct(product.id, 'price', parseFloat(value) || 0);
+                            handleUpdateProduct(products, product.id, 'price', parseFloat(value) || 0);
                           }
                         }}
                         slotProps={{

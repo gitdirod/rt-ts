@@ -3,16 +3,7 @@ import React from 'react'
 import PurchaseOrderTableUnits from './PurchaseOrderTableUnits'
 
 export default function PasoUnidades() {
-  const { orderBuy, setOrderBuy } = useStore();
-
-  const handleUpdateProduct = (id, field, value) => {
-    const updated = orderBuy.map(p => {
-      if (p.id === id) return { ...p, [field]: value };
-      return p;
-    });
-    setOrderBuy(updated);
-    localStorage.setItem('productsBuy', JSON.stringify(updated));
-  };
+  const { orderBuy, handleUpdateProduct } = useStore();
 
   return (
     <PurchaseOrderTableUnits
