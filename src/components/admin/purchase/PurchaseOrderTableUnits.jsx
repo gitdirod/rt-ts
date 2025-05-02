@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import {
   Box,
   Paper,
@@ -17,46 +17,25 @@ import BACKEND from '/src/data/backend';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 export default function PurchaseOrderTableUnits({
+
   products,
+  totalProducts,
   selectedProducts = [],
-  handleUpdateProduct,
+  page,
+  rowsPerPage,
+  handleUpdateProductQuantity,
+  handleUpdateProductPrice,
   handleRemoveProductBuy,
-  searchComponente,
-  optionComponent
+  onRowsPerPageChange,
+  onPageChange
+
 }) {
   const selectedIds = selectedProducts.map(p => p.id);
 
-  // Filtros locales
-  const [filterName, setFilterName] = useState('');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(50);
-
-  const filteredProducts = useMemo(() => {
-    return products.filter(p => {
-      const matchesName = p.name?.toLowerCase().includes(filterName.toLowerCase());
-      return matchesName;
-    });
-  }, [products, filterName]);
-
-  const startIndex = page * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
-  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden', overflowY: 'auto', p: 1, border: '1px solid #ccc' }}>
-      <Box sx={{ display: 'flex', gap: 2, mb: 1 }}>
-        <TextField
-          label="Buscar por nombre"
-          size="small"
-          value={filterName}
-          onChange={(e) => {
-            setFilterName(e.target.value);
-            setPage(0);
-          }}
-        />
-        {searchComponente && searchComponente}
-        {optionComponent && optionComponent}
-      </Box>
+      
 
       <TableContainer sx={{ maxHeight: 'calc(100vh - 195px)', overflowY: 'auto', borderRadius: 2 }}>
         <Table stickyHeader>
@@ -71,7 +50,7 @@ export default function PurchaseOrderTableUnits({
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedProducts.map((product) => {
+            {products.map((product) => {
               const isSelected = selectedIds.includes(product.id);
               return (
                 <TableRow
@@ -97,13 +76,7 @@ export default function PurchaseOrderTableUnits({
                       size="small"
                       sx={{ maxWidth: '10rem' }}
                       value={product.quantity ?? ''}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        const regex = /^\d*$/;
-                        if (value === '' || regex.test(value)) {
-                          handleUpdateProduct(products, product.id, 'quantity', parseInt(value, 10) || 0);
-                        }
-                      }}
+                      onChange={(e)=>handleUpdateProductQuantity(e, product)}
                       slotProps={{ input: { min: 0, step: 1 } }}
                     />
                   </TableCell>
@@ -113,13 +86,7 @@ export default function PurchaseOrderTableUnits({
                       size="small"
                       sx={{ maxWidth: '10rem' }}
                       value={product.price ?? ''}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        const regex = /^\d*\.?\d{0,3}$/;
-                        if (value === '' || regex.test(value)) {
-                          handleUpdateProduct(products, product.id, 'price', parseFloat(value) || 0);
-                        }
-                      }}
+                      onChange={(e) => handleUpdateProductPrice(e, product)}
                       slotProps={{
                         input: {
                           min: 0,
@@ -152,15 +119,12 @@ export default function PurchaseOrderTableUnits({
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', mt: 1 }}>
         <TablePagination
           component="div"
-          count={filteredProducts.length}
+          count={totalProducts}
           page={page}
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[25, 50, 100]}
-          onPageChange={(e, newPage) => setPage(newPage)}
-          onRowsPerPageChange={(e) => {
-            setRowsPerPage(parseInt(e.target.value, 10));
-            setPage(0);
-          }}
+          onPageChange={(e, newPage) => onPageChange(e, newPage)}
+          onRowsPerPageChange={onRowsPerPageChange}
         />
       </Box>
     </Paper>
