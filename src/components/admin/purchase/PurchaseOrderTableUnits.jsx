@@ -27,7 +27,8 @@ export default function PurchaseOrderTableUnits({
   handleUpdateProductPrice,
   handleRemoveProductBuy,
   onRowsPerPageChange,
-  onPageChange
+  onPageChange,
+  searchComponente
 
 }) {
   const selectedIds = selectedProducts.map(p => p.id);
@@ -37,7 +38,7 @@ export default function PurchaseOrderTableUnits({
     <Paper sx={{ width: '100%', overflow: 'hidden', overflowY: 'auto', p: 1, border: '1px solid #ccc' }}>
       
 
-      <TableContainer sx={{ maxHeight: 'calc(100vh - 195px)', overflowY: 'auto', borderRadius: 2 }}>
+      <TableContainer sx={{ maxHeight: 'calc(100vh - 155px)', overflowY: 'auto', borderRadius: 2 }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -117,6 +118,12 @@ export default function PurchaseOrderTableUnits({
       </TableContainer>
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', mt: 1 }}>
+        {searchComponente && (
+          <Box sx={{ ml: 2 }}>
+            {searchComponente}
+          </Box>
+        )}
+
         <TablePagination
           component="div"
           count={totalProducts}

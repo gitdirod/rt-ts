@@ -1,7 +1,8 @@
 import useStore from '/src/hooks/useStore'
 import React, { useState, useMemo } from 'react'
 import PurchaseOrderTableUnits from './PurchaseOrderTableUnits'
-import { Box, TextField } from '@mui/material';
+import { Box } from '@mui/material';
+import ProductFilters from '../product/ProductFilters';
 
 export default function PasoUnidades() {
   const { orderBuy, handleUpdateProduct, handleRemoveProductBuy } = useStore();
@@ -10,15 +11,24 @@ export default function PasoUnidades() {
 
   // Filtros locales
   const [filterName, setFilterName] = useState('');
+  const [filterCode, setFilterCode] = useState('');
+  const [filterCategories, setFilterCategories] = useState([]);
+  const [filterTypes, setFilterTypes] = useState([]);
+
+  //variables paginacion
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
 
   const filteredProducts = useMemo(() => {
     return orderBuy.filter(p => {
       const matchesName = p.name?.toLowerCase().includes(filterName.toLowerCase());
-      return matchesName;
+      const matchesCode = p.code?.toLowerCase().includes(filterCode.toLowerCase());
+      const matchesCategories = filterCategories.length === 0 || filterCategories.includes(p?.category?.id);
+      const matchesTypes = filterTypes.length === 0 || filterTypes.includes(p?.type_product?.id);
+      return matchesName && matchesCode && matchesCategories && matchesTypes;
     });
-  }, [orderBuy, filterName]);
+  }, [orderBuy, filterName, filterCode, filterCategories, filterTypes]);
+  
 
   const startIndex = page * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
@@ -51,32 +61,25 @@ export default function PasoUnidades() {
   }
   
 
-  return (
-    <>
-    <Box sx={{ display: 'flex', gap: 2, mb: 1 }}>
-      <TextField
-        label="Buscar por nombre"
-        size="small"
-        value={filterName}
-        onChange={(e) => {
-          setFilterName(e.target.value);
-          setPage(0);
-        }}
-      />
-    </Box>
+  return ( 
     <PurchaseOrderTableUnits
       products={paginatedProducts}
       page={page}
       totalProducts={filteredProducts?.length || 0}
       rowsPerPage={rowsPerPage}
-      filterName={filterName}
-      setFilterName={setFilterName}
       handleUpdateProductQuantity={handleUpdateProductQuantity}
       handleUpdateProductPrice={handleUpdateProductPrice}
       handleRemoveProductBuy={handleRemoveProductBuy}
       onRowsPerPageChange={onRowsPerPageChange}
       onPageChange={onPageChange}
+      searchComponente={(
+        <ProductFilters
+          handleDebouncedFilterName={setFilterName}
+          handleDebouncedFilterCode={setFilterCode}
+          handleChangeCategories={setFilterCategories}
+          handleChangeTypes={setFilterTypes}
+        />
+      )}
     />
-    </>
   );
 }
