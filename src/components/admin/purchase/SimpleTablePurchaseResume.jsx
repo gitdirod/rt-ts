@@ -8,6 +8,7 @@ export default function SimpleTablePurchaseResume({ products = [] }) {
       <Table size="small">
         <TableHead>
           <TableRow>
+            <TableCell><Typography variant="subtitle2">#</Typography></TableCell>
             <TableCell><Typography variant="subtitle2">Código</Typography></TableCell>
             <TableCell><Typography variant="subtitle2">Nombre</Typography></TableCell>
             <TableCell align="right"><Typography variant="subtitle2">Precio</Typography></TableCell>
@@ -16,8 +17,9 @@ export default function SimpleTablePurchaseResume({ products = [] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((p) => (
+          {products.map((p, index) => (
             <TableRow key={p.id}>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{p.code}</TableCell>
               <TableCell>{p.name}</TableCell>
               <TableCell align="right">{formatearDinero(p.price)}</TableCell>
