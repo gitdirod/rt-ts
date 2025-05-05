@@ -38,7 +38,6 @@ export default function PasoResumen() {
       
     } else {
       setErrores(response.errors);
-      console.log(response.errors)
     }
   }
 
@@ -66,6 +65,8 @@ export default function PasoResumen() {
           </Typography>
 
           <TextField
+            error={Boolean(errores?.envoice)}
+            helperText={errores?.envoice}
             label="Comprobante / Factura"
             size="small"
             value={envoice}
