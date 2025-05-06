@@ -62,14 +62,26 @@ const StoreProvider = memo(({children}) => {
         }
     }
 
-    const handleUpdateProduct = (order, id, field, value) => {
+    // const handleUpdateProduct = (order, id, field, value) => {
+    //     const updated = order.map(p => {
+    //     if (p.id === id) return { ...p, [field]: value };
+    //     return p;
+    //     });
+    //     setOrderBuy(updated);
+    //     localStorage.setItem('productsBuy', JSON.stringify(updated));
+    // };
+
+    const handleUpdateProduct = (order, productId, field, value) => {
         const updated = order.map(p => {
-        if (p.id === id) return { ...p, [field]: value };
-        return p;
+          if (p.product_id === productId) {
+            return { ...p, [field]: value };
+          }
+          return p;
         });
         setOrderBuy(updated);
         localStorage.setItem('productsBuy', JSON.stringify(updated));
-    };
+      };
+      
 
     const handleAddBuy = (product, notify = true) => {
         const exists = orderBuy.some(orderState => orderState.product_id === product.id);

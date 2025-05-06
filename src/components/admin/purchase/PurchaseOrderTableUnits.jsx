@@ -31,7 +31,7 @@ export default function PurchaseOrderTableUnits({
   searchComponente
 
 }) {
-  const selectedIds = selectedProducts.map(p => p.id);
+  const selectedIds = selectedProducts.map(p => p.product_id);
 
 
   return (
@@ -51,11 +51,11 @@ export default function PurchaseOrderTableUnits({
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((product) => {
-              const isSelected = selectedIds.includes(product.id);
+            {products.map((p) => {
+              const isSelected = selectedIds.includes(p.id);
               return (
                 <TableRow
-                  key={product.id}
+                  key={p.product_id}
                   sx={{
                     backgroundColor: isSelected ? 'rgba(0, 255, 0, 0.1)' : 'transparent',
                     transition: 'background-color 0.2s ease-in-out',
@@ -63,21 +63,21 @@ export default function PurchaseOrderTableUnits({
                 >
                   <TableCell>
                     <ImageTable
-                      images={product?.images}
+                      images={p?.product?.images}
                       url={BACKEND.PRODUCTS.URL}
                       higth={14}
                       count={true}
                     />
                   </TableCell>
-                  <TableCell>{product?.code}</TableCell>
-                  <TableCell>{product?.name}</TableCell>
+                  <TableCell>{p?.product?.code}</TableCell>
+                  <TableCell>{p?.product?.name}</TableCell>
                   <TableCell>
                     <TextField
                       type="number"
                       size="small"
                       sx={{ maxWidth: '10rem' }}
-                      value={product.quantity ?? ''}
-                      onChange={(e)=>handleUpdateProductQuantity(e, product)}
+                      value={p.quantity ?? ''}
+                      onChange={(e)=>handleUpdateProductQuantity(e, p)}
                       slotProps={{ input: { min: 0, step: 1 } }}
                     />
                   </TableCell>
@@ -86,8 +86,8 @@ export default function PurchaseOrderTableUnits({
                       type="number"
                       size="small"
                       sx={{ maxWidth: '10rem' }}
-                      value={product.price ?? ''}
-                      onChange={(e) => handleUpdateProductPrice(e, product)}
+                      value={p.price ?? ''}
+                      onChange={(e) => handleUpdateProductPrice(e, p)}
                       slotProps={{
                         input: {
                           min: 0,
@@ -99,7 +99,7 @@ export default function PurchaseOrderTableUnits({
                   </TableCell>
                   <TableCell>
                     <DeleteOutlineIcon
-                      onClick={() => handleRemoveProductBuy(product.id)}
+                      onClick={() => handleRemoveProductBuy(p.product_id)}
                       sx={{
                         ml: 2,
                         fontSize: 20,

@@ -21,10 +21,10 @@ export default function PasoUnidades() {
 
   const filteredProducts = useMemo(() => {
     return orderBuy.filter(p => {
-      const matchesName = p.name?.toLowerCase().includes(filterName.toLowerCase());
-      const matchesCode = p.code?.toLowerCase().includes(filterCode.toLowerCase());
-      const matchesCategories = filterCategories.length === 0 || filterCategories.includes(p?.category?.id);
-      const matchesTypes = filterTypes.length === 0 || filterTypes.includes(p?.type_product?.id);
+      const matchesName = p.product.name?.toLowerCase().includes(filterName.toLowerCase());
+      const matchesCode = p.product.code?.toLowerCase().includes(filterCode.toLowerCase());
+      const matchesCategories = filterCategories.length === 0 || filterCategories.includes(p.product?.category?.id);
+      const matchesTypes = filterTypes.length === 0 || filterTypes.includes(p.product?.type_product?.id);
       return matchesName && matchesCode && matchesCategories && matchesTypes;
     });
   }, [orderBuy, filterName, filterCode, filterCategories, filterTypes]);
@@ -34,22 +34,40 @@ export default function PasoUnidades() {
   const endIndex = startIndex + rowsPerPage;
   const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
+  console.log(paginatedProducts)
 
-  const handleUpdateProductQuantity = (e,p) =>{
+  const handleUpdateProductQuantity = (e, p) => {
     const value = e.target.value;
     const regex = /^\d*$/;
     if (value === '' || regex.test(value)) {
-      handleUpdateProduct(orderBuy, p.id, 'quantity', parseInt(value, 10) || 0);
+      handleUpdateProduct(orderBuy, p.product_id, 'quantity', parseInt(value, 10) || 0);
     }
-  }
+  };
 
-  const handleUpdateProductPrice = (e, p) =>{
+  const handleUpdateProductPrice = (e, p) => {
     const value = e.target.value;
     const regex = /^\d*\.?\d{0,3}$/;
     if (value === '' || regex.test(value)) {
-      handleUpdateProduct(orderBuy, p.id, 'price', parseFloat(value) || 0);
+      handleUpdateProduct(orderBuy, p.product_id, 'price', parseFloat(value) || 0);
     }
-  }
+  };
+  
+  
+  // const handleUpdateProductQuantity = (e,p) =>{
+  //   const value = e.target.value;
+  //   const regex = /^\d*$/;
+  //   if (value === '' || regex.test(value)) {
+  //     handleUpdateProduct(orderBuy, p.id, 'quantity', parseInt(value, 10) || 0);
+  //   }
+  // }
+
+  // const handleUpdateProductPrice = (e, p) =>{
+  //   const value = e.target.value;
+  //   const regex = /^\d*\.?\d{0,3}$/;
+  //   if (value === '' || regex.test(value)) {
+  //     handleUpdateProduct(orderBuy, p.id, 'price', parseFloat(value) || 0);
+  //   }
+  // }
 
   const onRowsPerPageChange = (e)=>{
     setRowsPerPage(parseInt(e.target.value, 10));
