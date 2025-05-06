@@ -7,7 +7,13 @@ import ProductFilters from '../product/ProductFilters';
 import useStore from '/src/hooks/useStore';
 import SelectActionMode from './SelectActionMode';
 
-export default function ProductPage({purchaseOrder={}}) {
+export default function ProductPage({
+  purchaseOrder=[],
+  addPurchaseOrderProduct,
+  handleAddAllProducts,
+  handleRemoveProductBuy,
+  handleRemoveAllProducts
+}) {
 
   // Filtros
   const [debouncedFilterName, setDebouncedFilterName] = useState('');
@@ -31,19 +37,11 @@ export default function ProductPage({purchaseOrder={}}) {
     sortOrder: 'desc'
   });
 
-  const {
-    // orderBuy,
-    handleAddBuy,
-    handleRemoveProductBuy,
-    handleAddAllProducts,
-    handleRemoveAllProducts
-  } = useStore();
-
   const [actionMode, setActionMode] = useState('add'); // Por defecto agregar
 
   const handleProductClick = (prod) => {
     if (actionMode === 'add') {
-      handleAddBuy({ ...prod, quantity: 1 });
+      addPurchaseOrderProduct({ ...prod, quantity: 1 },true,'purchaseOrderProducts');
     } else if (actionMode === 'remove') {
       handleRemoveProductBuy(prod.id);
     }
@@ -100,8 +98,8 @@ export default function ProductPage({purchaseOrder={}}) {
           <SelectActionMode
             mode={actionMode}
             onChange={setActionMode}
-            onAddAll={()=>handleAddAllProducts(purchaseOrder, products)}
-            onRemoveAll={()=>handleRemoveAllProducts(purchaseOrder,products)}
+            onAddAll={()=>handleAddAllProducts(products)}
+            onRemoveAll={()=>handleRemoveAllProducts(products)}
           />
         )}
         products={products}

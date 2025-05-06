@@ -5,7 +5,11 @@ import { Box } from '@mui/material';
 import ProductFilters from '../product/ProductFilters';
 
 export default function PasoUnidades() {
-  const { orderBuy, handleUpdateProduct, handleRemoveProductBuy } = useStore();
+  const { 
+    orderBuy, 
+    handleUpdateProduct, 
+    handleRemoveProductBuy 
+  } = useStore();
 
 
 

@@ -62,14 +62,16 @@ const StoreProvider = memo(({children}) => {
         }
     }
 
-    // const handleUpdateProduct = (order, id, field, value) => {
-    //     const updated = order.map(p => {
-    //     if (p.id === id) return { ...p, [field]: value };
-    //     return p;
-    //     });
-    //     setOrderBuy(updated);
-    //     localStorage.setItem('productsBuy', JSON.stringify(updated));
-    // };
+
+    //////////////////////////////////////////
+    //Ordenes de compra, Ingreso de unidades//
+    //////////////////////////////////////////
+
+    const getPurchaseOrderProductsFromStorage = (orderId = null) => {
+        const key = orderId ? `purchaseOrderProducts-${orderId}` : 'purchaseOrderProducts';
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : [];
+    };
 
     const handleUpdateProduct = (order, productId, field, value) => {
         const updated = order.map(p => {
@@ -80,11 +82,11 @@ const StoreProvider = memo(({children}) => {
         });
         setOrderBuy(updated);
         localStorage.setItem('productsBuy', JSON.stringify(updated));
-      };
-      
+    };
 
-    const handleAddBuy = (product, notify = true) => {
-        const exists = orderBuy.some(orderState => orderState.product_id === product.id);
+    const addPurchaseOrderProduct = (product, notify = true, storageKey = 'purchaseOrderProducts') => {
+        const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
+        const exists = currentProducts.some(item => item.product_id === product.id);
       
         if (exists) {
           if (notify) console.log('Este producto ya fue agregado');
@@ -93,35 +95,18 @@ const StoreProvider = memo(({children}) => {
       
         const newItem = {
           product_id: product.id,
-          product: product, // objeto completo para mostrar código, nombre, etc.
+          product: product,
           quantity: 1,
           price: product.price ?? 0
         };
       
-        const finalOrder = [...orderBuy, newItem];
-        setOrderBuy(finalOrder);
-        localStorage.setItem('productsBuy', JSON.stringify(finalOrder));
+        const updated = [...currentProducts, newItem];
+        localStorage.setItem(storageKey, JSON.stringify(updated));
+      
+        if (storageKey === 'purchaseOrderProducts') setOrderBuy(updated);
       
         if (notify) console.log('Agregado al carrito');
     };
-      
-    // const handleAddBuy = ({ ...product }, notify = true) => {
-    //     // Verificar si ya existe el producto en la lista
-    //     const exists = orderBuy.some(orderState => orderState.id === product.id);
-        
-    //     if (exists) {
-    //         if (notify) console.log('Este producto ya fue agregado');
-    //         return; // no hace nada si ya está
-    //     }
-        
-    //     const finalOrder = [...orderBuy, product];
-    //     setOrderBuy(finalOrder);
-    //     localStorage.setItem('productsBuy', JSON.stringify(finalOrder));
-        
-    //     if (notify) console.log('Agregado al carrito');
-    // };
-
-      // Agregar todos los productos visibles
 
     const handleAddAllProducts = (orderBuy, products) => {
         const productosActuales = [...orderBuy];
@@ -144,24 +129,8 @@ const StoreProvider = memo(({children}) => {
         localStorage.setItem('productsBuy', JSON.stringify(actualizados));
         console.log('Todos los productos visibles fueron agregados');
     };
-      
-    // const handleAddAllProducts = (orderBuy, products) => {
-    //     const productosActuales = [...orderBuy];
-    //     const nuevos = [];
 
-    //     products?.forEach((p) => {
-    //     const existe = productosActuales.find((o) => o.id === p.id);
-    //     if (!existe) {
-    //         nuevos.push({ ...p, quantity: 1 });
-    //     }
-    //     });
-    //     const actualizados = [...productosActuales, ...nuevos];
-    //     setOrderBuy(actualizados);
-    //     localStorage.setItem('productsBuy', JSON.stringify(actualizados));
-    //     console.log('Todos los productos visibles fueron agregados');
-    // }
-
-      // Eliminar todos los productos visibles
+    // Eliminar todos los productos visibles
 
     const handleRemoveAllProducts = (orderBuy, products) => {
         const idsAEliminar = new Set(products.map(p => p.id));
@@ -170,14 +139,6 @@ const StoreProvider = memo(({children}) => {
         localStorage.setItem('productsBuy', JSON.stringify(actualizados));
         console.log('Todos los productos visibles fueron eliminados');
     };
-      
-    // const handleRemoveAllProducts = (orderBuy, products) => {
-    //     const idsAEliminar = new Set(products.map(p => p.id));
-    //     const actualizados = orderBuy.filter(p => !idsAEliminar.has(p.id));
-    //     setOrderBuy(actualizados);
-    //     localStorage.setItem('productsBuy', JSON.stringify(actualizados));
-    //     console.log('Todos los productos visibles fueron eliminados');
-    // };
 
     const handleRemoveProductBuy = (productId) => {
         if (orderBuy.some(orderState => orderState.product_id === productId)) {
@@ -187,15 +148,6 @@ const StoreProvider = memo(({children}) => {
           toastMessage('Producto eliminado de lista!', false);
         }
     };
-      
-    // const handleRemoveProductBuy = id => {
-    //     if(orderBuy.some( orderState => orderState.id === id)){
-    //         const OrderUpdated = orderBuy.filter(orderState => orderState.id !== id)
-    //         setOrderBuy(OrderUpdated)
-    //         localStorage.setItem('productsBuy', JSON.stringify(OrderUpdated))
-    //         toastMessage('Producto eliminado de lista!', false)
-    //     }
-    // }
 
     const handleRemoveProduct = (id, silent = false) => {
         const newOrder = order.filter(p => p.id !== id);
@@ -231,7 +183,9 @@ const StoreProvider = memo(({children}) => {
                 
                 handleClearOrderBuy,
                 handleRemoveProductBuy,
-                handleAddBuy,
+                // handleAddBuy,
+                getPurchaseOrderProductsFromStorage,
+                addPurchaseOrderProduct,
                 handleUpdateProduct,
                 orderBuy,
                 subtotalBuy,
