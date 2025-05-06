@@ -14,9 +14,8 @@ import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutl
 import PasoSeleccion from '/src/components/admin/purchase/PasoSeleccion';
 import PasoUnidades from '/src/components/admin/purchase/PasoUnidades';
 import PasoResumen from '/src/components/admin/purchase/PasoResumen';
-import useStore from '/src/hooks/useStore';
 
-export default function StoreUpdatePurchaseOrder() {
+export default function StorePurchaseOrder() {
  
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -25,15 +24,15 @@ export default function StoreUpdatePurchaseOrder() {
   };
 
   
-  // const {orderBuy}= useStore()
-  const {getPurchaseOrderProductsFromStorage}= useStore()
+  const getPurchaseOrderProductsFromStorage = (orderId = null) => {
+    const key = orderId ? `purchaseOrderProducts-${orderId}` : 'purchaseOrderProducts';
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : [];
+  };
 
   const [subtotalBuy, setSubtotalBuy] = useState(0)
   const initialOrderBuy = getPurchaseOrderProductsFromStorage(); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
   const [orderBuy, setOrderBuy] = useState(initialOrderBuy);
-
-  
-
 
   const addPurchaseOrderProduct = (product, notify = true, storageKey = 'purchaseOrderProducts') => {
     const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
