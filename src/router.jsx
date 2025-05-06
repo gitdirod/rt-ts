@@ -29,9 +29,9 @@ import ShowSoldOrder,{
     loader as loaderSoldOrder
 } from './views/admin/ShowSoldOrder'
 
-import UpdatePurchaseOrder,{
-    loader as loaderPurchase
-} from '/src/views/admin/UpdatePurchaseOrder'
+// import UpdatePurchaseOrder,{
+//     loader as loaderPurchase
+// } from '/src/views/admin/UpdatePurchaseOrder'
 
 import IndexUser from '/src/views/admin/IndexUser'
 
@@ -45,6 +45,7 @@ import Likes from '/src/views/store/likes/Likes'
 import BoughtDetailPage from '/src/views/store/bought/BoughtDetailPage'
 import IndexMemory from '/src/views/admin/IndexMemory'
 import ProductPage from '/src/components/admin/product/ProductPage'
+import UpdatePurchaseOrder from '/src/views/admin/UpdatePurchaseOrder'
 
 
 
@@ -147,7 +148,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "/admin/purchases/purchases/purchase/:itemId",
-                        loader: loaderPurchase,
+                        // loader: loaderPurchase,
                         element: <UpdatePurchaseOrder/>
                     },
                 ]
