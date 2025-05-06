@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 
 import Stack from '@mui/material/Stack';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 
 
 import PasoSeleccion from '/src/components/admin/purchase/PasoSeleccion';
@@ -35,7 +35,7 @@ export default function MiTablaConPaginacion() {
     <div className="overflow-y-hidden flex flex-col flex-1 ">
         <Box sx={{display:'flex', mt:1, px:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
             <Stack direction="row" spacing={2} alignItems="center">
-                <ShoppingCartCheckoutIcon color="primary"/>
+                <AddShoppingCartOutlinedIcon color="primary"/>
                 <Typography variant="h5" fontWeight="bold">
                 Ingreso de unidades
                 </Typography>

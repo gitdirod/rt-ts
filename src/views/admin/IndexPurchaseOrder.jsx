@@ -1,132 +1,131 @@
-import { memo, useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom"
-import { formatearDinero } from '/src/helpers'
+import {
+  Box,
+  Typography,
+  Chip,
+  Paper,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody
+} from '@mui/material';
 
-import { useAuth } from '/src/hooks/useAuth'
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { PurchaseOrderService } from '/src/services/PurchaseOrderService';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { formatearDinero, formatearFecha } from '/src/helpers';
+import { useNavigate } from 'react-router-dom';
 
-import add from '/src/static/icons/add.svg'
-import iconCart from '/src/static/icons/cart.svg'
-import Total from '/src/components/admin/Total'
-import LinkBtn from '../../components/admin/LinkBtn'
-import TableHeader from '/src/components/admin/TableHeader'
-
-
-import moment from 'moment/dist/moment';
-import 'moment/dist/locale/es'
-import localization from 'moment/locale/es';
-import { PurchaseOrderService } from '/src/services/PurchaseOrderService'
-
-moment.suppressDeprecationWarnings = true;
-moment.updateLocale('es', localization);
-
-const IndexPurchaseOrder=()=> {
-
-    // const {
-    //     purchases
-    // } = useStore()
-    const {data:purchases} = PurchaseOrderService.useAllPurchaseOrders()
-    const { user } = useAuth({
-        middleware: 'guest',
-    })
-    
-    const columns = [
-        { title: 'Id', className: 'w-10' },
-        { title: 'Factura', className: '' },
-        { title: 'Subtotal', className: '' },
-        { title: 'Total', className: '' },
-        { title: 'Articulos', className: 'w-32' },
-        { title: 'Unidades', className: 'w-32' },
-        { title: 'Actualizado', className: '' },
-      ];
-    
-    return (
-    <div
-        className=' overflow-y-hidden flex flex-col flex-1'
-    >
-        {/* Cabecera */}
-        <div>
-                <div className='flex'>
-                    <img src={iconCart} alt="save" className='w-8 h-8 pr-2' />
-                    Compras ({purchases?.length})
-                </div>
-                <Total purchases={purchases} />
-            
-        
-            <LinkBtn
-                to='/admin/purchases/storePurchase'
-                icon={add}
-                text='Nueva'
-                style='bg-cyanPrimary'
-                imageColor='white'
-            />
-        </div>
-        
-        {/* Contenido */}
-        
-        
-        <div className='flex flex-1 h-96 border-orange-500'>
-            <div
-                className=' w-full flex flex-col border-cyan-500 overflow-y-auto px-0.5'
-            >
-                <table className=" table-fixed w-full text-slate-600">
-                    <TableHeader columns={columns} />
-                    <tbody className='w-full  '>
-                        {
-                            purchases?.map(item=>(
-                                <TableTrPurchase
-                                    key={item.id}
-                                    item={item}
-                                />
-                            )
-                            )
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-  )
-}
-
-
-export default memo(IndexPurchaseOrder)
-
-const TableTrPurchase=({item})=> {
-    
-    const {id, envoice, subtotal, products} = item
-    const [units, setUnits] = useState(0)
-    useEffect(()=>{
-        const unidades = products?.reduce((units, item) => (Number(item.quantity)) + units, 0)
-        setUnits(unidades)
-    })
-
+export default function ProductPage({selectedProducts=[]}) {
+ 
     const navigate = useNavigate()
-    const handleSelect =(id)=>{
-        navigate('/admin/purchases/purchases/purchase/'+id)
+
+    const handleAddPurchaseOrder = () => {
+        navigate('/admin/purchases/storePurchase')
+    };
+
+    const handleEditPurchaseOrder=(purchaseOrder)=>{
+        navigate('/admin/purchases/purchases/purchase/'+purchaseOrder.id)
     }
+    
+    const { data: purchaseOrders, totalRecords, loading, mutate } = PurchaseOrderService.useAllPurchaseOrders()
 
+    const selectedIds = selectedProducts.map(p => p.id);
+    // return
     return (
-    <tr
-        className='cursor-pointer group/item'
-        onClick={()=>handleSelect(item.id)}
-    >
-        <Td style='w-10 border-l rounded-l-lg'>{id}</Td>
-        <Td>{envoice}</Td>
-        <Td>{subtotal?formatearDinero(subtotal):'$0'}</Td>
-        <Td>{subtotal?formatearDinero(subtotal*1.12):'$0'}</Td>
-        <Td style='w-32'>{products?.length}</Td>
-        <Td style='w-32'>{units}</Td>
-        <Td style='text-sm  border-r rounded-r-lg'>{moment(item?.created_at).format('lll')}</Td>
-    </tr>
-  )
-}
+        <Box>
+        
+        <Box sx={{display:'flex', my:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
+            <Stack direction="row" spacing={2} alignItems="center">
+            <ShoppingCartOutlinedIcon color="primary"/>
+            <Typography variant="h5" fontWeight="bold">
+                Ordenes de compra
+            </Typography>
+            <Chip label={purchaseOrders.length || 0} color="primary" />
+            </Stack>
 
-const Td=({ children, style=''})=>{
-    return(
-        <td className='px-0'>
-            <div className={`py-1 bg-white font-poppins-regular group-hover/item:border-slate-500  transition-all h-10 center-r flex-1  group-hover/item:font-poppins-bold border-y ${style}`}>
-                {children}
-            </div>
-        </td>
-    )
+            <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} 
+                onClick={() => {
+                handleAddPurchaseOrder(null); // por ejemplo, abrir modal de vista
+            }}
+            >
+            Orden de compra
+            </Button>
+        </Box>
+
+        <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
+        <TableContainer  sx={{ maxHeight: 'calc(100vh - 155px)', overflowY: 'auto', borderRadius: 2 }}>
+            <Table stickyHeader>
+            <TableHead>
+                <TableRow >
+                <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                    ID
+                    </Typography>
+                </TableCell>
+                <TableCell>
+                <Typography variant="subtitle2" color="text.secondary">
+                    Comprobante / Factura
+                </Typography>
+                </TableCell>
+                <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                    Subtotal
+                    </Typography>
+                </TableCell>
+                <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                    Total + IVA
+                    </Typography>
+                </TableCell>
+                <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                    Productos
+                    </Typography>
+                </TableCell>
+                <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                    Creado
+                    </Typography>
+                </TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {(purchaseOrders || []).map((purchaseOrder, index) => {
+                const isSelected = selectedIds.includes(purchaseOrder.id);
+                return (
+                    <TableRow
+                    key={index}
+                    hover
+                    sx={{
+                        cursor: 'pointer',
+                        backgroundColor: isSelected ? 'rgba(0, 255, 0, 0.1)' : 'transparent', // verde suave
+                        '&:hover': {
+                        backgroundColor: isSelected ? 'rgba(0, 255, 0, 0.2)' : 'rgba(0, 0, 0, 0.05)',
+                        },
+                        transition: 'background-color 0.2s ease-in-out',
+                    }}
+                    onClick={() => handleEditPurchaseOrder(purchaseOrder)}
+                    >
+                    
+                    <TableCell><Typography variant="body2">{purchaseOrder?.id}</Typography></TableCell>
+                    <TableCell><Typography variant="body2">{purchaseOrder?.envoice}</Typography></TableCell>
+                    <TableCell><Typography variant="body2">{formatearDinero(purchaseOrder?.subtotal)}</Typography></TableCell>
+                    <TableCell><Typography variant="body2">{formatearDinero(purchaseOrder?.subtotal * 1.15)}</Typography></TableCell>
+                    <TableCell><Typography variant="body2">{purchaseOrder?.products?.length}</Typography></TableCell>
+                    <TableCell><Typography variant="body2">{formatearFecha(purchaseOrder?.created_at)}</Typography></TableCell>
+                    </TableRow>
+                );
+                })}
+            </TableBody>
+            </Table>
+        </TableContainer>
+
+        </Paper>
+        
+        </Box>
+    );
 }
