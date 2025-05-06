@@ -24,7 +24,7 @@ export default function UpdatePurchaseOrder() {
 
     const {orderBuy}= useStore()
     const { itemId: orderId } = useParams();
-    console.log(orderId)
+    
     const [purchaseOrder, setPurchaseOrder] = useState(null);  // Estado para el producto
     const [isLoading, setIsLoading] = useState(true);
 
@@ -53,7 +53,6 @@ export default function UpdatePurchaseOrder() {
     }
     }, [orderId]);
 
-    console.log(purchaseOrder)
 
     if(isLoading || purchaseOrder === undefined || purchaseOrder === null || purchaseOrder?.products?.length < 0 ) return <IsLoading/>
 
