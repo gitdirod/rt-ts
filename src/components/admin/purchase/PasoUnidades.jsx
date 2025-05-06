@@ -1,12 +1,8 @@
-import useStore from '/src/hooks/useStore'
 import React, { useState, useMemo } from 'react'
 import PurchaseOrderTableUnits from './PurchaseOrderTableUnits'
-import { Box } from '@mui/material';
 import ProductFilters from '../product/ProductFilters';
 
 export default function PasoUnidades({purchaseOrder, handleUpdateProduct, handleRemoveProductBuy}) {
-
-
 
   // Filtros locales
   const [filterName, setFilterName] = useState('');

@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import { ProductService } from '/src/services/ProductService';
 import ProductTable from '../product/ProductTable';
 import ProductFilters from '../product/ProductFilters';
-import useStore from '/src/hooks/useStore';
 import SelectActionMode from './SelectActionMode';
 
 export default function ProductPage({

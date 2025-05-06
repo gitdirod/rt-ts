@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -28,6 +28,7 @@ export default function StoreUpdatePurchaseOrder() {
   // const {orderBuy}= useStore()
   const {getPurchaseOrderProductsFromStorage}= useStore()
 
+  const [subtotalBuy, setSubtotalBuy] = useState(0)
   const initialOrderBuy = getPurchaseOrderProductsFromStorage(); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
   const [orderBuy, setOrderBuy] = useState(initialOrderBuy);
 
@@ -116,6 +117,15 @@ export default function StoreUpdatePurchaseOrder() {
     console.log('Todos los productos visibles fueron eliminados');
   };
 
+  const handleClearOrderBuy = (storageKey = 'purchaseOrderProducts') => {
+    localStorage.removeItem(storageKey);
+  
+    if (storageKey === 'purchaseOrderProducts') {
+      setOrderBuy([]);
+    }
+  };
+  
+
   const handleUpdateProduct = (productId, field, value, storageKey = 'purchaseOrderProducts') => {
     const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
   
@@ -132,8 +142,11 @@ export default function StoreUpdatePurchaseOrder() {
       setOrderBuy(updated);
     }
   };
-  
-  
+
+  useEffect(()=>{
+      const newSubtotalBuy = orderBuy?.reduce((subtotal, product) => (product.price * product.quantity) + subtotal, 0)
+      setSubtotalBuy(newSubtotalBuy)
+  }, [orderBuy])
   
 
   return (
@@ -169,13 +182,16 @@ export default function StoreUpdatePurchaseOrder() {
             }
             {tabIndex === 1 && 
               <PasoUnidades 
-              purchaseOrder={orderBuy}
-              handleUpdateProduct={handleUpdateProduct}
-              handleRemoveProductBuy={handleRemoveProductBuy}
+                purchaseOrder={orderBuy}
+                handleUpdateProduct={handleUpdateProduct}
+                handleRemoveProductBuy={handleRemoveProductBuy}
               />
             }
             {tabIndex === 2 && 
               <PasoResumen 
+                purchaseOrder={orderBuy}
+                subtotalBuy={subtotalBuy}
+                handleClearOrderBuy={handleClearOrderBuy}
               />
             }
         </Box>
