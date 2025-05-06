@@ -23,7 +23,7 @@ export default function PasoResumen() {
       envoice: envoice,
       products : orderBuy?.map(product => (
           {
-              id: product.id,
+              id: product.product_id,
               quantity: product.quantity,
               price: product.price
           }

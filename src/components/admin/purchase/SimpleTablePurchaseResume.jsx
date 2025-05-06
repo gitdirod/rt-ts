@@ -18,10 +18,10 @@ export default function SimpleTablePurchaseResume({ products = [] }) {
         </TableHead>
         <TableBody>
           {products.map((p, index) => (
-            <TableRow key={p.id}>
+            <TableRow key={p?.product?.id}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>{p.code}</TableCell>
-              <TableCell>{p.name}</TableCell>
+              <TableCell>{p?.product?.code}</TableCell>
+              <TableCell>{p?.product?.name}</TableCell>
               <TableCell align="right">{formatearDinero(p.price)}</TableCell>
               <TableCell align="right">{p.quantity}</TableCell>
               <TableCell align="right">{formatearDinero((p.price || 0) * (p.quantity || 0))}</TableCell>

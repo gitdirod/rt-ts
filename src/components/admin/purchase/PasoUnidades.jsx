@@ -34,8 +34,6 @@ export default function PasoUnidades() {
   const endIndex = startIndex + rowsPerPage;
   const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
-  console.log(paginatedProducts)
-
   const handleUpdateProductQuantity = (e, p) => {
     const value = e.target.value;
     const regex = /^\d*$/;
