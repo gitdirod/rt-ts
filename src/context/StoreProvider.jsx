@@ -110,39 +110,80 @@ const StoreProvider = memo(({children}) => {
     // };
 
       // Agregar todos los productos visibles
+
     const handleAddAllProducts = (orderBuy, products) => {
         const productosActuales = [...orderBuy];
         const nuevos = [];
-
+        
         products?.forEach((p) => {
-        const existe = productosActuales.find((o) => o.id === p.id);
-        if (!existe) {
-            nuevos.push({ ...p, quantity: 1 });
-        }
+            const existe = productosActuales.find((o) => o.product_id === p.id);
+            if (!existe) {
+            nuevos.push({
+                product_id: p.id,
+                price: p.price || 0,
+                quantity: 1,
+                product: p
+            });
+            }
         });
+        
         const actualizados = [...productosActuales, ...nuevos];
         setOrderBuy(actualizados);
         localStorage.setItem('productsBuy', JSON.stringify(actualizados));
         console.log('Todos los productos visibles fueron agregados');
-    }
+    };
+      
+    // const handleAddAllProducts = (orderBuy, products) => {
+    //     const productosActuales = [...orderBuy];
+    //     const nuevos = [];
+
+    //     products?.forEach((p) => {
+    //     const existe = productosActuales.find((o) => o.id === p.id);
+    //     if (!existe) {
+    //         nuevos.push({ ...p, quantity: 1 });
+    //     }
+    //     });
+    //     const actualizados = [...productosActuales, ...nuevos];
+    //     setOrderBuy(actualizados);
+    //     localStorage.setItem('productsBuy', JSON.stringify(actualizados));
+    //     console.log('Todos los productos visibles fueron agregados');
+    // }
 
       // Eliminar todos los productos visibles
+
     const handleRemoveAllProducts = (orderBuy, products) => {
         const idsAEliminar = new Set(products.map(p => p.id));
-        const actualizados = orderBuy.filter(p => !idsAEliminar.has(p.id));
+        const actualizados = orderBuy.filter(p => !idsAEliminar.has(p.product_id));
         setOrderBuy(actualizados);
         localStorage.setItem('productsBuy', JSON.stringify(actualizados));
         console.log('Todos los productos visibles fueron eliminados');
     };
+      
+    // const handleRemoveAllProducts = (orderBuy, products) => {
+    //     const idsAEliminar = new Set(products.map(p => p.id));
+    //     const actualizados = orderBuy.filter(p => !idsAEliminar.has(p.id));
+    //     setOrderBuy(actualizados);
+    //     localStorage.setItem('productsBuy', JSON.stringify(actualizados));
+    //     console.log('Todos los productos visibles fueron eliminados');
+    // };
 
-    const handleRemoveProductBuy = id => {
-        if(orderBuy.some( orderState => orderState.id === id)){
-            const OrderUpdated = orderBuy.filter(orderState => orderState.id !== id)
-            setOrderBuy(OrderUpdated)
-            localStorage.setItem('productsBuy', JSON.stringify(OrderUpdated))
-            toastMessage('Producto eliminado de lista!', false)
+    const handleRemoveProductBuy = (productId) => {
+        if (orderBuy.some(orderState => orderState.product_id === productId)) {
+          const updatedOrder = orderBuy.filter(orderState => orderState.product_id !== productId);
+          setOrderBuy(updatedOrder);
+          localStorage.setItem('productsBuy', JSON.stringify(updatedOrder));
+          toastMessage('Producto eliminado de lista!', false);
         }
-    }
+    };
+      
+    // const handleRemoveProductBuy = id => {
+    //     if(orderBuy.some( orderState => orderState.id === id)){
+    //         const OrderUpdated = orderBuy.filter(orderState => orderState.id !== id)
+    //         setOrderBuy(OrderUpdated)
+    //         localStorage.setItem('productsBuy', JSON.stringify(OrderUpdated))
+    //         toastMessage('Producto eliminado de lista!', false)
+    //     }
+    // }
 
     const handleRemoveProduct = (id, silent = false) => {
         const newOrder = order.filter(p => p.id !== id);
