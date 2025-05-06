@@ -70,21 +70,44 @@ const StoreProvider = memo(({children}) => {
         setOrderBuy(updated);
         localStorage.setItem('productsBuy', JSON.stringify(updated));
     };
-    const handleAddBuy = ({ ...product }, notify = true) => {
-        // Verificar si ya existe el producto en la lista
-        const exists = orderBuy.some(orderState => orderState.id === product.id);
-        
+
+    const handleAddBuy = (product, notify = true) => {
+        const exists = orderBuy.some(orderState => orderState.product_id === product.id);
+      
         if (exists) {
-            if (notify) console.log('Este producto ya fue agregado');
-            return; // no hace nada si ya está
+          if (notify) console.log('Este producto ya fue agregado');
+          return;
         }
-        
-        const finalOrder = [...orderBuy, product];
+      
+        const newItem = {
+          product_id: product.id,
+          product: product, // objeto completo para mostrar código, nombre, etc.
+          quantity: 1,
+          price: product.price ?? 0
+        };
+      
+        const finalOrder = [...orderBuy, newItem];
         setOrderBuy(finalOrder);
         localStorage.setItem('productsBuy', JSON.stringify(finalOrder));
-        
+      
         if (notify) console.log('Agregado al carrito');
     };
+      
+    // const handleAddBuy = ({ ...product }, notify = true) => {
+    //     // Verificar si ya existe el producto en la lista
+    //     const exists = orderBuy.some(orderState => orderState.id === product.id);
+        
+    //     if (exists) {
+    //         if (notify) console.log('Este producto ya fue agregado');
+    //         return; // no hace nada si ya está
+    //     }
+        
+    //     const finalOrder = [...orderBuy, product];
+    //     setOrderBuy(finalOrder);
+    //     localStorage.setItem('productsBuy', JSON.stringify(finalOrder));
+        
+    //     if (notify) console.log('Agregado al carrito');
+    // };
 
       // Agregar todos los productos visibles
     const handleAddAllProducts = (orderBuy, products) => {

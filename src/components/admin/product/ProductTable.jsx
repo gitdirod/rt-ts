@@ -19,7 +19,7 @@ export default function ProductTable({
   optionComponent
 }) {
 
-  const selectedIds = selectedProducts.map(p => p.id);
+  const selectedIds = selectedProducts.map(p => p.product_id);
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
