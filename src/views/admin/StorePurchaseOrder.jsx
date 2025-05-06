@@ -115,6 +115,24 @@ export default function StoreUpdatePurchaseOrder() {
   
     console.log('Todos los productos visibles fueron eliminados');
   };
+
+  const handleUpdateProduct = (productId, field, value, storageKey = 'purchaseOrderProducts') => {
+    const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
+  
+    const updated = currentProducts.map(p => {
+      if (p.product_id === productId) {
+        return { ...p, [field]: value };
+      }
+      return p;
+    });
+  
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  
+    if (storageKey === 'purchaseOrderProducts') {
+      setOrderBuy(updated);
+    }
+  };
+  
   
   
 
@@ -151,6 +169,9 @@ export default function StoreUpdatePurchaseOrder() {
             }
             {tabIndex === 1 && 
               <PasoUnidades 
+              purchaseOrder={orderBuy}
+              handleUpdateProduct={handleUpdateProduct}
+              handleRemoveProductBuy={handleRemoveProductBuy}
               />
             }
             {tabIndex === 2 && 
