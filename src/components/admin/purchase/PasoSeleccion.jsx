@@ -7,7 +7,7 @@ import ProductFilters from '../product/ProductFilters';
 import useStore from '/src/hooks/useStore';
 import SelectActionMode from './SelectActionMode';
 
-export default function ProductPage() {
+export default function ProductPage({purchaseOrder={}}) {
 
   // Filtros
   const [debouncedFilterName, setDebouncedFilterName] = useState('');
@@ -32,7 +32,7 @@ export default function ProductPage() {
   });
 
   const {
-    orderBuy,
+    // orderBuy,
     handleAddBuy,
     handleRemoveProductBuy,
     handleAddAllProducts,
@@ -100,13 +100,13 @@ export default function ProductPage() {
           <SelectActionMode
             mode={actionMode}
             onChange={setActionMode}
-            onAddAll={()=>handleAddAllProducts(orderBuy, products)}
-            onRemoveAll={()=>handleRemoveAllProducts(orderBuy,products)}
+            onAddAll={()=>handleAddAllProducts(purchaseOrder, products)}
+            onRemoveAll={()=>handleRemoveAllProducts(purchaseOrder,products)}
           />
         )}
         products={products}
         totalRecords={totalRecords}
-        selectedProducts={orderBuy}
+        selectedProducts={purchaseOrder}
         page={safePage}
         rowsPerPage={rowsPerPage}
         handleChangePage={handleChangePage}

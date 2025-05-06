@@ -28,6 +28,7 @@ import PasoSeleccion from '/src/components/admin/purchase/PasoSeleccion';
 
 export default function UpdatePurchaseOrder() {
 
+ 
     const {orderBuy}= useStore()
     const { itemId: orderId } = useParams();
     
@@ -93,7 +94,7 @@ export default function UpdatePurchaseOrder() {
         </Box>
         {/* Contenido según el tab */}
         <Box sx={{ flexGrow: 1, pt: 1 }}>
-            {tabIndex === 0 && <PasoSeleccion />}
+            {tabIndex === 0 && <PasoSeleccion purchaseOrder={purchaseOrder?.products}/>}
             {tabIndex === 1 && <PasoUnidades />}
             {tabIndex === 2 && <PasoResumen />}
         </Box>

@@ -53,7 +53,7 @@ export default function StorePurchaseOrder() {
 
         {/* Contenido según el tab */}
         <Box sx={{ flexGrow: 1, pt: 1 }}>
-            {tabIndex === 0 && <PasoSeleccion />}
+            {tabIndex === 0 && <PasoSeleccion purchaseOrder={orderBuy} />}
             {tabIndex === 1 && <PasoUnidades />}
             {tabIndex === 2 && <PasoResumen />}
         </Box>
