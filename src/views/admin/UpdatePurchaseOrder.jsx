@@ -2,7 +2,9 @@ import {
   Box,
   Typography,
   Chip,
-  Button
+  Button,
+  Tabs,
+  Tab
 } from '@mui/material';
 
 import Stack from '@mui/material/Stack';
@@ -14,6 +16,10 @@ import SimpleTablePurchaseResume from '/src/components/admin/purchase/SimpleTabl
 import { PurchaseOrderService } from '/src/services/PurchaseOrderService';
 import { useEffect, useState } from 'react';
 import IsLoading from '/src/components/store/common/IsLoading';
+import ShoppingCartCheckoutOutlinedIcon from '@mui/icons-material/ShoppingCartCheckoutOutlined';
+import PasoUnidades from '/src/components/admin/purchase/PasoUnidades';
+import PasoResumen from '/src/components/admin/purchase/PasoResumen';
+import PasoSeleccion from '/src/components/admin/purchase/PasoSeleccion';
 
 // export async function loader({ params }){
 //     return params.itemId
@@ -45,6 +51,10 @@ export default function UpdatePurchaseOrder() {
         setIsLoading(false);
     };
 
+    const [tabIndex, setTabIndex] = useState(0);
+    const handleChangeTab = (event, newValue) => {
+      setTabIndex(newValue);
+    };
 
     useEffect(() => {
     if (orderId) {
@@ -59,11 +69,19 @@ export default function UpdatePurchaseOrder() {
     <Box>
         <Box sx={{display:'flex', mt:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
             <Stack direction="row" spacing={2} alignItems="center">
-                <AddShoppingCartOutlinedIcon color="primary"/>
+                <ShoppingCartCheckoutOutlinedIcon color="primary"/>
                 <Typography variant="h5" fontWeight="bold">
-                Ingreso de unidades
+                Editar Ingreso "Orden {orderId}"
                 </Typography>
                 <Chip label={purchaseOrder?.products.length || 0} color="primary" />
+            </Stack>
+            <Stack direction="row" gap={2} alignItems="center">
+                {/* Aquí van los Tabs */}
+                <Tabs value={tabIndex} onChange={handleChangeTab} textColor="primary" indicatorColor="primary">
+                    <Tab label="Seleccionar" />
+                    <Tab label="Unidades" />
+                    <Tab label="Resumen" />
+                </Tabs>
             </Stack>
             <Button variant="outlined" color="primary" startIcon={<EditOutlinedIcon />} 
                 onClick={() => {
@@ -73,11 +91,17 @@ export default function UpdatePurchaseOrder() {
             Editar
             </Button>
         </Box>
-
         {/* Contenido según el tab */}
         <Box sx={{ flexGrow: 1, pt: 1 }}>
-            <SimpleTablePurchaseResume products={purchaseOrder?.products} />
+            {tabIndex === 0 && <PasoSeleccion />}
+            {tabIndex === 1 && <PasoUnidades />}
+            {tabIndex === 2 && <PasoResumen />}
         </Box>
+
+        {/* Contenido según el tab */}
+        {/* <Box sx={{ flexGrow: 1, pt: 1 }}>
+            <SimpleTablePurchaseResume products={purchaseOrder?.products} />
+        </Box> */}
       
     </Box>
   );

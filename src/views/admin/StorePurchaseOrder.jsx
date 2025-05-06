@@ -16,14 +16,14 @@ import PasoUnidades from '/src/components/admin/purchase/PasoUnidades';
 import PasoResumen from '/src/components/admin/purchase/PasoResumen';
 import useStore from '/src/hooks/useStore';
 
-export default function MiTablaConPaginacion() {
+export default function StorePurchaseOrder() {
  
 
 
-  const [tabIndex, setTabIndex] = useState(0);
-
+  
   const {orderBuy}= useStore()
-
+  
+  const [tabIndex, setTabIndex] = useState(0);
   const handleChangeTab = (event, newValue) => {
     setTabIndex(newValue);
   };
