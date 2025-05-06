@@ -88,7 +88,12 @@ export default function SidebarAdmin({ collapsed, onToggle }) {
               <Box key={section.id}>
                 <ListItemButton onClick={() => toggleSection(section.id)} selected={isActive}>
                   <ListItemIcon>{iconMap[section.icon]}</ListItemIcon>
-                  {!collapsed && <ListItemText primary={section.name} />}
+                  {!collapsed && 
+                  <ListItemText primary={section.name} slotProps={{
+                    primary: {
+                      variant: 'body2',
+                    },
+                  }} />}
                   {!collapsed && (isOpen ? <ExpandLess /> : <ExpandMoreIcon />)}
                 </ListItemButton>
 
@@ -104,7 +109,16 @@ export default function SidebarAdmin({ collapsed, onToggle }) {
                           selected={location.pathname === view.url}
                           sx={{ pl: 4 }}
                         >
-                          <ListItemText primary={view.name} />
+                          <ListItemText
+                            primary={view.name}
+                            slotProps={{
+                              primary: {
+                                variant: 'body2',
+                              },
+                            }}
+                          />
+
+
                         </ListItemButton>
                       ))}
                     </List>
