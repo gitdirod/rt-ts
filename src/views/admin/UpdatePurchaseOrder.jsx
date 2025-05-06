@@ -38,7 +38,6 @@ export default function UpdatePurchaseOrder() {
     const getOrder = async (id) => {
         const { data, error } = await PurchaseOrderService.fetchById(id);
         if (data.data) {
-            console.log(data.data)
         setPurchaseOrder(data.data);
         } else {
         console.error("Error al cargar la ordern", error);
