@@ -72,5 +72,6 @@ export const removeProductsFromPurchaseOrder = (products, key = 'purchaseOrderPr
   
 export const clearPurchaseOrder = (key = 'purchaseOrderProducts') => {
     localStorage.removeItem(key);
+    return [];
 };
   

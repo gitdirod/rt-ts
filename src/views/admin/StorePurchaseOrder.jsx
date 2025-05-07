@@ -18,7 +18,9 @@ import {
   addProductToPurchaseOrder, 
   addProductsToPurchaseOrder,
   removeProductFromPurchaseOrder,
-  updateProductInPurchaseOrder
+  removeProductsFromPurchaseOrder,
+  updateProductInPurchaseOrder,
+  clearPurchaseOrder
 } from '/src/features/purchaseOrders/localStorage';
 
 
@@ -41,89 +43,6 @@ export default function StorePurchaseOrder() {
   const initialOrderBuy = getPurchaseOrderProductsFromStorage(); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
   const [orderBuy, setOrderBuy] = useState(initialOrderBuy);
 
-  // const addProductToPurchaseOrder = (product, storageKey = 'purchaseOrderProducts') => {
-  //   const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
-  //   const exists = currentProducts.some(item => item.product_id === product.id);
-  
-  //   if (exists) {
-  //     console.log(currentProducts)
-  //     return currentProducts;
-  //   }
-  
-  //   const newItem = {
-  //     product_id: product.id,
-  //     product: product,
-  //     quantity: 1,
-  //     price: product.price ?? 0
-  //   };
-  
-  //   const updated = [...currentProducts, newItem];
-  //   localStorage.setItem(storageKey, JSON.stringify(updated));
-  
-  //   if (storageKey === 'purchaseOrderProducts') setOrderBuy(updated);
-  
-  // };
-
-  // const removeProductFromPurchaseOrder = (productId, storageKey = 'purchaseOrderProducts') => {
-  //   const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
-  //   const exists = currentProducts.some(item => item.product_id === productId);
-  
-  //   if (!exists) return;
-  
-  //   const updated = currentProducts.filter(item => item.product_id !== productId);
-  //   localStorage.setItem(storageKey, JSON.stringify(updated));
-  
-  //   // Solo actualiza el estado global si es la orden activa
-  //   if (storageKey === 'purchaseOrderProducts') {
-  //     setOrderBuy(updated);
-  //   }
-  
-  //   console.log('Producto eliminado de lista!');
-  // };
-
-  // const handleUpdateProduct = (productId, field, value, storageKey = 'purchaseOrderProducts') => {
-  //   const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
-  
-  //   const updated = currentProducts.map(p => {
-  //     if (p.product_id === productId) {
-  //       return { ...p, [field]: value };
-  //     }
-  //     return p;
-  //   });
-  
-  //   localStorage.setItem(storageKey, JSON.stringify(updated));
-  
-  //   if (storageKey === 'purchaseOrderProducts') {
-  //     setOrderBuy(updated);
-  //   }
-  // };
-
-  // const handleAddAllProducts = (products, storageKey = 'purchaseOrderProducts') => {
-  //   const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
-  //   const nuevos = [];
-  
-  //   products?.forEach((p) => {
-  //     const existe = currentProducts.some((o) => o.product_id === p.id);
-  //     if (!existe) {
-  //       nuevos.push({
-  //         product_id: p.id,
-  //         price: p.price || 0,
-  //         quantity: 1,
-  //         product: p,
-  //       });
-  //     }
-  //   });
-  
-  //   const actualizados = [...currentProducts, ...nuevos];
-  //   localStorage.setItem(storageKey, JSON.stringify(actualizados));
-  
-  //   // Solo actualizar el estado global si es el storage principal
-  //   if (storageKey === 'purchaseOrderProducts') {
-  //     setOrderBuy(actualizados);
-  //   }
-  
-  //   console.log('Todos los productos visibles fueron agregados');
-  // };
 
   const addProduct=(product, key = 'purchaseOrderProducts')=>{
     const updated = addProductToPurchaseOrder(product, key)
@@ -145,36 +64,16 @@ export default function StorePurchaseOrder() {
     setOrderBuy(updated)
   }
 
-  
+  const removeProducts=(productId, key = 'purchaseOrderProducts')=>{
+    const updated = removeProductsFromPurchaseOrder(productId, key)
+    setOrderBuy(updated)
+  }
 
-
-  
-
-
-  const handleRemoveAllProducts = (products, storageKey = 'purchaseOrderProducts') => {
-    const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
-    const idsAEliminar = new Set(products.map(p => p.id));
-  
-    const actualizados = currentProducts.filter(p => !idsAEliminar.has(p.product_id));
-    localStorage.setItem(storageKey, JSON.stringify(actualizados));
-  
-    if (storageKey === 'purchaseOrderProducts') {
-      setOrderBuy(actualizados);
-    }
-  
-    console.log('Todos los productos visibles fueron eliminados');
+    const clearAll = (storageKey = 'purchaseOrderProducts') => {
+      const update = clearPurchaseOrder(storageKey)
+      setOrderBuy(update)
   };
-
-  const clearPurchaseOrder = (storageKey = 'purchaseOrderProducts') => {
-    localStorage.removeItem(storageKey);
-  
-    if (storageKey === 'purchaseOrderProducts') {
-      setOrderBuy([]);
-    }
-  };
-
-
-  
+ 
 
   useEffect(()=>{
       const newSubtotalBuy = orderBuy?.reduce((subtotal, product) => (product.price * product.quantity) + subtotal, 0)
@@ -210,7 +109,7 @@ export default function StorePurchaseOrder() {
                 addProductToPurchaseOrder={addProduct}
                 handleAddAllProducts={addProducts}
                 removeProductFromPurchaseOrder={removeProduct}
-                handleRemoveAllProducts={handleRemoveAllProducts}
+                handleRemoveAllProducts={removeProducts}
               />
             }
             {tabIndex === 1 && 
@@ -224,7 +123,7 @@ export default function StorePurchaseOrder() {
               <PasoResumen 
                 purchaseOrder={orderBuy}
                 subtotalBuy={subtotalBuy}
-                clearPurchaseOrder={clearPurchaseOrder}
+                clearPurchaseOrder={clearAll}
               />
             }
         </Box>
