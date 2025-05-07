@@ -7,15 +7,19 @@ import { formatearDinero2 } from '/src/helpers';
 import { PurchaseOrderService } from '/src/services/PurchaseOrderService';
 import { useNavigate } from 'react-router-dom';
 
-export default function PasoResumen({purchaseOrderProducts, subtotalBuy, clearPurchaseOrder}) {
+export default function PasoResumen({purchaseOrder, purchaseOrderProducts, subtotalBuy, clearPurchaseOrder}) {
 
   const navigate = useNavigate()
-  const [envoice, setEnvoice] = useState('');
+  const [envoice, setEnvoice] = useState(purchaseOrder?.envoice || '');
   const [errores, setErrores] = useState({});
 
   const handlePurchaseOrder = async (e) =>{
-    
-    const newOrderBuy = {
+
+    const isUpdate = purchaseOrder?.id != null;
+
+    const _purchaseOrder = {
+      _method: isUpdate ? 'PUT' : 'POST',
+      id: purchaseOrder?.id,
       subtotal: formatearDinero2(subtotalBuy),
       total: formatearDinero2(subtotalBuy * 1.15),
       envoice: envoice,
@@ -27,8 +31,11 @@ export default function PasoResumen({purchaseOrderProducts, subtotalBuy, clearPu
           }
       ))
     }
+    
+    const response = isUpdate 
+    ? await PurchaseOrderService.update(_purchaseOrder.id, _purchaseOrder)
+    : await PurchaseOrderService.create(_purchaseOrder)
 
-    const response = await PurchaseOrderService.create(newOrderBuy)
     if (response.success) {
       setErrores({});
       clearPurchaseOrder()

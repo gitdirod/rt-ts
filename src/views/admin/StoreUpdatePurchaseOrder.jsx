@@ -42,9 +42,11 @@ export default function StoreUpdatePurchaseOrder() {
   };
 
 
-  const [subtotalBuy, setSubtotalBuy] = useState(0)
   const initialPurchaseOrderProducts = getPurchaseOrderProductsFromStorage(localKey); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
+  
+  const [purchaseOrder, setPurchaseOrder] = useState({})
   const [purchaseOrderProducts, setPurchaseOrderProducts] = useState(initialPurchaseOrderProducts);
+  const [purchaseOrderSubtotal, setPurchaseOrderSubtotal] = useState(0)
 
 
   const addProduct=(product, key = localKey)=>{
@@ -81,6 +83,7 @@ export default function StoreUpdatePurchaseOrder() {
   const getPurchaseOrder = async (id) => {
     const { data, error } = await PurchaseOrderService.fetchById(id);
     if (data.data) {
+      setPurchaseOrder(data.data)
       setPurchaseOrderProducts(data.data.products);
       savePurchaseOrderProductsToStorage(data.data.products, localKey)
     } else {
@@ -92,7 +95,7 @@ export default function StoreUpdatePurchaseOrder() {
 
   useEffect(()=>{
       const newSubtotalBuy = purchaseOrderProducts?.reduce((subtotal, product) => (product.price * product.quantity) + subtotal, 0)
-      setSubtotalBuy(newSubtotalBuy)
+      setPurchaseOrderSubtotal(newSubtotalBuy)
   }, [purchaseOrderProducts])
 
   useEffect(() => {
@@ -110,7 +113,7 @@ export default function StoreUpdatePurchaseOrder() {
             <Stack direction="row" spacing={2} alignItems="center">
                 <AddShoppingCartOutlinedIcon color="primary"/>
                 <Typography variant="h5" fontWeight="bold">
-                Ingreso de unidades
+                {orderId ? `Editar Orden de compra ${orderId}`:'Ingreso de unidades'}
                 </Typography>
                 <Chip label={purchaseOrderProducts.length || 0} color="primary" />
             </Stack>
@@ -144,8 +147,9 @@ export default function StoreUpdatePurchaseOrder() {
             }
             {tabIndex === 2 && 
               <PasoResumen 
+                purchaseOrder={purchaseOrder}
                 purchaseOrderProducts={purchaseOrderProducts}
-                subtotalBuy={subtotalBuy}
+                subtotalBuy={purchaseOrderSubtotal}
                 clearPurchaseOrder={clearAll}
               />
             }
