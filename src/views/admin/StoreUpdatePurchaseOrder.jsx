@@ -43,45 +43,45 @@ export default function StoreUpdatePurchaseOrder() {
 
 
   const [subtotalBuy, setSubtotalBuy] = useState(0)
-  const initialOrderBuy = getPurchaseOrderProductsFromStorage(localKey); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
-  const [orderBuy, setOrderBuy] = useState(initialOrderBuy);
+  const initialPurchaseOrderProducts = getPurchaseOrderProductsFromStorage(localKey); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
+  const [purchaseOrderProducts, setPurchaseOrderProducts] = useState(initialPurchaseOrderProducts);
 
 
   const addProduct=(product, key = localKey)=>{
     const updated = addProductToPurchaseOrder(product, key)
-    setOrderBuy(updated)
+    setPurchaseOrderProducts(updated)
   }
 
   const addProducts=(product, key = localKey)=>{
     const updated = addProductsToPurchaseOrder(product, key)
-    setOrderBuy(updated)
+    setPurchaseOrderProducts(updated)
   }
 
   const updateProduct =(productId, field, value, key = localKey)=>{
     const updated = updateProductInPurchaseOrder(productId, field, value, key)
-    setOrderBuy(updated)
+    setPurchaseOrderProducts(updated)
   }
 
   const removeProduct=(productId, key = localKey)=>{
     const updated = removeProductFromPurchaseOrder(productId, key)
-    setOrderBuy(updated)
+    setPurchaseOrderProducts(updated)
   }
 
   const removeProducts=(productId, key = localKey)=>{
     const updated = removeProductsFromPurchaseOrder(productId, key)
-    setOrderBuy(updated)
+    setPurchaseOrderProducts(updated)
   }
 
-    const clearAll = (storageKey = localKey) => {
-      const update = clearPurchaseOrder(storageKey)
-      setOrderBuy(update)
+  const clearAll = (storageKey = localKey) => {
+    const update = clearPurchaseOrder(storageKey)
+    setPurchaseOrderProducts(update)
   };
 
   // Función para obtener el producto por ID
-  const getOrder = async (id) => {
+  const getPurchaseOrder = async (id) => {
     const { data, error } = await PurchaseOrderService.fetchById(id);
     if (data.data) {
-      setOrderBuy(data.data.products);
+      setPurchaseOrderProducts(data.data.products);
       savePurchaseOrderProductsToStorage(data.data.products, localKey)
     } else {
     console.error("Error al cargar la ordern", error);
@@ -91,18 +91,18 @@ export default function StoreUpdatePurchaseOrder() {
  
 
   useEffect(()=>{
-      const newSubtotalBuy = orderBuy?.reduce((subtotal, product) => (product.price * product.quantity) + subtotal, 0)
+      const newSubtotalBuy = purchaseOrderProducts?.reduce((subtotal, product) => (product.price * product.quantity) + subtotal, 0)
       setSubtotalBuy(newSubtotalBuy)
-  }, [orderBuy])
+  }, [purchaseOrderProducts])
 
   useEffect(() => {
     if (orderId) {
-      getOrder(orderId);  // Obtener el producto cuando se monta el componente
+      getPurchaseOrder(orderId);  // Obtener el producto cuando se monta el componente
     }
   }, [orderId]);
 
   
-  if(isLoading || orderBuy === undefined || orderBuy === null || orderBuy?.length < 0 ) return <IsLoading/>
+  if(isLoading || purchaseOrderProducts === undefined || purchaseOrderProducts === null || purchaseOrderProducts?.length < 0 ) return <IsLoading/>
 
   return (
     <div className="overflow-y-hidden flex flex-col flex-1 ">
@@ -112,7 +112,7 @@ export default function StoreUpdatePurchaseOrder() {
                 <Typography variant="h5" fontWeight="bold">
                 Ingreso de unidades
                 </Typography>
-                <Chip label={orderBuy.length || 0} color="primary" />
+                <Chip label={purchaseOrderProducts.length || 0} color="primary" />
             </Stack>
             <Stack direction="row" gap={2} alignItems="center">
                 {/* Aquí van los Tabs */}
@@ -128,7 +128,7 @@ export default function StoreUpdatePurchaseOrder() {
         <Box sx={{ flexGrow: 1, pt: 1 }}>
             {tabIndex === 0 && 
               <PasoSeleccion 
-                purchaseOrderProducts={orderBuy} 
+                purchaseOrderProducts={purchaseOrderProducts} 
                 addProductToPurchaseOrder={addProduct}
                 handleAddAllProducts={addProducts}
                 removeProductFromPurchaseOrder={removeProduct}
@@ -137,14 +137,14 @@ export default function StoreUpdatePurchaseOrder() {
             }
             {tabIndex === 1 && 
               <PasoUnidades 
-                purchaseOrderProducts={orderBuy}
+                purchaseOrderProducts={purchaseOrderProducts}
                 handleUpdateProduct={updateProduct}
                 removeProductFromPurchaseOrder={removeProduct}
               />
             }
             {tabIndex === 2 && 
               <PasoResumen 
-                purchaseOrderProducts={orderBuy}
+                purchaseOrderProducts={purchaseOrderProducts}
                 subtotalBuy={subtotalBuy}
                 clearPurchaseOrder={clearAll}
               />
