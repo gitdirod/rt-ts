@@ -8,9 +8,9 @@ import SelectActionMode from './SelectActionMode';
 
 export default function ProductPage({
   purchaseOrder=[],
-  addPurchaseOrderProduct,
+  addProductToPurchaseOrder,
   handleAddAllProducts,
-  handleRemoveProductBuy,
+  removeProductFromPurchaseOrder,
   handleRemoveAllProducts
 }) {
 
@@ -40,9 +40,9 @@ export default function ProductPage({
 
   const handleProductClick = (prod) => {
     if (actionMode === 'add') {
-      addPurchaseOrderProduct({ ...prod, quantity: 1 },true,'purchaseOrderProducts');
+      addProductToPurchaseOrder({ ...prod, quantity: 1 },'purchaseOrderProducts');
     } else if (actionMode === 'remove') {
-      handleRemoveProductBuy(prod.id);
+      removeProductFromPurchaseOrder(prod.id);
     }
   };
 

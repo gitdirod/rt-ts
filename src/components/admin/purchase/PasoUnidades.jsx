@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import PurchaseOrderTableUnits from './PurchaseOrderTableUnits'
 import ProductFilters from '../product/ProductFilters';
 
-export default function PasoUnidades({purchaseOrder, handleUpdateProduct, handleRemoveProductBuy}) {
+export default function PasoUnidades({purchaseOrder, handleUpdateProduct, removeProductFromPurchaseOrder}) {
 
   // Filtros locales
   const [filterName, setFilterName] = useState('');
@@ -63,7 +63,7 @@ export default function PasoUnidades({purchaseOrder, handleUpdateProduct, handle
       rowsPerPage={rowsPerPage}
       handleUpdateProductQuantity={handleUpdateProductQuantity}
       handleUpdateProductPrice={handleUpdateProductPrice}
-      handleRemoveProductBuy={handleRemoveProductBuy}
+      handleRemoveProductBuy={removeProductFromPurchaseOrder}
       onRowsPerPageChange={onRowsPerPageChange}
       onPageChange={onPageChange}
       searchComponente={(

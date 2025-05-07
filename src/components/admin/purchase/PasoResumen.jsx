@@ -7,7 +7,7 @@ import { formatearDinero2 } from '/src/helpers';
 import { PurchaseOrderService } from '/src/services/PurchaseOrderService';
 import { useNavigate } from 'react-router-dom';
 
-export default function PasoResumen({purchaseOrder, subtotalBuy, handleClearOrderBuy}) {
+export default function PasoResumen({purchaseOrder, subtotalBuy, clearPurchaseOrder}) {
 
   const navigate = useNavigate()
   const [envoice, setEnvoice] = useState('');
@@ -31,7 +31,7 @@ export default function PasoResumen({purchaseOrder, subtotalBuy, handleClearOrde
     const response = await PurchaseOrderService.create(newOrderBuy)
     if (response.success) {
       setErrores({});
-      handleClearOrderBuy()
+      clearPurchaseOrder()
       navigate('/admin/purchases/purchases')
       
     } else {

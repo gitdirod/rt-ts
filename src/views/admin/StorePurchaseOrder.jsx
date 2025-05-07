@@ -14,6 +14,13 @@ import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutl
 import PasoSeleccion from '/src/components/admin/purchase/PasoSeleccion';
 import PasoUnidades from '/src/components/admin/purchase/PasoUnidades';
 import PasoResumen from '/src/components/admin/purchase/PasoResumen';
+import { 
+  addProductToPurchaseOrder, 
+  addProductsToPurchaseOrder,
+  removeProductFromPurchaseOrder,
+  updateProductInPurchaseOrder
+} from '/src/features/purchaseOrders/localStorage';
+
 
 export default function StorePurchaseOrder() {
  
@@ -34,73 +41,115 @@ export default function StorePurchaseOrder() {
   const initialOrderBuy = getPurchaseOrderProductsFromStorage(); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
   const [orderBuy, setOrderBuy] = useState(initialOrderBuy);
 
-  const addPurchaseOrderProduct = (product, notify = true, storageKey = 'purchaseOrderProducts') => {
-    const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
-    const exists = currentProducts.some(item => item.product_id === product.id);
+  // const addProductToPurchaseOrder = (product, storageKey = 'purchaseOrderProducts') => {
+  //   const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
+  //   const exists = currentProducts.some(item => item.product_id === product.id);
   
-    if (exists) {
-      if (notify) console.log('Este producto ya fue agregado');
-      return;
-    }
+  //   if (exists) {
+  //     console.log(currentProducts)
+  //     return currentProducts;
+  //   }
   
-    const newItem = {
-      product_id: product.id,
-      product: product,
-      quantity: 1,
-      price: product.price ?? 0
-    };
+  //   const newItem = {
+  //     product_id: product.id,
+  //     product: product,
+  //     quantity: 1,
+  //     price: product.price ?? 0
+  //   };
   
-    const updated = [...currentProducts, newItem];
-    localStorage.setItem(storageKey, JSON.stringify(updated));
+  //   const updated = [...currentProducts, newItem];
+  //   localStorage.setItem(storageKey, JSON.stringify(updated));
   
-    if (storageKey === 'purchaseOrderProducts') setOrderBuy(updated);
+  //   if (storageKey === 'purchaseOrderProducts') setOrderBuy(updated);
   
-    if (notify) console.log('Agregado al carrito');
-  };
+  // };
 
-  const handleAddAllProducts = (products, storageKey = 'purchaseOrderProducts') => {
-    const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
-    const nuevos = [];
+  // const removeProductFromPurchaseOrder = (productId, storageKey = 'purchaseOrderProducts') => {
+  //   const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
+  //   const exists = currentProducts.some(item => item.product_id === productId);
   
-    products?.forEach((p) => {
-      const existe = currentProducts.some((o) => o.product_id === p.id);
-      if (!existe) {
-        nuevos.push({
-          product_id: p.id,
-          price: p.price || 0,
-          quantity: 1,
-          product: p,
-        });
-      }
-    });
+  //   if (!exists) return;
   
-    const actualizados = [...currentProducts, ...nuevos];
-    localStorage.setItem(storageKey, JSON.stringify(actualizados));
+  //   const updated = currentProducts.filter(item => item.product_id !== productId);
+  //   localStorage.setItem(storageKey, JSON.stringify(updated));
   
-    // Solo actualizar el estado global si es el storage principal
-    if (storageKey === 'purchaseOrderProducts') {
-      setOrderBuy(actualizados);
-    }
+  //   // Solo actualiza el estado global si es la orden activa
+  //   if (storageKey === 'purchaseOrderProducts') {
+  //     setOrderBuy(updated);
+  //   }
   
-    console.log('Todos los productos visibles fueron agregados');
-  };
+  //   console.log('Producto eliminado de lista!');
+  // };
+
+  // const handleUpdateProduct = (productId, field, value, storageKey = 'purchaseOrderProducts') => {
+  //   const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
   
-  const handleRemoveProductBuy = (productId, storageKey = 'purchaseOrderProducts') => {
-    const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
-    const exists = currentProducts.some(item => item.product_id === productId);
+  //   const updated = currentProducts.map(p => {
+  //     if (p.product_id === productId) {
+  //       return { ...p, [field]: value };
+  //     }
+  //     return p;
+  //   });
   
-    if (!exists) return;
+  //   localStorage.setItem(storageKey, JSON.stringify(updated));
   
-    const updated = currentProducts.filter(item => item.product_id !== productId);
-    localStorage.setItem(storageKey, JSON.stringify(updated));
+  //   if (storageKey === 'purchaseOrderProducts') {
+  //     setOrderBuy(updated);
+  //   }
+  // };
+
+  // const handleAddAllProducts = (products, storageKey = 'purchaseOrderProducts') => {
+  //   const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
+  //   const nuevos = [];
   
-    // Solo actualiza el estado global si es la orden activa
-    if (storageKey === 'purchaseOrderProducts') {
-      setOrderBuy(updated);
-    }
+  //   products?.forEach((p) => {
+  //     const existe = currentProducts.some((o) => o.product_id === p.id);
+  //     if (!existe) {
+  //       nuevos.push({
+  //         product_id: p.id,
+  //         price: p.price || 0,
+  //         quantity: 1,
+  //         product: p,
+  //       });
+  //     }
+  //   });
   
-    console.log('Producto eliminado de lista!');
-  };
+  //   const actualizados = [...currentProducts, ...nuevos];
+  //   localStorage.setItem(storageKey, JSON.stringify(actualizados));
+  
+  //   // Solo actualizar el estado global si es el storage principal
+  //   if (storageKey === 'purchaseOrderProducts') {
+  //     setOrderBuy(actualizados);
+  //   }
+  
+  //   console.log('Todos los productos visibles fueron agregados');
+  // };
+
+  const addProduct=(product, key = 'purchaseOrderProducts')=>{
+    const updated = addProductToPurchaseOrder(product, key)
+    setOrderBuy(updated)
+  }
+
+  const addProducts=(product, key = 'purchaseOrderProducts')=>{
+    const updated = addProductsToPurchaseOrder(product, key)
+    setOrderBuy(updated)
+  }
+
+  const updateProduct =(productId, field, value, key = 'purchaseOrderProducts')=>{
+    const updated = updateProductInPurchaseOrder(productId, field, value, key)
+    setOrderBuy(updated)
+  }
+
+  const removeProduct=(productId, key = 'purchaseOrderProducts')=>{
+    const updated = removeProductFromPurchaseOrder(productId, key)
+    setOrderBuy(updated)
+  }
+
+  
+
+
+  
+
 
   const handleRemoveAllProducts = (products, storageKey = 'purchaseOrderProducts') => {
     const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
@@ -116,31 +165,16 @@ export default function StorePurchaseOrder() {
     console.log('Todos los productos visibles fueron eliminados');
   };
 
-  const handleClearOrderBuy = (storageKey = 'purchaseOrderProducts') => {
+  const clearPurchaseOrder = (storageKey = 'purchaseOrderProducts') => {
     localStorage.removeItem(storageKey);
   
     if (storageKey === 'purchaseOrderProducts') {
       setOrderBuy([]);
     }
   };
-  
 
-  const handleUpdateProduct = (productId, field, value, storageKey = 'purchaseOrderProducts') => {
-    const currentProducts = JSON.parse(localStorage.getItem(storageKey)) || [];
+
   
-    const updated = currentProducts.map(p => {
-      if (p.product_id === productId) {
-        return { ...p, [field]: value };
-      }
-      return p;
-    });
-  
-    localStorage.setItem(storageKey, JSON.stringify(updated));
-  
-    if (storageKey === 'purchaseOrderProducts') {
-      setOrderBuy(updated);
-    }
-  };
 
   useEffect(()=>{
       const newSubtotalBuy = orderBuy?.reduce((subtotal, product) => (product.price * product.quantity) + subtotal, 0)
@@ -173,24 +207,24 @@ export default function StorePurchaseOrder() {
             {tabIndex === 0 && 
               <PasoSeleccion 
                 purchaseOrder={orderBuy} 
-                addPurchaseOrderProduct={addPurchaseOrderProduct}
-                handleAddAllProducts={handleAddAllProducts}
-                handleRemoveProductBuy={handleRemoveProductBuy}
+                addProductToPurchaseOrder={addProduct}
+                handleAddAllProducts={addProducts}
+                removeProductFromPurchaseOrder={removeProduct}
                 handleRemoveAllProducts={handleRemoveAllProducts}
               />
             }
             {tabIndex === 1 && 
               <PasoUnidades 
                 purchaseOrder={orderBuy}
-                handleUpdateProduct={handleUpdateProduct}
-                handleRemoveProductBuy={handleRemoveProductBuy}
+                handleUpdateProduct={updateProduct}
+                removeProductFromPurchaseOrder={removeProduct}
               />
             }
             {tabIndex === 2 && 
               <PasoResumen 
                 purchaseOrder={orderBuy}
                 subtotalBuy={subtotalBuy}
-                handleClearOrderBuy={handleClearOrderBuy}
+                clearPurchaseOrder={clearPurchaseOrder}
               />
             }
         </Box>

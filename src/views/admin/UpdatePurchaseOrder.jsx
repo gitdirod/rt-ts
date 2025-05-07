@@ -8,11 +8,9 @@ import {
 } from '@mui/material';
 
 import Stack from '@mui/material/Stack';
-import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useParams } from "react-router-dom";
 import useStore from '/src/hooks/useStore';
-import SimpleTablePurchaseResume from '/src/components/admin/purchase/SimpleTablePurchaseResume';
 import { PurchaseOrderService } from '/src/services/PurchaseOrderService';
 import { useEffect, useState } from 'react';
 import IsLoading from '/src/components/store/common/IsLoading';
@@ -20,10 +18,6 @@ import ShoppingCartCheckoutOutlinedIcon from '@mui/icons-material/ShoppingCartCh
 import PasoUnidades from '/src/components/admin/purchase/PasoUnidades';
 import PasoResumen from '/src/components/admin/purchase/PasoResumen';
 import PasoSeleccion from '/src/components/admin/purchase/PasoSeleccion';
-
-// export async function loader({ params }){
-//     return params.itemId
-// }
 
 
 export default function UpdatePurchaseOrder() {
@@ -66,7 +60,7 @@ export default function UpdatePurchaseOrder() {
 
     if(isLoading || purchaseOrder === undefined || purchaseOrder === null || purchaseOrder?.products?.length < 0 ) return <IsLoading/>
 
-  return (
+    return (
     <Box>
         <Box sx={{display:'flex', mt:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
             <Stack direction="row" spacing={2} alignItems="center">
@@ -98,12 +92,7 @@ export default function UpdatePurchaseOrder() {
             {tabIndex === 1 && <PasoUnidades />}
             {tabIndex === 2 && <PasoResumen />}
         </Box>
-
-        {/* Contenido según el tab */}
-        {/* <Box sx={{ flexGrow: 1, pt: 1 }}>
-            <SimpleTablePurchaseResume products={purchaseOrder?.products} />
-        </Box> */}
       
     </Box>
-  );
+    );
 }
