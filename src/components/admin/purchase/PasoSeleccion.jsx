@@ -40,7 +40,7 @@ export default function ProductPage({
 
   const handleProductClick = (prod) => {
     if (actionMode === 'add') {
-      addProductToPurchaseOrder({ ...prod, quantity: 1 },'purchaseOrderProducts');
+      addProductToPurchaseOrder({ ...prod, quantity: 1 });
     } else if (actionMode === 'remove') {
       removeProductFromPurchaseOrder(prod.id);
     }

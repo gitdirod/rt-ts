@@ -20,58 +20,73 @@ import {
   removeProductFromPurchaseOrder,
   removeProductsFromPurchaseOrder,
   updateProductInPurchaseOrder,
-  clearPurchaseOrder
+  clearPurchaseOrder,
+  getPurchaseOrderProductsFromStorage,
+  savePurchaseOrderProductsToStorage
 } from '/src/features/purchaseOrders/localStorage';
+import { useParams } from 'react-router-dom';
+import { PurchaseOrderService } from '/src/services/PurchaseOrderService';
+import IsLoading from '/src/components/store/common/IsLoading';
 
 
-export default function StorePurchaseOrder() {
+export default function StoreUpdatePurchaseOrder() {
  
+  const { itemId: orderId } = useParams();
+  const localKey= orderId ? `purchaseOrderProducts-${orderId}`:'purchaseOrderProducts'
+  
+  const [isLoading, setIsLoading] = useState(true);
 
   const [tabIndex, setTabIndex] = useState(0);
   const handleChangeTab = (event, newValue) => {
     setTabIndex(newValue);
   };
 
-  
-  const getPurchaseOrderProductsFromStorage = (orderId = null) => {
-    const key = orderId ? `purchaseOrderProducts-${orderId}` : 'purchaseOrderProducts';
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : [];
-  };
 
   const [subtotalBuy, setSubtotalBuy] = useState(0)
-  const initialOrderBuy = getPurchaseOrderProductsFromStorage(); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
+  const initialOrderBuy = getPurchaseOrderProductsFromStorage(localKey); // o getPurchaseOrderProductsFromStorage('purchaseOrderProducts-9')
   const [orderBuy, setOrderBuy] = useState(initialOrderBuy);
 
 
-  const addProduct=(product, key = 'purchaseOrderProducts')=>{
+  const addProduct=(product, key = localKey)=>{
     const updated = addProductToPurchaseOrder(product, key)
     setOrderBuy(updated)
   }
 
-  const addProducts=(product, key = 'purchaseOrderProducts')=>{
+  const addProducts=(product, key = localKey)=>{
     const updated = addProductsToPurchaseOrder(product, key)
     setOrderBuy(updated)
   }
 
-  const updateProduct =(productId, field, value, key = 'purchaseOrderProducts')=>{
+  const updateProduct =(productId, field, value, key = localKey)=>{
     const updated = updateProductInPurchaseOrder(productId, field, value, key)
     setOrderBuy(updated)
   }
 
-  const removeProduct=(productId, key = 'purchaseOrderProducts')=>{
+  const removeProduct=(productId, key = localKey)=>{
     const updated = removeProductFromPurchaseOrder(productId, key)
     setOrderBuy(updated)
   }
 
-  const removeProducts=(productId, key = 'purchaseOrderProducts')=>{
+  const removeProducts=(productId, key = localKey)=>{
     const updated = removeProductsFromPurchaseOrder(productId, key)
     setOrderBuy(updated)
   }
 
-    const clearAll = (storageKey = 'purchaseOrderProducts') => {
+    const clearAll = (storageKey = localKey) => {
       const update = clearPurchaseOrder(storageKey)
       setOrderBuy(update)
+  };
+
+  // Función para obtener el producto por ID
+  const getOrder = async (id) => {
+    const { data, error } = await PurchaseOrderService.fetchById(id);
+    if (data.data) {
+      setOrderBuy(data.data.products);
+      savePurchaseOrderProductsToStorage(data.data.products, localKey)
+    } else {
+    console.error("Error al cargar la ordern", error);
+    }
+    setIsLoading(false);
   };
  
 
@@ -79,7 +94,14 @@ export default function StorePurchaseOrder() {
       const newSubtotalBuy = orderBuy?.reduce((subtotal, product) => (product.price * product.quantity) + subtotal, 0)
       setSubtotalBuy(newSubtotalBuy)
   }, [orderBuy])
+
+  useEffect(() => {
+    if (orderId) {
+      getOrder(orderId);  // Obtener el producto cuando se monta el componente
+    }
+  }, [orderId]);
   
+  if(isLoading || orderBuy === undefined || orderBuy === null || orderBuy?.length < 0 ) return <IsLoading/>
 
   return (
     <div className="overflow-y-hidden flex flex-col flex-1 ">

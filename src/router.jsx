@@ -21,21 +21,15 @@ import IndexType from '/src/views/admin/IndexType'
 import IndexLanding from '/src/views/admin/IndexLanding'
 import IndexSuggested from '/src/views/admin/IndexSuggested'
 import IndexPurchaseOrder from "/src/views/admin/IndexPurchaseOrder"
-
-
-import StorePurchaseOrder from '/src/views/admin/StorePurchaseOrder'
+import IndexMemory from '/src/views/admin/IndexMemory'
+import ProductPage from '/src/components/admin/product/ProductPage'
+import StoreUpdatePurchaseOrder from '/src/views/admin/StoreUpdatePurchaseOrder'
 
 import ShowSoldOrder,{
     loader as loaderSoldOrder
 } from './views/admin/ShowSoldOrder'
 
-// import UpdatePurchaseOrder,{
-//     loader as loaderPurchase
-// } from '/src/views/admin/UpdatePurchaseOrder'
-
 import IndexUser from '/src/views/admin/IndexUser'
-
-
 
 
 import Bought from '/src/views/store/bought/Bought'
@@ -43,9 +37,6 @@ import ProductDetailPage from '/src/views/store/product/ProductDetailPage'
 import ViewProducts from '/src/views/store/product/ViewProducts'
 import Likes from '/src/views/store/likes/Likes'
 import BoughtDetailPage from '/src/views/store/bought/BoughtDetailPage'
-import IndexMemory from '/src/views/admin/IndexMemory'
-import ProductPage from '/src/components/admin/product/ProductPage'
-import UpdatePurchaseOrder from '/src/views/admin/UpdatePurchaseOrder'
 
 
 
@@ -144,12 +135,11 @@ const router = createBrowserRouter([
                     },
                     {
                         path : "/admin/purchases/Storepurchase",
-                        element: <StorePurchaseOrder/>
+                        element: <StoreUpdatePurchaseOrder/>
                     },
                     {
                         path: "/admin/purchases/purchases/purchase/:itemId",
-                        // loader: loaderPurchase,
-                        element: <UpdatePurchaseOrder/>
+                        element: <StoreUpdatePurchaseOrder/>
                     },
                 ]
             },
