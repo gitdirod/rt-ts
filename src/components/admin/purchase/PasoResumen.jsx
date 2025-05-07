@@ -7,7 +7,7 @@ import { formatearDinero2 } from '/src/helpers';
 import { PurchaseOrderService } from '/src/services/PurchaseOrderService';
 import { useNavigate } from 'react-router-dom';
 
-export default function PasoResumen({purchaseOrder, subtotalBuy, clearPurchaseOrder}) {
+export default function PasoResumen({purchaseOrderProducts, subtotalBuy, clearPurchaseOrder}) {
 
   const navigate = useNavigate()
   const [envoice, setEnvoice] = useState('');
@@ -19,7 +19,7 @@ export default function PasoResumen({purchaseOrder, subtotalBuy, clearPurchaseOr
       subtotal: formatearDinero2(subtotalBuy),
       total: formatearDinero2(subtotalBuy * 1.15),
       envoice: envoice,
-      products : purchaseOrder?.map(product => (
+      products : purchaseOrderProducts?.map(product => (
           {
               id: product.product_id,
               quantity: product.quantity,
@@ -55,7 +55,7 @@ export default function PasoResumen({purchaseOrder, subtotalBuy, clearPurchaseOr
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} justifyContent="space-between" alignItems="center">
         <Stack direction='row' alignItems="center" spacing={3}>
           <Typography variant="body1">
-            Productos seleccionados: <strong>{purchaseOrder?.length}</strong>
+            Productos seleccionados: <strong>{purchaseOrderProducts?.length}</strong>
           </Typography>
 
           <Typography variant="body1">
@@ -80,7 +80,7 @@ export default function PasoResumen({purchaseOrder, subtotalBuy, clearPurchaseOr
       <Divider sx={{ my: 2 }} />
 
       <Box sx={{ maxHeight: 'calc(100vh - 205px)', overflowY: 'auto' }}>
-        <SimpleTablePurchaseResume products={purchaseOrder} />
+        <SimpleTablePurchaseResume products={purchaseOrderProducts} />
       </Box>
 
       {/* Puedes añadir más detalles aquí: impuestos, botones, etc. */}

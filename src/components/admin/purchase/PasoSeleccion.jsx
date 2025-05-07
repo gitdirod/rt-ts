@@ -7,7 +7,7 @@ import ProductFilters from '../product/ProductFilters';
 import SelectActionMode from './SelectActionMode';
 
 export default function ProductPage({
-  purchaseOrder=[],
+  purchaseOrderProducts=[],
   addProductToPurchaseOrder,
   handleAddAllProducts,
   removeProductFromPurchaseOrder,
@@ -103,7 +103,7 @@ export default function ProductPage({
         )}
         products={products}
         totalRecords={totalRecords}
-        selectedProducts={purchaseOrder}
+        selectedProducts={purchaseOrderProducts}
         page={safePage}
         rowsPerPage={rowsPerPage}
         handleChangePage={handleChangePage}

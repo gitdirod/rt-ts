@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import PurchaseOrderTableUnits from './PurchaseOrderTableUnits'
 import ProductFilters from '../product/ProductFilters';
 
-export default function PasoUnidades({purchaseOrder, handleUpdateProduct, removeProductFromPurchaseOrder}) {
+export default function PasoUnidades({purchaseOrderProducts, handleUpdateProduct, removeProductFromPurchaseOrder}) {
 
   // Filtros locales
   const [filterName, setFilterName] = useState('');
@@ -15,14 +15,14 @@ export default function PasoUnidades({purchaseOrder, handleUpdateProduct, remove
   const [rowsPerPage, setRowsPerPage] = useState(50);
 
   const filteredProducts = useMemo(() => {
-    return purchaseOrder.filter(p => {
+    return purchaseOrderProducts.filter(p => {
       const matchesName = p.product.name?.toLowerCase().includes(filterName.toLowerCase());
       const matchesCode = p.product.code?.toLowerCase().includes(filterCode.toLowerCase());
       const matchesCategories = filterCategories.length === 0 || filterCategories.includes(p.product?.category?.id);
       const matchesTypes = filterTypes.length === 0 || filterTypes.includes(p.product?.type_product?.id);
       return matchesName && matchesCode && matchesCategories && matchesTypes;
     });
-  }, [purchaseOrder, filterName, filterCode, filterCategories, filterTypes]);
+  }, [purchaseOrderProducts, filterName, filterCode, filterCategories, filterTypes]);
   
 
   const startIndex = page * rowsPerPage;

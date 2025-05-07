@@ -34,7 +34,7 @@ export default function StoreUpdatePurchaseOrder() {
   const { itemId: orderId } = useParams();
   const localKey= orderId ? `purchaseOrderProducts-${orderId}`:'purchaseOrderProducts'
   
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(orderId ? true : false);
 
   const [tabIndex, setTabIndex] = useState(0);
   const handleChangeTab = (event, newValue) => {
@@ -100,6 +100,7 @@ export default function StoreUpdatePurchaseOrder() {
       getOrder(orderId);  // Obtener el producto cuando se monta el componente
     }
   }, [orderId]);
+
   
   if(isLoading || orderBuy === undefined || orderBuy === null || orderBuy?.length < 0 ) return <IsLoading/>
 
@@ -127,7 +128,7 @@ export default function StoreUpdatePurchaseOrder() {
         <Box sx={{ flexGrow: 1, pt: 1 }}>
             {tabIndex === 0 && 
               <PasoSeleccion 
-                purchaseOrder={orderBuy} 
+                purchaseOrderProducts={orderBuy} 
                 addProductToPurchaseOrder={addProduct}
                 handleAddAllProducts={addProducts}
                 removeProductFromPurchaseOrder={removeProduct}
@@ -136,14 +137,14 @@ export default function StoreUpdatePurchaseOrder() {
             }
             {tabIndex === 1 && 
               <PasoUnidades 
-                purchaseOrder={orderBuy}
+                purchaseOrderProducts={orderBuy}
                 handleUpdateProduct={updateProduct}
                 removeProductFromPurchaseOrder={removeProduct}
               />
             }
             {tabIndex === 2 && 
               <PasoResumen 
-                purchaseOrder={orderBuy}
+                purchaseOrderProducts={orderBuy}
                 subtotalBuy={subtotalBuy}
                 clearPurchaseOrder={clearAll}
               />
