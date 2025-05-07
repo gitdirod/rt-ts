@@ -259,7 +259,14 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel, open
             </Box>
 
             <Box sx={{ flex: 1, display: 'flex', marginTop: '1rem', gap: 1, justifyContent: 'flex-end' }}>
-              <Button variant="outlined" color="inherit" startIcon={<CancelOutlinedIcon />} onClick={onCancel}>
+              <Button variant="outlined" color="inherit" startIcon={<CancelOutlinedIcon />} 
+                onClick={
+                  ()=>{
+                  onCancel()
+                  setErrores({});
+                  }
+                }
+              >
                 Cancelar
               </Button>
               <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSubmit}>
