@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Stack, TextField, Typography, Divider, Button } from '@mui/material';
 import { formatearDinero } from '/src/helpers';
 import SimpleTablePurchaseResume from './SimpleTablePurchaseResume';
@@ -13,9 +13,10 @@ export default function PasoResumen({purchaseOrder, purchaseOrderProducts, subto
   const [envoice, setEnvoice] = useState(purchaseOrder?.envoice || '');
   const [errores, setErrores] = useState({});
 
+  const isUpdate = purchaseOrder?.id != null;
+
   const handlePurchaseOrder = async (e) =>{
 
-    const isUpdate = purchaseOrder?.id != null;
 
     const _purchaseOrder = {
       _method: isUpdate ? 'PUT' : 'POST',
@@ -45,6 +46,11 @@ export default function PasoResumen({purchaseOrder, purchaseOrderProducts, subto
       setErrores(response.errors);
     }
   }
+
+  useEffect(()=>{
+    setEnvoice(purchaseOrder?.envoice || '')
+    setErrores({});
+  },[purchaseOrder])
 
   return (
     <Box
@@ -80,7 +86,7 @@ export default function PasoResumen({purchaseOrder, purchaseOrderProducts, subto
           />
         </Stack>
         <Button variant="outlined" color="primary" startIcon={<SendIcon />} onClick={handlePurchaseOrder}>
-          Enviar
+          {isUpdate ? 'Actualizar compra' : 'Crear compra'}
         </Button>
       </Stack>
 

@@ -101,6 +101,10 @@ export default function StoreUpdatePurchaseOrder() {
   useEffect(() => {
     if (orderId) {
       getPurchaseOrder(orderId);  // Obtener el producto cuando se monta el componente
+    }else{
+      setPurchaseOrder({})
+      const initialPurchaseOrderProducts = getPurchaseOrderProductsFromStorage('purchaseOrderProducts');
+      setPurchaseOrderProducts(initialPurchaseOrderProducts);
     }
   }, [orderId]);
 
@@ -113,7 +117,7 @@ export default function StoreUpdatePurchaseOrder() {
             <Stack direction="row" spacing={2} alignItems="center">
                 <AddShoppingCartOutlinedIcon color="primary"/>
                 <Typography variant="h5" fontWeight="bold">
-                {orderId ? `Editar Orden de compra ${orderId}`:'Ingreso de unidades'}
+                {orderId ? `Editar compra ${orderId}`:'Nueva compra'}
                 </Typography>
                 <Chip label={purchaseOrderProducts.length || 0} color="primary" />
             </Stack>
