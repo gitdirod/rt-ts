@@ -1,115 +1,134 @@
-import {  memo, useEffect, useState } from "react"
-import IsLoading from "../../components/store/common/IsLoading"
-import { useNavigate } from "react-router-dom"
+import {
+  Box,
+  Typography,
+  Chip,
+  Paper,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody
+} from '@mui/material';
 
-import Total from '/src/components/admin/Total'
-import iconEnvoice from '/src/static/icons/envoice.svg'
-import TableHeader from "/src/components/admin/TableHeader"
+import Stack from '@mui/material/Stack';
+import { formatearDinero, formatearFecha } from '/src/helpers';
+import { useNavigate } from 'react-router-dom';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { SoldOrderService } from '/src/services/SoldOrderService';
+import OrderStatusBadge from '/src/components/admin/sold/OrderStatusBadge';
+import PaymentStatusBadge from '/src/components/admin/sold/PaymentStatusBadge';
 
-import TagPayment from '/src/components/admin/TagPayment'
-import TagTracking from '/src/components/admin/TagTracking'
-import { formatearDinero } from '/src/helpers'
-import { SoldOrderService } from "/src/services/SoldOrderService"
+export default function ProductPage({selectedProducts=[]}) {
+ 
+    const navigate = useNavigate()
 
+    const handleEditPurchaseOrder=(soldOrder)=>{
+      navigate(`/admin/orders/orders/item/${soldOrder.id}`)
+    }
 
-const IndexSoldOrder= () => {
+    const {data: soldOrders} = SoldOrderService.useAllSoldOrders()
 
-  const {data: soldOrders} = SoldOrderService.useAllSoldOrders()
-
-  const navigate = useNavigate()
-  const handleSelect =(id)=>{
-    navigate(`/admin/orders/orders/item/${id}`)
-  }
-  const columns = [
-    { title: '#', className: 'w-10' },
-    { title: 'Subtotal', className: 'w-32' },
-    { title: 'Total', className: 'w-32' },
-    { title: 'Cliente', className: '' },
-    { title: 'Estado', className: '' },
-    { title: 'Articulos', className: 'w-24' },
-    { title: 'Unidades', className: 'w-24' }
-  ];
-
-  if(soldOrders === undefined) return (<IsLoading/>)
-  
-  return (
-    <div className="overflow-y-hidden flex flex-col flex-1">
-      {/* Titulo y nuevo */}
-      <div className='flex'>
-              <img src={iconEnvoice} alt="save" className='w-8 h-8 pr-2' />
-                Prefacturas ({soldOrders?.length})
-            </div>
+    const selectedIds = selectedProducts.map(p => p.id);
+    // return
+    return (
+        <Box>
         
+        <Box sx={{display:'flex', my:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
+            <Stack direction="row" spacing={2} alignItems="center">
+            <ShoppingBasketIcon color="primary"/>
+            <Typography variant="h5" fontWeight="bold">
+              Ventas
+            </Typography>
+            <Chip label={soldOrders.length || 0} color="primary" />
+            </Stack>
+        </Box>
 
-        <table className=" table-fixed w-full text-slate-600">
-          <TableHeader columns={columns} />
-          <tbody className='w-full  '>
-            {
-                soldOrders?.map(item=>(
-                    <TableTrItem
-                        key={item.id}
-                        item={item}
-                        change={handleSelect}
-                    />
-                )
-                )
-            }
-          </tbody>
-        </table>
-    </div>
-      
-  )
+        <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
+          <TableContainer  sx={{ maxHeight: 'calc(100vh - 155px)', overflowY: 'auto', borderRadius: 2 }}>
+              <Table stickyHeader>
+              <TableHead>
+                  <TableRow >
+                  <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                    ID
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Subtotal
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Total
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                      Cliente
+                      </Typography>
+                  </TableCell>
+                  <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                      Productos
+                      </Typography>
+                  </TableCell>
+                  <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                      Creado
+                      </Typography>
+                  </TableCell>
+                  <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                      Estado
+                      </Typography>
+                  </TableCell>
+                  <TableCell>
+                      <Typography variant="subtitle2" color="text.secondary">
+                      Pago
+                      </Typography>
+                  </TableCell>
+                  </TableRow>
+              </TableHead>
+              <TableBody>
+                  {(soldOrders || []).map((soldOrder, index) => {
+                  const isSelected = selectedIds.includes(soldOrder.id);
+                  return (
+                      <TableRow
+                      key={index}
+                      hover
+                      sx={{
+                          cursor: 'pointer',
+                          backgroundColor: isSelected ? 'rgba(0, 255, 0, 0.1)' : 'transparent', // verde suave
+                          '&:hover': {
+                          backgroundColor: isSelected ? 'rgba(0, 255, 0, 0.2)' : 'rgba(0, 0, 0, 0.05)',
+                          },
+                          transition: 'background-color 0.2s ease-in-out',
+                      }}
+                      onClick={() => handleEditPurchaseOrder(soldOrder)}
+                      >
+                      
+                      <TableCell><Typography variant="body2">{soldOrder?.id}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{formatearDinero(soldOrder?.subtotal)}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{formatearDinero(soldOrder?.subtotal * 1.15)}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{`${soldOrder?.user?.name} - ${soldOrder?.user?.email}`}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{soldOrder?.products_count}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{formatearFecha(soldOrder?.created_at)}</Typography></TableCell>
+                      <TableCell>
+                        <OrderStatusBadge estado={soldOrder?.soldOrderTracking?.state} />
+                      </TableCell>
+                      <TableCell>
+                        <PaymentStatusBadge estado={soldOrder?.soldOrderPayment?.state} />
+                      </TableCell>
+                      </TableRow>
+                  );
+                  })}
+              </TableBody>
+              </Table>
+          </TableContainer>
+        </Paper>
+        
+        </Box>
+    );
 }
-
-
-const TableTrItem=({item, change})=> {
-  const {id, subtotal, total, user, products} = item
-
-  const [units, setUnits] = useState(0)
-  useEffect(()=>{
-      const unidades = products?.reduce((quantity, item) => (Number(item.quantity)) + quantity, 0)
-      setUnits(unidades)
-  })
-  
-  return (
-  <tr
-      className='cursor-pointer group/item'
-      onClick={()=>change(item.id)}
-  >
-      <Td style='w-10 border-l rounded-l-lg'>
-          {id}
-      </Td>
-      <Td>{formatearDinero(subtotal)}</Td>
-      <Td>{formatearDinero(total)}</Td>
-      <Td>
-          <span>{user?.name}</span>
-          <span className="text-sm">{user?.email}</span>
-      </Td>
-      <Td>
-          <div className='flex gap-1'>
-            <TagPayment orderPayment={item?.soldOrderPayment}/>
-            <TagTracking orderTracking={item?.soldOrderTracking}/>
-          </div>
-      </Td>
-      <Td style='w-24'>
-          {products?.length}
-      </Td>
-      <Td style='w-24 border-r rounded-r-lg'>
-          {units}
-      </Td>
-  </tr>
-)
-}
-const Td = ({children, style=''})=>{
-  return(
-    <td
-          className='px-0'
-      >
-      <div className={`py-1  font-poppins-regular bg-white text-sm group-hover/item:border-slate-400 transition-all h-14 flex flex-col flex-1 items-center justify-center group-hover/item:font-poppins-semibold border-y ${style}`}>
-          {children}
-      </div>
-    </td>
-  )
-}
-
-export default memo(IndexSoldOrder)
