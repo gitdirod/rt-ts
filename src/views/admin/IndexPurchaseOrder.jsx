@@ -115,7 +115,7 @@ export default function ProductPage({selectedProducts=[]}) {
                     <TableCell><Typography variant="body2">{purchaseOrder?.envoice}</Typography></TableCell>
                     <TableCell><Typography variant="body2">{formatearDinero(purchaseOrder?.subtotal)}</Typography></TableCell>
                     <TableCell><Typography variant="body2">{formatearDinero(purchaseOrder?.subtotal * 1.15)}</Typography></TableCell>
-                    <TableCell><Typography variant="body2">{purchaseOrder?.products?.length}</Typography></TableCell>
+                    <TableCell><Typography variant="body2">{purchaseOrder?.products_count}</Typography></TableCell>
                     <TableCell><Typography variant="body2">{formatearFecha(purchaseOrder?.created_at)}</Typography></TableCell>
                     </TableRow>
                 );
