@@ -17,16 +17,26 @@ export default function SimpleTablePurchaseResume({ products = [] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((p, index) => (
-            <TableRow key={p?.product?.id}>
-              <TableCell>{index + 1}</TableCell>
-              <TableCell>{p?.product?.code}</TableCell>
-              <TableCell>{p?.product?.name}</TableCell>
-              <TableCell align="right">{formatearDinero(p.price)}</TableCell>
-              <TableCell align="right">{p.quantity}</TableCell>
-              <TableCell align="right">{formatearDinero((p.price || 0) * (p.quantity || 0))}</TableCell>
-            </TableRow>
-          ))}
+          {products.map((p, index) => {
+            const isInvalid = p.price <= 0 || p.quantity <= 0;
+            return (
+              <TableRow
+                key={p?.product?.id}
+                sx={isInvalid ? { backgroundColor: 'rgba(255, 0, 0, 0.1)' } : {}}
+              >
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{p?.product?.code}</TableCell>
+                <TableCell>{p?.product?.name}</TableCell>
+                <TableCell align="right" sx={p.price <= 0 ? { color: 'error.main', fontWeight: 'bold' } : {}}>
+                  {formatearDinero(p.price)}
+                </TableCell>
+                <TableCell align="right" sx={p.quantity <= 0 ? { color: 'error.main', fontWeight: 'bold' } : {}}>
+                  {p.quantity}
+                </TableCell>
+                <TableCell align="right">{formatearDinero((p.price || 0) * (p.quantity || 0))}</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
