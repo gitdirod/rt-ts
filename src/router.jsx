@@ -5,38 +5,38 @@ import AuthLayout from './layout/AuthLayout'
 import StoreLayout from './layout/StoreLayout'
 import Cart from './views/store/cart/Cart'
 import Index from './views/Index'
-import Login from './views/auth/Login'
-import Register from './views/auth/Register'
 import User from './views/store/user/User'
-
-
-//  Vista Administrador
-import ErrorView from "/src/views/ErrorView"
-
-
-import AdminLayout from './layout/AdminLayout'
-import IndexSoldOrder from './views/admin/IndexSoldOrder'
-import IndexGroup from './views/admin/IndexGroup'
-import IndexType from '/src/views/admin/IndexType'
-import IndexLanding from '/src/views/admin/IndexLanding'
-import IndexSuggested from '/src/views/admin/IndexSuggested'
-import IndexPurchaseOrder from "/src/views/admin/IndexPurchaseOrder"
-import IndexMemory from '/src/views/admin/IndexMemory'
-import ProductPage from '/src/components/admin/product/ProductPage'
-import StoreUpdatePurchaseOrder from '/src/views/admin/StoreUpdatePurchaseOrder'
-
-import ShowSoldOrder,{
-    loader as loaderSoldOrder
-} from './views/admin/ShowSoldOrder'
-
-import IndexUser from '/src/views/admin/IndexUser'
-
 
 import Bought from '/src/views/store/bought/Bought'
 import ProductDetailPage from '/src/views/store/product/ProductDetailPage'
 import ViewProducts from '/src/views/store/product/ViewProducts'
 import Likes from '/src/views/store/likes/Likes'
 import BoughtDetailPage from '/src/views/store/bought/BoughtDetailPage'
+
+import Login from './views/auth/Login'
+import Register from './views/auth/Register'
+
+//  Vista Administrador
+import ErrorView from "/src/views/ErrorView"
+
+
+import AdminLayout from './layout/AdminLayout'
+import IndexGroup from './views/admin/IndexGroup'
+import IndexType from '/src/views/admin/IndexType'
+import IndexLanding from '/src/views/admin/IndexLanding'
+import IndexSuggested from '/src/views/admin/IndexSuggested'
+import IndexMemory from '/src/views/admin/IndexMemory'
+import ProductPage from '/src/components/admin/product/ProductPage'
+
+import IndexPurchaseOrder from "/src/views/admin/IndexPurchaseOrder"
+import StoreUpdatePurchaseOrder from '/src/views/admin/StoreUpdatePurchaseOrder'
+
+import IndexSoldOrder from './views/admin/IndexSoldOrder'
+import ShowSoldOrder from './views/admin/ShowSoldOrder'
+
+import IndexUser from '/src/views/admin/IndexUser'
+
+
 
 
 
@@ -153,7 +153,6 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "/admin/orders/orders/item/:itemId",
-                        loader: loaderSoldOrder,
                         element: <ShowSoldOrder />
                     },
                 ]

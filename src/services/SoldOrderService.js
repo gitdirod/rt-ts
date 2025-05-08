@@ -1,9 +1,12 @@
 import useSWR from 'swr';
 import { fetchData, swrConfig} from '/src/utils/fetchData';
 import BACKEND from '/src/data/backend';
+import request from './request';
 
 export const SoldOrderService = {
-    
+    fetchById: (id) => request(`${BACKEND.SOLD_ORDERS.KEY}/${id}`, 'GET'),
+    create: (data) => request(BACKEND.SOLD_ORDERS.KEY, 'POST', data),
+    update: (id, data) => request(`${BACKEND.SOLD_ORDERS.KEY}/${id}`, 'POST', data),
     useAllSoldOrders: () => {
         const url = BACKEND.SOLD_ORDERS.KEY;
 
