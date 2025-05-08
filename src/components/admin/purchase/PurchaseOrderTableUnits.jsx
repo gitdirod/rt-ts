@@ -20,7 +20,6 @@ export default function PurchaseOrderTableUnits({
 
   products,
   totalProducts,
-  selectedProducts = [],
   page,
   rowsPerPage,
   handleUpdateProductQuantity,
@@ -31,7 +30,7 @@ export default function PurchaseOrderTableUnits({
   searchComponente
 
 }) {
-  const selectedIds = selectedProducts.map(p => p.product_id);
+ 
 
 
   return (
@@ -52,14 +51,12 @@ export default function PurchaseOrderTableUnits({
           </TableHead>
           <TableBody>
             {products.map((p) => {
-              const isSelected = selectedIds.includes(p.id);
+              const isInvalid = p.price <= 0 || p.quantity <= 0;
+          
               return (
                 <TableRow
                   key={p.product_id}
-                  sx={{
-                    backgroundColor: isSelected ? 'rgba(0, 255, 0, 0.1)' : 'transparent',
-                    transition: 'background-color 0.2s ease-in-out',
-                  }}
+                  sx={isInvalid ? { backgroundColor: 'rgba(255, 0, 0, 0.1)' } : {}}
                 >
                   <TableCell>
                     <ImageTable
@@ -75,7 +72,17 @@ export default function PurchaseOrderTableUnits({
                     <TextField
                       type="number"
                       size="small"
-                      sx={{ maxWidth: '10rem' }}
+                      sx={{
+                        maxWidth: '10rem',
+                        ...(p.quantity <= 0 && {
+                          color: 'error.main',
+                          fontWeight: 'bold',
+                          '& .MuiInputBase-input': {
+                            color: 'error.main',
+                            fontWeight: 'bold',
+                          }
+                        })
+                      }}
                       value={p.quantity ?? ''}
                       onChange={(e)=>handleUpdateProductQuantity(e, p)}
                       slotProps={{ input: { min: 0, step: 1 } }}
@@ -85,7 +92,17 @@ export default function PurchaseOrderTableUnits({
                     <TextField
                       type="number"
                       size="small"
-                      sx={{ maxWidth: '10rem' }}
+                      sx={{
+                        maxWidth: '10rem',
+                        ...(p.price <= 0 && {
+                          color: 'error.main',
+                          fontWeight: 'bold',
+                          '& .MuiInputBase-input': {
+                            color: 'error.main',
+                            fontWeight: 'bold',
+                          }
+                        })
+                      }}
                       value={p.price ?? ''}
                       onChange={(e) => handleUpdateProductPrice(e, p)}
                       slotProps={{
