@@ -22,6 +22,8 @@ import ImageTable from '/src/components/admin/ImageTable';
 import BACKEND from '/src/data/backend';
 import { formatearDinero } from '/src/helpers';
 import UserInfoCard from '/src/components/admin/sold/UserInfoCard';
+import OrderStatusBadge from '/src/components/admin/sold/OrderStatusBadge';
+import PaymentStatusBadge from '/src/components/admin/sold/PaymentStatusBadge';
 
 export default function StoreUpdatePurchaseOrder() {
 
@@ -64,6 +66,10 @@ export default function StoreUpdatePurchaseOrder() {
                     Prefactura {orderId}
                     </Typography>
                     <Chip label={soldOrderProducts?.length || 0} color="primary" />
+                </Stack>
+                <Stack gap={2} direction="row">
+                    <OrderStatusBadge estado={soldOrder?.sold_order_tracking?.state} />
+                    <PaymentStatusBadge estado={soldOrder?.sold_order_payment?.state} />
                 </Stack>
             </Box>
 
@@ -137,7 +143,7 @@ export default function StoreUpdatePurchaseOrder() {
                         </Table>
 
                     </TableContainer>
-                        <Box sx={{ my: 2, display: 'flex', justifyContent: 'flex-end' }}>
+                        <Box sx={{ my: 2, mx:1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Paper elevation={1} sx={{ p: 2, width: '100%', maxWidth: 400, borderRadius: 1, border: '1px solid #ccc' }}>
                             <Stack spacing={1}>
                             <Stack direction="row" justifyContent="space-between">

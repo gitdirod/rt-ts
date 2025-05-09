@@ -12,14 +12,26 @@ export default function OrderStatusBadge({ estado = '' }) {
   return (
     <Box
       sx={{
-        px: 2,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        px: 1.5,
         py: 0.5,
         borderRadius: 2,
-        display: 'inline-block',
-        bgcolor: color,
+        border: `1px solid`,
+        borderColor: color,
+        bgcolor: 'background.paper',
+        whiteSpace: 'nowrap',
+        width: 'auto',
+        maxWidth: '100%',
       }}
     >
-      <Typography variant="caption" color="white" fontWeight="bold">
+      <Typography 
+        variant="caption" 
+        color={color} 
+        fontWeight="medium"
+        sx={{ lineHeight: 2 }}
+      >
         {estado}
       </Typography>
     </Box>
