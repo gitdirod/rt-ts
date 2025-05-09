@@ -24,6 +24,7 @@ import { formatearDinero } from '/src/helpers';
 import UserInfoCard from '/src/components/admin/sold/UserInfoCard';
 import OrderStatusBadge from '/src/components/admin/sold/OrderStatusBadge';
 import PaymentStatusBadge from '/src/components/admin/sold/PaymentStatusBadge';
+import ModalUpdateSoldOrder from '/src/components/admin/sold/ModalUpdateSoldOrder';
 
 export default function StoreUpdatePurchaseOrder() {
 
@@ -34,6 +35,13 @@ export default function StoreUpdatePurchaseOrder() {
     const [user, setUser] = useState({})
     const [addresses, setAddresses] = useState({})
     const [soldOrderProducts, setSoldOrderProducts] = useState([]);
+
+
+    const [edit, setEdit] = useState(false);
+    const handleCloseEdit = () => setEdit(false);
+    const handleEdit = () => {
+        setEdit(true)
+    };
 
     //   Función para obtener el producto por ID
     const getSoldOrder = async (id) => {
@@ -59,6 +67,17 @@ export default function StoreUpdatePurchaseOrder() {
 
     return (
         <Box>
+            <ModalUpdateSoldOrder 
+                open={edit}
+                soldOrder={soldOrder} 
+                onCancel= {handleCloseEdit}
+                onUpdated={()=>{
+                handleCloseEdit();
+                mutate();
+                }}
+                handleEdit={handleEdit} 
+                handleCloseEdit={handleCloseEdit}
+            />
             <Box sx={{display:'flex', my:1, p:1, borderRadius:1, border:'1px solid #ccc', bgcolor:'white', justifyContent:'space-between', alignItems:'center'}}>
                 <Stack direction="row" spacing={2} alignItems="center">
                     <ReceiptOutlinedIcon color="primary"/>
@@ -67,7 +86,7 @@ export default function StoreUpdatePurchaseOrder() {
                     </Typography>
                     <Chip label={soldOrderProducts?.length || 0} color="primary" />
                 </Stack>
-                <Stack gap={2} direction="row">
+                <Stack gap={2} sx={{cursor:'pointer'}} direction="row" onClick={()=>setEdit(true)}>
                     <OrderStatusBadge estado={soldOrder?.sold_order_tracking?.state} />
                     <PaymentStatusBadge estado={soldOrder?.sold_order_payment?.state} />
                 </Stack>
