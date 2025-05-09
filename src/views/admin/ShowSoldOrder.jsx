@@ -10,8 +10,7 @@ TableHead,
 TableRow,
 TableCell,
 TableBody,
-Grid,
-Divider,
+Divider
 } from '@mui/material';
 
 import Stack from '@mui/material/Stack';
@@ -22,10 +21,6 @@ import IsLoading from '/src/components/store/common/IsLoading';
 import ImageTable from '/src/components/admin/ImageTable';
 import BACKEND from '/src/data/backend';
 import { formatearDinero } from '/src/helpers';
-
-import PersonIcon from '@mui/icons-material/Person';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
 import UserInfoCard from '/src/components/admin/sold/UserInfoCard';
 
 export default function StoreUpdatePurchaseOrder() {
@@ -36,7 +31,7 @@ export default function StoreUpdatePurchaseOrder() {
     const [soldOrder, setSoldOrder] = useState({})
     const [user, setUser] = useState({})
     const [addresses, setAddresses] = useState({})
-    const [soldOrderProducts, setSoldOrderProducts] = useState();
+    const [soldOrderProducts, setSoldOrderProducts] = useState([]);
 
     //   Función para obtener el producto por ID
     const getSoldOrder = async (id) => {
@@ -57,8 +52,6 @@ export default function StoreUpdatePurchaseOrder() {
         getSoldOrder(orderId);  // Obtener el producto cuando se monta el componente
     }
     }, [orderId]);
-
-
 
     if(isLoading || soldOrderProducts === undefined || soldOrderProducts === null || soldOrderProducts?.length < 0 ) return <IsLoading/>
 
@@ -142,7 +135,27 @@ export default function StoreUpdatePurchaseOrder() {
                                 ))}
                             </TableBody>
                         </Table>
+
                     </TableContainer>
+                        <Box sx={{ my: 2, display: 'flex', justifyContent: 'flex-end' }}>
+                        <Paper elevation={1} sx={{ p: 2, width: '100%', maxWidth: 400, borderRadius: 1, border: '1px solid #ccc' }}>
+                            <Stack spacing={1}>
+                            <Stack direction="row" justifyContent="space-between">
+                                <Typography variant="subtitle2" color="text.secondary">Subtotal:</Typography>
+                                <Typography variant="body2">{formatearDinero(soldOrder?.subtotal)}</Typography>
+                            </Stack>
+                            <Stack direction="row" justifyContent="space-between">
+                                <Typography variant="subtitle2" color="text.secondary">Impuestos (15%):</Typography>
+                                <Typography variant="body2">{formatearDinero(soldOrder?.subtotal * 0.15)}</Typography>
+                            </Stack>
+                            <Divider />
+                            <Stack direction="row" justifyContent="space-between">
+                                <Typography variant="subtitle1" fontWeight="bold">Total:</Typography>
+                                <Typography variant="subtitle1" fontWeight="bold">{formatearDinero(soldOrder?.total)}</Typography>
+                            </Stack>
+                            </Stack>
+                        </Paper>
+                        </Box>
                 </Paper>
             </Box>
         </Box>
