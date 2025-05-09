@@ -16,7 +16,7 @@ export default function PaymentStatusBadge({ estado = '' }) {
         justifyContent: 'center',
         px: 1.5,
         py: 0.5,
-        borderRadius: 2,
+        borderRadius: 1,
         border: '1px solid',
         borderColor: color,
         bgcolor: 'background.paper',
