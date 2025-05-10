@@ -7,11 +7,6 @@ import 'moment/dist/locale/es'
 import localization from 'moment/locale/es';
 moment.suppressDeprecationWarnings = true;
 moment.updateLocale('es', localization);
-import UploadImage from '/src/components/admin/UploadImage';
-
-
-
-import iconEdit from '/src/static/icons/edit_filled.svg'
 import iconCalendar from '/src/static/icons/calendar.svg'
 
 
@@ -49,13 +44,13 @@ export default function BlockLanding({children, item, type}) {
                 {
                     !image?.length > 0 && (
                         <div className='absolute right-1 cursor-pointer overflow-hidden'>
-                            <UploadImage
+                            {/* <UploadImage
                                 max={1}
                                 setImages={setImage}
                                 image={image}
                             >
                                 <img src={iconEdit} alt="" className='w-5 h-5 green'/>
-                            </UploadImage>
+                            </UploadImage> */}
                         </div>
                     )
                     
