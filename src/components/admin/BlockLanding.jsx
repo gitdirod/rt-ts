@@ -9,7 +9,6 @@ moment.suppressDeprecationWarnings = true;
 moment.updateLocale('es', localization);
 import UploadImage from '/src/components/admin/UploadImage';
 
-import BtnsUpdate from './BtnsUpdate';
 
 
 import iconEdit from '/src/static/icons/edit_filled.svg'
@@ -87,15 +86,7 @@ export default function BlockLanding({children, item, type}) {
                 <div className='center-r w-full'>
                     {
                         image?.length>0?
-                        <form 
-                            className='flex gap-2 w-full'
-                            onSubmit={handleSubmit}
-                            noValidate
-                        >
-                            <BtnsUpdate
-                                closeAction={()=>setImage([])}
-                            />
-                        </form>
+                        "sss"
                         :
                         <div className='center-r py-2'>
                             <img src={iconCalendar} alt="" className='w-5 h-5 grey'/>
