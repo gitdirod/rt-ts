@@ -2,13 +2,13 @@ import { formatearDinero } from "/src/helpers"
 import { useNavigate } from "react-router-dom"
 import useStore from "/src/hooks/useStore"
 import { memo, useState } from "react"
-import { urlsBackend } from "/src/data/urlsBackend"
 import UnidsAvailable from "./UnidsAvailable"
 
 import { Box, Button, Modal } from "@mui/material"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useTheme } from '@mui/material/styles';
 import ProductDetailCard from "./ProductDetailCard"
+import BACKEND from "/src/data/backend"
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate()
@@ -104,7 +104,7 @@ const ProductCard = ({ product }) => {
                 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <img 
-                            src={urlsBackend.ICON + product?.type_product?.image}
+                            src={BACKEND.ICONS.URL + product?.type_product?.image}
                             alt="icon"
                             style={{ height: '20px', width: '20px' }}
                         />
@@ -125,7 +125,7 @@ const ProductCard = ({ product }) => {
                     borderRadius: 2,
                 }}>
                     <img 
-                        src={urlsBackend.PRODUCT_IMAGE + product.images[0]?.name}
+                        src={BACKEND.PRODUCTS.URL + product.images[0]?.name}
                         alt={product.name}
                         style={{
                             height: '100%',

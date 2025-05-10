@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { memo } from "react";
 import { Card, CardMedia, CardActionArea, CardContent, Typography, Box } from "@mui/material";
-import { urlsBackend } from "/src/data/urlsBackend";
+import BACKEND from "/src/data/backend";
 
 const Category = ({ categoria, width = 128, height = 100 }) => {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const Category = ({ categoria, width = 128, height = 100 }) => {
         <Box sx={{ position: "relative", width: "100%", height }}>
           <CardMedia
             component="img"
-            image={urlsBackend.CATEGORY + categoria?.images?.[0]?.name}
+            image={BACKEND.CATEGORIES.URL + categoria?.images?.[0]?.name}
             alt={categoria?.name}
             sx={{
               width: "100%",

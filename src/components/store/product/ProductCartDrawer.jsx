@@ -8,8 +8,8 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useStore from '/src/hooks/useStore';
-import { urlsBackend } from '/src/data/urlsBackend';
 import { formatearDinero } from '/src/helpers';
+import BACKEND from '/src/data/backend';
 
 export default function ProductCartDrawer({product}) {
     const { handleAddOrder, handleRemoveProduct } = useStore();
@@ -38,7 +38,7 @@ export default function ProductCartDrawer({product}) {
             {/* Imagen */}
             <Box sx={{ flexShrink: 0 }}>
                 <img
-                src={urlsBackend.PRODUCT_IMAGE + product?.images?.[0]?.name}
+                src={BACKEND.PRODUCTS.URL + product?.images?.[0]?.name}
                 alt={product.name}
                 style={{
                     width: 80,

@@ -1,7 +1,7 @@
 import {memo} from 'react'
 import useStore from '/src/hooks/useStore'
 import TittleName from '../common/TittleName'
-import { urlsBackend } from '/src/data/urlsBackend'
+import BACKEND from '/src/data/backend'
 
 const Memories=({})=> {
     const {
@@ -31,7 +31,7 @@ const Memories=({})=> {
                             <div>
                                 <img 
                                     className=''
-                                    src={urlsBackend.MEMORY + memory.image}  
+                                    src={BACKEND.MEMORIES.URL + memory.image}  
                                     alt={memory.name}
                                 />
                             </div>
