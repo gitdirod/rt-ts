@@ -1,13 +1,16 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { 
   Modal, Box, FormControl, Button, 
-  InputLabel, MenuItem, Select, Typography, Alert, ListSubheader 
+  InputLabel, MenuItem, Select, Typography, Alert, ListSubheader, 
+  TextField
 } from '@mui/material';
 
+import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 
+import SaveIcon from '@mui/icons-material/Save';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
-
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { SoldOrderService } from '/src/services/SoldOrderService';
 import { ORDER_PAYMENT_TYPES } from '/src/data/orderPaymentTypes';
 import { ORDER_STATE_TYPES } from '/src/data/orderStateTypes';
@@ -21,7 +24,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '90vw',           // Responsivo en pantallas pequeñas
-    maxWidth: 500,           // Máximo 1000px
+    maxWidth: 450,           // Máximo 1000px
     bgcolor: 'background.paper',
     maxHeight: '95vh',
     overflowY: 'auto',
@@ -32,6 +35,7 @@ const style = {
 
     const [valuePayment, setValuePayment] = useState(soldOrder?.sold_order_payment?.state || '');
     const [valueStatus, setValueStatus] = useState(soldOrder?.sold_order_tracking?.state || '')
+    const [valueEnvoice, setValueEnvoice] = useState(soldOrder?.envoice	|| '')
 
     const [errores, setErrores] = useState({});
 
@@ -41,6 +45,7 @@ const style = {
         id: soldOrder?.id,
         
         sold_order_payment: valuePayment,
+        sold_order_tracking: valueStatus,
         
         };
 
@@ -76,6 +81,18 @@ const style = {
 
                 <Box sx={{ flex: 1, minWidth: 300, display: 'flex', flexDirection: 'column', gap: 2 }}>
 
+                    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                    <ReceiptOutlinedIcon sx={{ color: 'action.active', mr: 1 }} />
+                    <TextField
+                        label="Factura / Comprobante"
+                        variant="standard"
+                        fullWidth
+                        value={valueEnvoice}
+                        onChange={(e) => setValueEnvoice(e.target.value)}
+                    />
+                    </Box>
+                    {errores?.name && <Alert severity="error" icon={<GppBadOutlinedIcon fontSize="inherit" />}>{errores.name}</Alert>}                    
+
                     <FormControl variant="standard" fullWidth>
                         <InputLabel>Pago</InputLabel>
                         <Select
@@ -110,6 +127,21 @@ const style = {
 
                     {errores?.type && <Alert severity="error" icon={<GppBadOutlinedIcon fontSize="inherit" />}>{errores.type}</Alert>}
 
+                </Box>
+                <Box sx={{ flex: 1, display: 'flex', marginTop: '1rem', gap: 1, justifyContent: 'flex-end' }}>
+                    <Button variant="outlined" color="inherit" startIcon={<CancelOutlinedIcon />} 
+                    onClick={
+                        ()=>{
+                        onCancel()
+                        setErrores({});
+                        }
+                    }
+                    >
+                    Cancelar
+                    </Button>
+                    <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSubmit}>
+                    Guardar
+                    </Button>
                 </Box>
             </Box>
         </Modal>

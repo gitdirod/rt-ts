@@ -276,14 +276,6 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel, open
           </>
         )}
       </Box>
-        {/* <ModalStoreUpdateProduct 
-          product={selectedProduct}
-          onCancel={handleCloseEdit}
-          onUpdated={() => {
-            handleCloseEdit();
-            mutate();
-          }}
-        /> */}
       </Modal>
     
   );
