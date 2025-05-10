@@ -40,7 +40,7 @@ export default function ProductPage({selectedProducts=[]}) {
             <Typography variant="h5" fontWeight="bold">
               Ventas
             </Typography>
-            <Chip label={soldOrders.length || 0} color="primary" />
+            <Chip variant="outlined" label={soldOrders.length || 0} color="primary" />
             </Stack>
         </Box>
 

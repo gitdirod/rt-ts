@@ -60,11 +60,11 @@ export default function IndexMemory(){
                     <Typography variant="h5" fontWeight="bold">
                         Memorias
                     </Typography>
-                    <Chip label={memories.length} color="primary" />
+                    <Chip variant="outlined" label={memories.length} color="primary" />
                 </Stack>
                 <Button 
                 onClick={()=>handleEditMemory(null)} 
-                variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+                variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />}>
                     Memoria
                 </Button>
             </Box>

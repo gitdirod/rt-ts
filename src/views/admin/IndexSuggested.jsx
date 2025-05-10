@@ -105,9 +105,9 @@ export default function IndexSuggested() {
                     <Typography variant="h5" fontWeight="bold">
                         Productos sugeridos
                     </Typography>
-                    <Chip label={suggestions.length} color="primary" />
+                    <Chip variant="outlined" label={suggestions.length} color="primary" />
                 </Stack>
-                <Button onClick={()=>handleEditSuggestion(null)} variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+                <Button onClick={()=>handleEditSuggestion(null)} variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />}>
                     Grupo
                 </Button>
             </Box>
@@ -127,7 +127,7 @@ export default function IndexSuggested() {
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                     <Typography fontWeight="medium">{sug.name}</Typography>
-                                    <Chip label={`${sug?.products?.length || 0}`} size="small" color="primary" sx={{ fontSize: '0.75rem', height: 20 }} />
+                                    <Chip variant="outlined" label={`${sug?.products?.length || 0}`} size="small" color="primary" sx={{ fontSize: '0.75rem', height: 20 }} />
                                 </Box>
                                 <Stack direction="row">
                                     <Tooltip title="Renombrar grupo" arrow>

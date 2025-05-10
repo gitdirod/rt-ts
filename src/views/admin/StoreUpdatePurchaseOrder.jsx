@@ -119,7 +119,7 @@ export default function StoreUpdatePurchaseOrder() {
                 <Typography variant="h5" fontWeight="bold">
                 {orderId ? `Editar compra ${orderId}`:'Nueva compra'}
                 </Typography>
-                <Chip label={purchaseOrderProducts.length || 0} color="primary" />
+                <Chip variant="outlined" label={purchaseOrderProducts.length || 0} color="primary" />
             </Stack>
             <Stack direction="row" gap={2} alignItems="center">
                 {/* Aquí van los Tabs */}

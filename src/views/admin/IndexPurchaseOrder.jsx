@@ -44,7 +44,7 @@ export default function ProductPage({selectedProducts=[]}) {
                 <Typography variant="h5" fontWeight="bold">
                     Ordenes de compra
                 </Typography>
-                <Chip label={purchaseOrders.length || 0} color="primary" />
+                <Chip variant="outlined" label={purchaseOrders.length || 0} color="primary" />
                 </Stack>
 
                 <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} 

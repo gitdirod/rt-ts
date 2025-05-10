@@ -84,7 +84,7 @@ export default function StoreUpdatePurchaseOrder() {
                     <Typography variant="h5" fontWeight="bold">
                     Prefactura {orderId}
                     </Typography>
-                    <Chip label={soldOrderProducts?.length || 0} color="primary" />
+                    <Chip variant="outlined" label={soldOrderProducts?.length || 0} color="primary" />
                 </Stack>
                 <Stack gap={2} sx={{cursor:'pointer'}} direction="row" onClick={()=>setEdit(true)}>
                     <OrderStatusBadge estado={soldOrder?.sold_order_tracking?.state} />

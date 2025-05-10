@@ -63,9 +63,9 @@ export default function IndexType(){
                     <Typography variant="h5" fontWeight="bold">
                         Tipos de productos
                     </Typography>
-                    <Chip label={types.length} color="primary" />
+                    <Chip variant="outlined" label={types.length} color="primary" />
                 </Stack>
-                <Button onClick={()=>handleEditType(null)} variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+                <Button onClick={()=>handleEditType(null)} variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />}>
                     Tipo de producto
                 </Button>
             </Box>

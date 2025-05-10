@@ -93,13 +93,13 @@ const handleCloseEditCategory = () => setEditCategory(false);
             <Typography variant="h5" fontWeight="bold">
                 Grupos y Categorías
             </Typography>
-            <Chip label={groups.length} color="primary" />
+            <Chip variant="outlined" label={groups.length} color="primary" />
         </Stack>
         <Stack direction="row" gap={2}>
-            <Button onClick={()=>handleEditGroup(null)} variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+            <Button onClick={()=>handleEditGroup(null)} variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />}>
             Grupo
             </Button>
-            <Button onClick={()=>handleEditCategory(null)} variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+            <Button onClick={()=>handleEditCategory(null)} variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />}>
             Categoría
             </Button>
         </Stack>
@@ -128,6 +128,7 @@ const handleCloseEditCategory = () => setEditCategory(false);
                   label={`${group?.categories?.length || 0}`}
                   size="small"
                   color="primary"
+                  variant="outlined"
                   sx={{ fontSize: '0.75rem', height: 20 }}
                   />
                 </Box>

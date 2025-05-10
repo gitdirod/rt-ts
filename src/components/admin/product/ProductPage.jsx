@@ -108,10 +108,10 @@ export default function ProductPage() {
           <Typography variant="h5" fontWeight="bold">
             Productos
           </Typography>
-          <Chip label={totalRecords || 0} color="primary" />
+          <Chip variant="outlined" label={totalRecords || 0} color="primary" />
         </Stack>
 
-        <Button variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />} 
+        <Button variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />} 
             onClick={() => {
             handleEdit(null); // por ejemplo, abrir modal de vista
           }}
