@@ -17,16 +17,12 @@ import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithC
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
 
-import { TypeService } from '/src/services/TypeService';
+
 import { ProductService } from '/src/services/ProductService';
-import { GroupService } from '/src/services/GroupService';
 
-const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel, open, handleCloseEdit }, ref) => {
+const ModalStoreUpdateProduct = forwardRef(({ product, groups, types,  onUpdated, onCancel, open, handleCloseEdit }, ref) => {
 
- 
 
-  const { data: groups } = GroupService.useAllGroups();
-  const { data: types } = TypeService.useAllTypes();
 
   const style = {
     position: 'absolute',
@@ -42,6 +38,8 @@ const ModalStoreUpdateProduct = forwardRef(({ product, onUpdated, onCancel, open
     p: 4,
     borderRadius: 2,
   };
+
+  
 
   const [productName, setProductName] = useState(product?.name || '');
   const [productCode, setProductCode] = useState(product?.code || '');

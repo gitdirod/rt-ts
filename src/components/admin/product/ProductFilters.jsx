@@ -18,7 +18,7 @@ export default function ProductFilters({ handleDebouncedFilterName, handleDeboun
   const [filterCode, setFilterCode] = useState('');
 
   const handleClick = (event) => {
-    console.log('se llama')
+    // console.log('se llama')
     setAnchorEl(event.currentTarget);
     setFetchEnabled(true);
   };

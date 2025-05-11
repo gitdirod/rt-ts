@@ -14,6 +14,9 @@ import ProductTable from './ProductTable';
 import ModalStoreUpdateProduct from './ModalStoreUpdateProduct';
 import ProductFilters from './ProductFilters';
 
+import { TypeService } from '/src/services/TypeService';
+import { GroupService } from '/src/services/GroupService';
+
 export default function ProductPage() {
  
   // Variables control ModalStoreUpdateProduct
@@ -23,6 +26,7 @@ export default function ProductPage() {
   const handleEdit = (product) => {
     setSelectedProduct(product)
     setEdit(true)
+    setFetchEnabled(true)
   };
 
 
@@ -36,6 +40,10 @@ export default function ProductPage() {
   // Variables paginación
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
+
+  const [fetchEnabled, setFetchEnabled] = useState(false);
+  const { data: groups } = GroupService.useAllGroups(fetchEnabled);
+  const { data: types } = TypeService.useAllTypes(fetchEnabled);
   
   const { data: products, totalRecords, loading, mutate } = ProductService.useProducts({
     page: page + 1,
@@ -91,8 +99,10 @@ export default function ProductPage() {
     <Box>
     {/* <div className="overflow-y-hidden flex flex-col flex-1"> */}
       <ModalStoreUpdateProduct 
-        open={edit}
         product={selectedProduct} 
+        groups={groups}
+        types={types}
+        open={edit}
         onCancel= {handleCloseEdit}
         onUpdated={()=>{
           handleCloseEdit();
