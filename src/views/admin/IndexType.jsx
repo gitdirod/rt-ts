@@ -10,7 +10,7 @@ import ModalStoreUpdateType from '/src/components/admin/modals/ModalStoreUpdateT
 
 export default function IndexType(){
 
-    const{data:types, mutate} = TypeService.useAllTypes()
+    const{data:types, mutate} = TypeService.useAllTypes(true)
 
     //  Modal crear editar grupo  
       const [editType, setEditType] = useState(false);

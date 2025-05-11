@@ -16,7 +16,7 @@ import ModalStoreUpdateGroup from '/src/components/admin/modals/ModalStoreUpdate
 import ModalStoreUpdateCategory from '/src/components/admin/modals/ModalStoreUpdateCategory';
 
 export default function IndexGroupAccordion() {
-  const { data: groups, mutate } = GroupService.useAllGroups();
+  const { data: groups, mutate } = GroupService.useAllGroups(true);
 
 //  Modal crear editar grupo  
   const [editGroup, setEditGroup] = useState(false);

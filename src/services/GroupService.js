@@ -8,8 +8,8 @@ export const GroupService = {
     fetchById: (id) => request(`${BACKEND.GROUPS.KEY}/${id}`, 'GET'),
     create: (data) => request(BACKEND.GROUPS.KEY, 'POST', data),
     update: (id, data) => request(`${BACKEND.GROUPS.KEY}/${id}`, 'POST', data),
-    useAllGroups: () => {
-        const url = BACKEND.GROUPS.KEY;
+    useAllGroups: (enabled = false) => {
+        const url = enabled ? BACKEND.GROUPS.KEY : null;
 
         // Uso de SWR con fetchData como fetcher
         const { data, error, mutate } = useSWR(

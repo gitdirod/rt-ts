@@ -6,9 +6,10 @@ import { TypeService } from '/src/services/TypeService';
 
 export default function ProductFilters({ handleDebouncedFilterName, handleDebouncedFilterCode, handleChangeCategories, handleChangeTypes }) {
   const [anchorEl, setAnchorEl] = useState(null);   // Controla si el popover está abierto
-
-  const {data:groups} = GroupService.useAllGroups()
-  const {data:types} = TypeService.useAllTypes()
+  
+  const [fetchEnabled, setFetchEnabled] = useState(false);
+  const {data:groups} = GroupService.useAllGroups(fetchEnabled)
+  const {data:types} = TypeService.useAllTypes(fetchEnabled)
 
   //   Filtros
   const [categoryIds, setCategoryIds] = useState([]);
@@ -17,7 +18,9 @@ export default function ProductFilters({ handleDebouncedFilterName, handleDeboun
   const [filterCode, setFilterCode] = useState('');
 
   const handleClick = (event) => {
+    console.log('se llama')
     setAnchorEl(event.currentTarget);
+    setFetchEnabled(true);
   };
 
   const handleClose = () => {
