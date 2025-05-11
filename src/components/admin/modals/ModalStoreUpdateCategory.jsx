@@ -16,7 +16,7 @@ import BACKEND from '/src/data/backend';
 
 const ModalStoreUpdateCategory = forwardRef(({ category, onUpdated, onCancel }, ref) => {
 
-    const {data:groups} = GroupService.useAllGroups()
+    const {data:groups} = GroupService.useAllGroups(true)
 
     const style = {
         position: 'absolute',
