@@ -7,7 +7,7 @@ import 'moment/dist/locale/es'
 import localization from 'moment/locale/es';
 moment.suppressDeprecationWarnings = true;
 moment.updateLocale('es', localization);
-import iconCalendar from '/src/static/icons/calendar.svg'
+// import iconCalendar from '/src/static/icons/calendar.svg'
 
 
 export default function BlockLanding({children, item, type}) {
@@ -84,7 +84,7 @@ export default function BlockLanding({children, item, type}) {
                         "sss"
                         :
                         <div className='center-r py-2'>
-                            <img src={iconCalendar} alt="" className='w-5 h-5 grey'/>
+                            {/* <img src={iconCalendar} alt="" className='w-5 h-5 grey'/> */}
                             <span className=' font-thin'>{moment(item?.updated_at).format("ll")}</span>
                         </div>
                     }

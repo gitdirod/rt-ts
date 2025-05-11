@@ -1,5 +1,4 @@
 import IsLoading from '../../components/store/common/IsLoading'
-import iconDesktop from '/src/static/icons/desktop.svg'
 import BlockLanding from '/src/components/admin/BlockLanding'
 import { DEVICE_TYPES } from '/src/data/deviceTypes'
 import { LandingService } from '/src/services/LandingService'
@@ -13,7 +12,7 @@ export default function IndexLanding() {
     return (
     <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>
         <div className='flex'>
-                <img src={iconDesktop} alt="save" className='w-8 h-8 pr-2' />
+                {/* <img src={iconDesktop} alt="save" className='w-8 h-8 pr-2' /> */}
                 Landing
                 </div>
         <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
