@@ -36,7 +36,7 @@ const ModalStoreLanding = forwardRef(({ onUpdated, onCancel }, ref) => {
         const _landing = {
             _method: 'POST',
             type: typeId,
-            images: imagenesSeleccionadas,
+            image: imagenesSeleccionadas[0],
         }
 
         const response = await LandingService.create(_landing);
@@ -82,9 +82,9 @@ const ModalStoreLanding = forwardRef(({ onUpdated, onCancel }, ref) => {
                 maxImages={1} 
                 message="Subir imagen"
             />
-            {errores?.images && (
+            {errores?.image && (
                 <Alert icon={<GppBadOutlinedIcon fontSize="inherit" />} severity="error">
-                {errores?.images}
+                {errores?.image}
                 </Alert>
             )}
 

@@ -10,10 +10,10 @@ import ModalStoreLanding from '/src/components/admin/landing/ModalStoreLanding';
 export default function IndexMemory(){
 
 
-    const {data:landings}= LandingService.useAllLandings(true)
+    const {data:landings, mutate}= LandingService.useAllLandings(true)
     
     const [uploadLanding, setUploadLanding] = useState(false);
-    const handleCloseEditMemory = () => setUploadLanding(false);
+    const closeModalUploadLanding = () => setUploadLanding(false);
 
     return (
 
@@ -22,14 +22,14 @@ export default function IndexMemory(){
                 open={uploadLanding}
                 onClose={(event, reason) => {
                     if (reason !== 'backdropClick') {
-                        handleCloseEditMemory();
+                        closeModalUploadLanding();
                     }
                 }}
             >
                 <ModalStoreLanding
-                    onCancel={handleCloseEditMemory}
+                    onCancel={closeModalUploadLanding}
                     onUpdated={() => {
-                        handleCloseEditMemory();
+                        closeModalUploadLanding();
                     mutate();
                     }}
                 />
