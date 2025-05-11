@@ -1,73 +1,106 @@
-import IsLoading from '../../components/store/common/IsLoading'
-import iconUser from '/src/static/icons/user.svg'
-import iconEmail from '/src/static/icons/email.svg'
-import iconPhone from '/src/static/icons/phone.svg'
-import { UserService } from '/src/services/UserService'
+import { Box, Chip, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
+import { UserService } from '/src/services/UserService';
+import { formatearFecha } from '/src/helpers';
 
+export default function IndexMemory(){
 
-export default function IndexGroup (){
-    
-    const{data:users}=UserService.useAllUsers()
+    const{data:users}=UserService.useAllUsers(true)
 
-    if(users === undefined) return(<IsLoading/>)
     return (
-        <div className='overflow-y-hidden flex flex-col flex-1'>
-            <div className='flex'>
-                    <img src={iconUser} alt="save" className='w-8 h-8 pr-2' />
-                        Usuarios ({users?.length})
-                    </div>
-            <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-                <div className='w-full'>
 
-                    
-                    <div className='pb-1 pr-1 flex flex-col gap-0.5'>
-                        {users?.map(user => (
-                            <div
-                                key={user.id}
-                            >
-                                <BlockUser
-                                    user={user}
-                                >
-                                    
-                                </BlockUser>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    )
-}
+        <Box className="flex flex-col flex-1 overflow-hidden">
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    p: 1,
+                    my: 1,
+                    bgcolor: 'white',
+                    borderRadius: 1,
+                    border: '1px solid #ccc'
+                }}
+            >
+                <Stack direction="row" spacing={2} alignItems="center">
+                    <Person2OutlinedIcon color="primary" />
+                    <Typography variant="h5" fontWeight="bold">
+                        Usuarios
+                    </Typography>
+                    <Chip variant="outlined" label={users.length} color="primary" />
+                </Stack>
+            </Box>
 
-const BlockUser=({user})=>{
-    return(
-        <div className='flex w-full border gap-x-1 justify-between p-2 transition-all bg-white rounded-lg text-slate-700 hover:border-slate-500 cursor-pointer'>
-            <div className='flex flex-col'>
-                <div className='flex items-center gap-1'>
-                    <span className='font-extrabold'>{user?.name}</span>
-                    <span className='font-bold'><TagRole role={user?.role}/></span>
-                </div>
-                <div className='flex gap-x-1 items-center'>
-                    <img src={iconEmail} alt="save" className='w-5 h-5 gray' />
-                    <span className=''>{user?.email}</span>
-                    {/* {user?.phone} */}
-                </div>
-                <div className='flex gap-x-1 items-center'>
-                    <img src={iconPhone} alt="save" className='w-5 h-5 gray' />
-                    <span className=''>099 109 5204</span>
-                </div>
-            </div>
-            
-        </div>
-    )
-}
 
-const TagRole=({role=''})=>{
-    return(
-        <span className={`${role==='admin'?'bg-green-500':
-        role==='coor'?'bg-sky-500':
-        role==='user'?'bg-slate-600':''
-    } p-1 text-white rounded-md capitalize text-xs`}>{role}</span>
-    )
+            <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
+            <TableContainer  sx={{ maxHeight: 'calc(100vh - 95px)', overflowY: 'auto', borderRadius: 2 }}>
+              <Table stickyHeader>
+                <TableHead>
+                  <TableRow >
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Id
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                        Nombre
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Email
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Telefonos
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Rol
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Verificado
+                        </Typography>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(users || []).map((user, index) => (
+                    <TableRow 
+                      key={index}
+                      hover
+                      sx={{
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s ease-in-out',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 0, 0, 0.05)', // claro en light mode
+                        }
+                      }}
+                    >
+                      
+                        <TableCell><Typography variant="body2">{user?.id}</Typography></TableCell>
+                        <TableCell><Typography variant="body2">{user?.name}</Typography></TableCell>
+                        <TableCell><Typography variant="body2">{user?.email}</Typography></TableCell>
+                        <TableCell>
+                            <Typography variant="body2">{user.phones && user.phones.length > 0
+                                ? user.phones.join(', ')
+                                : '-'}
+                            </Typography>
+                        </TableCell>
+                        <TableCell><Typography variant="body2">{user?.role}</Typography></TableCell>
+                        <TableCell><Typography variant="body2">{formatearFecha(user?.email_verified_at)}</Typography></TableCell>
+                        
+                    </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Box>
+  )
 }

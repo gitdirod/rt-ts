@@ -7,8 +7,8 @@ export const UserService = {
     fetchById: (id) => request(`${BACKEND.USERS.KEY}/${id}`, 'GET'),
     create: (data) => request(BACKEND.USERS.KEY, 'POST', data),
     update: (id, data) => request(`${BACKEND.USERS.KEY}/${id}`, 'POST', data),
-    useAllUsers: () => {
-        const url = BACKEND.USERS.KEY;
+    useAllUsers: (enabled = false) => {
+        const url = enabled ?  BACKEND.USERS.KEY : null;
 
         // Uso de SWR con fetchData como fetcher
         const { data, error, mutate } = useSWR(
