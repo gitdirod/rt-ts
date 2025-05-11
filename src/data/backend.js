@@ -13,7 +13,7 @@ const BACKEND = {
     GROUPS: createEndpoint('groups'),
     ICONS: createEndpoint('iconos'),
     MEMORIES: createEndpoint('memories'),
-    LANDING: createEndpoint('landings'),
+    LANDINGS: createEndpoint('landings'),
     LIKES: createEndpoint('likes'),
     SUGGESTIONS: createEndpoint('suggestions'),
     SUGGESTEDS: createEndpoint('suggesteds'),

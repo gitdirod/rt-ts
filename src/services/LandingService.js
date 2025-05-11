@@ -4,11 +4,11 @@ import BACKEND from '/src/data/backend';
 import request from './request';
 
 export const LandingService = {
-    fetchById: (id) => request(`${BACKEND.LANDING.KEY}/${id}`, 'GET'),
-    create: (data) => request(BACKEND.LANDING.KEY, 'POST', data),
-    update: (id, data) => request(`${BACKEND.LANDING.KEY}/${id}`, 'POST', data),
-    useAllLandings: () => {
-        const url = BACKEND.LANDING.KEY;
+    fetchById: (id) => request(`${BACKEND.LANDINGS.KEY}/${id}`, 'GET'),
+    create: (data) => request(BACKEND.LANDINGS.KEY, 'POST', data),
+    update: (id, data) => request(`${BACKEND.LANDINGS.KEY}/${id}`, 'POST', data),
+    useAllLandings: (enable = false) => {
+        const url = enable ? BACKEND.LANDINGS.KEY : null;
 
         // Uso de SWR con fetchData como fetcher
         const { data, error, mutate } = useSWR(

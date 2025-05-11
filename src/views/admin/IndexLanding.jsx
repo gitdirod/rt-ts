@@ -1,49 +1,136 @@
-import IsLoading from '../../components/store/common/IsLoading'
-import BlockLanding from '/src/components/admin/BlockLanding'
-import { DEVICE_TYPES } from '/src/data/deviceTypes'
-import { LandingService } from '/src/services/LandingService'
+import { useState } from 'react'
+import { Box, Button, Chip, Modal, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import BACKEND from '/src/data/backend';
+import { LandingService } from '/src/services/LandingService';
+import { formatearFecha } from '/src/helpers';
+import VrpanoOutlinedIcon from '@mui/icons-material/VrpanoOutlined';
+import DeviceTypeIcon from '/src/components/admin/landing/DeviceTypeIcon';
+export default function IndexMemory(){
 
 
-export default function IndexLanding() {
+    const {data:landings}= LandingService.useAllLandings(true)
+
+    // Modal crear editar categoria
+    
+    const [editMemory, setEditMemory] = useState(false);
+    const [selectedMemory, setSelectedMemory] = useState({})
+    
+    const handleEditMemory = (group) => {
+      setSelectedMemory(group)
+      setEditMemory(true)
+    };
+    const handleCloseEditMemory = () => setEditMemory(false);
 
 
-    const {data:landings}= LandingService.useAllLandings()
-    if(landings === undefined) return(<IsLoading/>)
     return (
-    <div className='overflow-y-hidden flex flex-col flex-1 pl-2 pb-2'>
-        <div className='flex'>
-                {/* <img src={iconDesktop} alt="save" className='w-8 h-8 pr-2' /> */}
-                Landing
-                </div>
-        <div className="flex flex-1 relative w-full overflow-hidden pb-5 overflow-y-auto">
-            <div className='w-full'>
-                <div className='pb-1 pr-1 flex gap-2 flex-wrap'>
-                    <BlockLanding
-                        type={DEVICE_TYPES.MOBILE}
-                        item={landings?.mobile}
+
+        <Box className="flex flex-col flex-1 overflow-hidden">
+            {/* <Modal
+                open={editMemory}
+                onClose={(event, reason) => {
+                    if (reason !== 'backdropClick') {
+                        handleCloseEditMemory();
+                    }
+                }}
+            >
+                <ModalStoreUpdateMemory 
+                    memory={selectedMemory}
+                    onCancel={handleCloseEditMemory}
+                    onUpdated={() => {
+                        handleCloseEditMemory();
+                    mutate();
+                    }}
+                />
+            </Modal> */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    p: 1,
+                    my: 1,
+                    bgcolor: 'white',
+                    borderRadius: 1,
+                    border: '1px solid #ccc'
+                }}
+            >
+                <Stack direction="row" spacing={2} alignItems="center">
+                    <VrpanoOutlinedIcon color="primary" />
+                    <Typography variant="h5" fontWeight="bold">
+                        Landings
+                    </Typography>
+                    <Chip variant="outlined" label={landings.length} color="primary" />
+                </Stack>
+                <Button 
+                onClick={()=>handleEditMemory(null)} 
+                variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />}>
+                    Landing
+                </Button>
+            </Box>
+
+
+            <Paper sx={{ width: '100%', overflow: 'hidden', overflowY:'auto', p:1, border:"1px solid #ccc" }}>
+            <TableContainer  sx={{ maxHeight: 'calc(100vh - 95px)', overflowY: 'auto', borderRadius: 2 }}>
+              <Table stickyHeader>
+                <TableHead>
+                  <TableRow >
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Id
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Tipo
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Imagen
+                        </Typography>
+                    </TableCell>
+                    <TableCell>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            Creado
+                        </Typography>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(landings || []).map((landing, index) => (
+                    <TableRow 
+                      key={index}
+                      hover
+                      sx={{
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s ease-in-out',
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 0, 0, 0.05)', // claro en light mode
+                        }
+                      }}
+                      onClick={() => {
+                        handleEditMemory(landing)
+                      }}
                     >
-                        <img src={DEVICE_TYPES.MOBILE.icon} alt="" className='w-6 h-6'/>
-                        {DEVICE_TYPES.MOBILE.label}  
-                    </BlockLanding>
-                    <BlockLanding
-                        type={DEVICE_TYPES.TABLET}
-                        item={landings?.tablet}
-                    >
-                        <img src={DEVICE_TYPES.TABLET.icon} alt="" className='w-6 h-6'/>
-                        {DEVICE_TYPES.TABLET.label}
-                    </BlockLanding>
-                    <BlockLanding
-                        type={DEVICE_TYPES.DESKTOP}
-                        item={landings?.desktop}
-                    >
-                        <img src={DEVICE_TYPES.DESKTOP.icon} alt="" className='w-6 h-6'/>
-                       {DEVICE_TYPES.DESKTOP.label}
-                    </BlockLanding>
-                </div>
-            </div>
-        </div>
-        
-    </div>
+                      
+                        <TableCell><Typography variant="body2">{landing?.id}</Typography></TableCell>
+                        <TableCell><DeviceTypeIcon type={landing?.type} /></TableCell>
+                        <TableCell>
+                            <img
+                              src={BACKEND.LANDINGS.URL + landing?.name}
+                              alt={landing.name}
+                              style={{ height: 80, objectFit: 'contain' }}
+                            />
+                        </TableCell>
+                        <TableCell><Typography variant="body2">{formatearFecha(landing?.created_at)}</Typography></TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Box>
+
   )
 }
-
