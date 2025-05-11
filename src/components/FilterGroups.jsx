@@ -16,7 +16,7 @@ import { GroupService } from '/src/services/GroupService';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const FilterGroups= () => {
-  const { data: groups, loading } = GroupService.useAllGroups();
+  const { data: groups, loading } = GroupService.useAllGroups(true);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
