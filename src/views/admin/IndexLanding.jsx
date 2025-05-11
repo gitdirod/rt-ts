@@ -6,43 +6,34 @@ import { LandingService } from '/src/services/LandingService';
 import { formatearFecha } from '/src/helpers';
 import VrpanoOutlinedIcon from '@mui/icons-material/VrpanoOutlined';
 import DeviceTypeIcon from '/src/components/admin/landing/DeviceTypeIcon';
+import ModalStoreLanding from '/src/components/admin/landing/ModalStoreLanding';
 export default function IndexMemory(){
 
 
     const {data:landings}= LandingService.useAllLandings(true)
-
-    // Modal crear editar categoria
     
-    const [editMemory, setEditMemory] = useState(false);
-    const [selectedMemory, setSelectedMemory] = useState({})
-    
-    const handleEditMemory = (group) => {
-      setSelectedMemory(group)
-      setEditMemory(true)
-    };
-    const handleCloseEditMemory = () => setEditMemory(false);
-
+    const [uploadLanding, setUploadLanding] = useState(false);
+    const handleCloseEditMemory = () => setUploadLanding(false);
 
     return (
 
         <Box className="flex flex-col flex-1 overflow-hidden">
-            {/* <Modal
-                open={editMemory}
+            <Modal
+                open={uploadLanding}
                 onClose={(event, reason) => {
                     if (reason !== 'backdropClick') {
                         handleCloseEditMemory();
                     }
                 }}
             >
-                <ModalStoreUpdateMemory 
-                    memory={selectedMemory}
+                <ModalStoreLanding
                     onCancel={handleCloseEditMemory}
                     onUpdated={() => {
                         handleCloseEditMemory();
                     mutate();
                     }}
                 />
-            </Modal> */}
+            </Modal>
             <Box
                 sx={{
                     display: 'flex',
@@ -63,7 +54,7 @@ export default function IndexMemory(){
                     <Chip variant="outlined" label={landings.length} color="primary" />
                 </Stack>
                 <Button 
-                onClick={()=>handleEditMemory(null)} 
+                onClick={()=>setUploadLanding(true)} 
                 variant="outlined" color="primary" startIcon={<AddCircleOutlineIcon />}>
                     Landing
                 </Button>
@@ -109,9 +100,9 @@ export default function IndexMemory(){
                           backgroundColor: 'rgba(0, 0, 0, 0.05)', // claro en light mode
                         }
                       }}
-                      onClick={() => {
-                        handleEditMemory(landing)
-                      }}
+                    //   onClick={() => {
+                    //     handleEditMemory(landing)
+                    //   }}
                     >
                       
                         <TableCell><Typography variant="body2">{landing?.id}</Typography></TableCell>

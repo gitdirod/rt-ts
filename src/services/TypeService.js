@@ -10,7 +10,6 @@ export const TypeService = {
     update: (id, data) => request(`${BACKEND.TYPE_PRODUCT.KEY}/${id}`, 'POST', data),
     useAllTypes: (enabled = false) => {
         const url = enabled ? BACKEND.TYPE_PRODUCT.KEY : null;
-        console.log(url)
 
         // Uso de SWR con fetchData como fetcher
         const { data, error, mutate } = useSWR(

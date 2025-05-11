@@ -31,9 +31,9 @@ export default function LandingImage(){
 
         const { mobile, tablet, desktop } = landings;  // Desestructure here, inside the function
 
-        if (windowSize[0] < DEVICE_TYPES.MOBILE.maxWidth) {
+        if (windowSize[0] < DEVICE_TYPES[0].maxWidth) {
             return mobile?.name;
-        } else if (windowSize[0] < DEVICE_TYPES.TABLET.maxWidth) {
+        } else if (windowSize[0] < DEVICE_TYPES[1].maxWidth) {
             return tablet?.name;
         } else {
             return desktop?.name;
