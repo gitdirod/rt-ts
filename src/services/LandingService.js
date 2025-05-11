@@ -7,6 +7,7 @@ export const LandingService = {
     fetchById: (id) => request(`${BACKEND.LANDINGS.KEY}/${id}`, 'GET'),
     create: (data) => request(BACKEND.LANDINGS.KEY, 'POST', data),
     update: (id, data) => request(`${BACKEND.LANDINGS.KEY}/${id}`, 'POST', data),
+    delete: (id) => request(`${BACKEND.LANDINGS.KEY}/${id}`, 'DELETE'),
     useAllLandings: (enable = false) => {
         const url = enable ? BACKEND.LANDINGS.KEY : null;
 
