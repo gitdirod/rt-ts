@@ -126,7 +126,7 @@ export default function ProductPage() {
             handleEdit(null); // por ejemplo, abrir modal de vista
           }}
           >
-          Nuevo
+          Producto
         </Button>
       </Box>
       

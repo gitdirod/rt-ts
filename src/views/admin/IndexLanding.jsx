@@ -119,7 +119,7 @@ export default function IndexMemory() {
                   <TableCell><DeviceTypeIcon type={landing?.type} /></TableCell>
                   <TableCell>
                     <img
-                      src={BACKEND.LANDINGS.URL + landing?.name}
+                      src={BACKEND.LANDINGS_STORAGE.URL + landing?.name}
                       alt={landing.name}
                       style={{ height: 80, objectFit: 'contain' }}
                     />
