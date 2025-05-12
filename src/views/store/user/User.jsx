@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import { useAuth } from "/src/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { timeToText } from "/src/helpers";
 
 
 import {
@@ -22,6 +21,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import CircularProgress from '@mui/material/CircularProgress';
 import TittleName from "/src/components/store/common/TittleName";
 import TarjetEnvoice from "/src/components/store/cart/TarjetEnvoice";
+import { formatearFecha } from "/src/helpers";
 
 const User = () => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const User = () => {
       <Paper elevation={3} sx={{ p: 3, my: 2 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="subtitle2" color="text.secondary">
-            Desde: {timeToText(user?.created_at, 'LLL')}
+            Desde: {formatearFecha(user?.created_at)}
           </Typography>
         </Box>
 

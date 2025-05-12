@@ -1,7 +1,7 @@
 import { useRouteError } from "react-router-dom";
 import Footer from "../components/store/footer/Footer";
 
-import SuggestedsProducts from "/src/components/SuggestedsProducts";
+
 import errorImage from "/src/static/img/404.svg"
 import ShowCategories from "/src/components/store/category/ShowCategories";
 import Memories from "/src/components/store/memories/Memories";
@@ -33,7 +33,7 @@ export default function ErrorView() {
               </div>
             </div>
           </div>
-          <SuggestedsProducts/>
+
           <ShowCategories
             font="text-lg"
           />

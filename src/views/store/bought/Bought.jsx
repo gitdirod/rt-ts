@@ -2,7 +2,7 @@ import { useAuth } from "/src/hooks/useAuth";
 import IsLoading from "/src/components/store/common/IsLoading";
 import TittleName from "/src/components/store/common/TittleName";
 import { SoldOrderService } from "/src/services/SoldOrderService";
-import { formatearDinero, timeToText } from "/src/helpers";
+import { formatearDinero, formatearFecha } from "/src/helpers";
 
 import {
   Table,
@@ -65,7 +65,7 @@ export default function Bought(){
               >
                 <TableCell>#{order.id}</TableCell>
                 <TableCell>
-                  {timeToText(order.created_at, 'dddd D [de] MMMM [de] YYYY - HH:mm')}
+                  {formatearFecha(order.created_at, 'dddd D [de] MMMM [de] YYYY - HH:mm')}
                 </TableCell>
                 <TableCell>
                   <PagoPedido estado={order?.soldOrderPayment?.state} />

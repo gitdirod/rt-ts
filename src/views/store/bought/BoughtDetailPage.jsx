@@ -3,7 +3,7 @@ import { useAuth } from "/src/hooks/useAuth";
 import IsLoading from "/src/components/store/common/IsLoading";
 import TittleName from "/src/components/store/common/TittleName";
 import { SoldOrderService } from "/src/services/SoldOrderService";
-import { formatearDinero, timeToText } from "/src/helpers";
+import { formatearDinero, formatearFecha } from "/src/helpers";
 import {
   Table,
   TableBody,
@@ -34,7 +34,7 @@ export default function BoughtDetailPage() {
       <TittleName>Detalle del Pedido #{order.id}</TittleName>
 
       <Typography variant="body2" sx={{ mt: 1, mb: 3 }}>
-        Fecha: {timeToText(order.created_at, 'dddd D [de] MMMM [de] YYYY - HH:mm')}
+        Fecha: {formatearFecha(order.created_at, 'dddd D [de] MMMM [de] YYYY - HH:mm')}
       </Typography>
 
       <Stack direction="row" gap={2}>
