@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Box, Avatar, Badge } from '@mui/material';
 import bag from '/src/static/icons/bag.svg';
 
-const ImageTable = ({ height = 40, url, images, count = false }) => {
+const ImageProductTable = ({ height = 40, url, images, count = false }) => {
   const hasImages = images?.length > 0;
   const imageSize = height; // Para controlar el tamaño dinámico
 
@@ -75,4 +75,4 @@ const ImageTable = ({ height = 40, url, images, count = false }) => {
   );
 };
 
-export default memo(ImageTable);
+export default memo(ImageProductTable);

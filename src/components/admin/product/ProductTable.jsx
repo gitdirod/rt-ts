@@ -3,8 +3,8 @@ import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { formatearDinero } from '/src/helpers';
-import ImageTable from '/src/components/admin/ImageTable';
 import BACKEND from '/src/data/backend';
+import ImageProductTable from './ImageProductTable';
 
 export default function ProductTable({
   products, 
@@ -87,7 +87,7 @@ export default function ProductTable({
                   <TableCell><Typography variant="body2">{product?.type_product?.name}</Typography></TableCell>
                   <TableCell><Typography variant="body2">{formatearDinero(product?.price)}</Typography></TableCell>
                   <TableCell>
-                    <ImageTable
+                    <ImageProductTable
                       images={product?.images}
                       url={BACKEND.PRODUCTS.URL}
                       higth={14}

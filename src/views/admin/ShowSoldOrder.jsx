@@ -18,13 +18,13 @@ import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import { useParams } from 'react-router-dom';
 import { SoldOrderService } from '/src/services/SoldOrderService';
 import IsLoading from '/src/components/store/common/IsLoading';
-import ImageTable from '/src/components/admin/ImageTable';
 import BACKEND from '/src/data/backend';
 import { formatearDinero } from '/src/helpers';
 import UserInfoCard from '/src/components/admin/sold/UserInfoCard';
 import OrderStatusBadge from '/src/components/admin/sold/OrderStatusBadge';
 import PaymentStatusBadge from '/src/components/admin/sold/PaymentStatusBadge';
 import ModalUpdateSoldOrder from '/src/components/admin/sold/ModalUpdateSoldOrder';
+import ImageProductTable from '/src/components/admin/product/ImageProductTable';
 
 export default function StoreUpdatePurchaseOrder() {
 
@@ -144,7 +144,7 @@ export default function StoreUpdatePurchaseOrder() {
                                         }}
                                     >
                                         <TableCell>
-                                            <ImageTable
+                                            <ImageProductTable
                                                 images={soldOrderproduct?.product?.images}
                                                 url={BACKEND.PRODUCTS.URL}
                                                 higth={14}

@@ -8,13 +8,13 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import StarPurple500Icon from '@mui/icons-material/StarPurple500';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BACKEND from '/src/data/backend';
-import ImageTable from '/src/components/admin/ImageTable';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { SuggestedService } from '/src/services/SuggestedService';
 import { Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ModalStoreUpdateSuggestion from '/src/components/admin/suggestion/ModalStoreUpdateSuggestion';
 import SelectProductsDialog from '/src/components/admin/product/SelectProductsDialog';
+import ImageProductTable from '/src/components/admin/product/ImageProductTable';
 
 
 
@@ -187,7 +187,7 @@ export default function IndexSuggested() {
                                                     <TableCell>{pro.code}</TableCell>
                                                     <TableCell>{pro.name}</TableCell>
                                                     <TableCell>
-                                                        <ImageTable 
+                                                        <ImageProductTable 
                                                             images={pro?.images}
                                                             url={BACKEND.PRODUCTS.URL}
                                                             higth={20}

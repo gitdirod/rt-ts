@@ -12,9 +12,9 @@ import {
   TextField,
   InputAdornment
 } from '@mui/material';
-import ImageTable from '/src/components/admin/ImageTable';
 import BACKEND from '/src/data/backend';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ImageProductTable from '../product/ImageProductTable';
 
 export default function PurchaseOrderTableUnits({
 
@@ -59,7 +59,7 @@ export default function PurchaseOrderTableUnits({
                   sx={isInvalid ? { backgroundColor: 'rgba(255, 0, 0, 0.1)' } : {}}
                 >
                   <TableCell>
-                    <ImageTable
+                    <ImageProductTable
                       images={p?.product?.images}
                       url={BACKEND.PRODUCTS.URL}
                       higth={14}
