@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { StoreProvider } from './context/StoreProvider'
-import { AdminProvider } from './context/AdminProvider'
+// import { AdminProvider } from './context/AdminProvider'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import router from './router'
@@ -15,11 +15,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AdminProvider>
+      {/* <AdminProvider> */}
         <StoreProvider>
           <RouterProvider router={router} />
         </StoreProvider>
-      </AdminProvider>
+      {/* </AdminProvider> */}
     </ThemeProvider>
   </React.StrictMode>
 )

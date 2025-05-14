@@ -7,12 +7,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useRef, useState, useEffect, memo } from 'react';
 import { useAuth } from '/src/hooks/useAuth';
 import { ADDRESSES_TYPES } from '/src/data/addressesTypes';
-import useAdmin from '/src/hooks/useAdmin';
-import BACKEND from '/src/data/backend';
+import { AddressesService } from '/src/services/AddressService';
 
 const TarjetEnvoice = ({ children, envoiceAddress, envoice = true }) => {
   const { userMutate, isLoading } = useAuth({ middleware: 'auth', url: '/' });
-  const { newCreate } = useAdmin();
+
 
   const [formOpen, setFormOpen] = useState(false);
 
@@ -40,7 +39,7 @@ const TarjetEnvoice = ({ children, envoiceAddress, envoice = true }) => {
       phone: phone.replace(/\s+/g, '')
     };
 
-    const response = await newCreate(BACKEND.ADDRESSES.KEY, sendData);
+    const response = await AddressesService.create(sendData);
     if (response.success) {
       setErrores({});
       userMutate();
