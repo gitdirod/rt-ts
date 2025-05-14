@@ -5,12 +5,12 @@ import { formatearDinero } from "../../../helpers";
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "/src/hooks/useAuth";
 import TittleName from "/src/components/store/common/TittleName";
-import NoProductsToShow from "/src/components/common/NoProductsToShow";
 import { Box, Button, List, ListItem, Stack, Typography } from "@mui/material";
 import ProductCartDrawer from "/src/components/store/product/ProductCartDrawer";
 import { Container } from '@mui/material';
 import CheckoutModal from "/src/components/store/cart/CheckoutModal";
 import LoginCreateRecuba from "/src/components/store/navbar/LoginCreateRecuba";
+import NoProductsToShow from "/src/components/store/cart/NoProductsToShow";
 
 
 

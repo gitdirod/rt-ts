@@ -1,10 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { memo, useState } from "react";
 import { useAuth } from "/src/hooks/useAuth";
-import SidebarAdmin from "/src/components/admin/SidebarAdmin";
-import NavAdmin from "/src/components/admin/NavAdmin";
 import IsLoading from "/src/components/store/common/IsLoading";
 import { Box } from "@mui/material";
+import SidebarAdmin from "/src/components/admin/sidebar/SidebarAdmin";
 
 const AdminLayout = () => {
   const { user } = useAuth({ middleware: "admin", url: "/store" });
