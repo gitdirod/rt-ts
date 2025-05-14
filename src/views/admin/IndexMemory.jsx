@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import IsLoading from '/src/components/store/common/IsLoading'
 import { MemoryService } from '/src/services/MemoryService'
 import { Box, Button, Chip, Modal, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CommentIcon from '@mui/icons-material/Comment';
 import BACKEND from '/src/data/backend';
-import ModalStoreUpdateMemory from '/src/components/admin/modals/ModalStoreUpdateMemory';
+import ModalStoreUpdateMemory from '/src/components/admin/memory/ModalStoreUpdateMemory';
+
 
 export default function IndexMemory(){
 

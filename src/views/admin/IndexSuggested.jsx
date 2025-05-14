@@ -7,14 +7,14 @@ import {
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import StarPurple500Icon from '@mui/icons-material/StarPurple500';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import SelectProductsDialog from '/src/components/admin/modals/SelectProductsDialog';
 import BACKEND from '/src/data/backend';
 import ImageTable from '/src/components/admin/ImageTable';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { SuggestedService } from '/src/services/SuggestedService';
 import { Tooltip } from '@mui/material';
-import ModalStoreUpdateSuggestion from '/src/components/admin/modals/ModalStoreUpdateSuggestion';
 import EditIcon from '@mui/icons-material/Edit';
+import ModalStoreUpdateSuggestion from '/src/components/admin/suggestion/ModalStoreUpdateSuggestion';
+import SelectProductsDialog from '/src/components/admin/product/SelectProductsDialog';
 
 
 

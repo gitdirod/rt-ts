@@ -5,7 +5,8 @@ import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { TypeService } from '/src/services/TypeService'
 import BACKEND from '/src/data/backend';
-import ModalStoreUpdateType from '/src/components/admin/modals/ModalStoreUpdateType';
+import ModalStoreUpdateType from '/src/components/admin/type/ModalStoreUpdateType';
+
 
 
 export default function IndexType(){

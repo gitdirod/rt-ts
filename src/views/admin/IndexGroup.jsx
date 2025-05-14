@@ -12,8 +12,9 @@ import CategoryIcon from '@mui/icons-material/Category';
 import { GroupService } from '/src/services/GroupService';
 import EditIcon from '@mui/icons-material/Edit';
 import BACKEND from '/src/data/backend';
-import ModalStoreUpdateGroup from '/src/components/admin/modals/ModalStoreUpdateGroup';
-import ModalStoreUpdateCategory from '/src/components/admin/modals/ModalStoreUpdateCategory';
+import ModalStoreUpdateCategory from '/src/components/admin/category/ModalStoreUpdateCategory';
+import ModalStoreUpdateGroup from '/src/components/admin/category/ModalStoreUpdateGroup';
+
 
 export default function IndexGroupAccordion() {
   const { data: groups, mutate } = GroupService.useAllGroups(true);
