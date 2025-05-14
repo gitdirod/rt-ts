@@ -160,7 +160,7 @@ const ModalStoreUpdateProduct = forwardRef(({ product, groups, types,  onUpdated
                     <MenuItem value=""><em>Seleccionar categoría</em></MenuItem>
                     {groups?.map((group) => (
                       [
-                        <ListSubheader key={`group-${group.id}`}>{group.name}</ListSubheader>,
+                        <ListSubheader sx={{color:'primary.main'}} key={`group-${group.id}`}>{group.name}</ListSubheader>,
                         group.categories.map((category) => (
                           <MenuItem key={category.id} value={category.id}>
                             {category.name}

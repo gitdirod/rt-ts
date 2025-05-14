@@ -1,7 +1,5 @@
 import {createBrowserRouter, Outlet, Navigate } from 'react-router-dom'
 
-// Vista consumidor
-import AuthLayout from './layout/AuthLayout'
 import StoreLayout from './layout/StoreLayout'
 import Cart from './views/store/cart/Cart'
 import Index from './views/Index'
@@ -13,10 +11,6 @@ import ViewProducts from '/src/views/store/product/ViewProducts'
 import Likes from '/src/views/store/likes/Likes'
 import BoughtDetailPage from '/src/views/store/bought/BoughtDetailPage'
 
-import Login from './views/auth/Login'
-import Register from './views/auth/Register'
-
-//  Vista Administrador
 import ErrorView from "/src/views/ErrorView"
 
 
@@ -88,20 +82,6 @@ const router = createBrowserRouter([
         ]
     },
     
-    {
-        path:'/auth',
-        element: <AuthLayout />,
-        children:[
-            {
-                path:'/auth/login',
-                element: <Login />
-            },
-            {
-                path:'/auth/registro',
-                element: <Register />
-            }
-        ]
-    },
     {
         path:'/admin',
         element: <AdminLayout />,
