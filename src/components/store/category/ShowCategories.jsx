@@ -1,55 +1,60 @@
 import { memo } from "react"
 import Category from "./Category"
-import TittleName from "../common/TittleName";
-import { CategoryService } from "/src/services/CategoryService";
-import { Box, CircularProgress } from "@mui/material";
+import TittleName from "../common/TittleName"
+import { CategoryService } from "/src/services/CategoryService"
+import { Box, CircularProgress } from "@mui/material"
 
-const ShowCategories =({width='w-40', height='h-auto', font = "text-2xl"})=> {
-  
-  const {data:categories, loading} = CategoryService.useAllCategories()
+const ShowCategories = ({ width = 160, height = 160 }) => {
+  const { data: categories, loading } = CategoryService.useAllCategories()
 
   if (loading || !categories) {
     return (
       <Box display="flex" justifyContent="center" mt={4}>
         <CircularProgress />
       </Box>
-    );
+    )
   }
+
   return (
-    
-    <div
-      className="flex flex-col gap-y-4 justify-center items-center w-full xl:px-20 py-16"
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      width="100%"
+      sx={{ py: 8, px: { xs: 2, xl: 10 }, gap: 4 }}
     >
       <TittleName>
         Compra por categorías
       </TittleName>
-      <div className="flex shrink-0 flex-wrap justify-center items-center gap-4 container w-full">
-        
-        {categories?.map(category => category.show == true && (
-          <div
-            key={category?.id}
-            onClick={()=>{
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              })
-            }}
-          >
-            <Category 
-              categoria={category}
-              width={width}
-              height={height}
-              font={font}
-            />
-          </div>
-        ))}
 
-      </div>
-    </div>
-    
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        alignItems="center"
+        gap={2}
+        width="100%"
+      >
+        {categories.map((category) =>
+          category.show === true ? (
+            <Box
+              key={category.id}
+              onClick={() =>
+                window.scrollTo({ top: 0, behavior: "smooth" })
+              }
+            >
+              <Category
+                categoria={category}
+                width={width}
+                height={height}
+              />
+            </Box>
+          ) : null
+        )}
+      </Box>
+    </Box>
   )
 }
 
 export default memo(ShowCategories)
-
-
