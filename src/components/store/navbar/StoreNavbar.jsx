@@ -3,60 +3,65 @@ import { useNavigate } from "react-router-dom"
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Badge } from "@mui/material";
+import { AppBar, Badge, Box, Container, IconButton, Toolbar } from "@mui/material";
 
 import logo from "/src/static/img/logo.svg"
-import { Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import useStore from "/src/hooks/useStore";
 import LoginCreateRecuba from "./LoginCreateRecuba";
 import { useAuth } from "/src/hooks/useAuth";
 
 const StoreNavbar = () => {
   const navigate = useNavigate()
-
-  const {user}= useAuth({middleware:'guest'})
-
-  const {order, toggleDrawerCart} = useStore()
-
+  const { user } = useAuth({ middleware: 'guest' })
+  const { order, toggleDrawerCart } = useStore()
 
   return (
-    <nav className="sticky top-0 z-50 w-full backdrop-blur-sm bg-white/70 border-b border-zinc-200 shadow-sm transition-all">
-      <div className="container mx-auto flex items-center justify-between  py-2 px-2 sx:px-0">
-        <LogoStore
-          action={() => {
-            navigate('/store')
-          }}
-          logo={logo}
-
-        />
-        {/* Aquí podrías poner botones, links, etc */}
-        <Stack direction="row" spacing={2}>
-            <SearchOutlinedIcon sx={{ cursor: 'pointer', fontSize: 30, color: 'grey.700' }} />
-            <LoginCreateRecuba/>
-            <Badge badgeContent={order?.length} color="primary" overlap="circular" sx={{ cursor: 'pointer'}} onClick={()=>toggleDrawerCart(true)}>
-                <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: 'grey.700' }} />
-            </Badge>
-            {user?.role == "admin" && (<SettingsIcon onClick={()=>navigate('/admin/inventory/products')} sx={{ cursor: 'pointer', fontSize: 30, color: 'primary.main' }}/>)}
-        </Stack>
-
-      </div>
-    </nav>
-  )
-}
-
-const LogoStore = ({ action, logo }) => {
-  return (
-    <div
-      className="cursor-pointer"
-      onClick={action}
+    <AppBar
+      position="sticky"
+      color="transparent"
+      elevation={1}
+      sx={{
+        backdropFilter: 'blur(6px)',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        borderBottom: '1px solid #e5e7eb'
+      }}
     >
-      <img
-        className="w-28 md:h-30"
-        src={logo}
-        alt="logo"
-      />
-    </div>
+      <Container maxWidth="lg">
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between', py: 1 }}>
+          <LogoStore action={() => navigate('/store')} logo={logo} />
+
+          <Stack direction="row" spacing={2} alignItems="center">
+            <IconButton>
+              <SearchOutlinedIcon sx={{ fontSize: 30, color: 'grey.700' }} />
+            </IconButton>
+            <LoginCreateRecuba />
+            <IconButton onClick={() => toggleDrawerCart(true)}>
+              <Badge badgeContent={order?.length} color="primary" overlap="circular">
+                <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: 'grey.700' }} />
+              </Badge>
+            </IconButton>
+            {user?.role === "admin" && (
+              <IconButton onClick={() => navigate('/admin/inventory/products')}>
+                <SettingsIcon sx={{ fontSize: 30, color: 'primary.main' }} />
+              </IconButton>
+            )}
+          </Stack>
+        </Toolbar>
+      </Container>
+    </AppBar>
   )
 }
+
+const LogoStore = ({ action, logo }) => (
+  <Box onClick={action} sx={{ cursor: 'pointer' }}>
+    <Box
+      component="img"
+      src={logo}
+      alt="logo"
+      sx={{ width: '7rem', height: 'auto' }}
+    />
+  </Box>
+)
 
 export default memo(StoreNavbar)
