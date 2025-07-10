@@ -1,58 +1,111 @@
-import {memo} from 'react'
-import useStore from '/src/hooks/useStore'
-import TittleName from '../common/TittleName'
-import BACKEND from '/src/data/backend'
+import { memo } from 'react';
+import TittleName from '../common/TittleName';
+import BACKEND from '/src/data/backend';
 
-const Memories=({})=> {
-    const {
-        memories
-    }= useStore()
-  
-    if(memories?.length === 0) return null
-    return (
-        <div className="relative center-c gap-y-2  w-full px-1 pt-8 shrink-0 overflow-hidden">
-            <TittleName>
-                Nuestros orfebres
-            </TittleName>
-        
-            <div className="relative center-c md:flex-row flex-wrap gap-2 text-center  w-full py-4">
-            
-                {
-                    memories?.map(memory=>(
-                        <div
-                            key={memory.id}
-                            className='relative font-poppins-bold text-white md:w-96 rounded-lg overflow-hidden shadow-md '
-                        >
-                            <div
-                                className='bg-pinkPrimary w-full p-1'
-                            >
-                                <span className=' text-xl '>{memory.name}</span>
-                            </div>
-                            <div>
-                                <img 
-                                    className=''
-                                    src={BACKEND.MEMORIES.URL + memory.image}  
-                                    alt={memory.name}
-                                />
-                            </div>
-                            <div
-                                className='absolute center-c opacity-0 hover:opacity-100 transition-all top-0 bottom-0 right-0 left-0  backdrop-blur-md bg-pinkPrimary bg-opacity-50 p-4'
-                            >
-                                <span className='  text-xl py-2 center-c'>
-                                    {memory.name}
-                                </span>
-                                <div className=' overflow-y-scroll scrollbar-3 font-poppins-regular'>
-                                    <span>{memory.description}</span>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-                
-            </div>
-        
-        </div>
-    )
-}
+import {
+  Box,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  Grid,
+  Fade,
+} from '@mui/material';
+import { MemoryService } from '/src/services/MemoryService';
 
-export default memo(Memories)
+const Memories = () => {
+  const { data: memories } = MemoryService.useAllMemories();
+
+  if (!memories || memories.length === 0) return null;
+
+  return (
+    <Box sx={{ width: '100%', px: 1, pt: 8 }}>
+      <TittleName>Nuestros orfebres</TittleName>
+
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        alignItems="flex-start"
+        sx={{ py: 4 }}
+      >
+        {memories.map((memory) => (
+          <Grid item key={memory.id} xs={12} sm={6} md={4} lg={3}>
+            <Card
+              sx={{
+                position: 'relative',
+                width: '100%',
+                borderRadius: 2,
+                overflow: 'hidden',
+                boxShadow: 3,
+                bgcolor: 'background.paper',
+              }}
+            >
+              <Box
+                sx={{
+                  bgcolor: 'primary.main',
+                  color: 'white',
+                  py: 1,
+                  textAlign: 'center',
+                }}
+              >
+                <Typography variant="h6" fontWeight="bold">
+                  {memory.name}
+                </Typography>
+              </Box>
+
+              <CardMedia
+                component="img"
+                image={BACKEND.MEMORIES.URL + memory.image}
+                alt={memory.name}
+              />
+
+              <Fade in timeout={300}>
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    inset: 0,
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    backdropFilter: 'blur(6px)',
+                    bgcolorOpacity: 0.5,
+                    opacity: 0,
+                    transition: 'opacity 0.3s',
+                    '&:hover': {
+                      opacity: 1,
+                    },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    p: 2,
+                  }}
+                >
+                  <Typography variant="h6" fontWeight="bold" mb={1}>
+                    {memory.name}
+                  </Typography>
+                  <CardContent
+                    sx={{
+                      maxHeight: 120,
+                      overflowY: 'auto',
+                      bgcolor: 'transparent',
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      sx={{ fontFamily: 'Poppins, sans-serif' }}
+                    >
+                      {memory.description}
+                    </Typography>
+                  </CardContent>
+                </Box>
+              </Fade>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+};
+
+export default memo(Memories);

@@ -32,7 +32,7 @@ const Inicio = () => {
       />
 
       <Memories />
-      <Footer />
+      {/* <Footer /> */}
     </Box>
   );
 };
