@@ -30,7 +30,7 @@ const Memories = () => {
         sx={{ py: 4 }}
       >
         {memories.map((memory) => (
-          <Grid item key={memory.id} xs={12} sm={6} md={4} lg={3}>
+          <Grid key={memory.id}>
             <Card
               sx={{
                 position: 'relative',
