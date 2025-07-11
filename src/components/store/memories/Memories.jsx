@@ -7,9 +7,7 @@ import {
   Typography,
   Card,
   CardMedia,
-  CardContent,
   Grid,
-  Fade,
 } from '@mui/material';
 import { MemoryService } from '/src/services/MemoryService';
 
@@ -19,87 +17,103 @@ const Memories = () => {
   if (!memories || memories.length === 0) return null;
 
   return (
-    <Box sx={{ width: '100%', px: 1, pt: 8 }}>
-      <TittleName>Nuestros orfebres</TittleName>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      width="100%"
+      sx={{ py: 8, px: { xs: 2, xl: 10 }, gap: 4 }}
+    >
+      <TittleName> Nuestros orfebres </TittleName>
 
       <Grid
         container
-        spacing={2}
+        columns={{ xs: 12, sm: 12, md: 12 }}
+        spacing={3}
         justifyContent="center"
-        alignItems="flex-start"
-        sx={{ py: 4 }}
       >
         {memories.map((memory) => (
-          <Grid key={memory.id}>
+          <Grid
+            key={memory.id}
+            sx={{
+              gridColumn: {
+                xs: 'span 12',
+                sm: 'span 6',
+                md: 'span 4',
+              },
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
             <Card
               sx={{
-                position: 'relative',
                 width: '100%',
-                borderRadius: 2,
+                maxWidth: 420, // Aumentamos el ancho máximo
+                position: 'relative',
+                borderRadius: 3,
                 overflow: 'hidden',
-                boxShadow: 3,
-                bgcolor: 'background.paper',
+                boxShadow: 4,
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              <Box
-                sx={{
-                  bgcolor: 'primary.main',
-                  color: 'white',
-                  py: 1,
-                  textAlign: 'center',
-                }}
-              >
-                <Typography variant="h6" fontWeight="bold">
-                  {memory.name}
-                </Typography>
-              </Box>
+              {/* Imagen ampliada */}
+              <Box sx={{ position: 'relative', height: 300 }}>
+                <CardMedia
+                  component="img"
+                  image={BACKEND.MEMORIES.URL + memory.image}
+                  alt={memory.name}
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
 
-              <CardMedia
-                component="img"
-                image={BACKEND.MEMORIES.URL + memory.image}
-                alt={memory.name}
-              />
-
-              <Fade in timeout={300}>
                 <Box
                   sx={{
                     position: 'absolute',
                     inset: 0,
-                    bgcolor: 'primary.main',
+                    bgcolor: 'rgba(0, 0, 0, 0.5)',
                     color: 'white',
-                    backdropFilter: 'blur(6px)',
-                    bgcolorOpacity: 0.5,
                     opacity: 0,
                     transition: 'opacity 0.3s',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    px: 2,
+                    textAlign: 'center',
                     '&:hover': {
                       opacity: 1,
                     },
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    p: 2,
                   }}
                 >
                   <Typography variant="h6" fontWeight="bold" mb={1}>
                     {memory.name}
                   </Typography>
-                  <CardContent
+                  <Typography
+                    variant="body2"
                     sx={{
-                      maxHeight: 120,
+                      maxHeight: 140,
                       overflowY: 'auto',
-                      bgcolor: 'transparent',
                     }}
                   >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontFamily: 'Poppins, sans-serif' }}
-                    >
-                      {memory.description}
-                    </Typography>
-                  </CardContent>
+                    {memory.description}
+                  </Typography>
                 </Box>
-              </Fade>
+              </Box>
+
+              <Box sx={{ p: 2, textAlign: 'center', bgcolor: 'grey.100' }}>
+                <Typography
+                  variant="subtitle1"
+                  fontWeight="medium"
+                  color="text.primary"
+                >
+                  {memory.name}
+                </Typography>
+              </Box>
             </Card>
           </Grid>
         ))}
@@ -109,3 +123,4 @@ const Memories = () => {
 };
 
 export default memo(Memories);
+
