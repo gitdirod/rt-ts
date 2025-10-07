@@ -1,0 +1,38 @@
+/* src/fonts.css */
+
+@font-face {
+  font-family: 'PoppinsRegular';
+  src: url('./static/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PoppinsMedium';
+  src: url('./static/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PoppinsBold';
+  src: url('./static/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+
+/* Clases utilitarias (puedes usar cualquier nombre) */
+.poppins-regular {
+  font-family: 'PoppinsRegular', sans-serif !important;
+}
+
+.poppins-medium {
+  font-family: 'PoppinsMedium', sans-serif !important;
+}
+
+.poppins-bold {
+  font-family: 'PoppinsBold', sans-serif !important;
+}

@@ -49,9 +49,10 @@ const FilterGroups= () => {
 
   return (
     <>
-      <Typography variant="subtitle2" fontWeight="bold" color="text.secondary" sx={{ mb: 1 }}>
+      <Typography className='poppins-bold' sx={{ fontWeight: 500 }}>
         Categorías
       </Typography>
+      
 
       {groups?.map((gr) => gr?.show && (
         <Accordion
@@ -94,7 +95,7 @@ const FilterGroups= () => {
                   >
                     <ListItemText
                       primary={
-                        <Typography fontSize={13} fontWeight={String(cat.id) === activeCategoryId ? 'bold' : 'normal'}>
+                        <Typography fontSize={13} className={String(cat.id) === activeCategoryId ? 'poppins-bold' : 'poppins-regular'}>
                           {cat.name}
                         </Typography>
                       }

@@ -2,9 +2,7 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
-  typography: {
-    fontFamily: 'Poppins, sans-serif',
-  },
+
   palette: {
     primary: {
       main: '#008B8B',
@@ -17,17 +15,9 @@ const theme = createTheme({
       main: '#ff4081',
     },
   },
+
   shape: {
     borderRadius: 12,
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          fontFamily: 'Poppins, sans-serif',
-        },
-      },
-    },
   },
 });
 
