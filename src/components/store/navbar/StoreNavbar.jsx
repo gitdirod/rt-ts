@@ -24,11 +24,11 @@ const StoreNavbar = () => {
       sx={{
         backdropFilter: 'blur(6px)',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        borderBottom: '1px solid #e5e7eb'
+        // borderBottom: '1px solid #e5e7eb'
       }}
     >
       <Container maxWidth="lg">
-        <Toolbar disableGutters sx={{ justifyContent: 'space-between', py: 1 }}>
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between', py: 0, my: 0 }}>
           <LogoStore action={() => navigate('/store')} logo={logo} />
 
           <Stack direction="row" spacing={2} alignItems="center">

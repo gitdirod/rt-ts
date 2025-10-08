@@ -88,12 +88,12 @@ const CustomerView = () => {
           position: 'sticky',
           top: 64,
           alignSelf: 'flex-start',
-          height: 'calc(100vh - 64px)',
+          height: 'calc(100vh - 72px)',
           overflowY: 'auto',
           px: 2,
           borderRight: '1px solid',
           borderColor: 'divider',
-          bgcolor: '#fff',
+          bgcolor: 'red',
         }}
       >
         <FilterGroups />
