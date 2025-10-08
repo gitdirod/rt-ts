@@ -1,16 +1,33 @@
-
 import { memo } from "react";
+import { Container, Grid } from "@mui/material";
 import ProductCard from "./ProductCard";
 
-const ProductGrid = ({ products }) => {
+const ProductGrid = ({ products = [] }) => {
   return (
-    <div className="w-full">
-      <div className="mx-auto  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {products?.map((prod) => (
-          <ProductCard key={prod.id} product={prod} />
+    <Container maxWidth="xl"> {/* ancho amplio para permitir 4 cols en xl */}
+      <Grid
+        container
+        spacing={1} // ~24px de gap
+        alignItems="stretch" // estira todos los items a la misma altura
+        sx={{border:"1px solid red"}}
+      >
+        {products.map((prod) => (
+          <ProductCard product={prod} sx={{ flex: 1 }} key={prod.id}/>
+          // <Grid
+          //   container
+          //   item
+          //   key={prod.id}
+          //   // xs={12}   // 1 col
+          //   // sm={6}    // 2 cols
+          //   // md={4}    // 3 cols
+          //   // lg={3}    // 4 cols (también aplica en xl si quieres)
+          //   sx={{ display: 'flex' }} // para que la card pueda llenar la altura
+          // >
+            
+          // </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 
