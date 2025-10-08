@@ -82,7 +82,7 @@ const CustomerView = () => {
     <>
     {/* SIDEBAR */}
       <Grid
-        size={1.6}
+        size={{md:2}}
         // sx={{border:1}}
       >
         {/* Sidebar */}
@@ -95,7 +95,7 @@ const CustomerView = () => {
             alignSelf: 'flex-start',
             height: 'calc(100vh - 72px)',
             overflowY: 'auto',
-            px: 2,
+            // px: 2,
             borderRight: '1px solid',
             borderColor: 'divider'
           }}
@@ -106,7 +106,7 @@ const CustomerView = () => {
 
       {/* Contenido */}
       <Grid 
-        size={'grow'}
+        size={{xs:12, md:'grow'}}
           sx={{
             height: "calc(100% - 4rem)", // <─ igual altura que sidebar
             overflow: "hidden",

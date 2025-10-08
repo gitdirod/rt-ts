@@ -49,7 +49,7 @@ const FilterGroups= () => {
 
   return (
     <>
-      <Typography className='poppins-bold' sx={{ fontWeight: 500 }}>
+      <Typography className='poppins-bold' sx={{ fontWeight: 500, px:2 }}>
         Categorías
       </Typography>
       
