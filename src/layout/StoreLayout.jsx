@@ -10,7 +10,11 @@ const StoreLayout = () => {
       position="relative"
       sx={{
         cursor: "default",
+        display:'flex',
+        flexDirection: 'column',
         maxHeight: "100vh",
+        border:'1px solid red',
+        overflow:'hidden'
       }}
     >
       {/* <Typography className="poppins-regular">Texto regular</Typography>
@@ -22,9 +26,10 @@ const StoreLayout = () => {
       {/* Margen superior ya no es necesario si StoreNavbar es sticky */}
       <Box
         display="flex"
-        flexDirection="column"
+        // flexDirection="column"
         sx={{
           transition: "all 0.3s ease",
+          overflowY: 'auto',
         }}
       >
         <Outlet />
