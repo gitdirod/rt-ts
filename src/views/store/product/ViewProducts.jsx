@@ -92,8 +92,7 @@ const CustomerView = () => {
           overflowY: 'auto',
           px: 2,
           borderRight: '1px solid',
-          borderColor: 'divider',
-          bgcolor: 'red',
+          borderColor: 'divider'
         }}
       >
         <FilterGroups />

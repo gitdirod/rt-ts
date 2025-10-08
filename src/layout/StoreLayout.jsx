@@ -10,11 +10,7 @@ const StoreLayout = () => {
       position="relative"
       sx={{
         cursor: "default",
-        // minHeight: "100vh",
         maxHeight: "100vh",
-        // background:'red',
-        border:'1px solid red',
-        overflow: 'scroll-y'
       }}
     >
       {/* <Typography className="poppins-regular">Texto regular</Typography>
