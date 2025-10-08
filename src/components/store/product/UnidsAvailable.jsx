@@ -24,10 +24,10 @@ export default function UnidsAvailable({ units = null }) {
         />
         <FiberManualRecordIcon color="primary" sx={{ fontSize: 12 }} />
       </Box>
-      <Typography variant="body2" fontWeight="medium">
+      <Typography className="poppins-regular" variant="body2" fontWeight="medium">
         {units}
       </Typography>
-      <Typography variant="body2" color="text.secondary">
+      <Typography className="poppins-regular" variant="body2" color="text.secondary">
         {units === 1 ? 'unidad' : 'unidades'}
       </Typography>
 

@@ -78,107 +78,107 @@ const ProductCard = ({ product }) => {
 
             {/* Parte clickeable */}
             <Box 
-                            onClick={() => {
-                                navigate(`/store/product/${product.id}?name=${encodeURIComponent(product.name)}&code=${encodeURIComponent(product.code)}`)
-                                window.scrollTo({ top: 0, behavior: "smooth" })
-                            }}
-                            sx={{
-                                width: '100%',
-                                height: '100%',
-                                px: 2,
-                                pt: 2,
-                                pb: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                gap: 2
-                            }}
-                        >
-                            {/* Icono tipo de producto */}
-                            <Box sx={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                width: '100%',
-                                mb: 1,
-                                color: 'text.secondary',
-                                fontSize: '0.875rem'
-                            }}>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                    <img 
-                                        src={BACKEND.ICONS.URL + product?.type_product?.image}
-                                        alt="icon"
-                                        style={{ height: '20px', width: '20px' }}
-                                    />
-                                    <span>{product?.group?.name}</span>
-                                </Box>
-                                <UnidsAvailable units={product?.units} textColor="text-slate-700" />
-                            </Box>
-            
-                            {/* Imagen de producto */}
-                            <Box sx={{
-                                position: 'relative',
-                                width: '100%',
-                                height: '208px',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                overflow: 'hidden',
-                                borderRadius: 2,
-                            }}>
-                                <img 
-                                    src={BACKEND.PRODUCTS.URL + product.images[0]?.name}
-                                    alt={product.name}
-                                    style={{
-                                        height: '100%',
-                                        objectFit: 'contain',
-                                        transition: 'transform 0.3s ease-in-out',
-                                    }}
-                                />
-            
-                                {/* Botón Previsualizar */}
-                                <Button
-                                    variant="outlined"
-                                    size="small"
-                                    className="previewButton"
-                                    sx={{
-                                        position: 'absolute',
-                                        bottom: '8px',
-                                        width: '90%',
-                                        bgcolor: '#fff',
-                                        borderColor: 'primary.main',
-                                        color: 'primary.main',
-                                        fontWeight: 'bold',
-                                        opacity: { xs: 1, md: 0 },
-                                        transition: 'opacity 0.3s ease-in-out',
-                                        zIndex: 10,
-                                        '&:hover': {
-                                            bgcolor: theme.palette.primary.lightHover,
-                                            borderColor: theme.palette.primary.main,
-                                            opacity: 1
-                                        },
-                                    }}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleOpenModal();
-                                    }}
-                                >
-                                    Previsualizar
-                                </Button>
-                            </Box>
-            
-                            {/* Nombre y código del producto */}
-                            <Box sx={{
-                                textAlign: 'center',
-                                fontSize: '1rem',
-                                fontWeight: 500,
-                                color: 'text.primary',
-                                mt: 2,
-                                lineHeight: 1.25,
-                            }}>
-                                {product.name} <Box component="span" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>({product.code})</Box>
-                            </Box>
-                        </Box>
+                onClick={() => {
+                    navigate(`/store/product/${product.id}?name=${encodeURIComponent(product.name)}&code=${encodeURIComponent(product.code)}`)
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                }}
+                sx={{
+                    width: '100%',
+                    height: '100%',
+                    px: 2,
+                    pt: 2,
+                    pb: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 2
+                }}
+            >
+                {/* Icono tipo de producto */}
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                    mb: 1,
+                    color: 'text.secondary',
+                    fontSize: '0.875rem'
+                }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <img 
+                            src={BACKEND.ICONS.URL + product?.type_product?.image}
+                            alt="icon"
+                            style={{ height: '20px', width: '20px' }}
+                        />
+                        <span className="poppins-regular">{product?.group?.name}</span>
+                    </Box>
+                    <UnidsAvailable units={product?.units} />
+                </Box>
+
+                {/* Imagen de producto */}
+                <Box sx={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '208px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    overflow: 'hidden',
+                    borderRadius: 2,
+                }}>
+                    <img 
+                        src={BACKEND.PRODUCTS.URL + product.images[0]?.name}
+                        alt={product.name}
+                        style={{
+                            height: '100%',
+                            objectFit: 'contain',
+                            transition: 'transform 0.3s ease-in-out',
+                        }}
+                    />
+
+                    {/* Botón Previsualizar */}
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        className="previewButton" 
+                        sx={{
+                            position: 'absolute',
+                            bottom: '8px',
+                            width: '90%',
+                            bgcolor: '#fff',
+                            borderColor: 'primary.main',
+                            color: 'primary.main',
+                            fontWeight: 'bold',
+                            opacity: { xs: 1, md: 0 },
+                            transition: 'opacity 0.3s ease-in-out',
+                            zIndex: 10,
+                            '&:hover': {
+                                bgcolor: theme.palette.primary.lightHover,
+                                borderColor: theme.palette.primary.main,
+                                opacity: 1
+                            },
+                        }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenModal();
+                        }}
+                    >
+                        Previsualizar
+                    </Button>
+                </Box>
+
+                {/* Nombre y código del producto */}
+                <Box sx={{
+                    textAlign: 'center',
+                    fontSize: '1rem',
+                    fontWeight: 500,
+                    color: 'text.primary',
+                    mt: 2,
+                    lineHeight: 1.25,
+                }}>
+                    {product.name} <Box component="span" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>({product.code})</Box>
+                </Box>
+            </Box>
 
             {/* Botón Agregar al carrito */}
             <Box sx={{ width: '100%', p: 2 }}>
@@ -191,6 +191,7 @@ const ProductCard = ({ product }) => {
                     }}
                     startIcon={<AddShoppingCartIcon />}
                     variant="contained"
+                    className="poppins-regular"
                     sx={{
                         py: 1.2,
                         fontWeight: 600,

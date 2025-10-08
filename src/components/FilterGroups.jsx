@@ -72,7 +72,7 @@ const FilterGroups= () => {
               }
             }}
           >
-            <Typography variant="body2" fontWeight="medium">
+            <Typography variant="body2" fontWeight="medium" className="poppins-regular">
               {gr?.name}
             </Typography>
           </AccordionSummary>
