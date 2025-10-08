@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ProductService } from '/src/services/ProductService';
-import { Button, Box, Container, Grid } from "@mui/material";
+import { Button, Box, Container } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import FilterGroups from "/src/components/FilterGroups";
 import ProductGrid from "/src/components/store/product/ProductGrid";
@@ -79,75 +79,56 @@ const CustomerView = () => {
   }, [loading, noMoreProducts]);
 
   return (
-    <>
-    {/* SIDEBAR */}
-      <Grid
-        size={1.6}
-        // sx={{border:1}}
+    <Box sx={{ display: 'flex', width: '100%' }}>
+      {/* Sidebar */}
+      <Box
+        sx={{
+          display: { xs: 'none', md: 'block' }, //  oculto en xs y sm, visible desde md
+          width: 260,
+          position: 'sticky',
+          top: 64,
+          alignSelf: 'flex-start',
+          height: 'calc(100vh - 72px)',
+          overflowY: 'auto',
+          px: 2,
+          borderRight: '1px solid',
+          borderColor: 'divider'
+        }}
       >
-        {/* Sidebar */}
-        <Box
-          sx={{
-            display: { xs: 'none', md: 'block' }, //  oculto en xs y sm, visible desde md
-            // width: 260,
-            position: 'sticky',
-            top: 64,
-            alignSelf: 'flex-start',
-            height: 'calc(100vh - 72px)',
-            overflowY: 'auto',
-            px: 2,
-            borderRight: '1px solid',
-            borderColor: 'divider'
-          }}
-        >
-          <FilterGroups />
-        </Box>
-      </Grid>
+        <FilterGroups />
+      </Box>
+
 
       {/* Contenido */}
-      <Grid 
-        size={'grow'}
-          sx={{
-            height: "calc(100% - 4rem)", // <─ igual altura que sidebar
-            overflow: "hidden",
-            // height: "100%",
-            overflowY: "auto",
-            // border:'2px solid red'
-          }}
-      >
+      <Box sx={{ flex: 1 }}>
+        <Container maxWidth="xl" sx={{ px: { xs: 2, md: 4 }, py: 3 }}>
+          <TittleName>
+            {groupName}
+            {categoryName ? ` & ${categoryName}` : ''}
+          </TittleName>
 
+          <ProductGrid products={products} />
 
-          
-        {/* Contenido */}
-        <Box sx={{ flex: 1 }}>
-          <Container maxWidth="2xl" sx={{ py: 3 }}>
-            <TittleName>
-              {groupName}
-              {categoryName ? ` & ${categoryName}` : ''}
-            </TittleName>
-            <ProductGrid products={products} />
-
-            <Box mt={6} display="flex" justifyContent="center">
-              <Button
-                ref={buttonRef}
-                color="primary"
-                sx={{ fontWeight: 'bold' }}
-                startIcon={<AddIcon />}
-                variant="outlined"
-                disabled={loading || noMoreProducts}
-                onClick={loadMore}
-              >
-                {loading
-                  ? 'Cargando...'
-                  : noMoreProducts
-                  ? 'No hay más productos'
-                  : 'Ver más productos'}
-              </Button>
-            </Box>
-          </Container>
-        </Box>
-      </Grid>
-    </>
+          <Box mt={6} display="flex" justifyContent="center">
+            <Button
+              ref={buttonRef}
+              color="primary"
+              sx={{ fontWeight: 'bold' }}
+              startIcon={<AddIcon />}
+              variant="outlined"
+              disabled={loading || noMoreProducts}
+              onClick={loadMore}
+            >
+              {loading
+                ? 'Cargando...'
+                : noMoreProducts
+                ? 'No hay más productos'
+                : 'Ver más productos'}
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
   );
 };
 

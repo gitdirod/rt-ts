@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { AppBar, Badge, Box, Container, Grid, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Badge, Box, Container, IconButton, Toolbar } from "@mui/material";
 
 import logo from "/src/static/img/logo.svg"
 import Stack from "@mui/material/Stack";
@@ -17,15 +17,14 @@ const StoreNavbar = () => {
   const { order, toggleDrawerCart } = useStore()
 
   return (
-    <Grid
-      size={12}
+    <AppBar
+      position="sticky"
+      color="transparent"
       elevation={1}
       sx={{
         backdropFilter: 'blur(6px)',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        borderBottom: '1px solid #e5e7eb'
-        
-        // borderBottom: '1px solid #222'
+        // borderBottom: '1px solid #e5e7eb'
       }}
     >
       <Container maxWidth="lg">
@@ -50,7 +49,7 @@ const StoreNavbar = () => {
           </Stack>
         </Toolbar>
       </Container>
-    </Grid>
+    </AppBar>
   )
 }
 

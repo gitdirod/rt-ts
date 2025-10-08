@@ -4,8 +4,7 @@ import ProductCard from "./ProductCard";
 
 const ProductGrid = ({ products = [] }) => {
   return (
-    <Container maxWidth="xl"> {/* ancho amplio para permitir 4 cols en xl */}
-      <Grid
+    <Grid
         container
         spacing={1} // ~24px de gap
         alignItems="stretch" // estira todos los items a la misma altura
@@ -14,7 +13,6 @@ const ProductGrid = ({ products = [] }) => {
           <ProductCard product={prod} sx={{ flex: 1 }} key={prod.id}/>
         ))}
       </Grid>
-    </Container>
   );
 };
 
