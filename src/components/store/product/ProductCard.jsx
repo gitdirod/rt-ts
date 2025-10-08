@@ -29,34 +29,34 @@ const ProductCard = ({ product }) => {
     return (
         <Grid 
         size={{xs: 12, sm:6, md: 4, lg:3 }}
-        sx={{border:1}}
-            // sx={{
-            //     display: 'flex',
-            //     flexDirection: 'column',
-            //     justifyContent: 'space-between',
-            //     alignItems: 'center',
-            //     backgroundColor: '#fff',
-            //     borderRadius: 2,
-            //     border: '1px solid',
-            //     borderColor: 'divider',
-            //     overflow: 'hidden',
-            //     boxShadow: 1,
-            //     minWidth: 250,
-            //     width: '100%',
-            //     transition: 'all 0.3s ease-in-out',
-            //     position: 'relative',
-            //     cursor: 'pointer',
-            //     '&:hover': {
-            //         boxShadow: 6,
-            //         transform: 'translateY(-4px)', // levanta un poquito la tarjeta
-            //         '& .previewButton': {
-            //             opacity: 1,
-            //         }
-            //     }
-            // }}
+        sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: '#fff',
+                borderRadius: 2,
+                border: '1px solid',
+                borderColor: 'divider',
+                overflow: 'hidden',
+                boxShadow: 1,
+                // minWidth: 250,
+                width: '100%',
+                transition: 'all 0.3s ease-in-out',
+                position: 'relative',
+                cursor: 'pointer',
+                '&:hover': {
+                    boxShadow: 6,
+                    transform: 'translateY(-4px)', // levanta un poquito la tarjeta
+                    '& .previewButton': {
+                        opacity: 1,
+                    }
+                }
+            }}
+
         >
             {/* Modal de Previsualización */}
-            {/* <Modal open={openModal} onClose={handleCloseModal}>
+            <Modal open={openModal} onClose={handleCloseModal}>
                 <Box
                     sx={{
                         position: 'absolute',
@@ -74,7 +74,7 @@ const ProductCard = ({ product }) => {
                 >
                     <ProductDetailCard product={product} />
                 </Box>
-            </Modal> */}
+            </Modal>
 
             {/* Parte clickeable */}
             <Box 
