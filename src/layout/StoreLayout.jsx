@@ -9,14 +9,11 @@ const StoreLayout = () => {
     <Grid
       container 
       spacing={0} 
-      sx={{
-        // background:'red', 
-        cursor: "default",
-        height: "100%", 
+      sx={{ 
+        cursor: "default", 
         display:'flex', 
         height:'99.5vh',
         position:'relative',
-        // border:'1px solid red'
       }}
     >
       <StoreNavbar />
