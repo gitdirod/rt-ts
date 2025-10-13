@@ -129,7 +129,7 @@ export default function ProductDetailCard({product}) {
                     <Stack direction="column"  spacing={0}>
                         <Stack direction="row" spacing={4}>
                         <LikeHart size="w-4" product={product} />
-                        <Typography sx={{fontFamily: 'poppins-extrabold, sans-serif', fontWeight: 800 }} variant="h5" fontWeight="" textTransform="uppercase">
+                        <Typography sx={{fontFamily: 'poppins-bold, sans-serif', fontWeight: 800 }} variant="h5" fontWeight="" textTransform="uppercase">
                             {product.name} <span className="text-zinc-500">({product?.code})</span>
                         </Typography>
                         </Stack>
@@ -139,7 +139,7 @@ export default function ProductDetailCard({product}) {
                     </Stack>
                     
                     <Box textAlign="center">
-                        <Typography variant="h4" fontWeight="bold" color="primary">
+                        <Typography variant="h4" fontWeight="bold" sx={{fontFamily:'poppins-bold'}} color="primary">
                         {formatearDinero(product.price)}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">Más impuestos</Typography>
@@ -230,6 +230,7 @@ export default function ProductDetailCard({product}) {
                         variant="contained"
                         color="primary"
                         fullWidth
+                        sx={{fontFamily:'poppins-bold'}}
                         startIcon={<ShoppingCart />}
                         size="large"
                         onClick={()=>{
@@ -252,7 +253,7 @@ export default function ProductDetailCard({product}) {
                             pr: 1 // padding a la derecha para evitar que el texto se esconda detrás del scroll
                         }}
                         >
-                        <Typography variant="body2" color="text.secondary" mt={1}>
+                        <Typography variant="body2" color="text.secondary" sx={{fontFamily:'poppins-bold'}} mt={1}>
                             {product.description}
                         </Typography>
                     </Box>
