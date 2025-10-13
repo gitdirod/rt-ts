@@ -200,7 +200,7 @@ const ProductCard = ({ product }) => {
                         borderRadius: '12px',
                     }}
                 >
-                    Agregar — <Box component="span" sx={{ ml: 2, fontWeight: 'bold' }}>{formatearDinero(product.price)}</Box>
+                    Agregar — <Box component="span" sx={{ ml: 2, fontWeight: 'bold' }}>{formatearDinero(product.price*1.15)}</Box>
                 </Button>
             </Box>
         </Grid>

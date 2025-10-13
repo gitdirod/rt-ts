@@ -140,9 +140,9 @@ export default function ProductDetailCard({product}) {
                     
                     <Box textAlign="center">
                         <Typography variant="h4" fontWeight="bold" sx={{fontFamily:'poppins-bold'}} color="primary">
-                        {formatearDinero(product.price)}
+                        {formatearDinero(product.price*1.15)}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary">Más impuestos</Typography>
+                        <Typography variant="caption" color="text.secondary">Incluye impuestos</Typography>
                     </Box>
                     <Stack direction={{sx:'column', sm:'row'}} sx={{
                         justifyContent:'center', gap:1
