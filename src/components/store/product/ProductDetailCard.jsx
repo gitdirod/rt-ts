@@ -62,8 +62,8 @@ export default function ProductDetailCard({product}) {
       },[product])
     
     return (
-        <Box maxWidth="xl" mx="auto" my={0} p={3} bgcolor="white" borderRadius={2} boxShadow={3}>
-            <Grid container  spacing={4}>
+        <Box maxWidth="xl" mx="auto" bgcolor="white">
+            <Grid container sx={{py:4}} spacing={4}>
                 {/* Galería de Imágenes */}
                 <Grid container direction="column"
                 size={{xs:12, md:6}}

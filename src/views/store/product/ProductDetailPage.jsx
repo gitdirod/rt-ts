@@ -38,7 +38,9 @@ const ProductDetailPage=() => {
   if(isLoading || productToShow === undefined || productToShow === null || productToShow?.units < 0 ) return <IsLoading/>
 
   return (
-    <Container sx={{my:4}}>
+    <Container sx={{ height: "calc(100% - 4rem)", // <─ igual altura que sidebar
+            overflow: "hidden",
+            overflowY: "auto",}}>
       <ProductDetailCard product={productToShow}/>
     </Container>
   );
