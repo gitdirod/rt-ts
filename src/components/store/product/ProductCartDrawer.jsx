@@ -56,8 +56,8 @@ export default function ProductCartDrawer({product}) {
                 Código: {product.code}
                 </Typography>
                 <Typography variant="body2" mt={1}>
-                {formatearDinero(product.price)} x {cantidad} ={" "}
-                <strong>{formatearDinero(product.price * cantidad)}</strong>
+                {formatearDinero(product.price * 1.15)} x {cantidad} ={" "}
+                <strong>{formatearDinero(product.price * cantidad *1.15)}</strong>
                 </Typography>
 
                 {/* Controles de cantidad */}
