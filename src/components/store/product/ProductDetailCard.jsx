@@ -63,7 +63,7 @@ export default function ProductDetailCard({product}) {
     
     return (
         <Box maxWidth="xl" mx="auto" bgcolor="white">
-            <Grid container sx={{py:4}} spacing={4}>
+            <Grid container sx={{p:4}} spacing={4}>
                 {/* Galería de Imágenes */}
                 <Grid container direction="column"
                 size={{xs:12, md:6}}
@@ -80,7 +80,7 @@ export default function ProductDetailCard({product}) {
                     component="img"
                     src={BACKEND.PRODUCTS.URL + product?.images?.[indexImage]?.name}
                     alt="Imagen de producto"
-                    sx={{ width: '100%', height: 400, objectFit: 'contain', borderRadius: 3, border: '1px solid #CCC', cursor: 'zoom-in' }}
+                    sx={{ width: '100%', height: 400, objectFit: 'contain', cursor: 'zoom-in' }}
                     />
                     {product?.images.length > 1 && (
                     <>
