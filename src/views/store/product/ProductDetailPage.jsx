@@ -1,7 +1,7 @@
 import { useEffect, useState, memo } from "react"
 import IsLoading from "/src/components/store/common/IsLoading"
 import ProductDetailCard from "/src/components/store/product/ProductDetailCard"
-import { Box } from "@mui/material"
+import { Box, Container } from "@mui/material"
 import { useParams } from "react-router-dom";
 import { ProductService } from "/src/services/ProductService"; // asegúrate de importar esto
 
@@ -38,9 +38,9 @@ const ProductDetailPage=() => {
   if(isLoading || productToShow === undefined || productToShow === null || productToShow?.units < 0 ) return <IsLoading/>
 
   return (
-    <Box sx={{my:4}}>
+    <Container sx={{my:4}}>
       <ProductDetailCard product={productToShow}/>
-    </Box>
+    </Container>
   );
 
 }
