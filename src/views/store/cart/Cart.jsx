@@ -43,7 +43,9 @@ const Cart=()=> {
     
     return (
 
-        <Container sx={{pt:4}}>
+        <Container sx={{pt:4, height: "calc(100% - 4rem)", // <─ igual altura que sidebar
+            overflow: "hidden",
+            overflowY: "auto",}}>
             <LoginCreateRecuba openExternal={openLogin} onCloseExternal={() => setOpenLogin(false)} />
 
 
