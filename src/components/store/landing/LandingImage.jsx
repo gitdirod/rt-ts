@@ -9,7 +9,7 @@ import BACKEND from '/src/data/backend';
 
 export default function LandingImage(){
 
-    const {data:landings} =LandingService.useAllLandings(true)
+    const {data:landings} =LandingService.usePublicLandings(true)
     
 
     const [windowSize, setWindowSize] = useState([
