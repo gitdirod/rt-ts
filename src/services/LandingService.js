@@ -28,7 +28,7 @@ export const LandingService = {
     },
     usePublicLandings: (enable = false) => {
         // Construcción de la URL con los parámetros
-        const url = `${BACKEND.PUBLIC_LANDINGS.KEY}`;
+        const url = enable ? BACKEND.PUBLIC_LANDINGS.KEY : null;
 
         // Uso de SWR para obtener productos
         const { data, error, mutate } = useSWR(
