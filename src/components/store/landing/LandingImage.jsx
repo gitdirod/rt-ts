@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 import { DEVICE_TYPES } from '/src/data/deviceTypes';
 import IsLoading from '../common/IsLoading';
 import { LandingService } from '/src/services/LandingService';
+import BACKEND from '/src/data/backend';
 
 
 export default function LandingImage(){
 
-    const {data:landings} =LandingService.useAllLandings()
+    const {data:landings} =LandingService.useAllLandings(true)
+    
 
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
@@ -30,7 +32,7 @@ export default function LandingImage(){
         if (!landings) return '';  // Important! Check if landings exist
 
         const { mobile, tablet, desktop } = landings;  // Desestructure here, inside the function
-
+        console.log(desktop)
         if (windowSize[0] < DEVICE_TYPES[0].maxWidth) {
             return mobile?.name;
         } else if (windowSize[0] < DEVICE_TYPES[1].maxWidth) {
@@ -40,7 +42,7 @@ export default function LandingImage(){
         }
     };
 
-    const imageUrl = import.meta.env.VITE_API_URL + "/landings/" + renderImageBySize();
+    const imageUrl = BACKEND.LANDINGS_STORAGE.URL + renderImageBySize();
 
     return (
         <>

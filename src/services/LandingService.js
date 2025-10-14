@@ -25,5 +25,25 @@ export const LandingService = {
             error,
             mutate
         };
-    }
+    },
+    usePublicLandings: (enable = false) => {
+        // Construcción de la URL con los parámetros
+        const url = `${BACKEND.PUBLIC_LANDINGS.KEY}`;
+
+        // Uso de SWR para obtener productos
+        const { data, error, mutate } = useSWR(
+            url,
+            fetchData,
+            swrConfig
+        );
+
+        // Retornar los datos y funciones de SWR
+        return {
+            data: data?.data || [],
+            totalRecords: data?.meta?.total || 0,
+            loading: !data && !error,
+            error,
+            mutate
+        };
+    },
 };
