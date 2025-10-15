@@ -32,7 +32,7 @@ export default function LandingImage(){
         if (!landings) return '';  // Important! Check if landings exist
 
         const { mobile, tablet, desktop } = landings;  // Desestructure here, inside the function
-        console.log(desktop)
+        // console.log(desktop)
         if (windowSize[0] < DEVICE_TYPES[0].maxWidth) {
             return mobile?.name;
         } else if (windowSize[0] < DEVICE_TYPES[1].maxWidth) {
